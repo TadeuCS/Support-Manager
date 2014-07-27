@@ -18,23 +18,19 @@ public class Frm_Login extends javax.swing.JFrame {
 
     Frm_Principal p;
     UsuarioDAO usuarioDAO;
-    private Usuario usuario;
+    private static Usuario usuario;
 
-    public Usuario getUsuario() {
+    public static Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public static void setUsuario(Usuario usuario) {
+        Frm_Login.usuario = usuario;
     }
-
+    
     public Frm_Login() {
         initComponents();
-        try {
-            setUndecorated(false);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        novo();
     }
 
     public void novo() {
@@ -42,14 +38,18 @@ public class Frm_Login extends javax.swing.JFrame {
         usuarioDAO = new UsuarioDAO();
     }
 
+    
     public void logar(String usuario, String senha) {
-        novo();
         try {
             if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
+                this.usuario=usuarioDAO.findByUsuarioAndSenha(usuario, senha);
                 p = new Frm_Principal();
                 dispose();
+            }else{
+                p.dispose();
             }
         } catch (Exception e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Usuário ou Senha inválidos!", "Aviso", JOptionPane.ERROR_MESSAGE);
             txt_senha.setText(null);
             txt_usuario.setText(null);
@@ -139,16 +139,14 @@ public class Frm_Login extends javax.swing.JFrame {
         pnl_fundoLayout.setHorizontalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fundoLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
                 .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnl_fundoLayout.setVerticalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fundoLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
                 .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,7 +183,7 @@ public class Frm_Login extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 

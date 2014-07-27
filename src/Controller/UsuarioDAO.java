@@ -21,10 +21,17 @@ public class UsuarioDAO extends Manager {
         em.getTransaction().commit();
     }
 
+    public Usuario findByCodigo(int codigo) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Usuario.findByCodusuario");
+        em.getTransaction().commit();
+        return (Usuario) query.getSingleResult();
+    }
+
     public Usuario findByUsuarioAndSenha(String usuario, String senha) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Usuario.findByUsuario").setParameter("usuario", usuario);
-//                .setParameter("user", usuario).setParameter("password", senha).setParameter("bloc", 'N');
+        query = em.createNamedQuery("Usuario.findByLogin")
+                .setParameter("user", usuario).setParameter("password", senha).setParameter("bloc", "N");
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }

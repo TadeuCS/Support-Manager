@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,12 +7,15 @@
 
 package Model;
 
+import Enums.UFenum;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,9 +46,8 @@ public class Uf implements Serializable {
     private Integer codestado;
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
-    private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codestado")
-    private List<Cep> cepList;
+    @Enumerated(EnumType.STRING)
+    private UFenum descricao;
 
     public Uf() {
     }
@@ -53,7 +56,7 @@ public class Uf implements Serializable {
         this.codestado = codestado;
     }
 
-    public Uf(Integer codestado, String descricao) {
+    public Uf(Integer codestado, UFenum descricao) {
         this.codestado = codestado;
         this.descricao = descricao;
     }
@@ -66,21 +69,12 @@ public class Uf implements Serializable {
         this.codestado = codestado;
     }
 
-    public String getDescricao() {
+    public UFenum getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(UFenum descricao) {
         this.descricao = descricao;
-    }
-
-    @XmlTransient
-    public List<Cep> getCepList() {
-        return cepList;
-    }
-
-    public void setCepList(List<Cep> cepList) {
-        this.cepList = cepList;
     }
 
     @Override

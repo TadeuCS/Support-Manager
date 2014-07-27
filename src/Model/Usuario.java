@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,9 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha"),
-    @NamedQuery(name = "Usuario.findByFoto", query = "SELECT u FROM Usuario u WHERE u.foto = :foto"),
-    @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado")})
+    @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado"),
+    @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.bloqueado= :bloc AND u.usuario= :user AND u.senha= :password")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,37 +46,26 @@ public class Usuario implements Serializable {
     @Column(name = "CODUSUARIO")
     private Integer codusuario;
     @Basic(optional = false)
-    @Column(name = "NOME")
+    @Column(name = "NOME",length = 100,unique = true)
     private String nome;
     @Basic(optional = false)
-    @Column(name = "CPF")
+    @Column(name = "CPF",unique = true)
     private String cpf;
     @Basic(optional = false)
     @Column(name = "SEXO")
     private Character sexo;
     @Basic(optional = false)
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", length = 100,unique = true)
     private String email;
     @Basic(optional = false)
-    @Column(name = "USUARIO")
+    @Column(name = "USUARIO",length = 20,unique = true)
     private String usuario;
     @Basic(optional = false)
-    @Column(name = "SENHA")
+    @Column(name = "SENHA",length = 120)
     private String senha;
     @Basic(optional = false)
-    @Column(name = "FOTO")
-    private String foto;
-    @Basic(optional = false)
-    @Column(name = "BLOQUEADO")
-    private Character bloqueado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
-    private List<Log> logList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
-    private List<Atendimento> atendimentoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
-    private List<Informacao> informacaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
-    private List<Ponto> pontoList;
+    @Column(name = "BLOQUEADO",columnDefinition="char(1) default 'N'")
+    private String bloqueado;
     @JoinColumn(name = "CODTIPOUSUARIO", referencedColumnName = "CODTIPOUSUARIO")
     @ManyToOne(optional = false)
     private TipoUsuario codtipousuario;
@@ -92,7 +77,7 @@ public class Usuario implements Serializable {
         this.codusuario = codusuario;
     }
 
-    public Usuario(Integer codusuario, String nome, String cpf, Character sexo, String email, String usuario, String senha, String foto, Character bloqueado) {
+    public Usuario(Integer codusuario, String nome, String cpf, Character sexo, String email, String usuario, String senha, String foto, String bloqueado) {
         this.codusuario = codusuario;
         this.nome = nome;
         this.cpf = cpf;
@@ -100,7 +85,6 @@ public class Usuario implements Serializable {
         this.email = email;
         this.usuario = usuario;
         this.senha = senha;
-        this.foto = foto;
         this.bloqueado = bloqueado;
     }
 
@@ -160,56 +144,12 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
-    }
-
-    public Character getBloqueado() {
+    public String getBloqueado() {
         return bloqueado;
     }
 
-    public void setBloqueado(Character bloqueado) {
+    public void setBloqueado(String bloqueado) {
         this.bloqueado = bloqueado;
-    }
-
-    @XmlTransient
-    public List<Log> getLogList() {
-        return logList;
-    }
-
-    public void setLogList(List<Log> logList) {
-        this.logList = logList;
-    }
-
-    @XmlTransient
-    public List<Atendimento> getAtendimentoList() {
-        return atendimentoList;
-    }
-
-    public void setAtendimentoList(List<Atendimento> atendimentoList) {
-        this.atendimentoList = atendimentoList;
-    }
-
-    @XmlTransient
-    public List<Informacao> getInformacaoList() {
-        return informacaoList;
-    }
-
-    public void setInformacaoList(List<Informacao> informacaoList) {
-        this.informacaoList = informacaoList;
-    }
-
-    @XmlTransient
-    public List<Ponto> getPontoList() {
-        return pontoList;
-    }
-
-    public void setPontoList(List<Ponto> pontoList) {
-        this.pontoList = pontoList;
     }
 
     public TipoUsuario getCodtipousuario() {
@@ -244,5 +184,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Model.Usuario[ codusuario=" + codusuario + " ]";
     }
-    
+
 }
