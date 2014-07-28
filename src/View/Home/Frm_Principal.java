@@ -5,9 +5,14 @@
  */
 package View.Home;
 
-import View.Atendente.Cadastro.Frm_CadUsuario;
-import View.Atendente.Consulta.Frm_consultaUsuarios;
-import View.Gestor.Frm_CadTipoUsuario;
+import View.Cadastros.Frm_CadAplicativo;
+import View.Cadastros.Frm_CadOrigem;
+import View.Cadastros.Frm_CadPrioridade;
+import View.Cadastros.Frm_CadStatus;
+import View.Cadastros.Frm_CadTipoAtendimento;
+import View.Cadastros.Frm_CadUsuario;
+import View.Consultas.Frm_ConUsuarios;
+import View.Cadastros.Frm_CadTipoUsuario;
 import javax.swing.JFrame;
 
 public class Frm_Principal extends javax.swing.JFrame {
@@ -21,7 +26,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     public void trocaUsuarioLogado() {
         txt_usuarioLogado.setText(Frm_Login.getUsuario().getUsuario());
-        if(Frm_Login.getUsuario().getSexo().equals('F')==true){
+        if (Frm_Login.getUsuario().getSexo().equals('F') == true) {
             lb_boasVindas.setText("Bem Vinda");
         }
     }
@@ -121,6 +126,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu5.setText("Aplicativo");
 
         jMenuItem5.setText("Aplicativo");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem5);
 
         jMenuItem11.setText("Links");
@@ -131,15 +141,35 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu6.setText("Atendimento");
 
         jMenuItem8.setText("Prioridade");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem8);
 
         jMenuItem7.setText("Origem");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem7);
 
         jMenuItem9.setText("Status");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem9);
 
         jMenuItem4.setText("Tipo Atendimento");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem4);
 
         jMenu1.add(jMenu6);
@@ -317,24 +347,44 @@ public class Frm_Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
-        Frm_Login f= new Frm_Login();
+        Frm_Login f = new Frm_Login();
         f.setVisible(true);
         dispose();
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Frm_CadUsuario c= new Frm_CadUsuario();
+        Frm_CadUsuario c = new Frm_CadUsuario();
         c.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        Frm_CadTipoUsuario c= new Frm_CadTipoUsuario();
+        Frm_CadTipoUsuario c = new Frm_CadTipoUsuario();
         c.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
-        Frm_consultaUsuarios f= new Frm_consultaUsuarios();
+        Frm_ConUsuarios f = new Frm_ConUsuarios();
     }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        Frm_CadAplicativo f = new Frm_CadAplicativo();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        Frm_CadTipoAtendimento f = new Frm_CadTipoAtendimento();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        Frm_CadOrigem f = new Frm_CadOrigem();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        Frm_CadPrioridade f = new Frm_CadPrioridade();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        Frm_CadStatus s = new Frm_CadStatus();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments

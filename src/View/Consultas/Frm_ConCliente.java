@@ -4,18 +4,18 @@
  * and open the template in the editor.
  */
 
-package View.Suporte;
+package View.Consultas;
 
 /**
  *
  * @author Tadeu
  */
-public class Frm_consultaCliente extends javax.swing.JFrame {
+public class Frm_ConCliente extends javax.swing.JFrame {
 
     /**
      * Creates new form Frm_consultaCliente
      */
-    public Frm_consultaCliente() {
+    public Frm_ConCliente() {
         initComponents();
     }
 
@@ -94,20 +94,20 @@ public class Frm_consultaCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_consultaCliente().setVisible(true);
+                new Frm_ConCliente().setVisible(true);
             }
         });
     }

@@ -321,8 +321,10 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btn_exclusao" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txt_operacao" pref="161" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Component id="btn_consulta" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="txt_operacao" min="-2" pref="195" max="-2" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Component id="btn_cancelar" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btn_salvar" min="-2" pref="100" max="-2" attributes="0"/>
@@ -344,6 +346,7 @@
                               <Component id="btn_inclusao" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_exclusao" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_operacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_consulta" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -396,6 +399,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_salvarActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btn_consulta">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Consulta"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_consultaActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

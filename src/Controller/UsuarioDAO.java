@@ -21,9 +21,15 @@ public class UsuarioDAO extends Manager {
         em.getTransaction().commit();
     }
 
+    public void excluir(Usuario usuario) {
+        em.getTransaction().begin();
+        em.remove(usuario);
+        em.getTransaction().commit();
+    }
+
     public Usuario findByCodigo(int codigo) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Usuario.findByCodusuario");
+        query = em.createNamedQuery("Usuario.findByCodusuario").setParameter("codusuario", codigo);
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }

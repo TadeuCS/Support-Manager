@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.Atendente.Cadastro;
+package View.Cadastros;
 
 import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
@@ -13,8 +13,8 @@ import Util.Criptografia;
 import Util.FixedLengthDocument;
 import Util.IntegerDocument;
 import Util.ValidarCpf;
-import View.Atendente.Consulta.Frm_consultaUsuarios;
-import View.Suporte.Frm_consultaCliente;
+import View.Consultas.Frm_ConUsuarios;
+import View.Consultas.Frm_ConCliente;
 import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,11 +49,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_usuario.setDocument(new FixedLengthDocument(20));
         txt_senha.setDocument(new FixedLengthDocument(18));
         txt_confirmaSenha.setDocument(new FixedLengthDocument(18));
+        codigoUsuario = 0;
         carregaTipoUsuarios();
         camposOFF();
     }
 
     public void camposOFF() {
+        btn_consulta.setEnabled(true);
         btn_alteracao.setEnabled(true);
         btn_inclusao.setEnabled(true);
         btn_exclusao.setEnabled(true);
@@ -73,6 +75,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void camposON() {
+        btn_consulta.setEnabled(false);
         btn_alteracao.setEnabled(false);
         btn_inclusao.setEnabled(false);
         btn_exclusao.setEnabled(false);
@@ -135,15 +138,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         }
     }
 
-    public String getbloqueado(String bloqueado) {
-        if (bloqueado.equals("NÃO") == true) {
-            bloqueado = "N";
-        } else {
-            bloqueado = "S";
-        }
-        return bloqueado;
-    }
-
     public void setBloqueado(Usuario usuario) {
         if (usuario.getBloqueado().equals("N") == true) {
             btn_bloqueado.setText("NÃO");
@@ -158,10 +152,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void setSexo(Usuario usuario) {
-        if (usuario.getSexo().equals("F") == true) {
+        if (usuario.getSexo().compareTo('F') == 0) {
             rbt_feminino.setSelected(true);
         } else {
-            rbt_feminino.setSelected(false);
+            rbt_masculino.setSelected(true);
         }
     }
 
@@ -176,7 +170,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         }
     }
 
-    public void validaNullos(String nome, String cpf, String email, String usuario, String senha, String confirmaSenha) {
+    public void validaNullos(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha) {
         if (nome.equals("") == true) {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
             txt_nome.requestFocus();
@@ -221,8 +215,15 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                                                 rbt_masculino.requestFocus();
                                             } else {
                                                 tipoUsuarioDAO = new TipoUsuarioDAO();
-                                                salva(nome, cpf, email, usuario, senha, btn_bloqueado.getText(),
-                                                        tipoUsuarioDAO.buscaTipoUsuario(cbx_tipo.getSelectedItem().toString()));
+                                                if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                                                    salva(codigo, nome, cpf, email, usuario, senha, btn_bloqueado.getText().substring(0, 1),
+                                                            tipoUsuarioDAO.buscaTipoUsuario(cbx_tipo.getSelectedItem().toString()));
+                                                } else {
+                                                    if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
+                                                        alterar(codigo, nome, cpf, email, usuario, senha, btn_bloqueado.getText().substring(0, 1),
+                                                                tipoUsuarioDAO.buscaTipoUsuario(cbx_tipo.getSelectedItem().toString()));
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -236,6 +237,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void limpaCampos() {
+        codigoUsuario = 0;
+        txt_codigo.setText(null);
         txt_confirmaSenha.setText(null);
         txt_cpf.setText(null);
         txt_email.setText(null);
@@ -247,7 +250,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         rbt_masculino.setSelected(false);
     }
 
-    public void salva(String nome, String cpf, String email, String user,
+    public void salva(String codigo, String nome, String cpf, String email, String user,
             String senha, String bloqueado, TipoUsuario tipo) {
         try {
             usuarioDAO = new UsuarioDAO();
@@ -259,12 +262,35 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             usuario.setCpf(cpf);
             usuario.setEmail(email);
             usuario.setNome(nome);
-            usuario.setBloqueado(getbloqueado(btn_bloqueado.getText()));
+            usuario.setBloqueado(bloqueado);
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Salvo com Sucesso!");
             limpaCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario\n" + "Usuário já cadastrado!", "Alerta", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    public void alterar(String codigo, String nome, String cpf, String email, String user,
+            String senha, String bloqueado, TipoUsuario tipo) {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuario = new Usuario();
+            usuario.setCodusuario(codigoUsuario);
+            getSexo(usuario);
+            usuario.setCodtipousuario(tipo);
+            usuario.setUsuario(user);
+            usuario.setSenha(Criptografia.criptografar(senha));
+            usuario.setCpf(cpf);
+            usuario.setEmail(email);
+            usuario.setNome(nome);
+            usuario.setBloqueado(bloqueado);
+            usuarioDAO.salvar(usuario);
+            JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!");
+            limpaCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Alterar Usuario\n", "Alerta", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -316,6 +342,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_operacao = new javax.swing.JTextField();
         btn_cancelar = new javax.swing.JButton();
         btn_salvar = new javax.swing.JButton();
+        btn_consulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Usuario");
@@ -510,6 +537,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             }
         });
 
+        btn_consulta.setText("Consulta");
+        btn_consulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_botoesLayout = new javax.swing.GroupLayout(pnl_botoes);
         pnl_botoes.setLayout(pnl_botoesLayout);
         pnl_botoesLayout.setHorizontalGroup(
@@ -522,8 +556,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_exclusao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txt_operacao, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addComponent(btn_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -541,7 +577,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                         .addComponent(btn_alteracao)
                         .addComponent(btn_inclusao)
                         .addComponent(btn_exclusao)
-                        .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_consulta)))
                 .addContainerGap())
         );
 
@@ -586,7 +623,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_rbt_femininoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        validaNullos(txt_nome.getText(), txt_cpf.getText(), txt_email.getText(), txt_usuario.getText(), txt_senha.getText(),
+        validaNullos(txt_codigo.getText(), txt_nome.getText(), txt_cpf.getText(), txt_email.getText(), txt_usuario.getText(), txt_senha.getText(),
                 txt_confirmaSenha.getText());
 
     }//GEN-LAST:event_btn_salvarActionPerformed
@@ -601,11 +638,20 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         txt_operacao.setText(null);
+        limpaCampos();
         camposOFF();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_alteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteracaoActionPerformed
-        txt_operacao.setText("ALTERAÇÃO");
+        if (txt_codigo.getText().equals("") == false) {
+            txt_operacao.setText("ALTERAÇÃO");
+            camposON();
+            txt_codigo.setEnabled(false);
+            txt_nome.requestFocus();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!");
+        }
+
     }//GEN-LAST:event_btn_alteracaoActionPerformed
 
     private void btn_inclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inclusaoActionPerformed
@@ -617,19 +663,63 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_inclusaoActionPerformed
 
     private void btn_exclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclusaoActionPerformed
-        txt_operacao.setText("EXCLUSÃO");
+        if (txt_codigo.getText().equals("") == false) {
+            if (JOptionPane.showConfirmDialog(null, "Deseja relamente excluir o Usuaário: " + usuario.getUsuario(),
+                    "Atenção", 0, JOptionPane.INFORMATION_MESSAGE) == 0) {
+                try {
+                usuarioDAO=new UsuarioDAO();
+                usuario=usuarioDAO.findByCodigo(codigoUsuario);
+                usuarioDAO.excluir(usuario); 
+                JOptionPane.showMessageDialog(null, "Usuário excluido com Sucesso!");
+                txt_codigo.requestFocus();
+                limpaCampos();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "erro ao excluir o Usuário: "+usuario.getUsuario());
+                }
+                
+                
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!");
+        }
     }//GEN-LAST:event_btn_exclusaoActionPerformed
 
     private void txt_codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_codigoKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (usuario.getCodusuario().compareTo(null) == 0) {
-                Frm_consultaUsuarios f = new Frm_consultaUsuarios();
+        if (txt_codigo.getText().equals("") == false) {
+            codigoUsuario = Integer.parseInt(txt_codigo.getText());
+        }
+        if ((evt.getKeyCode() == KeyEvent.VK_ENTER)) {
+            if (codigoUsuario == 0) {
+                Frm_ConUsuarios f = new Frm_ConUsuarios();
             } else {
-                usuario = usuarioDAO.findByCodigo(usuario.getCodusuario());
-                carregaUsuario(usuario);
+                txt_codigo.setText(codigoUsuario + "");
+                try {
+                    usuarioDAO = new UsuarioDAO();
+                    usuario = new Usuario();
+                    usuario = usuarioDAO.findByCodigo(codigoUsuario);
+                    carregaUsuario(usuario);
+                    btn_alteracao.setEnabled(true);
+                    btn_exclusao.setEnabled(true);
+                    btn_consulta.setEnabled(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
+                }
+
             }
         }
     }//GEN-LAST:event_txt_codigoKeyPressed
+
+    private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
+        txt_operacao.setText("CONSULTA");
+        camposOFF();
+        btn_consulta.setEnabled(false);
+        btn_inclusao.setEnabled(false);
+        btn_alteracao.setEnabled(false);
+        btn_exclusao.setEnabled(false);
+        btn_cancelar.setEnabled(true);
+        txt_codigo.setEnabled(true);
+        txt_codigo.requestFocus();
+    }//GEN-LAST:event_btn_consultaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -675,6 +765,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btn_alteracao;
     private javax.swing.JButton btn_bloqueado;
     private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_consulta;
     private javax.swing.JButton btn_exclusao;
     private javax.swing.JButton btn_inclusao;
     private javax.swing.JButton btn_salvar;

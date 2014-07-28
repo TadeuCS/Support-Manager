@@ -3,45 +3,43 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.Gestor;
+package View.Cadastros;
 
-import Controller.TipoUsuarioDAO;
-import Model.TipoUsuario;
-import Model.Usuario;
+import Controller.TipoAtendimentoDAO;
+import Model.TipoAtendimento;
 import Util.FixedLengthDocument;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Tadeu
  */
-public class Frm_CadTipoUsuario extends javax.swing.JFrame {
+public class Frm_CadTipoAtendimento extends javax.swing.JFrame {
 
-    TipoUsuarioDAO tipoUsuarioDAO;
-    TipoUsuario tipo;
+    TipoAtendimentoDAO tipoAtendimentoDAO;
+    TipoAtendimento tipoAtendimento;
 
-    public Frm_CadTipoUsuario() {
+    public Frm_CadTipoAtendimento() {
         initComponents();
+        setVisible(true);
         txt_descricao.setDocument(new FixedLengthDocument(20));
     }
 
     public void novo() {
-        tipoUsuarioDAO = new TipoUsuarioDAO();
-        tipo= new TipoUsuario();
+        tipoAtendimentoDAO = new TipoAtendimentoDAO();
+        tipoAtendimento= new TipoAtendimento();
     }
 
     public void salvar(String descricao) {
         novo();
-        tipo.setDescricao(descricao);
+        tipoAtendimento.setDescricao(descricao);
         try {
-            tipoUsuarioDAO.salvar(tipo);
-            JOptionPane.showMessageDialog(null, "Tipo de Usuário salvo com sucesso!");
+            tipoAtendimentoDAO.salvar(tipoAtendimento);
+            JOptionPane.showMessageDialog(null, "Tipo de Atendimento salvo com sucesso!");
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Tipo de Usuário ja existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tipo de Atendimento já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
             txt_descricao.requestFocus();
         }
         
@@ -59,7 +57,7 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Tipo de Usuários");
+        setTitle("Cadastro de Tipo de Atendimento");
         setResizable(false);
 
         pnl_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -172,20 +170,20 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadTipoAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadTipoAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadTipoAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadTipoAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadTipoUsuario().setVisible(true);
+                new Frm_CadTipoAtendimento().setVisible(true);
             }
         });
     }

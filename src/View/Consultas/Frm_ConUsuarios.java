@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View.Atendente.Consulta;
+package View.Consultas;
 
 import Controller.UsuarioDAO;
-import View.Atendente.Cadastro.Frm_CadUsuario;
+import View.Cadastros.Frm_CadUsuario;
+import java.awt.Event;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -17,12 +18,12 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Tadeu
  */
-public class Frm_consultaUsuarios extends javax.swing.JFrame {
+public class Frm_ConUsuarios extends javax.swing.JFrame {
 
     DefaultTableModel model;
     UsuarioDAO usuarioDAO;
 
-    public Frm_consultaUsuarios() {
+    public Frm_ConUsuarios() {
         initComponents();
         model = (DefaultTableModel) tb_usuarios.getModel();
         setVisible(true);
@@ -62,7 +63,7 @@ public class Frm_consultaUsuarios extends javax.swing.JFrame {
         }
     }
 
-    public void filtrar() {
+    public void filtrar(java.awt.event.KeyEvent evt) {
         TableRowSorter sorter = new TableRowSorter(tb_usuarios.getModel());
         tb_usuarios.setRowSorter(sorter);
         String texto = txt_usuario.getText();
@@ -141,16 +142,16 @@ public class Frm_consultaUsuarios extends javax.swing.JFrame {
             tb_usuarios.getColumnModel().getColumn(0).setMinWidth(45);
             tb_usuarios.getColumnModel().getColumn(0).setPreferredWidth(50);
             tb_usuarios.getColumnModel().getColumn(0).setMaxWidth(55);
-            tb_usuarios.getColumnModel().getColumn(3).setMinWidth(60);
-            tb_usuarios.getColumnModel().getColumn(3).setPreferredWidth(65);
-            tb_usuarios.getColumnModel().getColumn(3).setMaxWidth(65);
+            tb_usuarios.getColumnModel().getColumn(3).setMinWidth(70);
+            tb_usuarios.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tb_usuarios.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,6 +163,9 @@ public class Frm_consultaUsuarios extends javax.swing.JFrame {
         jLabel1.setText("Usuário *:");
 
         txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_usuarioKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_usuarioKeyReleased(evt);
             }
@@ -262,8 +266,12 @@ public class Frm_consultaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_usuariosKeyPressed
 
     private void txt_usuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyReleased
-        filtrar();
+        filtrar(evt);
     }//GEN-LAST:event_txt_usuarioKeyReleased
+
+    private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
+
+    }//GEN-LAST:event_txt_usuarioKeyPressed
 
     /**
      * @param args the command line arguments
@@ -282,20 +290,20 @@ public class Frm_consultaUsuarios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_consultaUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_consultaUsuarios().setVisible(true);
+                new Frm_ConUsuarios().setVisible(true);
             }
         });
     }
