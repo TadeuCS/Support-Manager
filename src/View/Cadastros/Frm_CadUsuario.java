@@ -33,14 +33,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     DefaultTableModel model;
     private static int codigoUsuario;
 
-    public static int getCodigoUsuario() {
-        return codigoUsuario;
-    }
-
-    public static void setCodigoUsuario(int codigoUsuario) {
-        Frm_CadUsuario.codigoUsuario = codigoUsuario;
-    }
-
     public Frm_CadUsuario() {
         initComponents();
         setVisible(true);
@@ -52,6 +44,15 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         codigoUsuario = 0;
         carregaTipoUsuarios();
         camposOFF();
+
+    }
+
+    public static int getCodigoUsuario() {
+        return codigoUsuario;
+    }
+
+    public static void setCodigoUsuario(int codigoUsuario) {
+        Frm_CadUsuario.codigoUsuario = codigoUsuario;
     }
 
     public void camposOFF() {
@@ -108,6 +109,22 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         }
     }
 
+    public void buscaUsuario() {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuario = new Usuario();
+            usuario = usuarioDAO.findByCodigo(codigoUsuario);
+            carregaUsuario(usuario);
+            txt_operacao.setText("CONSULTA");
+            camposOFF();
+            btn_inclusao.setEnabled(false);
+            btn_consulta.setEnabled(false);
+            btn_cancelar.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
+        }
+    }
+
     public void carregaUsuario(Usuario usuario) {
         txt_codigo.setText(usuario.getCodusuario().toString());
         txt_cpf.setText(usuario.getCpf());
@@ -144,11 +161,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         } else {
             btn_bloqueado.setText("SIM");
         }
-    }
-
-    public void buscaUsuario(Usuario usuario) {
-        usuarioDAO = new UsuarioDAO();
-        usuarioDAO.findByCodigo(usuario.getCodusuario());
     }
 
     public void setSexo(Usuario usuario) {
@@ -237,6 +249,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void limpaCampos() {
+        txt_operacao.setText(null);
         codigoUsuario = 0;
         txt_codigo.setText(null);
         txt_confirmaSenha.setText(null);
@@ -667,17 +680,17 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             if (JOptionPane.showConfirmDialog(null, "Deseja relamente excluir o Usuaário: " + usuario.getUsuario(),
                     "Atenção", 0, JOptionPane.INFORMATION_MESSAGE) == 0) {
                 try {
-                usuarioDAO=new UsuarioDAO();
-                usuario=usuarioDAO.findByCodigo(codigoUsuario);
-                usuarioDAO.excluir(usuario); 
-                JOptionPane.showMessageDialog(null, "Usuário excluido com Sucesso!");
-                txt_codigo.requestFocus();
-                limpaCampos();
+                    usuarioDAO = new UsuarioDAO();
+                    usuario = usuarioDAO.findByCodigo(codigoUsuario);
+                    usuarioDAO.excluir(usuario);
+                    JOptionPane.showMessageDialog(null, "Usuário excluido com Sucesso!");
+                    txt_codigo.requestFocus();
+                    limpaCampos();
+                    camposOFF();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "erro ao excluir o Usuário: "+usuario.getUsuario());
+                    JOptionPane.showMessageDialog(null, "erro ao excluir o Usuário: " + usuario.getUsuario());
                 }
-                
-                
+
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!");
@@ -710,15 +723,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_codigoKeyPressed
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
-        txt_operacao.setText("CONSULTA");
-        camposOFF();
-        btn_consulta.setEnabled(false);
-        btn_inclusao.setEnabled(false);
-        btn_alteracao.setEnabled(false);
-        btn_exclusao.setEnabled(false);
-        btn_cancelar.setEnabled(true);
-        txt_codigo.setEnabled(true);
-        txt_codigo.requestFocus();
+        Frm_ConUsuarios f = new Frm_ConUsuarios();
+        dispose();
     }//GEN-LAST:event_btn_consultaActionPerformed
 
     /**

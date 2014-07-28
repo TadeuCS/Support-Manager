@@ -7,7 +7,6 @@ package View.Consultas;
 
 import Controller.UsuarioDAO;
 import View.Cadastros.Frm_CadUsuario;
-import java.awt.Event;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -57,7 +56,9 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
             if (tb_usuarios.getSelectedRowCount() > 1) {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
-                Frm_CadUsuario.setCodigoUsuario(Integer.parseInt(tb_usuarios.getValueAt(tb_usuarios.getSelectedRow(), 0).toString()));
+                Frm_CadUsuario f = new Frm_CadUsuario();
+                f.setCodigoUsuario(Integer.parseInt(tb_usuarios.getValueAt(tb_usuarios.getSelectedRow(), 0).toString()));
+                f.buscaUsuario();
                 dispose();
             }
         }
