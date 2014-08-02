@@ -63,8 +63,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "SENHA",length = 120)
     private String senha;
-    @Basic(optional = false)
-    @Column(name = "BLOQUEADO",columnDefinition="char(1) default 'N'")
+    @Column(name = "BLOQUEADO")
     private String bloqueado;
     @JoinColumn(name = "CODTIPOUSUARIO", referencedColumnName = "CODTIPOUSUARIO")
     @ManyToOne(optional = false)
@@ -144,13 +143,6 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public String getBloqueado() {
-        return bloqueado;
-    }
-
-    public void setBloqueado(String bloqueado) {
-        this.bloqueado = bloqueado;
-    }
 
     public TipoUsuario getCodtipousuario() {
         return codtipousuario;
@@ -183,6 +175,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "Model.Usuario[ codusuario=" + codusuario + " ]";
+    }
+
+    public String getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(String bloqueado) {
+        this.bloqueado = bloqueado;
     }
 
 }

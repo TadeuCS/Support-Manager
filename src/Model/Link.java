@@ -45,11 +45,11 @@ public class Link implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "link")
+    private List<LinkCliente> linkClienteList;
     @JoinColumn(name = "CODAPLICATIVO", referencedColumnName = "CODAPLICATIVO")
     @ManyToOne(optional = false)
     private Aplicativo codaplicativo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codlink")
-    private List<LinkCliente> linkClienteList;
 
     public Link() {
     }
@@ -79,14 +79,6 @@ public class Link implements Serializable {
         this.descricao = descricao;
     }
 
-    public Aplicativo getCodaplicativo() {
-        return codaplicativo;
-    }
-
-    public void setCodaplicativo(Aplicativo codaplicativo) {
-        this.codaplicativo = codaplicativo;
-    }
-
     @XmlTransient
     public List<LinkCliente> getLinkClienteList() {
         return linkClienteList;
@@ -94,6 +86,14 @@ public class Link implements Serializable {
 
     public void setLinkClienteList(List<LinkCliente> linkClienteList) {
         this.linkClienteList = linkClienteList;
+    }
+
+    public Aplicativo getCodaplicativo() {
+        return codaplicativo;
+    }
+
+    public void setCodaplicativo(Aplicativo codaplicativo) {
+        this.codaplicativo = codaplicativo;
     }
 
     @Override

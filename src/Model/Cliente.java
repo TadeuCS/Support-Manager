@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByRazaoSocial", query = "SELECT c FROM Cliente c WHERE c.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Cliente.findByNomeFantasia", query = "SELECT c FROM Cliente c WHERE c.nomeFantasia = :nomeFantasia"),
     @NamedQuery(name = "Cliente.findByResponsavel", query = "SELECT c FROM Cliente c WHERE c.responsavel = :responsavel"),
+    @NamedQuery(name = "Cliente.findByTipoPessoa", query = "SELECT c FROM Cliente c WHERE c.tipoPessoa = :tipoPessoa"),
     @NamedQuery(name = "Cliente.findByCnpjCpf", query = "SELECT c FROM Cliente c WHERE c.cnpjCpf = :cnpjCpf"),
     @NamedQuery(name = "Cliente.findByInscricaoEstadual", query = "SELECT c FROM Cliente c WHERE c.inscricaoEstadual = :inscricaoEstadual"),
     @NamedQuery(name = "Cliente.findByEmail", query = "SELECT c FROM Cliente c WHERE c.email = :email"),
@@ -65,6 +66,9 @@ public class Cliente implements Serializable {
     @Column(name = "RESPONSAVEL")
     private String responsavel;
     @Basic(optional = false)
+    @Column(name = "TIPO_PESSOA")
+    private String tipoPessoa;
+    @Basic(optional = false)
     @Column(name = "CNPJ_CPF")
     private String cnpjCpf;
     @Basic(optional = false)
@@ -79,14 +83,12 @@ public class Cliente implements Serializable {
     @Column(name = "DATA_ATUALIZACAO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
+    @JoinColumn(name = "CODSEGMENTO", referencedColumnName = "CODSEGMENTO")
+    @ManyToOne(optional = false)
+    private Segmento codsegmento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Endereco> enderecoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
-    private List<Atendimento> atendimentoList;
-    @JoinColumn(name = "CODTIPOCLIENTE", referencedColumnName = "CODSEGMENTO")
-    @ManyToOne(optional = false)
-    private Segmento codSegmento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<LinkCliente> linkClienteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Contato> contatoList;
@@ -98,11 +100,12 @@ public class Cliente implements Serializable {
         this.codcliente = codcliente;
     }
 
-    public Cliente(Integer codcliente, String razaoSocial, String nomeFantasia, String responsavel, String cnpjCpf, String inscricaoEstadual, String email, Character bloqueado) {
+    public Cliente(Integer codcliente, String razaoSocial, String nomeFantasia, String responsavel, String tipoPessoa, String cnpjCpf, String inscricaoEstadual, String email, Character bloqueado) {
         this.codcliente = codcliente;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
         this.responsavel = responsavel;
+        this.tipoPessoa = tipoPessoa;
         this.cnpjCpf = cnpjCpf;
         this.inscricaoEstadual = inscricaoEstadual;
         this.email = email;
@@ -149,6 +152,14 @@ public class Cliente implements Serializable {
         this.responsavel = responsavel;
     }
 
+    public String getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(String tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
+
     public String getCnpjCpf() {
         return cnpjCpf;
     }
@@ -189,6 +200,14 @@ public class Cliente implements Serializable {
         this.dataAtualizacao = dataAtualizacao;
     }
 
+    public Segmento getCodsegmento() {
+        return codsegmento;
+    }
+
+    public void setCodsegmento(Segmento codsegmento) {
+        this.codsegmento = codsegmento;
+    }
+
     @XmlTransient
     public List<Endereco> getEnderecoList() {
         return enderecoList;
@@ -196,23 +215,6 @@ public class Cliente implements Serializable {
 
     public void setEnderecoList(List<Endereco> enderecoList) {
         this.enderecoList = enderecoList;
-    }
-
-    @XmlTransient
-    public List<Atendimento> getAtendimentoList() {
-        return atendimentoList;
-    }
-
-    public void setAtendimentoList(List<Atendimento> atendimentoList) {
-        this.atendimentoList = atendimentoList;
-    }
-
-    public Segmento getCodSegmento() {
-        return codSegmento;
-    }
-
-    public void setCodSegmento(Segmento codSegmento) {
-        this.codSegmento = codSegmento;
     }
 
     @XmlTransient

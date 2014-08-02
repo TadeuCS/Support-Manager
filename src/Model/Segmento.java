@@ -43,7 +43,7 @@ public class Segmento implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codSegmento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codsegmento")
     private List<Cliente> clienteList;
 
     public Segmento() {

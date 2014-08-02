@@ -8,6 +8,7 @@ package View.Home;
 import Controller.UsuarioDAO;
 import Model.Usuario;
 import Util.Criptografia;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,7 +28,7 @@ public class Frm_Login extends javax.swing.JFrame {
     public static void setUsuario(Usuario usuario) {
         Frm_Login.usuario = usuario;
     }
-    
+
     public Frm_Login() {
         initComponents();
         novo();
@@ -38,19 +39,18 @@ public class Frm_Login extends javax.swing.JFrame {
         usuarioDAO = new UsuarioDAO();
     }
 
-    
     public void logar(String usuario, String senha) {
         try {
             if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
-                this.usuario=usuarioDAO.findByUsuarioAndSenha(usuario, senha);
+                this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
                 p = new Frm_Principal();
                 dispose();
-            }else{
+            } else {
                 p.dispose();
             }
         } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Usuário ou Senha inválidos!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Usuário não existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
             txt_senha.setText(null);
             txt_usuario.setText(null);
             txt_usuario.requestFocus();
@@ -77,7 +77,19 @@ public class Frm_Login extends javax.swing.JFrame {
 
         jLabel1.setText("Usuário:");
 
+        txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_usuarioKeyPressed(evt);
+            }
+        });
+
         jLabel2.setText("Senha:");
+
+        txt_senha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_senhaKeyPressed(evt);
+            }
+        });
 
         btn_entrar.setText("Entrar");
         btn_entrar.addActionListener(new java.awt.event.ActionListener() {
@@ -165,12 +177,35 @@ public class Frm_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
-        logar(txt_usuario.getText().toUpperCase(), Criptografia.criptografar(txt_senha.getText()));
+        if (txt_usuario.getText().equals("") == true) {
+            JOptionPane.showMessageDialog(null, "Usuário Inválido!");
+            txt_usuario.requestFocus();
+        } else {
+            if (txt_senha.getText().equals("") == true) {
+                JOptionPane.showMessageDialog(null, "Senha Inválida!");
+                txt_senha.requestFocus();
+            } else {
+                logar(txt_usuario.getText().toUpperCase(), Criptografia.criptografar(txt_senha.getText()));
+            }
+        }
+
     }//GEN-LAST:event_btn_entrarActionPerformed
 
     private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
         dispose();
     }//GEN-LAST:event_btn_sairActionPerformed
+
+    private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txt_senha.requestFocus();
+        }
+    }//GEN-LAST:event_txt_usuarioKeyPressed
+
+    private void txt_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_senhaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btn_entrar.requestFocus();
+        }
+    }//GEN-LAST:event_txt_senhaKeyPressed
 
     /**
      * @param args the command line arguments

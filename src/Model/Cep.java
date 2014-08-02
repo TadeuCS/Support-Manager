@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,7 +32,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cep.findByCep", query = "SELECT c FROM Cep c WHERE c.cep = :cep"),
     @NamedQuery(name = "Cep.findByCidade", query = "SELECT c FROM Cep c WHERE c.cidade = :cidade"),
     @NamedQuery(name = "Cep.findByBairro", query = "SELECT c FROM Cep c WHERE c.bairro = :bairro"),
-    @NamedQuery(name = "Cep.findByRua", query = "SELECT c FROM Cep c WHERE c.rua = :rua")})
+    @NamedQuery(name = "Cep.findByRua", query = "SELECT c FROM Cep c WHERE c.rua = :rua"),
+    @NamedQuery(name = "Cep.findByEstado", query = "SELECT c FROM Cep c WHERE c.estado = :estado")})
 public class Cep implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,11 +49,11 @@ public class Cep implements Serializable {
     @Basic(optional = false)
     @Column(name = "RUA")
     private String rua;
+    @Basic(optional = false)
+    @Column(name = "ESTADO")
+    private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cep")
     private List<Endereco> enderecoList;
-    @JoinColumn(name = "CODESTADO", referencedColumnName = "CODESTADO")
-    @ManyToOne(optional = false)
-    private Uf codestado;
 
     public Cep() {
     }
@@ -63,11 +62,12 @@ public class Cep implements Serializable {
         this.cep = cep;
     }
 
-    public Cep(String cep, String cidade, String bairro, String rua) {
+    public Cep(String cep, String cidade, String bairro, String rua, String estado) {
         this.cep = cep;
         this.cidade = cidade;
         this.bairro = bairro;
         this.rua = rua;
+        this.estado = estado;
     }
 
     public String getCep() {
@@ -102,6 +102,14 @@ public class Cep implements Serializable {
         this.rua = rua;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @XmlTransient
     public List<Endereco> getEnderecoList() {
         return enderecoList;
@@ -109,14 +117,6 @@ public class Cep implements Serializable {
 
     public void setEnderecoList(List<Endereco> enderecoList) {
         this.enderecoList = enderecoList;
-    }
-
-    public Uf getCodestado() {
-        return codestado;
-    }
-
-    public void setCodestado(Uf codestado) {
-        this.codestado = codestado;
     }
 
     @Override

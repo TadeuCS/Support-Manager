@@ -5,12 +5,17 @@
  */
 package View.Cadastros;
 
+import Controller.SegmentoDAO;
+import Controller.TipoUsuarioDAO;
 import Enums.EstadosENUM;
 import Enums.TipoPessoaENUM;
+import Model.Segmento;
 import Util.CompletaData;
 import Util.IntegerDocument;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
@@ -22,6 +27,7 @@ import javax.swing.text.MaskFormatter;
  */
 public class Frm_CadClientes extends javax.swing.JFrame {
 
+    private SegmentoDAO segmentoDAO;
     private TipoPessoaENUM tipoPessoaENUM;
     private EstadosENUM estadosENUM;
     private CompletaData c;
@@ -37,8 +43,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         cbx_estados.setModel(new DefaultComboBoxModel<>(estadosENUM.values()));
         cbx_estados.setSelectedItem("MG");
         try {
+            carregaSegmentos();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        try {
             trocaMascara();
-        } catch (ParseException ex) {
+
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Selecione Um Tipo de Cliente");
         }
     }
@@ -72,6 +84,21 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     new DefaultFormatterFactory(cnpj));
         }
         txt_cpf.requestFocus();
+    }
+
+    public void carregaSegmentos() throws Exception {
+        segmentoDAO = new SegmentoDAO();
+        int i = 0;
+        try {
+            while (i < segmentoDAO.lista().size()) {
+                String linha = segmentoDAO.lista().get(i).getDescricao();
+                cbx_segmento.addItem(linha);
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Segmentos");
+        }
+
     }
 
     @SuppressWarnings("unchecked")
