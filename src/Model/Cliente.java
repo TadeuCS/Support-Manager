@@ -85,7 +85,7 @@ public class Cliente implements Serializable {
     private List<Atendimento> atendimentoList;
     @JoinColumn(name = "CODTIPOCLIENTE", referencedColumnName = "CODSEGMENTO")
     @ManyToOne(optional = false)
-    private Segmento codtipocliente;
+    private Segmento codSegmento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<LinkCliente> linkClienteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
@@ -207,12 +207,12 @@ public class Cliente implements Serializable {
         this.atendimentoList = atendimentoList;
     }
 
-    public Segmento getCodtipocliente() {
-        return codtipocliente;
+    public Segmento getCodSegmento() {
+        return codSegmento;
     }
 
-    public void setCodtipocliente(Segmento codtipocliente) {
-        this.codtipocliente = codtipocliente;
+    public void setCodSegmento(Segmento codSegmento) {
+        this.codSegmento = codSegmento;
     }
 
     @XmlTransient

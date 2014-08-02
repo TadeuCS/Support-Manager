@@ -9,7 +9,7 @@ package Enums;
  *
  * @author Tadeu
  */
-public enum UFenum {
+public enum EstadosENUM {
     AC,
     AL,
     AP,

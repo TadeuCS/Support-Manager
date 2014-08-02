@@ -6,6 +6,7 @@
 package Controller;
 
 import Model.Usuario;
+import Util.Criptografia;
 import Util.Manager;
 import java.util.List;
 
@@ -14,6 +15,25 @@ import java.util.List;
  * @author Tadeu
  */
 public class UsuarioDAO extends Manager {
+
+    private Usuario usuario;
+
+    public UsuarioDAO() {
+        usuario = new Usuario();
+        usuario.setUsuario("admin".toUpperCase());
+        usuario.setSenha(Criptografia.criptografar("adm123"));
+        usuario.setCpf("1");
+        usuario.setEmail("teste@hotmail.com");
+        usuario.setNome("administrador");
+        usuario.setSexo('M');
+        usuario.setBloqueado("N");
+        try {
+            usuario.setCodusuario(consulta(usuario.getUsuario()).getCodusuario());
+        } catch (Exception e) {
+        } finally {
+            salvar(usuario);
+        }
+    }
 
     public void salvar(Usuario usuario) {
         em.getTransaction().begin();
@@ -25,6 +45,13 @@ public class UsuarioDAO extends Manager {
         em.getTransaction().begin();
         em.remove(usuario);
         em.getTransaction().commit();
+    }
+
+    public Usuario consulta(String usuario) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Usuario.findByUsuario").setParameter("usuario", usuario);
+        em.getTransaction().commit();
+        return (Usuario) query.getSingleResult();
     }
 
     public Usuario findByCodigo(int codigo) {

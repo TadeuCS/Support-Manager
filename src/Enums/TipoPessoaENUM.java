@@ -9,9 +9,8 @@ package Enums;
  *
  * @author Tadeu
  */
-public enum TipoUsuarioenum {
+public enum TipoPessoaENUM {
 
-    SUPORTE,
-    ATENDENTE,
-    ADMINISTRADOR
+    F,
+    J
 }

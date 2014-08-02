@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class TipoUsuarioDAO extends Manager {
 
+    private TipoUsuario tipoUsuario;
+
     public void salvar(TipoUsuario tipoUsuario) {
         em.getTransaction().begin();
         em.merge(tipoUsuario);

@@ -7,7 +7,7 @@
 
 package Model;
 
-import Enums.UFenum;
+import Enums.EstadosENUM;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -47,7 +47,7 @@ public class Uf implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     @Enumerated(EnumType.STRING)
-    private UFenum descricao;
+    private EstadosENUM descricao;
 
     public Uf() {
     }
@@ -56,7 +56,7 @@ public class Uf implements Serializable {
         this.codestado = codestado;
     }
 
-    public Uf(Integer codestado, UFenum descricao) {
+    public Uf(Integer codestado, EstadosENUM descricao) {
         this.codestado = codestado;
         this.descricao = descricao;
     }
@@ -69,11 +69,11 @@ public class Uf implements Serializable {
         this.codestado = codestado;
     }
 
-    public UFenum getDescricao() {
+    public EstadosENUM getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(UFenum descricao) {
+    public void setDescricao(EstadosENUM descricao) {
         this.descricao = descricao;
     }
 
