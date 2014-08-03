@@ -81,14 +81,16 @@ public class Cliente implements Serializable {
     @Column(name = "BLOQUEADO")
     private Character bloqueado;
     @Column(name = "DATA_ATUALIZACAO")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date dataAtualizacao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
+    private List<Endereco> enderecoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
+    private List<Atendimento> atendimentoList;
     @JoinColumn(name = "CODSEGMENTO", referencedColumnName = "CODSEGMENTO")
     @ManyToOne(optional = false)
     private Segmento codsegmento;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
-    private List<Endereco> enderecoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<LinkCliente> linkClienteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Contato> contatoList;
@@ -200,14 +202,6 @@ public class Cliente implements Serializable {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    public Segmento getCodsegmento() {
-        return codsegmento;
-    }
-
-    public void setCodsegmento(Segmento codsegmento) {
-        this.codsegmento = codsegmento;
-    }
-
     @XmlTransient
     public List<Endereco> getEnderecoList() {
         return enderecoList;
@@ -215,6 +209,23 @@ public class Cliente implements Serializable {
 
     public void setEnderecoList(List<Endereco> enderecoList) {
         this.enderecoList = enderecoList;
+    }
+
+    @XmlTransient
+    public List<Atendimento> getAtendimentoList() {
+        return atendimentoList;
+    }
+
+    public void setAtendimentoList(List<Atendimento> atendimentoList) {
+        this.atendimentoList = atendimentoList;
+    }
+
+    public Segmento getCodsegmento() {
+        return codsegmento;
+    }
+
+    public void setCodsegmento(Segmento codsegmento) {
+        this.codsegmento = codsegmento;
     }
 
     @XmlTransient
@@ -258,6 +269,10 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "Model.Cliente[ codcliente=" + codcliente + " ]";
+    }
+
+    public void setDataAtualizacao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

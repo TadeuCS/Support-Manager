@@ -5,8 +5,10 @@
  */
 package View.Cadastros;
 
-import Controller.TipoUsuarioDAO;
-import Model.TipoUsuario;
+import Controller.AplicativoDAO;
+import Controller.LinksDAO;
+import Model.Aplicativo;
+import Model.Link;
 import Util.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
@@ -14,35 +16,58 @@ import javax.swing.JOptionPane;
  *
  * @author Tadeu
  */
-public class Frm_CadTipoUsuario extends javax.swing.JFrame {
+public class Frm_CadLinks extends javax.swing.JFrame {
 
-    TipoUsuarioDAO tipoUsuarioDAO;
-    TipoUsuario tipo;
+    AplicativoDAO aplicativoDAO;
+    Aplicativo aplicativo;
+    LinksDAO linksDAO;
+    Link link;
 
-    public Frm_CadTipoUsuario() {
+    public Frm_CadLinks() {
         initComponents();
         setVisible(true);
         txt_descricao.setDocument(new FixedLengthDocument(20));
+        carregaAplicativos();
     }
 
     public void novo() {
-        tipoUsuarioDAO = new TipoUsuarioDAO();
-        tipo= new TipoUsuario();
+        aplicativoDAO = new AplicativoDAO();
+        aplicativo = new Aplicativo();
+        link = new Link();
+        linksDAO = new LinksDAO();
+    }
+
+    public void carregaAplicativos() {
+        aplicativoDAO = new AplicativoDAO();
+        int i = 0;
+        cbx_aplicativos.removeAllItems();
+        try {
+            while (i < aplicativoDAO.lista().size()) {
+                String linha = aplicativoDAO.lista().get(i).getDescricao();
+                cbx_aplicativos.addItem(linha);
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Aplicativos");
+        }
+
     }
 
     public void salvar(String descricao) {
         novo();
-        tipo.setDescricao(descricao);
+        aplicativo.setDescricao(cbx_aplicativos.getSelectedItem().toString());
+        link.setDescricao(descricao);
+        link.setCodaplicativo(aplicativo);
         try {
-            tipoUsuarioDAO.salvar(tipo);
-            JOptionPane.showMessageDialog(null, "Tipo de Usuário salvo com sucesso!");
+            linksDAO.salvar(link);
+            JOptionPane.showMessageDialog(null, "Link salvo com sucesso!");
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Tipo de Usuário ja existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Link já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
             txt_descricao.requestFocus();
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -53,16 +78,20 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
         pnl_dados = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txt_descricao = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        cbx_aplicativos = new javax.swing.JComboBox();
         btn_salvar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Tipo de Usuários");
+        setTitle("Cadastro de Aplicativo");
         setResizable(false);
 
         pnl_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setText("Descrição *:");
+
+        jLabel2.setText("Aplicativo *:");
 
         javax.swing.GroupLayout pnl_dadosLayout = new javax.swing.GroupLayout(pnl_dados);
         pnl_dados.setLayout(pnl_dadosLayout);
@@ -70,19 +99,29 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
             pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_dadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_descricao)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_descricao, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                    .addGroup(pnl_dadosLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbx_aplicativos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnl_dadosLayout.setVerticalGroup(
             pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_dadosLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbx_aplicativos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         btn_salvar.setText("Salvar");
@@ -116,14 +155,14 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
         );
         pnl_fundoLayout.setVerticalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_fundoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fundoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
                     .addComponent(btn_cancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,7 +183,7 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         if (txt_descricao.getText().equals("") == false) {
             salvar(txt_descricao.getText());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Descrição inválida");
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
@@ -170,20 +209,20 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadLinks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadLinks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadLinks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadTipoUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadLinks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadTipoUsuario().setVisible(true);
+                new Frm_CadLinks().setVisible(true);
             }
         });
     }
@@ -191,7 +230,9 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_salvar;
+    private javax.swing.JComboBox cbx_aplicativos;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel pnl_dados;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JTextField txt_descricao;

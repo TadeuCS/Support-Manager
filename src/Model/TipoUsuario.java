@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,10 +9,9 @@ package Model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoUsuario.findByCodtipousuario", query = "SELECT t FROM TipoUsuario t WHERE t.codtipousuario = :codtipousuario"),
     @NamedQuery(name = "TipoUsuario.findByDescricao", query = "SELECT t FROM TipoUsuario t WHERE t.descricao = :descricao")})
 public class TipoUsuario implements Serializable {
-    @OneToMany(mappedBy = "codtipousuario")
-    private List<Usuario> usuarioList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +41,7 @@ public class TipoUsuario implements Serializable {
     @Column(name = "CODTIPOUSUARIO")
     private Integer codtipousuario;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO", length = 20,unique = true)
+    @Column(name = "DESCRICAO")
     private String descricao;
 
     public TipoUsuario() {
@@ -99,15 +95,6 @@ public class TipoUsuario implements Serializable {
     @Override
     public String toString() {
         return "Model.TipoUsuario[ codtipousuario=" + codtipousuario + " ]";
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
     }
     
 }

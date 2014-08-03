@@ -6,6 +6,8 @@
 package Controller;
 
 import Model.TipoUsuario;
+import Model.Usuario;
+import Util.Criptografia;
 import Util.Manager;
 import java.util.List;
 
@@ -16,6 +18,23 @@ import java.util.List;
 public class TipoUsuarioDAO extends Manager {
 
     private TipoUsuario tipoUsuario;
+
+//    public TipoUsuarioDAO() {
+//        try {
+//            tipoUsuario = new TipoUsuario();
+//            tipoUsuario.setDescricao("ADMINISTRADOR");
+//            salvar(tipoUsuario);
+//            tipoUsuario = new TipoUsuario();
+//            tipoUsuario.setDescricao("ATENDENTE");
+//            salvar(tipoUsuario);
+//            tipoUsuario = new TipoUsuario();
+//            tipoUsuario.setDescricao("SUPORTE");
+//            salvar(tipoUsuario);
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//
+//    }
 
     public void salvar(TipoUsuario tipoUsuario) {
         em.getTransaction().begin();

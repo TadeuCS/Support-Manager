@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Tadeu
  */
 public class CompletaData {
-    public String getData(String texto,String formato) {
+
+    public String getData(String texto, String formato) {
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         Date data = new Date();
         sdf.format(data);
@@ -31,7 +33,7 @@ public class CompletaData {
                 } else {
                     if ("  ".equals(texto.substring(8, 10))) {
                         String dataAtual = sdf.format(data);
-                        texto = texto.replaceAll(texto.substring(6,8)+"  ", dataAtual.substring(6,8)+texto.substring(6,8));
+                        texto = texto.replaceAll(texto.substring(6, 8) + "  ", dataAtual.substring(6, 8) + texto.substring(6, 8));
                     }
                 }
             }

@@ -7,9 +7,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,8 +41,6 @@ public class Link implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "link")
-    private List<LinkCliente> linkClienteList;
     @JoinColumn(name = "CODAPLICATIVO", referencedColumnName = "CODAPLICATIVO")
     @ManyToOne(optional = false)
     private Aplicativo codaplicativo;
@@ -77,15 +71,6 @@ public class Link implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    @XmlTransient
-    public List<LinkCliente> getLinkClienteList() {
-        return linkClienteList;
-    }
-
-    public void setLinkClienteList(List<LinkCliente> linkClienteList) {
-        this.linkClienteList = linkClienteList;
     }
 
     public Aplicativo getCodaplicativo() {

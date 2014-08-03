@@ -39,6 +39,7 @@ public class Contato implements Serializable {
     @Basic(optional = false)
     @Column(name = "CODCONTATO")
     private Integer codcontato;
+    @Basic(optional = false)
     @Column(name = "NOME")
     private String nome;
     @Basic(optional = false)
@@ -55,8 +56,9 @@ public class Contato implements Serializable {
         this.codcontato = codcontato;
     }
 
-    public Contato(Integer codcontato, String telefone) {
+    public Contato(Integer codcontato, String nome, String telefone) {
         this.codcontato = codcontato;
+        this.nome = nome;
         this.telefone = telefone;
     }
 

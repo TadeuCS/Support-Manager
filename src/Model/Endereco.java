@@ -31,7 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Endereco.findAll", query = "SELECT e FROM Endereco e"),
     @NamedQuery(name = "Endereco.findByCodendereco", query = "SELECT e FROM Endereco e WHERE e.codendereco = :codendereco"),
     @NamedQuery(name = "Endereco.findByNumero", query = "SELECT e FROM Endereco e WHERE e.numero = :numero"),
-    @NamedQuery(name = "Endereco.findByComplemento", query = "SELECT e FROM Endereco e WHERE e.complemento = :complemento")})
+    @NamedQuery(name = "Endereco.findByComplemento", query = "SELECT e FROM Endereco e WHERE e.complemento = :complemento"),
+    @NamedQuery(name = "Endereco.findByCidade", query = "SELECT e FROM Endereco e WHERE e.cidade = :cidade"),
+    @NamedQuery(name = "Endereco.findByBairro", query = "SELECT e FROM Endereco e WHERE e.bairro = :bairro"),
+    @NamedQuery(name = "Endereco.findByRua", query = "SELECT e FROM Endereco e WHERE e.rua = :rua"),
+    @NamedQuery(name = "Endereco.findByEstado", query = "SELECT e FROM Endereco e WHERE e.estado = :estado"),
+    @NamedQuery(name = "Endereco.findByCep", query = "SELECT e FROM Endereco e WHERE e.cep = :cep")})
 public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,9 +49,21 @@ public class Endereco implements Serializable {
     private int numero;
     @Column(name = "COMPLEMENTO")
     private String complemento;
-    @JoinColumn(name = "CEP", referencedColumnName = "CEP")
-    @ManyToOne(optional = false)
-    private Cep cep;
+    @Basic(optional = false)
+    @Column(name = "CIDADE")
+    private String cidade;
+    @Basic(optional = false)
+    @Column(name = "BAIRRO")
+    private String bairro;
+    @Basic(optional = false)
+    @Column(name = "RUA")
+    private String rua;
+    @Basic(optional = false)
+    @Column(name = "ESTADO")
+    private String estado;
+    @Basic(optional = false)
+    @Column(name = "CEP")
+    private String cep;
     @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
     @ManyToOne(optional = false)
     private Cliente codcliente;
@@ -58,9 +75,14 @@ public class Endereco implements Serializable {
         this.codendereco = codendereco;
     }
 
-    public Endereco(Integer codendereco, int numero) {
+    public Endereco(Integer codendereco, int numero, String cidade, String bairro, String rua, String estado, String cep) {
         this.codendereco = codendereco;
         this.numero = numero;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.rua = rua;
+        this.estado = estado;
+        this.cep = cep;
     }
 
     public Integer getCodendereco() {
@@ -87,11 +109,43 @@ public class Endereco implements Serializable {
         this.complemento = complemento;
     }
 
-    public Cep getCep() {
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getCep() {
         return cep;
     }
 
-    public void setCep(Cep cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 

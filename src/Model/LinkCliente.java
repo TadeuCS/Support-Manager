@@ -9,8 +9,10 @@ package Model;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -27,45 +29,43 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LinkCliente.findAll", query = "SELECT l FROM LinkCliente l"),
-    @NamedQuery(name = "LinkCliente.findByLinkcodlink", query = "SELECT l FROM LinkCliente l WHERE l.linkClientePK.linkcodlink = :linkcodlink"),
-    @NamedQuery(name = "LinkCliente.findByClientecodcliente", query = "SELECT l FROM LinkCliente l WHERE l.linkClientePK.clientecodcliente = :clientecodcliente"),
+    @NamedQuery(name = "LinkCliente.findByCodlinkcliente", query = "SELECT l FROM LinkCliente l WHERE l.codlinkcliente = :codlinkcliente"),
     @NamedQuery(name = "LinkCliente.findByQuantidade", query = "SELECT l FROM LinkCliente l WHERE l.quantidade = :quantidade")})
 public class LinkCliente implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected LinkClientePK linkClientePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "CODLINKCLIENTE")
+    private Integer codlinkcliente;
     @Basic(optional = false)
     @Column(name = "QUANTIDADE")
     private int quantidade;
-    @JoinColumn(name = "CLIENTECODCLIENTE", referencedColumnName = "CODCLIENTE", insertable = false, updatable = false)
+    @JoinColumn(name = "CODLINK", referencedColumnName = "CODLINK")
     @ManyToOne(optional = false)
-    private Cliente cliente;
-    @JoinColumn(name = "LINKCODLINK", referencedColumnName = "CODLINK", insertable = false, updatable = false)
+    private Link codlink;
+    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
     @ManyToOne(optional = false)
-    private Link link;
+    private Cliente codcliente;
 
     public LinkCliente() {
     }
 
-    public LinkCliente(LinkClientePK linkClientePK) {
-        this.linkClientePK = linkClientePK;
+    public LinkCliente(Integer codlinkcliente) {
+        this.codlinkcliente = codlinkcliente;
     }
 
-    public LinkCliente(LinkClientePK linkClientePK, int quantidade) {
-        this.linkClientePK = linkClientePK;
+    public LinkCliente(Integer codlinkcliente, int quantidade) {
+        this.codlinkcliente = codlinkcliente;
         this.quantidade = quantidade;
     }
 
-    public LinkCliente(int linkcodlink, int clientecodcliente) {
-        this.linkClientePK = new LinkClientePK(linkcodlink, clientecodcliente);
+    public Integer getCodlinkcliente() {
+        return codlinkcliente;
     }
 
-    public LinkClientePK getLinkClientePK() {
-        return linkClientePK;
-    }
-
-    public void setLinkClientePK(LinkClientePK linkClientePK) {
-        this.linkClientePK = linkClientePK;
+    public void setCodlinkcliente(Integer codlinkcliente) {
+        this.codlinkcliente = codlinkcliente;
     }
 
     public int getQuantidade() {
@@ -76,26 +76,26 @@ public class LinkCliente implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Link getCodlink() {
+        return codlink;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCodlink(Link codlink) {
+        this.codlink = codlink;
     }
 
-    public Link getLink() {
-        return link;
+    public Cliente getCodcliente() {
+        return codcliente;
     }
 
-    public void setLink(Link link) {
-        this.link = link;
+    public void setCodcliente(Cliente codcliente) {
+        this.codcliente = codcliente;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (linkClientePK != null ? linkClientePK.hashCode() : 0);
+        hash += (codlinkcliente != null ? codlinkcliente.hashCode() : 0);
         return hash;
     }
 
@@ -106,7 +106,7 @@ public class LinkCliente implements Serializable {
             return false;
         }
         LinkCliente other = (LinkCliente) object;
-        if ((this.linkClientePK == null && other.linkClientePK != null) || (this.linkClientePK != null && !this.linkClientePK.equals(other.linkClientePK))) {
+        if ((this.codlinkcliente == null && other.codlinkcliente != null) || (this.codlinkcliente != null && !this.codlinkcliente.equals(other.codlinkcliente))) {
             return false;
         }
         return true;
@@ -114,7 +114,7 @@ public class LinkCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.LinkCliente[ linkClientePK=" + linkClientePK + " ]";
+        return "Model.LinkCliente[ codlinkcliente=" + codlinkcliente + " ]";
     }
     
 }

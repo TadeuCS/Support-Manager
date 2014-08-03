@@ -6,8 +6,13 @@
 package View.Home;
 
 import View.Cadastros.Frm_CadAplicativo;
+import View.Cadastros.Frm_CadCEP;
+import View.Cadastros.Frm_CadClientes;
+import View.Cadastros.Frm_CadInformacao;
+import View.Cadastros.Frm_CadLinks;
 import View.Cadastros.Frm_CadOrigem;
 import View.Cadastros.Frm_CadPrioridade;
+import View.Cadastros.Frm_CadSegmento;
 import View.Cadastros.Frm_CadStatus;
 import View.Cadastros.Frm_CadTipoAtendimento;
 import View.Cadastros.Frm_CadUsuario;
@@ -134,6 +139,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem5);
 
         jMenuItem11.setText("Links");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenu1.add(jMenu5);
@@ -177,12 +187,27 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu4.setText("Cliente");
 
         jMenuItem3.setText("Cliente");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem3);
 
         jMenuItem2.setText("CEP");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem2);
 
         jMenuItem6.setText("Segmento");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem6);
 
         jMenu1.add(jMenu4);
@@ -220,9 +245,19 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu15.setText("Informação");
 
         jMenuItem30.setText("Informação");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem30);
 
         jMenuItem31.setText("Tipo Informação");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
         jMenu15.add(jMenuItem31);
 
         jMenu1.add(jMenu15);
@@ -359,7 +394,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         Frm_CadTipoUsuario c = new Frm_CadTipoUsuario();
-        c.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
@@ -385,6 +419,30 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         Frm_CadStatus s = new Frm_CadStatus();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        Frm_CadLinks f = new Frm_CadLinks();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Frm_CadCEP f = new Frm_CadCEP();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        Frm_CadSegmento f = new Frm_CadSegmento();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        Frm_CadClientes f = new Frm_CadClientes();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        Frm_CadInformacao f = new Frm_CadInformacao();
+    }//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     /**
      * @param args the command line arguments
