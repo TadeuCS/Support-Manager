@@ -194,7 +194,6 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             model = (DefaultTableModel) tb_telefones.getModel();
             contato.setNome(txt_contato.getText());
             contato.setTelefone(txt_contato.getText());
-            contato.setCodcliente(cliente);
             String[] linha = new String[]{contato.getNome(), contato.getTelefone()};
             model.addRow(linha);
             cliente.getContatoList().add(contato);

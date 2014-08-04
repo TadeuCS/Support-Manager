@@ -8,6 +8,9 @@ package View.Home;
 import View.Cadastros.Frm_CadAplicativo;
 import View.Cadastros.Frm_CadCEP;
 import View.Cadastros.Frm_CadClientes;
+import View.Cadastros.Frm_CadContato;
+import View.Cadastros.Frm_CadEmpresa;
+import View.Cadastros.Frm_CadGrupo;
 import View.Cadastros.Frm_CadInformacao;
 import View.Cadastros.Frm_CadLinks;
 import View.Cadastros.Frm_CadOrigem;
@@ -15,6 +18,7 @@ import View.Cadastros.Frm_CadPrioridade;
 import View.Cadastros.Frm_CadSegmento;
 import View.Cadastros.Frm_CadStatus;
 import View.Cadastros.Frm_CadTipoAtendimento;
+import View.Cadastros.Frm_CadTipoInformacao;
 import View.Cadastros.Frm_CadUsuario;
 import View.Consultas.Frm_ConUsuarios;
 import View.Cadastros.Frm_CadTipoUsuario;
@@ -22,15 +26,20 @@ import javax.swing.JFrame;
 
 public class Frm_Principal extends javax.swing.JFrame {
 
+    private String usuarioLogado;
+
     public Frm_Principal() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
-        trocaUsuarioLogado();
+        setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
     }
 
-    public void trocaUsuarioLogado() {
-        txt_usuarioLogado.setText(Frm_Login.getUsuario().getUsuario());
+    public String getUsuarioLogado() {
+        return txt_usuarioLogado.getText();
+    }
+
+    public void setUsuarioLogado(String usuarioLogado) {
+        txt_usuarioLogado.setText(usuarioLogado);
         if (Frm_Login.getUsuario().getSexo().equals('F') == true) {
             lb_boasVindas.setText("Bem Vinda");
         }
@@ -43,7 +52,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txt_usuarioLogado = new javax.swing.JTextField();
         lb_boasVindas = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -57,9 +65,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem35 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -74,6 +83,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
         jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem36 = new javax.swing.JMenuItem();
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
@@ -96,7 +106,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bem Vindo");
-        setResizable(false);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -110,11 +119,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(300, Short.MAX_VALUE)
+                .addContainerGap(375, Short.MAX_VALUE)
                 .addComponent(lb_boasVindas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(300, Short.MAX_VALUE))
+                .addContainerGap(375, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,6 +211,26 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem2);
 
+        jMenu7.setText("Contato");
+
+        jMenuItem34.setText("Contato");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem34);
+
+        jMenuItem35.setText("Grupo");
+        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem35ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem35);
+
+        jMenu4.add(jMenu7);
+
         jMenuItem6.setText("Segmento");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,15 +241,13 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu4);
 
-        jMenu7.setText("Empresa");
-
-        jMenuItem10.setText("Empresa");
-        jMenu7.add(jMenuItem10);
-
-        jMenuItem13.setText("Email");
-        jMenu7.add(jMenuItem13);
-
-        jMenu1.add(jMenu7);
+        jMenuItem13.setText("Empresa");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem13);
 
         jMenu8.setText("Usuário");
 
@@ -284,6 +311,14 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jMenuItem19.setText("Clientes");
         jMenu2.add(jMenuItem19);
+
+        jMenuItem36.setText("Contatos");
+        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem36ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem36);
 
         jMenuItem21.setText("Usuários");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
@@ -367,13 +402,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(502, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -441,8 +474,23 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        
+        Frm_CadTipoInformacao f = new Frm_CadTipoInformacao();
     }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        Frm_CadEmpresa f = new Frm_CadEmpresa();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        Frm_CadContato f = new Frm_CadContato();
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+        Frm_CadGrupo f = new Frm_CadGrupo();
+    }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+    }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,7 +528,6 @@ public class Frm_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
@@ -498,7 +545,6 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
@@ -524,6 +570,9 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem32;
     private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

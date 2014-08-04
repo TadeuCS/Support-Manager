@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -45,11 +44,18 @@ public class Contato implements Serializable {
     @Basic(optional = false)
     @Column(name = "TELEFONE")
     private String telefone;
-    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
-    @ManyToOne(optional = false)
-    private Cliente codcliente;
+    @ManyToOne
+    private Grupo codgrupo;
 
     public Contato() {
+    }
+
+    public Grupo getCodgrupo() {
+        return codgrupo;
+    }
+
+    public void setCodgrupo(Grupo codgrupo) {
+        this.codgrupo = codgrupo;
     }
 
     public Contato(Integer codcontato) {
@@ -84,14 +90,6 @@ public class Contato implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public Cliente getCodcliente() {
-        return codcliente;
-    }
-
-    public void setCodcliente(Cliente codcliente) {
-        this.codcliente = codcliente;
     }
 
     @Override

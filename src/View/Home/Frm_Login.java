@@ -44,6 +44,7 @@ public class Frm_Login extends javax.swing.JFrame {
             if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
                 this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
                 p = new Frm_Principal();
+                p.setVisible(true);
                 dispose();
             } else {
                 p.dispose();
