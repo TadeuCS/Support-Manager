@@ -8,7 +8,6 @@ package View.Cadastros;
 import Controller.AplicativoDAO;
 import Controller.ClienteDAO;
 import Controller.SegmentoDAO;
-import Controller.UsuarioDAO;
 import Enums.EstadosENUM;
 import Enums.TipoPessoaENUM;
 import Model.Cliente;
@@ -17,12 +16,13 @@ import Model.Endereco;
 import Model.Link;
 import Model.LinkCliente;
 import Util.CompletaData;
+import Util.Data;
 import Util.IntegerDocument;
+import java.awt.Event;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +36,7 @@ import javax.swing.text.MaskFormatter;
 public class Frm_CadClientes extends javax.swing.JFrame {
 
     ClienteDAO clienteDAO;
+    Data data;
     private SegmentoDAO segmentoDAO;
     private AplicativoDAO aplicativoDAO;
     private TipoPessoaENUM tipoPessoaENUM;
@@ -50,7 +51,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public Frm_CadClientes() {
         initComponents();
+        
         setVisible(true);
+        data = new Data();
         abas.setEnabled(false);
         c = new CompletaData();
         txt_codigo.setDocument(new IntegerDocument(4));
@@ -74,10 +77,10 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         camposOFF();
     }
 
-    public void camposOFF(){
-        
+    public void camposOFF() {
+
     }
-    
+
     public void proximo() {
         abas.setSelectedIndex(abas.getSelectedIndex() + 1);
     }
@@ -201,11 +204,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao inserir o Contato na lista!");
         }
     }
-    
+
     public void setLinks(Cliente cliente) {
         try {
             linksClientes = new LinkCliente();
-            link=new Link();
+            link = new Link();
             model = (DefaultTableModel) tb_telefones.getModel();
             link.setCodaplicativo(aplicativoDAO.buscaAplicativo(cbx_aplicativo.getSelectedItem().toString()));
             link.setDescricao(cbx_aplicativo.getSelectedItem().toString());
@@ -1157,8 +1160,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_segmentoActionPerformed
 
     private void txt_dataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_data.setText(c.getData(txt_data.getText(), "dd/MM/yyyy"));
+        if (evt.getKeyCode() == Event.ENTER) {
+            txt_data.setText(data.completaData(txt_data.getText(), "dd/MM/yyyy"));
         }
     }//GEN-LAST:event_txt_dataKeyPressed
 

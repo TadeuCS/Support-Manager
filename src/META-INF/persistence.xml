@@ -2,58 +2,34 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="Support_ManagerPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>Util.Origem</class>
-    <class>Util.Endereco</class>
-    <class>Util.TipoInformacao</class>
-    <class>Util.Segmento</class>
-    <class>Util.Prioridade</class>
-    <class>Util.TipoAtendimento</class>
-    <class>Util.Contato</class>
-    <class>Util.Aplicativo</class>
-    <class>Util.Status</class>
-    <class>Util.Informacao</class>
-    <class>Util.Atendimento</class>
-    <class>Util.Empresa</class>
-    <class>Util.Link</class>
-    <class>Util.Uf</class>
-    <class>Util.Avaliacao</class>
-    <class>Util.TipoUsuario</class>
-    <class>Util.Cliente</class>
-    <class>Util.Cep</class>
-    <class>Util.Log</class>
-    <class>Util.Email</class>
-    <class>Util.Usuario</class>
-    <class>Util.Ponto</class>
-    <class>Util.LinkCliente</class>
-    <class>Model.Prioridade</class>
-    <class>Model.Contato</class>
+    <class>Model.Aplicativo</class>
+    <class>Model.Atendimento</class>
+    <class>Model.Avaliacao</class>
     <class>Model.Cliente</class>
+    <class>Model.Contato</class>
+    <class>Model.Email</class>
     <class>Model.Empresa</class>
     <class>Model.Endereco</class>
-    <class>Model.Link</class>
-    <class>Model.Aplicativo</class>
-    <class>Model.TipoUsuario</class>
-    <class>Model.TipoAtendimento</class>
-    <class>Model.LinkCliente</class>
-    <class>Model.Status</class>
-    <class>Model.Ponto</class>
-    <class>Model.Atendimento</class>
-    <class>Model.Cep</class>
-    <class>Model.TipoInformacao</class>
-    <class>Model.Usuario</class>
-    <class>Model.Log</class>
+    <class>Model.Grupo</class>
     <class>Model.Informacao</class>
-    <class>Model.Segmento</class>
+    <class>Model.Link</class>
+    <class>Model.LinkCliente</class>
+    <class>Model.Log</class>
     <class>Model.Origem</class>
-    <class>Model.Avaliacao</class>
-    <class>Model.Uf</class>
-    <class>Model.Email</class>
+    <class>Model.Ponto</class>
+    <class>Model.Prioridade</class>
+    <class>Model.Segmento</class>
+    <class>Model.Status</class>
+    <class>Model.TipoAtendimento</class>
+    <class>Model.TipoInformacao</class>
+    <class>Model.TipoUsuario</class>
+    <class>Model.Usuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/smdados"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="1234"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>
