@@ -59,7 +59,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         btn_consulta.setEnabled(true);
         btn_alteracao.setEnabled(true);
         btn_inclusao.setEnabled(true);
-        btn_exclusao.setEnabled(true);
         btn_cancelar.setEnabled(false);
         btn_salvar.setEnabled(false);
         txt_codigo.setEnabled(false);
@@ -79,7 +78,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         btn_consulta.setEnabled(false);
         btn_alteracao.setEnabled(false);
         btn_inclusao.setEnabled(false);
-        btn_exclusao.setEnabled(false);
         btn_cancelar.setEnabled(true);
         btn_salvar.setEnabled(true);
         txt_codigo.setEnabled(true);
@@ -351,7 +349,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         pnl_botoes = new javax.swing.JPanel();
         btn_alteracao = new javax.swing.JButton();
         btn_inclusao = new javax.swing.JButton();
-        btn_exclusao = new javax.swing.JButton();
         txt_operacao = new javax.swing.JTextField();
         btn_cancelar = new javax.swing.JButton();
         btn_salvar = new javax.swing.JButton();
@@ -446,18 +443,18 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                                 .addGap(14, 14, 14)
                                 .addComponent(rbt_feminino))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
-                                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
+                                .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_bloqueado)))))
+                                .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_bloqueado))))
                     .addGroup(pnl_dadosLayout.createSequentialGroup()
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnl_dadosLayout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel5)
@@ -467,7 +464,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         pnl_dadosLayout.setVerticalGroup(
@@ -479,13 +476,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -506,7 +503,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(txt_confirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pnl_botoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -522,13 +519,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         btn_inclusao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inclusaoActionPerformed(evt);
-            }
-        });
-
-        btn_exclusao.setText("Exclusão");
-        btn_exclusao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_exclusaoActionPerformed(evt);
             }
         });
 
@@ -566,12 +556,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_alteracao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_exclusao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(btn_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_operacao)
+                .addGap(18, 18, 18)
                 .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -588,7 +576,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addGroup(pnl_botoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_alteracao)
                         .addComponent(btn_inclusao)
-                        .addComponent(btn_exclusao)
                         .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_consulta)))
                 .addContainerGap())
@@ -600,10 +587,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fundoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnl_botoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pnl_botoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_fundoLayout.setVerticalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -674,28 +661,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_nome.requestFocus();
     }//GEN-LAST:event_btn_inclusaoActionPerformed
 
-    private void btn_exclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclusaoActionPerformed
-        if (txt_codigo.getText().equals("") == false) {
-            if (JOptionPane.showConfirmDialog(null, "Deseja relamente excluir o Usuaário: " + usuario.getUsuario(),
-                    "Atenção", 0, JOptionPane.INFORMATION_MESSAGE) == 0) {
-                try {
-                    usuarioDAO = new UsuarioDAO();
-                    usuario = usuarioDAO.findByCodigo(codigoUsuario);
-                    usuarioDAO.excluir(usuario);
-                    JOptionPane.showMessageDialog(null, "Usuário excluido com Sucesso!");
-                    txt_codigo.requestFocus();
-                    limpaCampos();
-                    camposOFF();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "erro ao excluir o Usuário: " + usuario.getUsuario());
-                }
-
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!");
-        }
-    }//GEN-LAST:event_btn_exclusaoActionPerformed
-
     private void txt_codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_codigoKeyPressed
         if (txt_codigo.getText().equals("") == false) {
             codigoUsuario = Integer.parseInt(txt_codigo.getText());
@@ -711,7 +676,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     usuario = usuarioDAO.findByCodigo(codigoUsuario);
                     carregaUsuario(usuario);
                     btn_alteracao.setEnabled(true);
-                    btn_exclusao.setEnabled(true);
                     btn_consulta.setEnabled(false);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
@@ -771,7 +735,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btn_bloqueado;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_consulta;
-    private javax.swing.JButton btn_exclusao;
     private javax.swing.JButton btn_inclusao;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JComboBox cbx_tipo;
