@@ -7,7 +7,6 @@ package Controller;
 
 import Model.Cliente;
 import Model.Contato;
-import Model.Link;
 import Model.LinkCliente;
 import Util.Manager;
 import java.util.List;
