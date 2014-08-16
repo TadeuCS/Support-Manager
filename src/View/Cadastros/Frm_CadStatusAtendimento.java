@@ -5,29 +5,29 @@
  */
 package View.Cadastros;
 
-import Controller.StatusDAO;
-import Model.Status;
-import Util.FixedLengthDocument;
+import Controller.StatusAtendimentoDAO;
+import Model.StatusAtendimento;
+import Util.Classes.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Tadeu
  */
-public class Frm_CadStatus extends javax.swing.JFrame {
+public class Frm_CadStatusAtendimento extends javax.swing.JFrame {
 
-    StatusDAO statusDAO;
-    Status status;
+    StatusAtendimentoDAO statusDAO;
+    StatusAtendimento status;
 
-    public Frm_CadStatus() {
+    public Frm_CadStatusAtendimento() {
         initComponents();
         setVisible(true);
         txt_descricao.setDocument(new FixedLengthDocument(20));
     }
 
     public void novo() {
-        statusDAO = new StatusDAO();
-        status= new Status();
+        statusDAO = new StatusAtendimentoDAO();
+        status= new StatusAtendimento();
     }
 
     public void salvar(String descricao) {
@@ -35,11 +35,11 @@ public class Frm_CadStatus extends javax.swing.JFrame {
         status.setDescricao(descricao);
         try {
             statusDAO.salvar(status);
-            JOptionPane.showMessageDialog(null, "Status salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "StatusAtendimento salvo com sucesso!");
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Status já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "StatusAtendimento já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
             txt_descricao.requestFocus();
         }
         
@@ -170,20 +170,20 @@ public class Frm_CadStatus extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadStatusAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadStatusAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadStatusAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadStatus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadStatusAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadStatus().setVisible(true);
+                new Frm_CadStatusAtendimento().setVisible(true);
             }
         });
     }

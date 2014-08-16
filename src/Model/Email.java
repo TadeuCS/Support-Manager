@@ -36,8 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Email.findBySmtp", query = "SELECT e FROM Email e WHERE e.smtp = :smtp"),
     @NamedQuery(name = "Email.findByPorta", query = "SELECT e FROM Email e WHERE e.porta = :porta"),
     @NamedQuery(name = "Email.findByNome", query = "SELECT e FROM Email e WHERE e.nome = :nome"),
-    @NamedQuery(name = "Email.findBySenha", query = "SELECT e FROM Email e WHERE e.senha = :senha"),
-    @NamedQuery(name = "Email.findByAssinatura", query = "SELECT e FROM Email e WHERE e.assinatura = :assinatura")})
+    @NamedQuery(name = "Email.findBySenha", query = "SELECT e FROM Email e WHERE e.senha = :senha")})
 public class Email implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,9 +59,6 @@ public class Email implements Serializable {
     @Basic(optional = false)
     @Column(name = "SENHA")
     private String senha;
-    @Basic(optional = false)
-    @Column(name = "ASSINATURA")
-    private String assinatura;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codemail")
     private List<Empresa> empresaList;
 
@@ -73,14 +69,13 @@ public class Email implements Serializable {
         this.codemail = codemail;
     }
 
-    public Email(Integer codemail, String email, String smtp, int porta, String nome, String senha, String assinatura) {
+    public Email(Integer codemail, String email, String smtp, int porta, String nome, String senha) {
         this.codemail = codemail;
         this.email = email;
         this.smtp = smtp;
         this.porta = porta;
         this.nome = nome;
         this.senha = senha;
-        this.assinatura = assinatura;
     }
 
     public Integer getCodemail() {
@@ -129,14 +124,6 @@ public class Email implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getAssinatura() {
-        return assinatura;
-    }
-
-    public void setAssinatura(String assinatura) {
-        this.assinatura = assinatura;
     }
 
     @XmlTransient

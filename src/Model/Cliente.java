@@ -41,11 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByRazaoSocial", query = "SELECT c FROM Cliente c WHERE c.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Cliente.findByNomeFantasia", query = "SELECT c FROM Cliente c WHERE c.nomeFantasia = :nomeFantasia"),
     @NamedQuery(name = "Cliente.findByResponsavel", query = "SELECT c FROM Cliente c WHERE c.responsavel = :responsavel"),
-    @NamedQuery(name = "Cliente.findByTipoPessoa", query = "SELECT c FROM Cliente c WHERE c.tipoPessoa = :tipoPessoa"),
     @NamedQuery(name = "Cliente.findByCnpjCpf", query = "SELECT c FROM Cliente c WHERE c.cnpjCpf = :cnpjCpf"),
     @NamedQuery(name = "Cliente.findByInscricaoEstadual", query = "SELECT c FROM Cliente c WHERE c.inscricaoEstadual = :inscricaoEstadual"),
     @NamedQuery(name = "Cliente.findByEmail", query = "SELECT c FROM Cliente c WHERE c.email = :email"),
-    @NamedQuery(name = "Cliente.findByBloqueado", query = "SELECT c FROM Cliente c WHERE c.bloqueado = :bloqueado"),
     @NamedQuery(name = "Cliente.findByDataAtualizacao", query = "SELECT c FROM Cliente c WHERE c.dataAtualizacao = :dataAtualizacao")})
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -66,9 +64,6 @@ public class Cliente implements Serializable {
     @Column(name = "RESPONSAVEL")
     private String responsavel;
     @Basic(optional = false)
-    @Column(name = "TIPO_PESSOA")
-    private String tipoPessoa;
-    @Basic(optional = false)
     @Column(name = "CNPJ_CPF")
     private String cnpjCpf;
     @Basic(optional = false)
@@ -77,23 +72,26 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "EMAIL")
     private String email;
-    @Basic(optional = false)
-    @Column(name = "BLOQUEADO")
-    private Character bloqueado;
     @Column(name = "DATA_ATUALIZACAO")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
+    @OneToMany(mappedBy = "codcliente")
+    private List<Telefone> telefoneList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Endereco> enderecoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Atendimento> atendimentoList;
+    @JoinColumn(name = "CODTIPOPESSOA", referencedColumnName = "CODTIPOPESSOA")
+    @ManyToOne(optional = false)
+    private TipoPessoa codtipopessoa;
+    @JoinColumn(name = "CODSTATUSPESSOA", referencedColumnName = "CODSTATUSPESSOA")
+    @ManyToOne(optional = false)
+    private StatusPessoa codstatuspessoa;
     @JoinColumn(name = "CODSEGMENTO", referencedColumnName = "CODSEGMENTO")
     @ManyToOne(optional = false)
     private Segmento codsegmento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<LinkCliente> linkClienteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
-    private List<Contato> contatoList;
 
     public Cliente() {
     }
@@ -102,16 +100,14 @@ public class Cliente implements Serializable {
         this.codcliente = codcliente;
     }
 
-    public Cliente(Integer codcliente, String razaoSocial, String nomeFantasia, String responsavel, String tipoPessoa, String cnpjCpf, String inscricaoEstadual, String email, Character bloqueado) {
+    public Cliente(Integer codcliente, String razaoSocial, String nomeFantasia, String responsavel, String cnpjCpf, String inscricaoEstadual, String email) {
         this.codcliente = codcliente;
         this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
         this.responsavel = responsavel;
-        this.tipoPessoa = tipoPessoa;
         this.cnpjCpf = cnpjCpf;
         this.inscricaoEstadual = inscricaoEstadual;
         this.email = email;
-        this.bloqueado = bloqueado;
     }
 
     public Integer getCodcliente() {
@@ -154,14 +150,6 @@ public class Cliente implements Serializable {
         this.responsavel = responsavel;
     }
 
-    public String getTipoPessoa() {
-        return tipoPessoa;
-    }
-
-    public void setTipoPessoa(String tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
-    }
-
     public String getCnpjCpf() {
         return cnpjCpf;
     }
@@ -186,20 +174,21 @@ public class Cliente implements Serializable {
         this.email = email;
     }
 
-    public Character getBloqueado() {
-        return bloqueado;
-    }
-
-    public void setBloqueado(Character bloqueado) {
-        this.bloqueado = bloqueado;
-    }
-
     public Date getDataAtualizacao() {
         return dataAtualizacao;
     }
 
     public void setDataAtualizacao(Date dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+    @XmlTransient
+    public List<Telefone> getTelefoneList() {
+        return telefoneList;
+    }
+
+    public void setTelefoneList(List<Telefone> telefoneList) {
+        this.telefoneList = telefoneList;
     }
 
     @XmlTransient
@@ -220,6 +209,22 @@ public class Cliente implements Serializable {
         this.atendimentoList = atendimentoList;
     }
 
+    public TipoPessoa getCodtipopessoa() {
+        return codtipopessoa;
+    }
+
+    public void setCodtipopessoa(TipoPessoa codtipopessoa) {
+        this.codtipopessoa = codtipopessoa;
+    }
+
+    public StatusPessoa getCodstatuspessoa() {
+        return codstatuspessoa;
+    }
+
+    public void setCodstatuspessoa(StatusPessoa codstatuspessoa) {
+        this.codstatuspessoa = codstatuspessoa;
+    }
+
     public Segmento getCodsegmento() {
         return codsegmento;
     }
@@ -235,15 +240,6 @@ public class Cliente implements Serializable {
 
     public void setLinkClienteList(List<LinkCliente> linkClienteList) {
         this.linkClienteList = linkClienteList;
-    }
-
-    @XmlTransient
-    public List<Contato> getContatoList() {
-        return contatoList;
-    }
-
-    public void setContatoList(List<Contato> contatoList) {
-        this.contatoList = contatoList;
     }
 
     @Override
@@ -269,10 +265,6 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return "Model.Cliente[ codcliente=" + codcliente + " ]";
-    }
-
-    public void setDataAtualizacao() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

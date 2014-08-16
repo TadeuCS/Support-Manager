@@ -32,10 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Endereco.findByCodendereco", query = "SELECT e FROM Endereco e WHERE e.codendereco = :codendereco"),
     @NamedQuery(name = "Endereco.findByNumero", query = "SELECT e FROM Endereco e WHERE e.numero = :numero"),
     @NamedQuery(name = "Endereco.findByComplemento", query = "SELECT e FROM Endereco e WHERE e.complemento = :complemento"),
-    @NamedQuery(name = "Endereco.findByCidade", query = "SELECT e FROM Endereco e WHERE e.cidade = :cidade"),
     @NamedQuery(name = "Endereco.findByBairro", query = "SELECT e FROM Endereco e WHERE e.bairro = :bairro"),
     @NamedQuery(name = "Endereco.findByRua", query = "SELECT e FROM Endereco e WHERE e.rua = :rua"),
-    @NamedQuery(name = "Endereco.findByEstado", query = "SELECT e FROM Endereco e WHERE e.estado = :estado"),
     @NamedQuery(name = "Endereco.findByCep", query = "SELECT e FROM Endereco e WHERE e.cep = :cep")})
 public class Endereco implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -50,20 +48,17 @@ public class Endereco implements Serializable {
     @Column(name = "COMPLEMENTO")
     private String complemento;
     @Basic(optional = false)
-    @Column(name = "CIDADE")
-    private String cidade;
-    @Basic(optional = false)
     @Column(name = "BAIRRO")
     private String bairro;
     @Basic(optional = false)
     @Column(name = "RUA")
     private String rua;
     @Basic(optional = false)
-    @Column(name = "ESTADO")
-    private String estado;
-    @Basic(optional = false)
     @Column(name = "CEP")
     private String cep;
+    @JoinColumn(name = "CODCIDADE", referencedColumnName = "CODCIDADE")
+    @ManyToOne(optional = false)
+    private Cidade codcidade;
     @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
     @ManyToOne(optional = false)
     private Cliente codcliente;
@@ -75,13 +70,11 @@ public class Endereco implements Serializable {
         this.codendereco = codendereco;
     }
 
-    public Endereco(Integer codendereco, int numero, String cidade, String bairro, String rua, String estado, String cep) {
+    public Endereco(Integer codendereco, int numero, String bairro, String rua, String cep) {
         this.codendereco = codendereco;
         this.numero = numero;
-        this.cidade = cidade;
         this.bairro = bairro;
         this.rua = rua;
-        this.estado = estado;
         this.cep = cep;
     }
 
@@ -109,14 +102,6 @@ public class Endereco implements Serializable {
         this.complemento = complemento;
     }
 
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
     public String getBairro() {
         return bairro;
     }
@@ -133,20 +118,20 @@ public class Endereco implements Serializable {
         this.rua = rua;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public String getCep() {
         return cep;
     }
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Cidade getCodcidade() {
+        return codcidade;
+    }
+
+    public void setCodcidade(Cidade codcidade) {
+        this.codcidade = codcidade;
     }
 
     public Cliente getCodcliente() {

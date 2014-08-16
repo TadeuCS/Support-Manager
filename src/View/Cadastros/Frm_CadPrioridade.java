@@ -7,7 +7,7 @@ package View.Cadastros;
 
 import Controller.PrioridadeDAO;
 import Model.Prioridade;
-import Util.FixedLengthDocument;
+import Util.Classes.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
 /**

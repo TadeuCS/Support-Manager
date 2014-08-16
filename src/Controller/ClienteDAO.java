@@ -6,9 +6,9 @@
 package Controller;
 
 import Model.Cliente;
-import Model.Contato;
+import Model.Telefone;
 import Model.LinkCliente;
-import Util.Manager;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**
@@ -37,9 +37,9 @@ public class ClienteDAO extends Manager {
         return (Cliente) query.getSingleResult();
     }
 
-    public List<Contato> listaContatosByCliente(Cliente cliente) {
+    public List<Telefone> listaTelefonesByCliente(Cliente cliente) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT c FROM Contato c where c.codcliente = :cliente").setParameter("cliente", cliente);
+        query = em.createQuery("SELECT c FROM Telefone c where c.codcliente = :cliente").setParameter("cliente", cliente);
         em.getTransaction().commit();
         return query.getResultList();
     }

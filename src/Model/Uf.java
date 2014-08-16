@@ -27,43 +27,48 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Tadeu
  */
 @Entity
-@Table(name = "tipo_usuario")
+@Table(name = "uf")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoUsuario.findAll", query = "SELECT t FROM TipoUsuario t"),
-    @NamedQuery(name = "TipoUsuario.findByCodtipousuario", query = "SELECT t FROM TipoUsuario t WHERE t.codtipousuario = :codtipousuario"),
-    @NamedQuery(name = "TipoUsuario.findByDescricao", query = "SELECT t FROM TipoUsuario t WHERE t.descricao = :descricao")})
-public class TipoUsuario implements Serializable {
+    @NamedQuery(name = "Uf.findAll", query = "SELECT u FROM Uf u"),
+    @NamedQuery(name = "Uf.findByCoduf", query = "SELECT u FROM Uf u WHERE u.coduf = :coduf"),
+    @NamedQuery(name = "Uf.findByDescricao", query = "SELECT u FROM Uf u WHERE u.descricao = :descricao"),
+    @NamedQuery(name = "Uf.findBySigla", query = "SELECT u FROM Uf u WHERE u.sigla = :sigla")})
+public class Uf implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CODTIPOUSUARIO")
-    private Integer codtipousuario;
+    @Column(name = "CODUF")
+    private Integer coduf;
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codtipousuario")
-    private List<Usuario> usuarioList;
+    @Basic(optional = false)
+    @Column(name = "SIGLA")
+    private String sigla;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coduf")
+    private List<Cidade> cidadeList;
 
-    public TipoUsuario() {
+    public Uf() {
     }
 
-    public TipoUsuario(Integer codtipousuario) {
-        this.codtipousuario = codtipousuario;
+    public Uf(Integer coduf) {
+        this.coduf = coduf;
     }
 
-    public TipoUsuario(Integer codtipousuario, String descricao) {
-        this.codtipousuario = codtipousuario;
+    public Uf(Integer coduf, String descricao, String sigla) {
+        this.coduf = coduf;
         this.descricao = descricao;
+        this.sigla = sigla;
     }
 
-    public Integer getCodtipousuario() {
-        return codtipousuario;
+    public Integer getCoduf() {
+        return coduf;
     }
 
-    public void setCodtipousuario(Integer codtipousuario) {
-        this.codtipousuario = codtipousuario;
+    public void setCoduf(Integer coduf) {
+        this.coduf = coduf;
     }
 
     public String getDescricao() {
@@ -74,30 +79,38 @@ public class TipoUsuario implements Serializable {
         this.descricao = descricao;
     }
 
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public String getSigla() {
+        return sigla;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
+    @XmlTransient
+    public List<Cidade> getCidadeList() {
+        return cidadeList;
+    }
+
+    public void setCidadeList(List<Cidade> cidadeList) {
+        this.cidadeList = cidadeList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codtipousuario != null ? codtipousuario.hashCode() : 0);
+        hash += (coduf != null ? coduf.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoUsuario)) {
+        if (!(object instanceof Uf)) {
             return false;
         }
-        TipoUsuario other = (TipoUsuario) object;
-        if ((this.codtipousuario == null && other.codtipousuario != null) || (this.codtipousuario != null && !this.codtipousuario.equals(other.codtipousuario))) {
+        Uf other = (Uf) object;
+        if ((this.coduf == null && other.coduf != null) || (this.coduf != null && !this.coduf.equals(other.coduf))) {
             return false;
         }
         return true;
@@ -105,7 +118,7 @@ public class TipoUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.TipoUsuario[ codtipousuario=" + codtipousuario + " ]";
+        return "Model.Uf[ coduf=" + coduf + " ]";
     }
     
 }

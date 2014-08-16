@@ -24,6 +24,12 @@
     <class>Model.TipoInformacao</class>
     <class>Model.TipoUsuario</class>
     <class>Model.Usuario</class>
+    <class>Model.Telefone</class>
+    <class>Model.Cidade</class>
+    <class>Model.StatusPessoa</class>
+    <class>Model.Uf</class>
+    <class>Model.StatusAtendimento</class>
+    <class>Model.TipoPessoa</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/smdados"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

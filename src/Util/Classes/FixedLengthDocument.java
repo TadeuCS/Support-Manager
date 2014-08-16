@@ -1,4 +1,4 @@
-package Util;
+package Util.Classes;
 
 import javax.swing.text.AttributeSet;  
 import javax.swing.text.BadLocationException;  

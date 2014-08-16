@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +17,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Grupo.findByCodgrupo", query = "SELECT g FROM Grupo g WHERE g.codgrupo = :codgrupo"),
     @NamedQuery(name = "Grupo.findByDescricao", query = "SELECT g FROM Grupo g WHERE g.descricao = :descricao")})
 public class Grupo implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +43,8 @@ public class Grupo implements Serializable {
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codgrupo")
+    private List<Telefone> telefoneList;
 
     public Grupo() {
     }
@@ -68,6 +74,15 @@ public class Grupo implements Serializable {
         this.descricao = descricao;
     }
 
+    @XmlTransient
+    public List<Telefone> getTelefoneList() {
+        return telefoneList;
+    }
+
+    public void setTelefoneList(List<Telefone> telefoneList) {
+        this.telefoneList = telefoneList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -92,5 +107,5 @@ public class Grupo implements Serializable {
     public String toString() {
         return "Model.Grupo[ codgrupo=" + codgrupo + " ]";
     }
-
+    
 }

@@ -27,43 +27,45 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Tadeu
  */
 @Entity
-@Table(name = "tipo_usuario")
+@Table(name = "status_pessoa")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoUsuario.findAll", query = "SELECT t FROM TipoUsuario t"),
-    @NamedQuery(name = "TipoUsuario.findByCodtipousuario", query = "SELECT t FROM TipoUsuario t WHERE t.codtipousuario = :codtipousuario"),
-    @NamedQuery(name = "TipoUsuario.findByDescricao", query = "SELECT t FROM TipoUsuario t WHERE t.descricao = :descricao")})
-public class TipoUsuario implements Serializable {
+    @NamedQuery(name = "StatusPessoa.findAll", query = "SELECT s FROM StatusPessoa s"),
+    @NamedQuery(name = "StatusPessoa.findByCodstatuspessoa", query = "SELECT s FROM StatusPessoa s WHERE s.codstatuspessoa = :codstatuspessoa"),
+    @NamedQuery(name = "StatusPessoa.findByDescricao", query = "SELECT s FROM StatusPessoa s WHERE s.descricao = :descricao")})
+public class StatusPessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CODTIPOUSUARIO")
-    private Integer codtipousuario;
+    @Column(name = "CODSTATUSPESSOA")
+    private Integer codstatuspessoa;
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codtipousuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codstatuspessoa")
+    private List<Cliente> clienteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codstatuspessoa")
     private List<Usuario> usuarioList;
 
-    public TipoUsuario() {
+    public StatusPessoa() {
     }
 
-    public TipoUsuario(Integer codtipousuario) {
-        this.codtipousuario = codtipousuario;
+    public StatusPessoa(Integer codstatuspessoa) {
+        this.codstatuspessoa = codstatuspessoa;
     }
 
-    public TipoUsuario(Integer codtipousuario, String descricao) {
-        this.codtipousuario = codtipousuario;
+    public StatusPessoa(Integer codstatuspessoa, String descricao) {
+        this.codstatuspessoa = codstatuspessoa;
         this.descricao = descricao;
     }
 
-    public Integer getCodtipousuario() {
-        return codtipousuario;
+    public Integer getCodstatuspessoa() {
+        return codstatuspessoa;
     }
 
-    public void setCodtipousuario(Integer codtipousuario) {
-        this.codtipousuario = codtipousuario;
+    public void setCodstatuspessoa(Integer codstatuspessoa) {
+        this.codstatuspessoa = codstatuspessoa;
     }
 
     public String getDescricao() {
@@ -72,6 +74,15 @@ public class TipoUsuario implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
     }
 
     @XmlTransient
@@ -86,18 +97,18 @@ public class TipoUsuario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codtipousuario != null ? codtipousuario.hashCode() : 0);
+        hash += (codstatuspessoa != null ? codstatuspessoa.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoUsuario)) {
+        if (!(object instanceof StatusPessoa)) {
             return false;
         }
-        TipoUsuario other = (TipoUsuario) object;
-        if ((this.codtipousuario == null && other.codtipousuario != null) || (this.codtipousuario != null && !this.codtipousuario.equals(other.codtipousuario))) {
+        StatusPessoa other = (StatusPessoa) object;
+        if ((this.codstatuspessoa == null && other.codstatuspessoa != null) || (this.codstatuspessoa != null && !this.codstatuspessoa.equals(other.codstatuspessoa))) {
             return false;
         }
         return true;
@@ -105,7 +116,7 @@ public class TipoUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.TipoUsuario[ codtipousuario=" + codtipousuario + " ]";
+        return "Model.StatusPessoa[ codstatuspessoa=" + codstatuspessoa + " ]";
     }
     
 }

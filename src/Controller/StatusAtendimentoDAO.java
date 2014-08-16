@@ -5,34 +5,34 @@
  */
 package Controller;
 
-import Model.Status;
-import Util.Manager;
+import Model.StatusAtendimento;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**
  *
  * @author Tadeu
  */
-public class StatusDAO extends Manager {
+public class StatusAtendimentoDAO extends Manager {
 
-    public void salvar(Status status) {
+    public void salvar(StatusAtendimento status) {
         em.getTransaction().begin();
         em.merge(status);
         em.getTransaction().commit();
     }
 
-    public List<Status> lista() {
+    public List<StatusAtendimento> lista() {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Status.findAll");
+        query = em.createNamedQuery("StatusAtendimento.findAll");
         em.getTransaction().commit();
         return query.getResultList();
     }
 
-    public Status buscaStatus(String descricao) {
+    public StatusAtendimento buscaStatusAtendimento(String descricao) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Status.findByDescricao").setParameter("descricao", descricao);
+        query = em.createNamedQuery("StatusAtendimento.findByDescricao").setParameter("descricao", descricao);
         em.getTransaction().commit();
-        return (Status) query.getSingleResult();
+        return (StatusAtendimento) query.getSingleResult();
     }
 
 }

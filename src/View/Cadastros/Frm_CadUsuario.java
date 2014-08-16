@@ -9,12 +9,11 @@ import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
 import Model.TipoUsuario;
 import Model.Usuario;
-import Util.Criptografia;
-import Util.FixedLengthDocument;
-import Util.IntegerDocument;
-import Util.ValidarCpf;
+import Util.Classes.Criptografia;
+import Util.Classes.FixedLengthDocument;
+import Util.Classes.IntegerDocument;
+import Util.Classes.ValidarCpf;
 import View.Consultas.Frm_ConUsuarios;
-import View.Consultas.Frm_ConCliente;
 import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -154,7 +153,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void setBloqueado(Usuario usuario) {
-        if (usuario.getBloqueado().equals("N") == true) {
+        if (usuario.getCodstatuspessoa().equals("N") == true) {
             btn_bloqueado.setText("NÃO");
         } else {
             btn_bloqueado.setText("SIM");
@@ -273,7 +272,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             usuario.setCpf(cpf);
             usuario.setEmail(email);
             usuario.setNome(nome);
-            usuario.setBloqueado(bloqueado);
+//            usuario.getCodstatuspessoa().setDescricao("Bloqueado");
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Salvo com Sucesso!");
             limpaCampos();
@@ -296,7 +295,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             usuario.setCpf(cpf);
             usuario.setEmail(email);
             usuario.setNome(nome);
-            usuario.setBloqueado(bloqueado);
+//            usuario.setBloqueado(bloqueado);
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!");
             limpaCampos();

@@ -27,43 +27,43 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Tadeu
  */
 @Entity
-@Table(name = "status")
+@Table(name = "tipo_pessoa")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s"),
-    @NamedQuery(name = "Status.findByCodstatus", query = "SELECT s FROM Status s WHERE s.codstatus = :codstatus"),
-    @NamedQuery(name = "Status.findByDescricao", query = "SELECT s FROM Status s WHERE s.descricao = :descricao")})
-public class Status implements Serializable {
+    @NamedQuery(name = "TipoPessoa.findAll", query = "SELECT t FROM TipoPessoa t"),
+    @NamedQuery(name = "TipoPessoa.findByCodtipopessoa", query = "SELECT t FROM TipoPessoa t WHERE t.codtipopessoa = :codtipopessoa"),
+    @NamedQuery(name = "TipoPessoa.findByDescricao", query = "SELECT t FROM TipoPessoa t WHERE t.descricao = :descricao")})
+public class TipoPessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CODSTATUS")
-    private Integer codstatus;
+    @Column(name = "CODTIPOPESSOA")
+    private Integer codtipopessoa;
     @Basic(optional = false)
     @Column(name = "DESCRICAO")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codstatus")
-    private List<Atendimento> atendimentoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codtipopessoa")
+    private List<Cliente> clienteList;
 
-    public Status() {
+    public TipoPessoa() {
     }
 
-    public Status(Integer codstatus) {
-        this.codstatus = codstatus;
+    public TipoPessoa(Integer codtipopessoa) {
+        this.codtipopessoa = codtipopessoa;
     }
 
-    public Status(Integer codstatus, String descricao) {
-        this.codstatus = codstatus;
+    public TipoPessoa(Integer codtipopessoa, String descricao) {
+        this.codtipopessoa = codtipopessoa;
         this.descricao = descricao;
     }
 
-    public Integer getCodstatus() {
-        return codstatus;
+    public Integer getCodtipopessoa() {
+        return codtipopessoa;
     }
 
-    public void setCodstatus(Integer codstatus) {
-        this.codstatus = codstatus;
+    public void setCodtipopessoa(Integer codtipopessoa) {
+        this.codtipopessoa = codtipopessoa;
     }
 
     public String getDescricao() {
@@ -75,29 +75,29 @@ public class Status implements Serializable {
     }
 
     @XmlTransient
-    public List<Atendimento> getAtendimentoList() {
-        return atendimentoList;
+    public List<Cliente> getClienteList() {
+        return clienteList;
     }
 
-    public void setAtendimentoList(List<Atendimento> atendimentoList) {
-        this.atendimentoList = atendimentoList;
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codstatus != null ? codstatus.hashCode() : 0);
+        hash += (codtipopessoa != null ? codtipopessoa.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Status)) {
+        if (!(object instanceof TipoPessoa)) {
             return false;
         }
-        Status other = (Status) object;
-        if ((this.codstatus == null && other.codstatus != null) || (this.codstatus != null && !this.codstatus.equals(other.codstatus))) {
+        TipoPessoa other = (TipoPessoa) object;
+        if ((this.codtipopessoa == null && other.codtipopessoa != null) || (this.codtipopessoa != null && !this.codtipopessoa.equals(other.codtipopessoa))) {
             return false;
         }
         return true;
@@ -105,7 +105,7 @@ public class Status implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Status[ codstatus=" + codstatus + " ]";
+        return "Model.TipoPessoa[ codtipopessoa=" + codtipopessoa + " ]";
     }
     
 }

@@ -7,7 +7,7 @@ package View.Cadastros;
 
 import Controller.TipoAtendimentoDAO;
 import Model.TipoAtendimento;
-import Util.FixedLengthDocument;
+import Util.Classes.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
 /**

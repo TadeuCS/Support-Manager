@@ -7,7 +7,7 @@ package View.Cadastros;
 
 import Controller.SegmentoDAO;
 import Model.Segmento;
-import Util.FixedLengthDocument;
+import Util.Classes.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
 /**

@@ -7,8 +7,8 @@ package Controller;
 
 import Model.TipoUsuario;
 import Model.Usuario;
-import Util.Criptografia;
-import Util.Manager;
+import Util.Classes.Criptografia;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**

@@ -5,26 +5,25 @@
  */
 package Controller;
 
-import Model.Contato;
-import Model.Contato;
-import Util.Manager;
+import Model.Telefone;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**
  *
  * @author Tadeu
  */
-public class ContatoDAO extends Manager {
+public class TelefoneDAO extends Manager {
 
-    public void salvar(Contato cntato) {
+    public void salvar(Telefone cntato) {
         em.getTransaction().begin();
         em.merge(cntato);
         em.getTransaction().commit();
     }
     
-    public List<Contato> lista(){
+    public List<Telefone> lista(){
         em.getTransaction().begin();
-        query=em.createNamedQuery("Contato.findAll");
+        query=em.createNamedQuery("Telefone.findAll");
         em.getTransaction().commit();
         return query.getResultList();
     }

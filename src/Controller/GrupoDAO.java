@@ -5,10 +5,8 @@
  */
 package Controller;
 
-import Model.Contato;
 import Model.Grupo;
-import Model.Grupo;
-import Util.Manager;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**

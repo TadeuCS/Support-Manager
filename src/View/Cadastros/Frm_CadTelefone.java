@@ -5,9 +5,9 @@
  */
 package View.Cadastros;
 
-import Controller.ContatoDAO;
+import Controller.TelefoneDAO;
 import Controller.GrupoDAO;
-import Model.Contato;
+import Model.Telefone;
 import Model.Grupo;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,37 +16,37 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Tadeu
  */
-public class Frm_CadContato extends javax.swing.JFrame {
+public class Frm_CadTelefone extends javax.swing.JFrame {
 
     private Grupo grupo;
-    private Contato contato;
-    ContatoDAO contatoDAO;
+    private Telefone contato;
+    TelefoneDAO telefoneDAO;
     GrupoDAO grupoDAO;
     DefaultTableModel model;
 
-    public Frm_CadContato() {
+    public Frm_CadTelefone() {
         initComponents();
     }
 
-    public void carregaTipos() {
-        int i = 0;
-        grupoDAO = new GrupoDAO();
-        cbx_grupo.removeAllItems();
-        try {
-            while (i < contatoDAO.lista().size()) {
-                String linha = grupoDAO.lista().get(i).getDescricao();
-                cbx_grupo.addItem(linha);
-                i++;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
-        }
-
-    }
+//    public void carregaTipos() {
+//        int i = 0;
+//        grupoDAO = new GrupoDAO();
+//        cbx_grupo.removeAllItems();
+//        try {
+//            while (i < telefoneDAO.lista().size()) {
+//                String linha = grupoDAO.lista().get(i).getDescricao();
+//                cbx_grupo.addItem(linha);
+//                i++;
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
+//        }
+//
+//    }
 
     public void validaCampos(String contato, String telefone, String grupo) {
         if (contato.equals("") == true) {
-            JOptionPane.showMessageDialog(null, "Contato em branco");
+            JOptionPane.showMessageDialog(null, "Telefone em branco");
             txt_contato.requestFocus();
         } else {
             if (telefone.equals("(  )     -    ") == true) {
@@ -59,22 +59,22 @@ public class Frm_CadContato extends javax.swing.JFrame {
     }
 
     public void novo() {
-        contato = new Contato();
+        contato = new Telefone();
         grupo = new Grupo();
-        contatoDAO = new ContatoDAO();
+        telefoneDAO = new TelefoneDAO();
         grupoDAO = new GrupoDAO();
     }
 
     public void salvar(String grupo, String nome, String telefone) {
         try {
             novo();
-            contato.setNome(txt_contato.getText());
+            contato.setDescricao(txt_contato.getText());
             contato.setTelefone(txt_telefone.getText());
             contato.setCodgrupo(grupoDAO.consulta(grupo));
-            contatoDAO.salvar(contato);
-            JOptionPane.showMessageDialog(null, "Contato Inserido com Sucesso!");
+            telefoneDAO.salvar(contato);
+            JOptionPane.showMessageDialog(null, "Telefone Inserido com Sucesso!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar o Contato" + e);
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o Telefone" + e);
         }
     }
 
@@ -228,16 +228,16 @@ public class Frm_CadContato extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadContato.class
+            java.util.logging.Logger.getLogger(Frm_CadTelefone.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadContato.class
+            java.util.logging.Logger.getLogger(Frm_CadTelefone.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadContato.class
+            java.util.logging.Logger.getLogger(Frm_CadTelefone.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadContato.class
+            java.util.logging.Logger.getLogger(Frm_CadTelefone.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -245,7 +245,7 @@ public class Frm_CadContato extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadContato().setVisible(true);
+                new Frm_CadTelefone().setVisible(true);
             }
         });
     }

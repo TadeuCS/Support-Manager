@@ -6,7 +6,7 @@
 package Controller;
 
 import Model.TipoInformacao;
-import Util.Manager;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**

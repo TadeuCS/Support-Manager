@@ -7,7 +7,7 @@ package View.Home;
 
 import Controller.UsuarioDAO;
 import Model.Usuario;
-import Util.Criptografia;
+import Util.Classes.Criptografia;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 

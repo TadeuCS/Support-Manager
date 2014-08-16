@@ -6,8 +6,7 @@
 package Controller;
 
 import Model.Link;
-import Model.Status;
-import Util.Manager;
+import Util.Classes.Manager;
 import java.util.List;
 
 /**

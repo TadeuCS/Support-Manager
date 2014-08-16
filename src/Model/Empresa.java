@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Empresa.findByCodempresa", query = "SELECT e FROM Empresa e WHERE e.codempresa = :codempresa"),
     @NamedQuery(name = "Empresa.findByNomeFantasia", query = "SELECT e FROM Empresa e WHERE e.nomeFantasia = :nomeFantasia"),
     @NamedQuery(name = "Empresa.findByCnpjCpf", query = "SELECT e FROM Empresa e WHERE e.cnpjCpf = :cnpjCpf"),
-    @NamedQuery(name = "Empresa.findByTelefone", query = "SELECT e FROM Empresa e WHERE e.telefone = :telefone")})
+    @NamedQuery(name = "Empresa.findByTelefone", query = "SELECT e FROM Empresa e WHERE e.telefone = :telefone"),
+    @NamedQuery(name = "Empresa.findByCodcontato", query = "SELECT e FROM Empresa e WHERE e.codcontato = :codcontato")})
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +50,12 @@ public class Empresa implements Serializable {
     @Basic(optional = false)
     @Column(name = "TELEFONE")
     private String telefone;
+    @Basic(optional = false)
+    @Column(name = "CODCONTATO")
+    private int codcontato;
+    @JoinColumn(name = "CODTELEFONE", referencedColumnName = "CODTELEFONE")
+    @ManyToOne(optional = false)
+    private Telefone codtelefone;
     @JoinColumn(name = "CODEMAIL", referencedColumnName = "CODEMAIL")
     @ManyToOne(optional = false)
     private Email codemail;
@@ -60,11 +67,12 @@ public class Empresa implements Serializable {
         this.codempresa = codempresa;
     }
 
-    public Empresa(Integer codempresa, String nomeFantasia, String cnpjCpf, String telefone) {
+    public Empresa(Integer codempresa, String nomeFantasia, String cnpjCpf, String telefone, int codcontato) {
         this.codempresa = codempresa;
         this.nomeFantasia = nomeFantasia;
         this.cnpjCpf = cnpjCpf;
         this.telefone = telefone;
+        this.codcontato = codcontato;
     }
 
     public Integer getCodempresa() {
@@ -97,6 +105,22 @@ public class Empresa implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public int getCodcontato() {
+        return codcontato;
+    }
+
+    public void setCodcontato(int codcontato) {
+        this.codcontato = codcontato;
+    }
+
+    public Telefone getCodtelefone() {
+        return codtelefone;
+    }
+
+    public void setCodtelefone(Telefone codtelefone) {
+        this.codtelefone = codtelefone;
     }
 
     public Email getCodemail() {

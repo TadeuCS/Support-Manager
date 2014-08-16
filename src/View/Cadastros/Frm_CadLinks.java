@@ -9,7 +9,7 @@ import Controller.AplicativoDAO;
 import Controller.LinksDAO;
 import Model.Aplicativo;
 import Model.Link;
-import Util.FixedLengthDocument;
+import Util.Classes.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
 /**

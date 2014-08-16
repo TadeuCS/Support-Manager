@@ -39,7 +39,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
                     usuarioDAO.lista().get(i).getCodusuario().toString(),
                     usuarioDAO.lista().get(i).getUsuario(),
                     usuarioDAO.lista().get(i).getEmail(),
-                    usuarioDAO.lista().get(i).getBloqueado()
+//                    usuarioDAO.lista().get(i).getCodstatuspessoa()
                 };
                 model.addRow(linha);
                 i++;

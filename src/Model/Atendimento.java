@@ -89,9 +89,9 @@ public class Atendimento implements Serializable {
     @Column(name = "DATA_SOLUCAO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataSolucao;
-    @JoinColumn(name = "CODAVALIACAO", referencedColumnName = "CODAVALIACAO")
+    @JoinColumn(name = "CODSTATUSATENDIMENTO", referencedColumnName = "CODSTATUSATENDIMENTO")
     @ManyToOne(optional = false)
-    private Avaliacao codavaliacao;
+    private StatusAtendimento codstatusatendimento;
     @JoinColumn(name = "CODORIGEM", referencedColumnName = "CODORIGEM")
     @ManyToOne(optional = false)
     private Origem codorigem;
@@ -107,9 +107,6 @@ public class Atendimento implements Serializable {
     @JoinColumn(name = "CODTIPOATENDIMENTO", referencedColumnName = "CODTIPOATENDIMENTO")
     @ManyToOne(optional = false)
     private TipoAtendimento codtipoatendimento;
-    @JoinColumn(name = "CODSTATUS", referencedColumnName = "CODSTATUS")
-    @ManyToOne(optional = false)
-    private Status codstatus;
 
     public Atendimento() {
     }
@@ -237,12 +234,12 @@ public class Atendimento implements Serializable {
         this.dataSolucao = dataSolucao;
     }
 
-    public Avaliacao getCodavaliacao() {
-        return codavaliacao;
+    public StatusAtendimento getCodstatusatendimento() {
+        return codstatusatendimento;
     }
 
-    public void setCodavaliacao(Avaliacao codavaliacao) {
-        this.codavaliacao = codavaliacao;
+    public void setCodstatusatendimento(StatusAtendimento codstatusatendimento) {
+        this.codstatusatendimento = codstatusatendimento;
     }
 
     public Origem getCodorigem() {
@@ -283,14 +280,6 @@ public class Atendimento implements Serializable {
 
     public void setCodtipoatendimento(TipoAtendimento codtipoatendimento) {
         this.codtipoatendimento = codtipoatendimento;
-    }
-
-    public Status getCodstatus() {
-        return codstatus;
-    }
-
-    public void setCodstatus(Status codstatus) {
-        this.codstatus = codstatus;
     }
 
     @Override

@@ -11,13 +11,12 @@ import Controller.SegmentoDAO;
 import Enums.EstadosENUM;
 import Enums.TipoPessoaENUM;
 import Model.Cliente;
-import Model.Contato;
+import Model.Telefone;
 import Model.Endereco;
 import Model.Link;
 import Model.LinkCliente;
-import Util.CompletaData;
-import Util.Data;
-import Util.IntegerDocument;
+import Util.Classes.Data;
+import Util.Classes.IntegerDocument;
 import java.awt.Event;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
@@ -41,10 +40,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private AplicativoDAO aplicativoDAO;
     private TipoPessoaENUM tipoPessoaENUM;
     private EstadosENUM estadosENUM;
-    private CompletaData c;
     Cliente cliente;
     Endereco endereco;
-    Contato contato;
+    Telefone contato;
     Link link;
     LinkCliente linksClientes;
     DefaultTableModel model;
@@ -53,9 +51,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         initComponents();
         
         setVisible(true);
-        data = new Data();
         abas.setEnabled(false);
-        c = new CompletaData();
+        data = new Data();
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
@@ -126,82 +123,82 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         }
 
     }
+//
+//    public void getCliente(Cliente cliente) {
+//        //dados da aba dados pessoais
+//        txt_codigo.setText(cliente.getCodcliente() + "");
+//        cbx_tipo.setSelectedItem(cliente.getCodtipopessoa());
+//        txt_cpf.setText(cliente.getCnpjCpf());
+//        txt_inscEstadual.setText(cliente.getInscricaoEstadual());
+//        txt_razaoSocial.setText(cliente.getRazaoSocial());
+//        txt_nomeFantasia.setText(cliente.getNomeFantasia());
+//        txt_referencia.setText(cliente.getReferencia() + "");
+//        txt_responsavel.setText(cliente.getResponsavel());
+//        txt_email.setText(cliente.getEmail());
+//        txt_data.setText(cliente.getDataAtualizacao() + "");
+//        cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
+//        if (cliente.getCodstatuspessoa().equals("S") == true) {
+//            chx_bloqueado.setSelected(true);
+//        } else {
+//            chx_bloqueado.setSelected(false);
+//        }
+//        //dados da aba endereco
+//        txt_cep.setText(cliente.getEnderecoList().get(0).getCep());
+//        txt_rua.setText(cliente.getEnderecoList().get(0).getRua());
+//        txt_cidade.setText(cliente.getEnderecoList().get(0).getCodcidade().getDescricao());
+//        cbx_estados.setSelectedItem(cliente.getEnderecoList().get(0).getCodcidade().getCoduf().getDescricao());
+//        txt_bairro.setText(cliente.getEnderecoList().get(0).getBairro());
+//        txt_numero.setText(cliente.getEnderecoList().get(0).getNumero() + "");
+//        txt_complemento.setText(cliente.getEnderecoList().get(0).getComplemento());
+//
+//        //dados da aba telefones
+//        listaTelefones(cliente);
+//        txt_contato.setText(null);
+//        txt_telefone.setText(null);
+//
+//        //dados da aba links
+//        listaLinks(cliente);
+//        txt_quantidade.setText(null);
+//    }
+//
+//    public void setCliente() {
+//        //dados da aba dados pessoais
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Date data = new Date();
+//        sdf.format(txt_data.getText());
+//        cliente = new Cliente();
+//        cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
+//        cliente.getCodtipopessoa().setCodtipopessoa(WIDTH);
+//        cliente.setCnpjCpf(txt_cpf.getText());
+//        cliente.setInscricaoEstadual(txt_inscEstadual.getText());
+//        cliente.setRazaoSocial(txt_razaoSocial.getText());
+//        cliente.setNomeFantasia(txt_nomeFantasia.getText());
+//        cliente.setResponsavel(txt_responsavel.getText());
+//        cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
+//        cliente.setEmail(txt_email.getText());
+//        cliente.setDataAtualizacao(data);
+//        cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
+//        if (chx_bloqueado.getSelectedObjects() != null) {
+//            cliente.setBloqueado('S');
+//        } else {
+//            cliente.setBloqueado('N');
+//        }
+//        //dados da aba endereco
+//        cliente.getEnderecoList().add(setEndereco(cliente));
+//
+//    }
 
-    public void getCliente(Cliente cliente) {
-        //dados da aba dados pessoais
-        txt_codigo.setText(cliente.getCodcliente() + "");
-        cbx_tipo.setSelectedItem(cliente.getTipoPessoa());
-        txt_cpf.setText(cliente.getCnpjCpf());
-        txt_inscEstadual.setText(cliente.getInscricaoEstadual());
-        txt_razaoSocial.setText(cliente.getRazaoSocial());
-        txt_nomeFantasia.setText(cliente.getNomeFantasia());
-        txt_referencia.setText(cliente.getReferencia() + "");
-        txt_responsavel.setText(cliente.getResponsavel());
-        txt_email.setText(cliente.getEmail());
-        txt_data.setText(cliente.getDataAtualizacao() + "");
-        cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
-        if (cliente.getBloqueado().equals("S") == true) {
-            chx_bloqueado.setSelected(true);
-        } else {
-            chx_bloqueado.setSelected(false);
-        }
-        //dados da aba endereco
-        txt_cep.setText(cliente.getEnderecoList().get(0).getCep());
-        txt_rua.setText(cliente.getEnderecoList().get(0).getRua());
-        txt_cidade.setText(cliente.getEnderecoList().get(0).getCidade());
-        cbx_estados.setSelectedItem(cliente.getEnderecoList().get(0).getEstado());
-        txt_bairro.setText(cliente.getEnderecoList().get(0).getBairro());
-        txt_numero.setText(cliente.getEnderecoList().get(0).getNumero() + "");
-        txt_complemento.setText(cliente.getEnderecoList().get(0).getComplemento());
-
-        //dados da aba telefones
-        listaTelefones(cliente);
-        txt_contato.setText(null);
-        txt_telefone.setText(null);
-
-        //dados da aba links
-        listaLinks(cliente);
-        txt_quantidade.setText(null);
-    }
-
-    public void setCliente() {
-        //dados da aba dados pessoais
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date data = new Date();
-        sdf.format(txt_data.getText());
-        cliente = new Cliente();
-        cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
-        cliente.setTipoPessoa(cbx_tipo.getSelectedItem().toString());
-        cliente.setCnpjCpf(txt_cpf.getText());
-        cliente.setInscricaoEstadual(txt_inscEstadual.getText());
-        cliente.setRazaoSocial(txt_razaoSocial.getText());
-        cliente.setNomeFantasia(txt_nomeFantasia.getText());
-        cliente.setResponsavel(txt_responsavel.getText());
-        cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
-        cliente.setEmail(txt_email.getText());
-        cliente.setDataAtualizacao(data);
-        cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
-        if (chx_bloqueado.getSelectedObjects() != null) {
-            cliente.setBloqueado('S');
-        } else {
-            cliente.setBloqueado('N');
-        }
-        //dados da aba endereco
-        cliente.getEnderecoList().add(setEndereco(cliente));
-
-    }
-
-    public void setContatos(Cliente cliente) {
+    public void setTelefones(Cliente cliente) {
         try {
-            contato = new Contato();
+            contato = new Telefone();
             model = (DefaultTableModel) tb_telefones.getModel();
-            contato.setNome(txt_contato.getText());
+            contato.setDescricao(txt_contato.getText());
             contato.setTelefone(txt_contato.getText());
-            String[] linha = new String[]{contato.getNome(), contato.getTelefone()};
+            String[] linha = new String[]{contato.getDescricao(), contato.getTelefone()};
             model.addRow(linha);
-            cliente.getContatoList().add(contato);
+            cliente.getTelefoneList().add(contato);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir o Contato na lista!");
+            JOptionPane.showMessageDialog(null, "Erro ao inserir o Telefone na lista!");
         }
     }
 
@@ -212,8 +209,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             model = (DefaultTableModel) tb_telefones.getModel();
             link.setCodaplicativo(aplicativoDAO.buscaAplicativo(cbx_aplicativo.getSelectedItem().toString()));
             link.setDescricao(cbx_aplicativo.getSelectedItem().toString());
-            linksClientes.setCodcliente(cliente);
-            linksClientes.setCodlink(link);
+            linksClientes.setCliente(cliente);
+            linksClientes.setLink(link);
             linksClientes.setQuantidade(Integer.parseInt(txt_quantidade.getText()));
             String[] linha = new String[]{link.getDescricao(), txt_quantidade.getText()};
             model.addRow(linha);
@@ -227,32 +224,32 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         endereco = new Endereco();
         endereco.setBairro(txt_bairro.getText());
         endereco.setCep(txt_cep.getText());
-        endereco.setCidade(txt_cidade.getText());
+        endereco.getCodcidade().setDescricao(txt_cidade.getText());
         endereco.setComplemento(txt_complemento.getText());
-        endereco.setEstado(cbx_estados.getSelectedItem().toString());
+        endereco.getCodcidade().setDescricao(cbx_estados.getSelectedItem().toString());
         endereco.setNumero(Integer.parseInt(txt_numero.getText()));
         endereco.setRua(txt_rua.getText());
         endereco.setCodcliente(cliente);
         return endereco;
     }
-
-    public void listaTelefones(Cliente cliente) {
-        clienteDAO = new ClienteDAO();
-        model = (DefaultTableModel) tb_telefones.getModel();
-        try {
-            int i = 0;
-            tb_telefones.removeAll();
-            while (i < clienteDAO.listaContatosByCliente(cliente).size()) {
-                String[] linha = new String[]{
-                    clienteDAO.listaContatosByCliente(cliente).get(i).getNome(),
-                    clienteDAO.listaContatosByCliente(cliente).get(i).getTelefone(),};
-                model.addRow(linha);
-                i++;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
+//
+//    public void listaTelefones(Cliente cliente) {
+//        clienteDAO = new ClienteDAO();
+//        model = (DefaultTableModel) tb_telefones.getModel();
+//        try {
+//            int i = 0;
+//            tb_telefones.removeAll();
+//            while (i < clienteDAO.listaContatosByCliente(cliente).size()) {
+//                String[] linha = new String[]{
+//                    clienteDAO.listaTelefonesByCliente(cliente).get(i).getNome(),
+//                    clienteDAO.listaTelefonesByCliente(cliente).get(i).getTelefone(),};
+//                model.addRow(linha);
+//                i++;
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e);
+//        }
+//    }
 
     public void listaLinks(Cliente cliente) {
         clienteDAO = new ClienteDAO();
@@ -262,7 +259,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             tb_telefones.removeAll();
             while (i < clienteDAO.listalinksByCliente(cliente).size()) {
                 String[] linha = new String[]{
-                    clienteDAO.listalinksByCliente(cliente).get(i).getCodlink().getDescricao(),
+                    clienteDAO.listalinksByCliente(cliente).get(i).getLink().getDescricao(),
                     clienteDAO.listalinksByCliente(cliente).get(i).getQuantidade() + ""};
                 model.addRow(linha);
                 i++;
@@ -1132,7 +1129,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_numeroActionPerformed
 
     private void btn_inserirTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirTelefoneActionPerformed
-        setContatos(cliente);
+        setTelefones(cliente);
     }//GEN-LAST:event_btn_inserirTelefoneActionPerformed
 
     private void btn_removerTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerTelefoneActionPerformed

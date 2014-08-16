@@ -9,7 +9,7 @@ import Controller.AplicativoDAO;
 import Controller.AplicativoDAO;
 import Model.Aplicativo;
 import Model.Aplicativo;
-import Util.FixedLengthDocument;
+import Util.Classes.FixedLengthDocument;
 import javax.swing.JOptionPane;
 
 /**

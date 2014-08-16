@@ -10,7 +10,7 @@ import Controller.TipoInformacaoDAO;
 import Controller.UsuarioDAO;
 import Model.Informacao;
 import Model.TipoInformacao;
-import Util.FixedLengthDocument;
+import Util.Classes.FixedLengthDocument;
 import View.Home.Frm_Principal;
 import java.util.Date;
 import javax.swing.JOptionPane;

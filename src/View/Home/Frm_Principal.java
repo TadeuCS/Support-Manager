@@ -8,7 +8,6 @@ package View.Home;
 import View.Cadastros.Frm_CadAplicativo;
 import View.Cadastros.Frm_CadCEP;
 import View.Cadastros.Frm_CadClientes;
-import View.Cadastros.Frm_CadContato;
 import View.Cadastros.Frm_CadEmpresa;
 import View.Cadastros.Frm_CadGrupo;
 import View.Cadastros.Frm_CadInformacao;
@@ -16,7 +15,8 @@ import View.Cadastros.Frm_CadLinks;
 import View.Cadastros.Frm_CadOrigem;
 import View.Cadastros.Frm_CadPrioridade;
 import View.Cadastros.Frm_CadSegmento;
-import View.Cadastros.Frm_CadStatus;
+import View.Cadastros.Frm_CadStatusAtendimento;
+import View.Cadastros.Frm_CadTelefone;
 import View.Cadastros.Frm_CadTipoAtendimento;
 import View.Cadastros.Frm_CadTipoInformacao;
 import View.Cadastros.Frm_CadUsuario;
@@ -450,7 +450,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        Frm_CadStatus s = new Frm_CadStatus();
+        Frm_CadStatusAtendimento s = new Frm_CadStatusAtendimento();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -482,7 +482,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
-        Frm_CadContato f = new Frm_CadContato();
+        Frm_CadTelefone f = new Frm_CadTelefone();
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
