@@ -8,8 +8,6 @@ package View.Cadastros;
 import Controller.AplicativoDAO;
 import Controller.ClienteDAO;
 import Controller.SegmentoDAO;
-import Enums.EstadosENUM;
-import Enums.TipoPessoaENUM;
 import Model.Cliente;
 import Model.Telefone;
 import Model.Endereco;
@@ -18,10 +16,7 @@ import Model.LinkCliente;
 import Util.Classes.Data;
 import Util.Classes.IntegerDocument;
 import java.awt.Event;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -38,8 +33,6 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     Data data;
     private SegmentoDAO segmentoDAO;
     private AplicativoDAO aplicativoDAO;
-    private TipoPessoaENUM tipoPessoaENUM;
-    private EstadosENUM estadosENUM;
     Cliente cliente;
     Endereco endereco;
     Telefone contato;
@@ -57,8 +50,6 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
         txt_quantidade.setDocument(new IntegerDocument(2));
-        cbx_tipo.setModel(new DefaultComboBoxModel<>(tipoPessoaENUM.values()));
-        cbx_estados.setModel(new DefaultComboBoxModel<>(estadosENUM.values()));
         cbx_estados.setSelectedItem("MG");
         try {
             carregaSegmentos();

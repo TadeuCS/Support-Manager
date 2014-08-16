@@ -41,9 +41,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_senha.setDocument(new FixedLengthDocument(18));
         txt_confirmaSenha.setDocument(new FixedLengthDocument(18));
         codigoUsuario = 0;
-        carregaTipoUsuarios();
+//        carregaTipoUsuarios();
         camposOFF();
-
     }
 
     public static int getCodigoUsuario() {
