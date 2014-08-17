@@ -5,8 +5,10 @@
  */
 package View.Cadastros;
 
+import Controller.StatusPessoaDAO;
 import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
+import Model.StatusPessoa;
 import Model.TipoUsuario;
 import Model.Usuario;
 import Util.Classes.Criptografia;
@@ -15,10 +17,13 @@ import Util.Classes.IntegerDocument;
 import Util.Classes.ValidarCpf;
 import View.Consultas.Frm_ConUsuarios;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -29,22 +34,25 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     UsuarioDAO usuarioDAO;
     Usuario usuario;
     TipoUsuarioDAO tipoUsuarioDAO;
+    StatusPessoaDAO statusPessoaDAO;
     DefaultTableModel model;
     private static int codigoUsuario;
 
     public Frm_CadUsuario() {
         initComponents();
         setVisible(true);
+        btn_bloqueado.setToolTipText("Clique aqui para mudar para SIM");
         txt_codigo.setDocument(new IntegerDocument(3));
         txt_nome.setDocument(new FixedLengthDocument(100));
         txt_usuario.setDocument(new FixedLengthDocument(20));
         txt_senha.setDocument(new FixedLengthDocument(18));
         txt_confirmaSenha.setDocument(new FixedLengthDocument(18));
         codigoUsuario = 0;
-//        carregaTipoUsuarios();
+        carregaTipoUsuarios();
         camposOFF();
     }
 
+    //inicio das validações da interface
     public static int getCodigoUsuario() {
         return codigoUsuario;
     }
@@ -66,7 +74,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_nome.setEnabled(false);
         txt_senha.setEnabled(false);
         txt_usuario.setEnabled(false);
-        cbx_tipo.setEnabled(false);
+        cbx_tipoUsuario.setEnabled(false);
         rbt_masculino.setEnabled(false);
         rbt_feminino.setEnabled(false);
         btn_bloqueado.setEnabled(false);
@@ -85,62 +93,51 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_nome.setEnabled(true);
         txt_senha.setEnabled(true);
         txt_usuario.setEnabled(true);
-        cbx_tipo.setEnabled(true);
+        cbx_tipoUsuario.setEnabled(true);
         rbt_masculino.setEnabled(true);
         rbt_feminino.setEnabled(true);
         btn_bloqueado.setEnabled(true);
     }
 
-    public void carregaTipoUsuarios() {
-        tipoUsuarioDAO = new TipoUsuarioDAO();
-        try {
-            int i = 0;
-            while (i < tipoUsuarioDAO.lista().size()) {
-                String linha = tipoUsuarioDAO.lista().get(i).getDescricao();
-                cbx_tipo.addItem(linha);
-                i++;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void buscaUsuario() {
-        try {
-            usuarioDAO = new UsuarioDAO();
-            usuario = new Usuario();
-            usuario = usuarioDAO.findByCodigo(codigoUsuario);
-            carregaUsuario(usuario);
-            txt_operacao.setText("CONSULTA");
-            camposOFF();
-            btn_inclusao.setEnabled(false);
-            btn_consulta.setEnabled(false);
-            btn_cancelar.setEnabled(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
-        }
-    }
-
-    public void carregaUsuario(Usuario usuario) {
-        txt_codigo.setText(usuario.getCodusuario().toString());
-        txt_cpf.setText(usuario.getCpf());
-        txt_email.setText(usuario.getEmail());
-        txt_nome.setText(usuario.getNome());
-        txt_usuario.setText(usuario.getUsuario());
-        cbx_tipo.setSelectedItem(usuario.getCodtipousuario().getDescricao());
-        setSexo(usuario);
-        setBloqueado(usuario);
-    }
-
     public void booleanButton() {
         if (btn_bloqueado.getText().equals("SIM") == true) {
-            btn_bloqueado.setText("NAO");
+            btn_bloqueado.setText("NÃO");
+            btn_bloqueado.setToolTipText("Clique aqui para mudar para SIM");
         } else {
             btn_bloqueado.setText("SIM");
+            btn_bloqueado.setToolTipText("Clique aqui para mudar para NÃO");
         }
     }
 
-    public void groupRadions(int selecionado) {
+    public boolean validarEmail(String email) {
+        boolean isEmailIdValid = false;
+        if (email != null && email.length() > 0) {
+            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.matches()) {
+                isEmailIdValid = true;
+            }
+        }
+        return isEmailIdValid;
+    }
+
+    public void trocaMascara() throws ParseException {
+        if (cbx_tipoUsuario.getSelectedIndex() == 0) {
+            txt_cpf.setValue(null);
+            MaskFormatter cpf = new MaskFormatter("###.###.###-##");
+            txt_cpf.setFormatterFactory(
+                    new DefaultFormatterFactory(cpf));
+        } else {
+            txt_cpf.setValue(null);
+            MaskFormatter cnpj = new MaskFormatter("##.###.###/####-##");
+            txt_cpf.setFormatterFactory(
+                    new DefaultFormatterFactory(cnpj));
+        }
+        txt_cpf.requestFocus();
+    }
+
+    public void trocaSexo(int selecionado) {
         if (selecionado == 1) {
             rbt_feminino.setSelected(false);
             rbt_masculino.setSelected(true);
@@ -150,35 +147,90 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             rbt_masculino.setSelected(false);
         }
     }
+    //Fim das validações da interface
 
-    public void setBloqueado(Usuario usuario) {
-        if (usuario.getCodstatuspessoa().equals("N") == true) {
+    public void getUsuario(Usuario usuario) {
+        if (usuario.getCodusuario().equals("") == false) {
+            txt_codigo.setText(usuario.getCodusuario().toString());
+        } 
+            txt_cpf.setText(usuario.getCpf());
+            txt_email.setText(usuario.getEmail());
+            txt_nome.setText(usuario.getNome());
+            txt_usuario.setText(usuario.getUsuario());
+            cbx_tipoUsuario.setSelectedItem(usuario.getCodtipousuario().getDescricao());
+            setSexo(usuario.getSexo().toString());
+            setBloqueado(usuario.getCodstatuspessoa().getDescricao());
+        
+    }
+
+    public void setUsuario() {
+        usuarioDAO = new UsuarioDAO();
+        usuario = new Usuario();
+        if (txt_codigo.getText().equals("") == false) {
+            usuario.setCodusuario(Integer.parseInt(txt_codigo.getText()));
+        } 
+            usuario.setCpf(txt_cpf.getText());
+            usuario.setEmail(txt_email.getText());
+            usuario.setNome(txt_nome.getText());
+            usuario.setUsuario(txt_usuario.getText());
+
+            usuario.setSenha(Criptografia.criptografar(txt_senha.getText()));
+            usuario.setSexo(getSexo());
+            usuario.setCodtipousuario(getTipoUsuario());
+            usuario.setCodstatuspessoa(getBloqueado());
+    }
+
+    public void setBloqueado(String status) {
+        if (status.equals("DESBLOQUEADO") == true) {
             btn_bloqueado.setText("NÃO");
         } else {
             btn_bloqueado.setText("SIM");
         }
     }
 
-    public void setSexo(Usuario usuario) {
-        if (usuario.getSexo().compareTo('F') == 0) {
+    public StatusPessoa getBloqueado() {
+        statusPessoaDAO = new StatusPessoaDAO();
+        if (btn_bloqueado.getText().equals("SIM") == false) {
+            return statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO");
+        } else {
+            return statusPessoaDAO.buscaStatusPessoa("BLOQUEADO");
+        }
+    }
+    public void setSexo(String sexo) {
+        if (sexo.toUpperCase().equals("F") == true) {
             rbt_feminino.setSelected(true);
         } else {
             rbt_masculino.setSelected(true);
         }
     }
 
-    public void getSexo(Usuario usuario) {
-        String sexo = null;
+    public Character getSexo() {
         if (rbt_feminino.getSelectedObjects() != null) {
-            usuario.setSexo('F');
+            return 'F';
         } else {
-            if (rbt_masculino.getSelectedObjects() != null) {
-                usuario.setSexo('M');
-            }
+            return 'M';
         }
     }
 
-    public void validaNullos(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha) {
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuarioDAO.buscaTipoUsuario(cbx_tipoUsuario.getSelectedItem().toString());
+    }
+
+    public void carregaTipoUsuarios() {
+        tipoUsuarioDAO = new TipoUsuarioDAO();
+        try {
+            int i = 0;
+            while (i < tipoUsuarioDAO.lista().size()) {
+                String linha = tipoUsuarioDAO.lista().get(i).getDescricao();
+                cbx_tipoUsuario.addItem(linha);
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void validaNullos(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha, StatusPessoa bloqueado, TipoUsuario tipo) {
         if (nome.equals("") == true) {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
             txt_nome.requestFocus();
@@ -224,12 +276,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                                             } else {
                                                 tipoUsuarioDAO = new TipoUsuarioDAO();
                                                 if (txt_operacao.getText().equals("INCLUSÃO") == true) {
-                                                    salva(codigo, nome, cpf, email, usuario, senha, btn_bloqueado.getText().substring(0, 1),
-                                                            tipoUsuarioDAO.buscaTipoUsuario(cbx_tipo.getSelectedItem().toString()));
+                                                    salva();
+
                                                 } else {
                                                     if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
-                                                        alterar(codigo, nome, cpf, email, usuario, senha, btn_bloqueado.getText().substring(0, 1),
-                                                                tipoUsuarioDAO.buscaTipoUsuario(cbx_tipo.getSelectedItem().toString()));
+                                                        alterar();
                                                     }
                                                 }
                                             }
@@ -259,42 +310,23 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         rbt_masculino.setSelected(false);
     }
 
-    public void salva(String codigo, String nome, String cpf, String email, String user,
-            String senha, String bloqueado, TipoUsuario tipo) {
+    //Metodos do CRUD
+    public void salva() {
         try {
-            usuarioDAO = new UsuarioDAO();
-            usuario = new Usuario();
-            getSexo(usuario);
-            usuario.setCodtipousuario(tipo);
-            usuario.setUsuario(user);
-            usuario.setSenha(Criptografia.criptografar(senha));
-            usuario.setCpf(cpf);
-            usuario.setEmail(email);
-            usuario.setNome(nome);
-//            usuario.getCodstatuspessoa().setDescricao("Bloqueado");
+            setUsuario();
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Salvo com Sucesso!");
             limpaCampos();
         } catch (Exception e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario\n" + "Usuário já cadastrado!", "Alerta", JOptionPane.ERROR_MESSAGE);
 
         }
     }
 
-    public void alterar(String codigo, String nome, String cpf, String email, String user,
-            String senha, String bloqueado, TipoUsuario tipo) {
+    public void alterar() {
         try {
-            usuarioDAO = new UsuarioDAO();
-            usuario = new Usuario();
-            usuario.setCodusuario(codigoUsuario);
-            getSexo(usuario);
-            usuario.setCodtipousuario(tipo);
-            usuario.setUsuario(user);
-            usuario.setSenha(Criptografia.criptografar(senha));
-            usuario.setCpf(cpf);
-            usuario.setEmail(email);
-            usuario.setNome(nome);
-//            usuario.setBloqueado(bloqueado);
+            setUsuario();
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!");
             limpaCampos();
@@ -304,17 +336,20 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         }
     }
 
-    public static boolean validarEmail(String email) {
-        boolean isEmailIdValid = false;
-        if (email != null && email.length() > 0) {
-            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
-                isEmailIdValid = true;
-            }
+    public void buscar() {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuario = new Usuario();
+            usuario = usuarioDAO.findByCodigo(codigoUsuario);
+            getUsuario(usuario);
+            txt_operacao.setText("CONSULTA");
+            camposOFF();
+            btn_inclusao.setEnabled(false);
+            btn_consulta.setEnabled(false);
+            btn_cancelar.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
         }
-        return isEmailIdValid;
     }
 
     @SuppressWarnings("unchecked")
@@ -336,7 +371,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         btn_bloqueado = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        cbx_tipo = new javax.swing.JComboBox();
+        cbx_tipoUsuario = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txt_cpf = new javax.swing.JFormattedTextField();
@@ -381,7 +416,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         });
 
         btn_bloqueado.setText("NÃO");
-        btn_bloqueado.setToolTipText("Clique para Mudar a opção");
+        btn_bloqueado.setToolTipText("");
         btn_bloqueado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_bloqueadoActionPerformed(evt);
@@ -426,43 +461,41 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnl_dadosLayout.createSequentialGroup()
+                        .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_email)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbt_masculino)
+                        .addGap(14, 14, 14)
+                        .addComponent(rbt_feminino))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_dadosLayout.createSequentialGroup()
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txt_confirmaSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
                             .addComponent(txt_senha, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_usuario, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbt_masculino)
-                                .addGap(14, 14, 14)
-                                .addComponent(rbt_feminino))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbx_tipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 314, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_bloqueado))))
-                    .addGroup(pnl_dadosLayout.createSequentialGroup()
-                        .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnl_dadosLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_email))
-                            .addGroup(pnl_dadosLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_dadosLayout.createSequentialGroup()
+                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_nome)))
                 .addContainerGap())
         );
         pnl_dadosLayout.setVerticalGroup(
@@ -474,25 +507,29 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(txt_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbt_masculino)
+                        .addComponent(rbt_feminino)
+                        .addComponent(jLabel6))
+                    .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbt_masculino)
-                    .addComponent(rbt_feminino)
-                    .addComponent(jLabel6))
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbx_tipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8))
+                    .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -501,7 +538,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(txt_confirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pnl_botoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -556,7 +593,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txt_operacao)
+                .addComponent(txt_operacao, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -616,12 +653,12 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbt_femininoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_femininoActionPerformed
-        groupRadions(2);
+        trocaSexo(2);
     }//GEN-LAST:event_rbt_femininoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         validaNullos(txt_codigo.getText(), txt_nome.getText(), txt_cpf.getText(), txt_email.getText(), txt_usuario.getText(), txt_senha.getText(),
-                txt_confirmaSenha.getText());
+                txt_confirmaSenha.getText(), getBloqueado(), tipoUsuarioDAO.buscaTipoUsuario(cbx_tipoUsuario.getSelectedItem().toString()));
 
     }//GEN-LAST:event_btn_salvarActionPerformed
 
@@ -630,11 +667,12 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_bloqueadoActionPerformed
 
     private void rbt_masculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_masculinoActionPerformed
-        groupRadions(1);
+        trocaSexo(1);
     }//GEN-LAST:event_rbt_masculinoActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         txt_operacao.setText(null);
+        codigoUsuario = 0;
         limpaCampos();
         camposOFF();
     }//GEN-LAST:event_btn_cancelarActionPerformed
@@ -646,7 +684,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             txt_codigo.setEnabled(false);
             txt_nome.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!");
+            JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!\n"
+                    + "Consulte primeiro o usuario para poder altera-lo!");
         }
 
     }//GEN-LAST:event_btn_alteracaoActionPerformed
@@ -667,12 +706,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             if (codigoUsuario == 0) {
                 Frm_ConUsuarios f = new Frm_ConUsuarios();
             } else {
-                txt_codigo.setText(codigoUsuario + "");
                 try {
                     usuarioDAO = new UsuarioDAO();
                     usuario = new Usuario();
                     usuario = usuarioDAO.findByCodigo(codigoUsuario);
-                    carregaUsuario(usuario);
+                    getUsuario(usuario);
                     btn_alteracao.setEnabled(true);
                     btn_consulta.setEnabled(false);
                 } catch (Exception e) {
@@ -735,7 +773,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btn_consulta;
     private javax.swing.JButton btn_inclusao;
     private javax.swing.JButton btn_salvar;
-    private javax.swing.JComboBox cbx_tipo;
+    private javax.swing.JComboBox cbx_tipoUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

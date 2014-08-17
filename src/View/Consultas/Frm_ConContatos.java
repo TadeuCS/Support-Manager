@@ -58,7 +58,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
             } else {
                 Frm_CadUsuario f = new Frm_CadUsuario();
                 f.setCodigoUsuario(Integer.parseInt(tb_contatos.getValueAt(tb_contatos.getSelectedRow(), 0).toString()));
-                f.buscaUsuario();
+                f.buscar();
                 dispose();
             }
         }

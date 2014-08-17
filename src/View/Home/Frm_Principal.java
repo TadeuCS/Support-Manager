@@ -30,6 +30,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     public Frm_Principal() {
         initComponents();
+        setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
     }
@@ -40,8 +41,12 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     public void setUsuarioLogado(String usuarioLogado) {
         txt_usuarioLogado.setText(usuarioLogado);
-        if (Frm_Login.getUsuario().getSexo().equals('F') == true) {
-            lb_boasVindas.setText("Bem Vinda");
+        if (usuarioLogado.equals("ADMIN") == true) {
+            txt_usuarioLogado.setText("ADMINISTRADOR");
+        } else {
+            if (Frm_Login.getUsuario().getSexo().equals('F') == true) {
+                lb_boasVindas.setText("Bem Vinda");
+            }
         }
     }
 
@@ -385,6 +390,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenuItem27.setText("Sobre");
         jMenu14.add(jMenuItem27);
 
+        jMenuItem26.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem26.setText("Trocar de Usuário");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

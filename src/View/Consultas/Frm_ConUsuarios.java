@@ -39,8 +39,8 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
                     usuarioDAO.lista().get(i).getCodusuario().toString(),
                     usuarioDAO.lista().get(i).getUsuario(),
                     usuarioDAO.lista().get(i).getEmail(),
-//                    usuarioDAO.lista().get(i).getCodstatuspessoa().;
-                };
+                    usuarioDAO.lista().get(i).getCodstatuspessoa().getDescricao()};
+                
                 model.addRow(linha);
                 i++;
             }
@@ -58,7 +58,7 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
             } else {
                 Frm_CadUsuario f = new Frm_CadUsuario();
                 f.setCodigoUsuario(Integer.parseInt(tb_usuarios.getValueAt(tb_usuarios.getSelectedRow(), 0).toString()));
-                f.buscaUsuario();
+                f.buscar();
                 dispose();
             }
         }
@@ -77,11 +77,8 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
 
     public void limpaTabela() {
         try {
-            DefaultTableModel tblRemove = (DefaultTableModel) tb_usuarios.getModel();
-            while (tblRemove.getRowCount() > 0) {
-                for (int i = 1; i <= tblRemove.getRowCount(); i++) {
-                    tblRemove.removeRow(0);
-                }
+            while (0<model.getRowCount()) {
+                    model.removeRow(0);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -114,7 +111,7 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Usuário", "Email", "Bloqueado"
+                "Código", "Usuário", "Email", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -143,9 +140,9 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
             tb_usuarios.getColumnModel().getColumn(0).setMinWidth(45);
             tb_usuarios.getColumnModel().getColumn(0).setPreferredWidth(50);
             tb_usuarios.getColumnModel().getColumn(0).setMaxWidth(55);
-            tb_usuarios.getColumnModel().getColumn(3).setMinWidth(70);
-            tb_usuarios.getColumnModel().getColumn(3).setPreferredWidth(70);
-            tb_usuarios.getColumnModel().getColumn(3).setMaxWidth(70);
+            tb_usuarios.getColumnModel().getColumn(3).setMinWidth(100);
+            tb_usuarios.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tb_usuarios.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -254,7 +251,6 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
 
     private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
         Frm_CadUsuario f = new Frm_CadUsuario();
-        f.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_sairActionPerformed
 

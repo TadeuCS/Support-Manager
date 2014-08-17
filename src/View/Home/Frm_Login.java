@@ -32,6 +32,8 @@ public class Frm_Login extends javax.swing.JFrame {
     public Frm_Login() {
         initComponents();
         novo();
+        usuario.setUsuario("ADMIN");
+        usuario.setSenha(Criptografia.criptografar("adm123"));
     }
 
     public void novo() {
@@ -39,15 +41,27 @@ public class Frm_Login extends javax.swing.JFrame {
         usuarioDAO = new UsuarioDAO();
     }
 
+    public boolean isAdministrador(String user, String password) {
+        if ((usuario.getUsuario().equals(user) == true) && (usuario.getSenha().equals(password) == true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void logar(String usuario, String senha) {
         try {
-            if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
-                this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
+            if (isAdministrador(usuario, senha) == true) {
                 p = new Frm_Principal();
-                p.setVisible(true);
                 dispose();
             } else {
-                p.dispose();
+                if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
+                    this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
+                    p = new Frm_Principal();
+                    dispose();
+                } else {
+                    p.dispose();
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -204,7 +218,7 @@ public class Frm_Login extends javax.swing.JFrame {
 
     private void txt_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_senhaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            btn_entrar.requestFocus();
+            btn_entrar.doClick();
         }
     }//GEN-LAST:event_txt_senhaKeyPressed
 

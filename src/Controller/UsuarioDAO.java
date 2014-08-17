@@ -6,7 +6,6 @@
 package Controller;
 
 import Model.Usuario;
-import Util.Classes.Criptografia;
 import Util.Classes.Manager;
 import java.util.List;
 
@@ -16,26 +15,7 @@ import java.util.List;
  */
 public class UsuarioDAO extends Manager {
 
-    private Usuario usuario;
-
-    public UsuarioDAO() {
-        usuario = new Usuario();
-        usuario.setUsuario("admin".toUpperCase());
-        usuario.setSenha(Criptografia.criptografar("adm123"));
-        usuario.setCpf("1");
-        usuario.setEmail("teste@hotmail.com");
-        usuario.setNome("administrador");
-        usuario.setSexo('M');
-//        usuario.setCodtipousuario(null);
-//        usuario.setCodstatuspessoa();
-        try {
-            usuario.setCodusuario(consulta(usuario.getUsuario()).getCodusuario());
-        } catch (Exception e) {
-        } finally {
-            salvar(usuario);
-        }
-    }
-
+    StatusPessoaDAO statusPessoaDAO= new StatusPessoaDAO();
     public void salvar(Usuario usuario) {
         em.getTransaction().begin();
         em.merge(usuario);
@@ -64,8 +44,8 @@ public class UsuarioDAO extends Manager {
 
     public Usuario findByUsuarioAndSenha(String usuario, String senha) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT u FROM Usuario u where u.usuario = :user and u.senha= :password and u.bloqueado = :bloc")
-                .setParameter("user", usuario).setParameter("password", senha).setParameter("bloc", "N");
+        query = em.createQuery("SELECT u FROM Usuario u where u.usuario = :user and u.senha= :password and u.codstatuspessoa = :bloc")
+                .setParameter("user", usuario).setParameter("password", senha).setParameter("bloc", statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO"));
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }

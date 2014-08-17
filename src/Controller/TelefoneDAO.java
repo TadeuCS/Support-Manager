@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class TelefoneDAO extends Manager {
 
-    public void salvar(Telefone cntato) {
+    public void salvar(Telefone telefone) {
         em.getTransaction().begin();
-        em.merge(cntato);
+        em.merge(telefone);
         em.getTransaction().commit();
     }
     

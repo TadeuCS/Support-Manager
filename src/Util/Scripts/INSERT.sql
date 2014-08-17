@@ -1,8 +1,8 @@
 --INSERÇÃO DOS APLICATIVOS
 
-INSERT INTO smdados.aplicativo (`DESCRICAO`) 
+INSERT INTO smdados.aplicativo (`DESCRICAO`)
 	VALUES ('ATS');
-INSERT INTO smdados.aplicativo (`DESCRICAO`) 
+INSERT INTO smdados.aplicativo (`DESCRICAO`)
 	VALUES ('YUNES');
 
 --INSERÇÃO DAS ORIGENS
@@ -80,8 +80,12 @@ INSERT INTO smdados.status_pessoa (`DESCRICAO`)
 
 --INSERÇÕES DOS TIPOS DE PESSOA
 INSERT INTO smdados.tipo_pessoa (`DESCRICAO`) 
-	VALUES ('FISICA')
+	VALUES ('FISICA');
 INSERT INTO smdados.tipo_pessoa (`DESCRICAO`) 
-	VALUES ('JURIDICA')
+	VALUES ('JURIDICA');
+
+--INSERÇÕES DE USUARIO
+INSERT INTO smdados.usuario (`CPF`, `EMAIL`, `NOME`, `SENHA`, `SEXO`, `USUARIO`, `CODSTATUSPESSOA`, `CODTIPOUSUARIO`) 
+	VALUES ('1', '1', 'TADEU', '81dc9bdb52d04dc20036dbd8313ed055', 'F', 'TADEU', 1, 1);
 
 
