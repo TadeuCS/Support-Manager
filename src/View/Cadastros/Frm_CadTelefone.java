@@ -19,59 +19,61 @@ import javax.swing.table.DefaultTableModel;
 public class Frm_CadTelefone extends javax.swing.JFrame {
 
     private Grupo grupo;
-    private Telefone contato;
+    private Telefone telefone;
     TelefoneDAO telefoneDAO;
     GrupoDAO grupoDAO;
-    DefaultTableModel model;
 
     public Frm_CadTelefone() {
         initComponents();
+        setVisible(true);
+        carregaGrupos();
     }
 
-//    public void carregaTipos() {
-//        int i = 0;
-//        grupoDAO = new GrupoDAO();
-//        cbx_grupo.removeAllItems();
-//        try {
-//            while (i < telefoneDAO.lista().size()) {
-//                String linha = grupoDAO.lista().get(i).getDescricao();
-//                cbx_grupo.addItem(linha);
-//                i++;
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
-//        }
-//
-//    }
+    public void carregaGrupos() {
+        int i = 0;
 
-    public void validaCampos(String contato, String telefone, String grupo) {
-        if (contato.equals("") == true) {
-            JOptionPane.showMessageDialog(null, "Telefone em branco");
+        try {
+            cbx_grupo.removeAllItems();
+            grupoDAO = new GrupoDAO();
+            while (i < grupoDAO.lista().size()) {
+                String linha = grupoDAO.lista().get(i).getDescricao();
+                cbx_grupo.addItem(linha);
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
+        }
+
+    }
+
+    public void validaCampos(String grupo, String nome, String numTelefone){
+        if (nome.equals("") == true) {
+            JOptionPane.showMessageDialog(null, "Contato em branco!");
             txt_contato.requestFocus();
         } else {
-            if (telefone.equals("(  )     -    ") == true) {
+            if (numTelefone.equals("(  )     -    ") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone em branco");
                 txt_telefone.requestFocus();
             } else {
-                salvar(grupo, contato, telefone);
+                salvar(grupo, nome, numTelefone);
             }
         }
     }
 
     public void novo() {
-        contato = new Telefone();
+        telefone = new Telefone();
         grupo = new Grupo();
         telefoneDAO = new TelefoneDAO();
         grupoDAO = new GrupoDAO();
     }
 
-    public void salvar(String grupo, String nome, String telefone) {
+    public void salvar(String grupo, String nome, String numTelefone) {
         try {
             novo();
-            contato.setDescricao(txt_contato.getText());
-            contato.setTelefone(txt_telefone.getText());
-            contato.setCodgrupo(grupoDAO.consulta(grupo));
-            telefoneDAO.salvar(contato);
+            telefone.setCodgrupo(grupoDAO.consulta(grupo));
+            telefone.setDescricao(nome);
+            telefone.setTelefone(numTelefone);
+            telefoneDAO.salvar(telefone);
             JOptionPane.showMessageDialog(null, "Telefone Inserido com Sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o Telefone" + e);
@@ -206,7 +208,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        validaCampos(txt_contato.getText().toUpperCase(), txt_telefone.getText(), cbx_grupo.getSelectedItem().toString());
+        validaCampos(cbx_grupo.getSelectedItem().toString(),txt_contato.getText().toUpperCase(), txt_telefone.getText());
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed

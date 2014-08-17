@@ -15,23 +15,25 @@ public class Data {
      * Coverta "data" para inteiro E valida Mês e Dia verificando o retorno de
      * cada metodo
      */
-    public String completaData(String texto,String formato) {
+    public static String getData(String formato){
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         Date data = new Date();
-        sdf.format(data);
+        return sdf.format(data);
+    }
+    public String completaData(String texto,String formato) {
         if (texto.contains("  /  /    ")) {
-            texto = sdf.format(data);
+            texto = getData("dd/MM/yyyy");
         } else {
             if (texto.endsWith("/  /    ")) {
-                String dataAtual = sdf.format(data);
+                String dataAtual = getData("dd/MM/yyyy");
                 texto = dataAtual.replace(dataAtual.substring(0, 2), texto.substring(0, 2));
             } else {
                 if (texto.endsWith("/    ")) {
-                    String dataAtual = sdf.format(data);
+                    String dataAtual = getData("dd/MM/yyyy");
                     texto = texto.replaceAll("    ", dataAtual.substring(6, 10));
                 } else {
                     if ("  ".equals(texto.substring(8, 10))) {
-                        String dataAtual = sdf.format(data);
+                        String dataAtual = getData("dd/MM/yyyy");
                         texto = texto.replaceAll(texto.substring(6,8)+"  ", dataAtual.substring(6,8)+texto.substring(6,8));
                     }
                 }

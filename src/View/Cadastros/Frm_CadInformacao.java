@@ -10,6 +10,7 @@ import Controller.TipoInformacaoDAO;
 import Controller.UsuarioDAO;
 import Model.Informacao;
 import Model.TipoInformacao;
+import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
 import View.Home.Frm_Principal;
 import java.util.Date;
@@ -74,10 +75,9 @@ public class Frm_CadInformacao extends javax.swing.JFrame {
             txt_descricao.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir Informação");
-            txt_descricao.setText(usuario);
-            txt_descricao.requestFocus();
+            System.out.println(e);
+            cbx_tipo.requestFocus();
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -208,8 +208,8 @@ public class Frm_CadInformacao extends javax.swing.JFrame {
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         if (txt_descricao.getText().equals("") == false) {
-            Date data = new Date();
             f = new Frm_Principal();
+            Date data = new Date();
             salvar(txt_descricao.getText(), f.getUsuarioLogado(), data, cbx_tipo.getSelectedItem().toString());
         }
     }//GEN-LAST:event_btn_salvarActionPerformed

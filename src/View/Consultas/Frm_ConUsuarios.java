@@ -249,11 +249,6 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
-        Frm_CadUsuario f = new Frm_CadUsuario();
-        dispose();
-    }//GEN-LAST:event_btn_sairActionPerformed
-
     private void btn_selecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarActionPerformed
         selecionarUsuario();
     }//GEN-LAST:event_btn_selecionarActionPerformed
@@ -271,6 +266,11 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
     private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
 
     }//GEN-LAST:event_txt_usuarioKeyPressed
+
+    private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
+        Frm_CadUsuario f = new Frm_CadUsuario();
+        dispose();
+    }//GEN-LAST:event_btn_sairActionPerformed
 
     /**
      * @param args the command line arguments

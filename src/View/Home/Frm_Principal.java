@@ -22,7 +22,9 @@ import View.Cadastros.Frm_CadTipoInformacao;
 import View.Cadastros.Frm_CadUsuario;
 import View.Consultas.Frm_ConUsuarios;
 import View.Cadastros.Frm_CadTipoUsuario;
+import java.awt.Event;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Frm_Principal extends javax.swing.JFrame {
 
@@ -30,7 +32,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     public Frm_Principal() {
         initComponents();
-        setVisible(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
     }
@@ -111,6 +112,11 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bem Vindo");
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -390,7 +396,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenuItem27.setText("Sobre");
         jMenu14.add(jMenuItem27);
 
-        jMenuItem26.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem26.setText("Trocar de Usuário");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -497,6 +502,16 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
     }//GEN-LAST:event_jMenuItem36ActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == Event.ESCAPE) {
+            if (JOptionPane.showConfirmDialog(null, "Deseja realmente Sair?", "Saindo", 0) == 0) {
+                Frm_Login f = new Frm_Login();
+                f.setVisible(true);
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments

@@ -8,6 +8,7 @@ package View.Home;
 import Controller.UsuarioDAO;
 import Model.Usuario;
 import Util.Classes.Criptografia;
+import java.awt.Event;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -53,11 +54,13 @@ public class Frm_Login extends javax.swing.JFrame {
         try {
             if (isAdministrador(usuario, senha) == true) {
                 p = new Frm_Principal();
+                p.setVisible(true);
                 dispose();
             } else {
                 if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
                     this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
                     p = new Frm_Principal();
+                    p.setVisible(true);
                     dispose();
                 } else {
                     p.dispose();
@@ -65,7 +68,7 @@ public class Frm_Login extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Usuário não existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Usuário não existe ou Bloqueado!", "Aviso", JOptionPane.ERROR_MESSAGE);
             txt_senha.setText(null);
             txt_usuario.setText(null);
             txt_usuario.requestFocus();
@@ -166,14 +169,16 @@ public class Frm_Login extends javax.swing.JFrame {
         pnl_fundoLayout.setHorizontalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fundoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_fundoLayout.setVerticalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fundoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,17 +215,17 @@ public class Frm_Login extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btn_sairActionPerformed
 
-    private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txt_senha.requestFocus();
-        }
-    }//GEN-LAST:event_txt_usuarioKeyPressed
-
     private void txt_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_senhaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             btn_entrar.doClick();
         }
     }//GEN-LAST:event_txt_senhaKeyPressed
+
+    private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
+        if(evt.getKeyCode()==Event.ENTER){
+            txt_senha.requestFocus();
+        }
+    }//GEN-LAST:event_txt_usuarioKeyPressed
 
     /**
      * @param args the command line arguments
