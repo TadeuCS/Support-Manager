@@ -78,8 +78,13 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar o Telefone" + e);
         }
+        limpaCampos();
     }
 
+    public void limpaCampos(){
+        txt_contato.setText(null);
+        txt_telefone.setText(null);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,12 +100,19 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         txt_telefone = new javax.swing.JFormattedTextField();
         btn_salvar = new javax.swing.JButton();
         btn_fechar = new javax.swing.JButton();
+        btn_cadGrupo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Grupo");
         setResizable(false);
 
         jLabel1.setText("Grupo:");
+
+        cbx_grupo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_grupoFocusGained(evt);
+            }
+        });
 
         txt_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -158,6 +170,13 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
             }
         });
 
+        btn_cadGrupo.setText("...");
+        btn_cadGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cadGrupoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
         pnl_fundo.setLayout(pnl_fundoLayout);
         pnl_fundoLayout.setHorizontalGroup(
@@ -168,7 +187,9 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_grupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_cadGrupo))
                     .addComponent(txt_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +203,8 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cadGrupo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -214,6 +236,14 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
         dispose();
     }//GEN-LAST:event_btn_fecharActionPerformed
+
+    private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
+        Frm_CadGrupo f = new Frm_CadGrupo();
+    }//GEN-LAST:event_btn_cadGrupoActionPerformed
+
+    private void cbx_grupoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_grupoFocusGained
+        carregaGrupos();
+    }//GEN-LAST:event_cbx_grupoFocusGained
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -253,6 +283,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cadGrupo;
     private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JComboBox cbx_grupo;

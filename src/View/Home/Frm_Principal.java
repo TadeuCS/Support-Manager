@@ -6,7 +6,6 @@
 package View.Home;
 
 import View.Cadastros.Frm_CadAplicativo;
-import View.Cadastros.Frm_CadCEP;
 import View.Cadastros.Frm_CadClientes;
 import View.Cadastros.Frm_CadEmpresa;
 import View.Cadastros.Frm_CadGrupo;
@@ -70,11 +69,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -214,13 +212,15 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem3);
 
-        jMenuItem2.setText("CEP");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem6.setText("Segmento");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem2);
+        jMenu4.add(jMenuItem6);
+
+        jMenu1.add(jMenu4);
 
         jMenu7.setText("Contato");
 
@@ -240,17 +240,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         jMenu7.add(jMenuItem35);
 
-        jMenu4.add(jMenu7);
-
-        jMenuItem6.setText("Segmento");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem6);
-
-        jMenu1.add(jMenu4);
+        jMenu1.add(jMenu7);
 
         jMenuItem13.setText("Empresa");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
@@ -468,10 +458,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadLinks f = new Frm_CadLinks();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        Frm_CadCEP f = new Frm_CadCEP();
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         Frm_CadSegmento f = new Frm_CadSegmento();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
@@ -575,7 +561,6 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem19;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem20;
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
