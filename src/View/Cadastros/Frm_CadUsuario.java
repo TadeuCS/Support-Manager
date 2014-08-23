@@ -197,11 +197,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         cbx_tipoUsuario.setSelectedItem(usuario.getCodtipousuario().getDescricao());
         setSexo(usuario.getSexo().toString());
         setBloqueado(usuario.getCodstatuspessoa().getDescricao());
-        listaContatosByUsuario(usuario);
+        listaTelefonesByUsuario(usuario);
         //contato
     }
 
-    public void listaContatosByUsuario(Usuario usuario) {
+    public void listaTelefonesByUsuario(Usuario usuario) {
         telefoneDAO = new TelefoneDAO();
         try {
             int i = 0;
@@ -453,6 +453,30 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             btn_cancelar.setEnabled(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
+        }
+    }
+
+    public void remove(String numeroTelefone) {
+        if (tb_telefones.getSelectedRowCount() == 1) {
+            telefone = new Telefone();
+            telefoneDAO = new TelefoneDAO();
+            try {
+            telefone = telefoneDAO.busca(numeroTelefone);    
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: "+numeroTelefone);
+                System.out.println(e);
+            }
+            
+            try {
+                telefoneDAO.apagar(telefone);
+                model.removeRow(tb_telefones.getSelectedRow());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Remover Telefone: " + numeroTelefone);
+                System.out.println(e);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione Uma linha para Remover!");
         }
     }
 
@@ -1074,11 +1098,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_grupoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (tb_telefones.getSelectedRowCount() == 1) {
-            model.removeRow(tb_telefones.getSelectedRow());
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione Uma linha para Remover!");
-        }
+        remove(tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -1092,7 +1112,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 

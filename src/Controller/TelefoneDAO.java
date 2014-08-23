@@ -28,10 +28,20 @@ public class TelefoneDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-
+    public void apagar(Telefone telefone){
+        em.getTransaction().begin();
+        em.remove(telefone);
+        em.getTransaction().commit();
+    }
+    public Telefone busca(String telefone){
+        em.getTransaction().begin();
+        query= em.createNamedQuery("Telefone.findByTelefone").setParameter("telefone", telefone);
+        em.getTransaction().commit();
+        return (Telefone) query.getSingleResult();
+    }
     public List<Telefone> listaByUsuario(Usuario usuario) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT t FROM Telefone t where t.codusuario= :usuario").setParameter("usuario", usuario);
+        query = em.createQuery("SELECT t FROM Telefone t where t.codusuario= :usuario order by t.descricao").setParameter("usuario", usuario);
         em.getTransaction().commit();
         return query.getResultList();
     }
