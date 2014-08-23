@@ -5,7 +5,9 @@
  */
 package Controller;
 
+import Model.Cliente;
 import Model.Link;
+import Model.Telefone;
 import Util.Classes.Manager;
 import java.util.List;
 
@@ -34,5 +36,10 @@ public class LinksDAO extends Manager {
         em.getTransaction().commit();
         return (Link) query.getSingleResult();
     }
-
+      public List<Link> listaLinksByCliente(Cliente cliente) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("LinkCliente.findByClientecodcliente").setParameter("clientecodcliente",cliente);
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }

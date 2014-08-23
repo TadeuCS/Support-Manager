@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Cliente;
 import Model.Telefone;
 import Model.Usuario;
 import Util.Classes.Manager;
@@ -28,20 +29,30 @@ public class TelefoneDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-    public void apagar(Telefone telefone){
+
+    public void apagar(Telefone telefone) {
         em.getTransaction().begin();
         em.remove(telefone);
         em.getTransaction().commit();
     }
-    public Telefone busca(String telefone){
+
+    public Telefone busca(String telefone) {
         em.getTransaction().begin();
-        query= em.createNamedQuery("Telefone.findByTelefone").setParameter("telefone", telefone);
+        query = em.createNamedQuery("Telefone.findByTelefone").setParameter("telefone", telefone);
         em.getTransaction().commit();
         return (Telefone) query.getSingleResult();
     }
+
     public List<Telefone> listaByUsuario(Usuario usuario) {
         em.getTransaction().begin();
         query = em.createQuery("SELECT t FROM Telefone t where t.codusuario= :usuario order by t.descricao").setParameter("usuario", usuario);
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+
+    public List<Telefone> listaTelefoneByCliente(Cliente cliente) {
+        em.getTransaction().begin();
+        query = em.createQuery("SELECT t FROM Telefone t where t.codcliente :cliente order by t.descricao").setParameter("cliente", cliente);
         em.getTransaction().commit();
         return query.getResultList();
     }
