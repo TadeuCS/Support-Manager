@@ -38,11 +38,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByCodcliente", query = "SELECT c FROM Cliente c WHERE c.codcliente = :codcliente"),
     @NamedQuery(name = "Cliente.findByReferencia", query = "SELECT c FROM Cliente c WHERE c.referencia = :referencia"),
-    @NamedQuery(name = "Cliente.findByRazaoSocial", query = "SELECT c FROM Cliente c WHERE c.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Cliente.findByNomeFantasia", query = "SELECT c FROM Cliente c WHERE c.nomeFantasia = :nomeFantasia"),
-    @NamedQuery(name = "Cliente.findByResponsavel", query = "SELECT c FROM Cliente c WHERE c.responsavel = :responsavel"),
+    @NamedQuery(name = "Cliente.findByRazaoSocial", query = "SELECT c FROM Cliente c WHERE c.razaoSocial = :razaoSocial"),
     @NamedQuery(name = "Cliente.findByCnpjCpf", query = "SELECT c FROM Cliente c WHERE c.cnpjCpf = :cnpjCpf"),
     @NamedQuery(name = "Cliente.findByInscricaoEstadual", query = "SELECT c FROM Cliente c WHERE c.inscricaoEstadual = :inscricaoEstadual"),
+    @NamedQuery(name = "Cliente.findByResponsavel", query = "SELECT c FROM Cliente c WHERE c.responsavel = :responsavel"),
     @NamedQuery(name = "Cliente.findByEmail", query = "SELECT c FROM Cliente c WHERE c.email = :email"),
     @NamedQuery(name = "Cliente.findByDataAtualizacao", query = "SELECT c FROM Cliente c WHERE c.dataAtualizacao = :dataAtualizacao")})
 public class Cliente implements Serializable {
@@ -55,14 +55,11 @@ public class Cliente implements Serializable {
     @Column(name = "REFERENCIA")
     private Integer referencia;
     @Basic(optional = false)
-    @Column(name = "RAZAO_SOCIAL")
-    private String razaoSocial;
-    @Basic(optional = false)
     @Column(name = "NOME_FANTASIA")
     private String nomeFantasia;
     @Basic(optional = false)
-    @Column(name = "RESPONSAVEL")
-    private String responsavel;
+    @Column(name = "RAZAO_SOCIAL")
+    private String razaoSocial;
     @Basic(optional = false)
     @Column(name = "CNPJ_CPF")
     private String cnpjCpf;
@@ -70,28 +67,34 @@ public class Cliente implements Serializable {
     @Column(name = "INSCRICAO_ESTADUAL")
     private String inscricaoEstadual;
     @Basic(optional = false)
+    @Column(name = "RESPONSAVEL")
+    private String responsavel;
+    @Basic(optional = false)
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "DATA_ATUALIZACAO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
-    @OneToMany(mappedBy = "codcliente")
-    private List<Telefone> telefoneList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
-    private List<Endereco> enderecoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Atendimento> atendimentoList;
     @JoinColumn(name = "CODTIPOPESSOA", referencedColumnName = "CODTIPOPESSOA")
     @ManyToOne(optional = false)
     private TipoPessoa codtipopessoa;
-    @JoinColumn(name = "CODSTATUSPESSOA", referencedColumnName = "CODSTATUSPESSOA")
-    @ManyToOne(optional = false)
-    private StatusPessoa codstatuspessoa;
     @JoinColumn(name = "CODSEGMENTO", referencedColumnName = "CODSEGMENTO")
     @ManyToOne(optional = false)
     private Segmento codsegmento;
+    @JoinColumn(name = "CODSTATUSPESSOA", referencedColumnName = "CODSTATUSPESSOA")
+    @ManyToOne(optional = false)
+    private StatusPessoa codstatuspessoa;
+    @JoinColumn(name = "CODPARCELA", referencedColumnName = "CODPARCELA")
+    @ManyToOne(optional = false)
+    private Parcela codparcela;
+    @OneToMany(mappedBy = "codcliente")
+    private List<Telefone> telefoneList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<LinkCliente> linkClienteList;
+    @OneToMany(mappedBy = "codcliente")
+    private List<Endereco> enderecoList;
 
     public Cliente() {
     }
@@ -100,13 +103,13 @@ public class Cliente implements Serializable {
         this.codcliente = codcliente;
     }
 
-    public Cliente(Integer codcliente, String razaoSocial, String nomeFantasia, String responsavel, String cnpjCpf, String inscricaoEstadual, String email) {
+    public Cliente(Integer codcliente, String nomeFantasia, String razaoSocial, String cnpjCpf, String inscricaoEstadual, String responsavel, String email) {
         this.codcliente = codcliente;
-        this.razaoSocial = razaoSocial;
         this.nomeFantasia = nomeFantasia;
-        this.responsavel = responsavel;
+        this.razaoSocial = razaoSocial;
         this.cnpjCpf = cnpjCpf;
         this.inscricaoEstadual = inscricaoEstadual;
+        this.responsavel = responsavel;
         this.email = email;
     }
 
@@ -126,14 +129,6 @@ public class Cliente implements Serializable {
         this.referencia = referencia;
     }
 
-    public String getRazaoSocial() {
-        return razaoSocial;
-    }
-
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
-    }
-
     public String getNomeFantasia() {
         return nomeFantasia;
     }
@@ -142,12 +137,12 @@ public class Cliente implements Serializable {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public String getResponsavel() {
-        return responsavel;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setResponsavel(String responsavel) {
-        this.responsavel = responsavel;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getCnpjCpf() {
@@ -164,6 +159,14 @@ public class Cliente implements Serializable {
 
     public void setInscricaoEstadual(String inscricaoEstadual) {
         this.inscricaoEstadual = inscricaoEstadual;
+    }
+
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
     }
 
     public String getEmail() {
@@ -183,24 +186,6 @@ public class Cliente implements Serializable {
     }
 
     @XmlTransient
-    public List<Telefone> getTelefoneList() {
-        return telefoneList;
-    }
-
-    public void setTelefoneList(List<Telefone> telefoneList) {
-        this.telefoneList = telefoneList;
-    }
-
-    @XmlTransient
-    public List<Endereco> getEnderecoList() {
-        return enderecoList;
-    }
-
-    public void setEnderecoList(List<Endereco> enderecoList) {
-        this.enderecoList = enderecoList;
-    }
-
-    @XmlTransient
     public List<Atendimento> getAtendimentoList() {
         return atendimentoList;
     }
@@ -217,6 +202,14 @@ public class Cliente implements Serializable {
         this.codtipopessoa = codtipopessoa;
     }
 
+    public Segmento getCodsegmento() {
+        return codsegmento;
+    }
+
+    public void setCodsegmento(Segmento codsegmento) {
+        this.codsegmento = codsegmento;
+    }
+
     public StatusPessoa getCodstatuspessoa() {
         return codstatuspessoa;
     }
@@ -225,12 +218,21 @@ public class Cliente implements Serializable {
         this.codstatuspessoa = codstatuspessoa;
     }
 
-    public Segmento getCodsegmento() {
-        return codsegmento;
+    public Parcela getCodparcela() {
+        return codparcela;
     }
 
-    public void setCodsegmento(Segmento codsegmento) {
-        this.codsegmento = codsegmento;
+    public void setCodparcela(Parcela codparcela) {
+        this.codparcela = codparcela;
+    }
+
+    @XmlTransient
+    public List<Telefone> getTelefoneList() {
+        return telefoneList;
+    }
+
+    public void setTelefoneList(List<Telefone> telefoneList) {
+        this.telefoneList = telefoneList;
     }
 
     @XmlTransient
@@ -240,6 +242,15 @@ public class Cliente implements Serializable {
 
     public void setLinkClienteList(List<LinkCliente> linkClienteList) {
         this.linkClienteList = linkClienteList;
+    }
+
+    @XmlTransient
+    public List<Endereco> getEnderecoList() {
+        return enderecoList;
+    }
+
+    public void setEnderecoList(List<Endereco> enderecoList) {
+        this.enderecoList = enderecoList;
     }
 
     @Override

@@ -65,18 +65,18 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "SENHA")
     private String senha;
-    @OneToMany(mappedBy = "codusuario")
-    private List<Telefone> telefoneList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
-    private List<Atendimento> atendimentoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
-    private List<Informacao> informacaoList;
-    @JoinColumn(name = "CODSTATUSPESSOA", referencedColumnName = "CODSTATUSPESSOA")
-    @ManyToOne(optional = false)
-    private StatusPessoa codstatuspessoa;
     @JoinColumn(name = "CODTIPOUSUARIO", referencedColumnName = "CODTIPOUSUARIO")
     @ManyToOne(optional = false)
     private TipoUsuario codtipousuario;
+    @JoinColumn(name = "CODSTATUSPESSOA", referencedColumnName = "CODSTATUSPESSOA")
+    @ManyToOne(optional = false)
+    private StatusPessoa codstatuspessoa;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
+    private List<Informacao> informacaoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
+    private List<Atendimento> atendimentoList;
+    @OneToMany(mappedBy = "codusuario")
+    private List<Telefone> telefoneList;
 
     public Usuario() {
     }
@@ -151,13 +151,29 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    @XmlTransient
-    public List<Telefone> getTelefoneList() {
-        return telefoneList;
+    public TipoUsuario getCodtipousuario() {
+        return codtipousuario;
     }
 
-    public void setTelefoneList(List<Telefone> telefoneList) {
-        this.telefoneList = telefoneList;
+    public void setCodtipousuario(TipoUsuario codtipousuario) {
+        this.codtipousuario = codtipousuario;
+    }
+
+    public StatusPessoa getCodstatuspessoa() {
+        return codstatuspessoa;
+    }
+
+    public void setCodstatuspessoa(StatusPessoa codstatuspessoa) {
+        this.codstatuspessoa = codstatuspessoa;
+    }
+
+    @XmlTransient
+    public List<Informacao> getInformacaoList() {
+        return informacaoList;
+    }
+
+    public void setInformacaoList(List<Informacao> informacaoList) {
+        this.informacaoList = informacaoList;
     }
 
     @XmlTransient
@@ -170,28 +186,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Informacao> getInformacaoList() {
-        return informacaoList;
+    public List<Telefone> getTelefoneList() {
+        return telefoneList;
     }
 
-    public void setInformacaoList(List<Informacao> informacaoList) {
-        this.informacaoList = informacaoList;
-    }
-
-    public StatusPessoa getCodstatuspessoa() {
-        return codstatuspessoa;
-    }
-
-    public void setCodstatuspessoa(StatusPessoa codstatuspessoa) {
-        this.codstatuspessoa = codstatuspessoa;
-    }
-
-    public TipoUsuario getCodtipousuario() {
-        return codtipousuario;
-    }
-
-    public void setCodtipousuario(TipoUsuario codtipousuario) {
-        this.codtipousuario = codtipousuario;
+    public void setTelefoneList(List<Telefone> telefoneList) {
+        this.telefoneList = telefoneList;
     }
 
     @Override

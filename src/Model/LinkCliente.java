@@ -37,12 +37,12 @@ public class LinkCliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "QUANTIDADE")
     private int quantidade;
-    @JoinColumn(name = "LINKCODLINK", referencedColumnName = "CODLINK", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Link link;
     @JoinColumn(name = "CLIENTECODCLIENTE", referencedColumnName = "CODCLIENTE", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cliente cliente;
+    @JoinColumn(name = "LINKCODLINK", referencedColumnName = "CODLINK", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Link link;
 
     public LinkCliente() {
     }
@@ -76,20 +76,20 @@ public class LinkCliente implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public Link getLink() {
-        return link;
-    }
-
-    public void setLink(Link link) {
-        this.link = link;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 
     @Override

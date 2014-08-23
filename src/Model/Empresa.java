@@ -7,6 +7,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e"),
     @NamedQuery(name = "Empresa.findByCodempresa", query = "SELECT e FROM Empresa e WHERE e.codempresa = :codempresa"),
     @NamedQuery(name = "Empresa.findByNomeFantasia", query = "SELECT e FROM Empresa e WHERE e.nomeFantasia = :nomeFantasia"),
-    @NamedQuery(name = "Empresa.findByCnpjCpf", query = "SELECT e FROM Empresa e WHERE e.cnpjCpf = :cnpjCpf"),
-    @NamedQuery(name = "Empresa.findByTelefone", query = "SELECT e FROM Empresa e WHERE e.telefone = :telefone"),
-    @NamedQuery(name = "Empresa.findByCodcontato", query = "SELECT e FROM Empresa e WHERE e.codcontato = :codcontato")})
+    @NamedQuery(name = "Empresa.findByCnpjCpf", query = "SELECT e FROM Empresa e WHERE e.cnpjCpf = :cnpjCpf")})
 public class Empresa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,18 +48,13 @@ public class Empresa implements Serializable {
     @Basic(optional = false)
     @Column(name = "CNPJ_CPF")
     private String cnpjCpf;
-    @Basic(optional = false)
-    @Column(name = "TELEFONE")
-    private String telefone;
-    @Basic(optional = false)
-    @Column(name = "CODCONTATO")
-    private int codcontato;
-    @JoinColumn(name = "CODTELEFONE", referencedColumnName = "CODTELEFONE")
-    @ManyToOne(optional = false)
-    private Telefone codtelefone;
+    @OneToMany(mappedBy = "codempresa")
+    private List<Telefone> telefoneList;
     @JoinColumn(name = "CODEMAIL", referencedColumnName = "CODEMAIL")
     @ManyToOne(optional = false)
     private Email codemail;
+    @OneToMany(mappedBy = "codempresa")
+    private List<Endereco> enderecoList;
 
     public Empresa() {
     }
@@ -67,12 +63,10 @@ public class Empresa implements Serializable {
         this.codempresa = codempresa;
     }
 
-    public Empresa(Integer codempresa, String nomeFantasia, String cnpjCpf, String telefone, int codcontato) {
+    public Empresa(Integer codempresa, String nomeFantasia, String cnpjCpf) {
         this.codempresa = codempresa;
         this.nomeFantasia = nomeFantasia;
         this.cnpjCpf = cnpjCpf;
-        this.telefone = telefone;
-        this.codcontato = codcontato;
     }
 
     public Integer getCodempresa() {
@@ -99,28 +93,13 @@ public class Empresa implements Serializable {
         this.cnpjCpf = cnpjCpf;
     }
 
-    public String getTelefone() {
-        return telefone;
+    @XmlTransient
+    public List<Telefone> getTelefoneList() {
+        return telefoneList;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public int getCodcontato() {
-        return codcontato;
-    }
-
-    public void setCodcontato(int codcontato) {
-        this.codcontato = codcontato;
-    }
-
-    public Telefone getCodtelefone() {
-        return codtelefone;
-    }
-
-    public void setCodtelefone(Telefone codtelefone) {
-        this.codtelefone = codtelefone;
+    public void setTelefoneList(List<Telefone> telefoneList) {
+        this.telefoneList = telefoneList;
     }
 
     public Email getCodemail() {
@@ -129,6 +108,15 @@ public class Empresa implements Serializable {
 
     public void setCodemail(Email codemail) {
         this.codemail = codemail;
+    }
+
+    @XmlTransient
+    public List<Endereco> getEnderecoList() {
+        return enderecoList;
+    }
+
+    public void setEnderecoList(List<Endereco> enderecoList) {
+        this.enderecoList = enderecoList;
     }
 
     @Override

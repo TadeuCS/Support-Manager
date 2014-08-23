@@ -49,12 +49,12 @@ public class Informacao implements Serializable {
     @Column(name = "DATA")
     @Temporal(TemporalType.DATE)
     private Date data;
-    @JoinColumn(name = "CODTIPOINFORMACAO", referencedColumnName = "CODTIPOINFORMACAO")
-    @ManyToOne(optional = false)
-    private TipoInformacao codtipoinformacao;
     @JoinColumn(name = "CODUSUARIO", referencedColumnName = "CODUSUARIO")
     @ManyToOne(optional = false)
     private Usuario codusuario;
+    @JoinColumn(name = "CODTIPOINFORMACAO", referencedColumnName = "CODTIPOINFORMACAO")
+    @ManyToOne(optional = false)
+    private TipoInformacao codtipoinformacao;
 
     public Informacao() {
     }
@@ -93,20 +93,20 @@ public class Informacao implements Serializable {
         this.data = data;
     }
 
-    public TipoInformacao getCodtipoinformacao() {
-        return codtipoinformacao;
-    }
-
-    public void setCodtipoinformacao(TipoInformacao codtipoinformacao) {
-        this.codtipoinformacao = codtipoinformacao;
-    }
-
     public Usuario getCodusuario() {
         return codusuario;
     }
 
     public void setCodusuario(Usuario codusuario) {
         this.codusuario = codusuario;
+    }
+
+    public TipoInformacao getCodtipoinformacao() {
+        return codtipoinformacao;
+    }
+
+    public void setCodtipoinformacao(TipoInformacao codtipoinformacao) {
+        this.codtipoinformacao = codtipoinformacao;
     }
 
     @Override

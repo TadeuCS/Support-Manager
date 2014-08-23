@@ -7,9 +7,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "telefone")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Telefone.findAll", query = "SELECT t FROM Telefone t order by t.descricao"),
+    @NamedQuery(name = "Telefone.findAll", query = "SELECT t FROM Telefone t"),
     @NamedQuery(name = "Telefone.findByCodtelefone", query = "SELECT t FROM Telefone t WHERE t.codtelefone = :codtelefone"),
     @NamedQuery(name = "Telefone.findByDescricao", query = "SELECT t FROM Telefone t WHERE t.descricao = :descricao"),
     @NamedQuery(name = "Telefone.findByTelefone", query = "SELECT t FROM Telefone t WHERE t.telefone = :telefone")})
@@ -47,19 +43,20 @@ public class Telefone implements Serializable {
     @Column(name = "DESCRICAO")
     private String descricao;
     @Basic(optional = false)
-    @Column(name = "TELEFONE",unique = true,nullable = false)
+    @Column(name = "TELEFONE",unique = true)
     private String telefone;
     @JoinColumn(name = "CODGRUPO", referencedColumnName = "CODGRUPO")
     @ManyToOne(optional = false)
     private Grupo codgrupo;
-    @JoinColumn(name = "CODUSUARIO", referencedColumnName = "CODUSUARIO")
-    @ManyToOne
-    private Usuario codusuario;
     @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
     @ManyToOne
     private Cliente codcliente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codtelefone")
-    private List<Empresa> empresaList;
+    @JoinColumn(name = "CODUSUARIO", referencedColumnName = "CODUSUARIO")
+    @ManyToOne
+    private Usuario codusuario;
+    @JoinColumn(name = "CODEMPRESA", referencedColumnName = "CODEMPRESA")
+    @ManyToOne
+    private Empresa codempresa;
 
     public Telefone() {
     }
@@ -106,14 +103,6 @@ public class Telefone implements Serializable {
         this.codgrupo = codgrupo;
     }
 
-    public Usuario getCodusuario() {
-        return codusuario;
-    }
-
-    public void setCodusuario(Usuario codusuario) {
-        this.codusuario = codusuario;
-    }
-
     public Cliente getCodcliente() {
         return codcliente;
     }
@@ -122,13 +111,20 @@ public class Telefone implements Serializable {
         this.codcliente = codcliente;
     }
 
-    @XmlTransient
-    public List<Empresa> getEmpresaList() {
-        return empresaList;
+    public Usuario getCodusuario() {
+        return codusuario;
     }
 
-    public void setEmpresaList(List<Empresa> empresaList) {
-        this.empresaList = empresaList;
+    public void setCodusuario(Usuario codusuario) {
+        this.codusuario = codusuario;
+    }
+
+    public Empresa getCodempresa() {
+        return codempresa;
+    }
+
+    public void setCodempresa(Empresa codempresa) {
+        this.codempresa = codempresa;
     }
 
     @Override

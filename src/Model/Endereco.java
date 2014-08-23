@@ -60,8 +60,11 @@ public class Endereco implements Serializable {
     @ManyToOne(optional = false)
     private Cidade codcidade;
     @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Cliente codcliente;
+    @JoinColumn(name = "CODEMPRESA", referencedColumnName = "CODEMPRESA")
+    @ManyToOne
+    private Empresa codempresa;
 
     public Endereco() {
     }
@@ -140,6 +143,14 @@ public class Endereco implements Serializable {
 
     public void setCodcliente(Cliente codcliente) {
         this.codcliente = codcliente;
+    }
+
+    public Empresa getCodempresa() {
+        return codempresa;
+    }
+
+    public void setCodempresa(Empresa codempresa) {
+        this.codempresa = codempresa;
     }
 
     @Override

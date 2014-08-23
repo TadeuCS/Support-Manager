@@ -44,9 +44,9 @@ public class StatusPessoa implements Serializable {
     @Column(name = "DESCRICAO")
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codstatuspessoa")
-    private List<Cliente> clienteList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codstatuspessoa")
     private List<Usuario> usuarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codstatuspessoa")
+    private List<Cliente> clienteList;
 
     public StatusPessoa() {
     }
@@ -77,21 +77,21 @@ public class StatusPessoa implements Serializable {
     }
 
     @XmlTransient
-    public List<Cliente> getClienteList() {
-        return clienteList;
-    }
-
-    public void setClienteList(List<Cliente> clienteList) {
-        this.clienteList = clienteList;
-    }
-
-    @XmlTransient
     public List<Usuario> getUsuarioList() {
         return usuarioList;
     }
 
     public void setUsuarioList(List<Usuario> usuarioList) {
         this.usuarioList = usuarioList;
+    }
+
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
     }
 
     @Override

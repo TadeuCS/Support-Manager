@@ -89,24 +89,24 @@ public class Atendimento implements Serializable {
     @Column(name = "DATA_SOLUCAO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataSolucao;
-    @JoinColumn(name = "CODSTATUSATENDIMENTO", referencedColumnName = "CODSTATUSATENDIMENTO")
-    @ManyToOne(optional = false)
-    private StatusAtendimento codstatusatendimento;
-    @JoinColumn(name = "CODORIGEM", referencedColumnName = "CODORIGEM")
-    @ManyToOne(optional = false)
-    private Origem codorigem;
-    @JoinColumn(name = "CODUSUARIO", referencedColumnName = "CODUSUARIO")
-    @ManyToOne(optional = false)
-    private Usuario codusuario;
-    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
-    @ManyToOne(optional = false)
-    private Cliente codcliente;
-    @JoinColumn(name = "CODPRIORIDADE", referencedColumnName = "CODPRIORIDADE")
-    @ManyToOne(optional = false)
-    private Prioridade codprioridade;
     @JoinColumn(name = "CODTIPOATENDIMENTO", referencedColumnName = "CODTIPOATENDIMENTO")
     @ManyToOne(optional = false)
     private TipoAtendimento codtipoatendimento;
+    @JoinColumn(name = "CODPRIORIDADE", referencedColumnName = "CODPRIORIDADE")
+    @ManyToOne(optional = false)
+    private Prioridade codprioridade;
+    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
+    @ManyToOne(optional = false)
+    private Cliente codcliente;
+    @JoinColumn(name = "CODUSUARIO", referencedColumnName = "CODUSUARIO")
+    @ManyToOne(optional = false)
+    private Usuario codusuario;
+    @JoinColumn(name = "CODORIGEM", referencedColumnName = "CODORIGEM")
+    @ManyToOne(optional = false)
+    private Origem codorigem;
+    @JoinColumn(name = "CODSTATUSATENDIMENTO", referencedColumnName = "CODSTATUSATENDIMENTO")
+    @ManyToOne(optional = false)
+    private StatusAtendimento codstatusatendimento;
 
     public Atendimento() {
     }
@@ -234,36 +234,12 @@ public class Atendimento implements Serializable {
         this.dataSolucao = dataSolucao;
     }
 
-    public StatusAtendimento getCodstatusatendimento() {
-        return codstatusatendimento;
+    public TipoAtendimento getCodtipoatendimento() {
+        return codtipoatendimento;
     }
 
-    public void setCodstatusatendimento(StatusAtendimento codstatusatendimento) {
-        this.codstatusatendimento = codstatusatendimento;
-    }
-
-    public Origem getCodorigem() {
-        return codorigem;
-    }
-
-    public void setCodorigem(Origem codorigem) {
-        this.codorigem = codorigem;
-    }
-
-    public Usuario getCodusuario() {
-        return codusuario;
-    }
-
-    public void setCodusuario(Usuario codusuario) {
-        this.codusuario = codusuario;
-    }
-
-    public Cliente getCodcliente() {
-        return codcliente;
-    }
-
-    public void setCodcliente(Cliente codcliente) {
-        this.codcliente = codcliente;
+    public void setCodtipoatendimento(TipoAtendimento codtipoatendimento) {
+        this.codtipoatendimento = codtipoatendimento;
     }
 
     public Prioridade getCodprioridade() {
@@ -274,12 +250,36 @@ public class Atendimento implements Serializable {
         this.codprioridade = codprioridade;
     }
 
-    public TipoAtendimento getCodtipoatendimento() {
-        return codtipoatendimento;
+    public Cliente getCodcliente() {
+        return codcliente;
     }
 
-    public void setCodtipoatendimento(TipoAtendimento codtipoatendimento) {
-        this.codtipoatendimento = codtipoatendimento;
+    public void setCodcliente(Cliente codcliente) {
+        this.codcliente = codcliente;
+    }
+
+    public Usuario getCodusuario() {
+        return codusuario;
+    }
+
+    public void setCodusuario(Usuario codusuario) {
+        this.codusuario = codusuario;
+    }
+
+    public Origem getCodorigem() {
+        return codorigem;
+    }
+
+    public void setCodorigem(Origem codorigem) {
+        this.codorigem = codorigem;
+    }
+
+    public StatusAtendimento getCodstatusatendimento() {
+        return codstatusatendimento;
+    }
+
+    public void setCodstatusatendimento(StatusAtendimento codstatusatendimento) {
+        this.codstatusatendimento = codstatusatendimento;
     }
 
     @Override
