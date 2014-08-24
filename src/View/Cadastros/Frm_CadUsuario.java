@@ -937,9 +937,9 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jButton1)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jButton2)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86))
         );
 

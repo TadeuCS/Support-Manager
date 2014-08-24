@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Aplicativo;
 import Model.Cliente;
 import Model.Link;
 import Model.Telefone;
@@ -36,9 +37,16 @@ public class LinksDAO extends Manager {
         em.getTransaction().commit();
         return (Link) query.getSingleResult();
     }
-      public List<Link> listaLinksByCliente(Cliente cliente) {
+
+    public List<Link> listaLinksByCliente(Cliente cliente) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("LinkCliente.findByClientecodcliente").setParameter("clientecodcliente",cliente);
+        query = em.createNamedQuery("LinkCliente.findByClientecodcliente").setParameter("clientecodcliente", cliente);
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+    public List<Link> listaLinksByAplicativo(Aplicativo aplicativo) {
+        em.getTransaction().begin();
+        query = em.createQuery("SELECT a FROM Link a WHERE a.codaplicativo= :app order by a.descricao").setParameter("app", aplicativo);
         em.getTransaction().commit();
         return query.getResultList();
     }

@@ -29,7 +29,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="abas" pref="0" max="32767" attributes="0"/>
+                  <Component id="abas" max="32767" attributes="0"/>
                   <Component id="pnl_botoes" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -139,19 +139,19 @@
                               <Component id="txt_nomeFantasia" alignment="0" max="32767" attributes="0"/>
                               <Component id="txt_razaoSocial" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="txt_codigo" min="-2" pref="47" max="-2" attributes="0"/>
+                                  <Component id="txt_codigo" min="-2" pref="36" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="cbx_tipo" min="-2" pref="41" max="-2" attributes="0"/>
+                                  <Component id="cbx_tipo" pref="108" max="32767" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txt_cpf" min="-2" pref="117" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txt_inscEstadual" pref="172" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txt_inscEstadual" min="-2" pref="135" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -254,6 +254,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_codigo">
+                  <Properties>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -445,7 +448,7 @@
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="txt_rua" pref="435" max="32767" attributes="0"/>
+                                  <Component id="txt_rua" pref="462" max="32767" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -521,6 +524,12 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JFormattedTextField" name="txt_cep">
+                  <Properties>
+                    <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+                      <Format format="#####-###" subtype="-1" type="5"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel17">
                   <Properties>
@@ -581,6 +590,8 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_cidadesActionPerformed"/>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cbx_cidadesFocusGained"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cbx_cidadesFocusLost"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -605,7 +616,7 @@
                           <Component id="pnl_dados_telefones" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="btn_anteriorTelefones" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="635" max="32767" attributes="0"/>
+                              <EmptySpace pref="662" max="32767" attributes="0"/>
                               <Component id="btn_proximoTelefones" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -659,13 +670,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="pnl_cadTelefones" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="pnl_cadTelefones" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="btn_removerTelefone" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btn_inserirTelefone" min="-2" pref="90" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btn_removerTelefone" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_inserirTelefone" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="452" max="-2" attributes="0"/>
@@ -679,13 +688,17 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="pnl_cadTelefones" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="56" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btn_inserirTelefone" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="btn_removerTelefone" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="42" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="pnl_cadTelefones" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="btn_inserirTelefone" min="-2" pref="25" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btn_removerTelefone" min="-2" pref="25" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -751,7 +764,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="txt_telefone" min="-2" pref="94" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="txt_contato" max="32767" attributes="0"/>
@@ -803,7 +816,7 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btn_inserirTelefone">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Inserir"/>
+                    <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inserirTelefoneActionPerformed"/>
@@ -811,7 +824,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_removerTelefone">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Remover"/>
+                    <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_removerTelefoneActionPerformed"/>
@@ -890,13 +903,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="pnl_CadLinks" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="18" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="pnl_CadLinks" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="btn_removerLinks" min="-2" pref="90" max="-2" attributes="0"/>
-                                  <EmptySpace pref="103" max="32767" attributes="0"/>
-                                  <Component id="btn_inserirLinks" min="-2" pref="90" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btn_inserirLinks" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_removerLinks" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="452" max="-2" attributes="0"/>
@@ -908,18 +919,20 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="pnl_CadLinks" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="23" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btn_inserirLinks" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="btn_removerLinks" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
+                          <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="36" max="32767" attributes="0"/>
+                          <Component id="pnl_CadLinks" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btn_inserirLinks" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btn_removerLinks" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -986,7 +999,7 @@
                                   <Component id="cbx_links" alignment="1" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="txt_quantidade" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="78" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1035,6 +1048,7 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbx_aplicativoActionPerformed"/>
+                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cbx_aplicativoFocusLost"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cbx_links">
@@ -1058,7 +1072,7 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btn_inserirLinks">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Inserir"/>
+                    <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inserirLinksActionPerformed"/>
@@ -1066,7 +1080,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_removerLinks">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Remover"/>
+                    <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_removerLinksActionPerformed"/>
@@ -1100,10 +1114,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btn_consulta" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txt_operacao" min="-2" pref="188" max="-2" attributes="0"/>
+                  <Component id="txt_operacao" max="32767" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btn_cancelar" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -1129,6 +1143,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Inclus&#xe3;o"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inclusaoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_alteracao">
           <Properties>
@@ -1146,11 +1163,18 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_operacao">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btn_cancelar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cancelarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

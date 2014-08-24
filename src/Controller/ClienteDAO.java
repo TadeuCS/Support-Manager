@@ -46,10 +46,7 @@ public class ClienteDAO extends Manager {
 
     public List<LinkCliente> listalinksByCliente(Cliente cliente) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT c FROM LinkCliente lc"
-                + "inner join link l on lc.CODLINK=l.CODLINK"
-                + "inner join cliente c on lc.CODCLIENTE=c.CODCLIENTE"
-                + " where c.codcliente = :cliente").setParameter("cliente", cliente);
+        query = em.createNamedQuery("LinkCliente.findByClientecodcliente").setParameter("clientecodcliente", cliente);
         em.getTransaction().commit();
         return query.getResultList();
     }

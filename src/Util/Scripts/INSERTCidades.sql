@@ -1,3 +1,4 @@
+delete from cidade;
 INSERT INTO  cidade (descricao, codIBGEmunicipio, coduf) VALUES ('ABADIA DOS DOURADOS','3100104',31);
 INSERT INTO  cidade (descricao, codIBGEmunicipio, coduf) VALUES ('ABAETE','3100203',31);
 INSERT INTO  cidade (descricao, codIBGEmunicipio, coduf) VALUES ('ABRE CAMPO','3100302',31);

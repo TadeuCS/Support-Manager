@@ -11,18 +11,22 @@ import Controller.ClienteDAO;
 import Controller.EstadosDAO;
 import Controller.LinksDAO;
 import Controller.SegmentoDAO;
+import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
+import Model.Aplicativo;
 import Model.Cliente;
-import Model.Telefone;
 import Model.Endereco;
 import Model.Link;
 import Model.LinkCliente;
+import Model.Telefone;
 import Model.TipoPessoa;
 import Util.Classes.Data;
 import Util.Classes.IntegerDocument;
 import java.awt.Event;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -39,14 +43,16 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     EstadosDAO estadosDAO;
     TelefoneDAO telefoneDAO;
     SegmentoDAO segmentosDao;
+    StatusPessoaDAO statusPessoaDAO;
     CidadesDAO cidadesDAO;
     LinksDAO linksDAO;
     TipoPessoaDAO tipoPessoaDAO;
+    AplicativoDAO aplicativoDAO;
+
     Data data;
-    private AplicativoDAO aplicativoDAO;
     Cliente cliente;
     Endereco endereco;
-    Telefone contato;
+    Telefone telefone;
     Link link;
     TipoPessoa tipo;
     LinkCliente linksClientes;
@@ -54,36 +60,93 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public Frm_CadClientes() {
         initComponents();
-
         setVisible(true);
-        abas.setEnabled(false);
-        data = new Data();
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
         txt_quantidade.setDocument(new IntegerDocument(2));
         cbx_estados.setSelectedItem("MG");
-        try {
-            carregaSegmentos();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-        try {
-            trocaMascara();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Selecione Um Tipo de Cliente");
-        }
-        try {
-            carregaTipos();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar Tipos de Pessoa");
-        }
+        carregaSegmentos();
+        carregaTipos();
+        carregaEstados();
+        carregaCidades();
+        carregaAplicativos();
+        trocaMascara();
         camposOFF();
     }
 
     //Início das validações de interface.
     public void camposOFF() {
-        
+        txt_codigo.setEnabled(false);
+        txt_cpf.setEnabled(false);
+        txt_inscEstadual.setEnabled(false);
+        txt_razaoSocial.setEnabled(false);
+        txt_nomeFantasia.setEnabled(false);
+        txt_referencia.setEnabled(false);
+        txt_responsavel.setEnabled(false);
+        txt_email.setEnabled(false);
+        txt_data.setEnabled(false);
+        cbx_tipo.setEnabled(false);
+        cbx_segmento.setEnabled(false);
+        chx_bloqueado.setEnabled(false);
+        btn_proximoDados.setEnabled(false);
+        btn_cancelar.setEnabled(false);
+        abas.setEnabled(false);
+        botoesON();
+    }
+
+    public void camposON() {
+        txt_codigo.setEnabled(true);
+        txt_cpf.setEnabled(true);
+        txt_inscEstadual.setEnabled(true);
+        txt_razaoSocial.setEnabled(true);
+        txt_nomeFantasia.setEnabled(true);
+        txt_referencia.setEnabled(true);
+        txt_responsavel.setEnabled(true);
+        txt_email.setEnabled(true);
+        txt_data.setEnabled(true);
+        cbx_tipo.setEnabled(true);
+        cbx_segmento.setEnabled(true);
+        chx_bloqueado.setEnabled(true);
+        btn_proximoDados.setEnabled(true);
+        abas.setEnabled(true);
+        botoesOFF();
+    }
+
+    public void botoesOFF() {
+        btn_inclusao.setEnabled(false);
+        btn_alteracao.setEnabled(false);
+        btn_exclusao.setEnabled(false);
+        btn_consulta.setEnabled(false);
+        btn_cancelar.setEnabled(true);
+    }
+
+    public void botoesON() {
+        btn_inclusao.setEnabled(true);
+        btn_alteracao.setEnabled(true);
+        btn_exclusao.setEnabled(true);
+        btn_consulta.setEnabled(true);
+        btn_cancelar.setEnabled(false);
+    }
+
+    public void limpaCampos() {
+        txt_codigo.setText(null);
+        txt_cpf.setText(null);
+        txt_inscEstadual.setText(null);
+        txt_razaoSocial.setText(null);
+        txt_nomeFantasia.setText(null);
+        txt_referencia.setText(null);
+        txt_responsavel.setText(null);
+        txt_email.setText(null);
+        txt_data.setText(null);
+        txt_rua.setText(null);
+        txt_bairro.setText(null);
+        txt_cep.setText(null);
+        txt_numero.setText(null);
+        txt_complemento.setText(null);
+        txt_contato.setText(null);
+        txt_telefone.setText(null);
+        txt_quantidade.setText(null);
     }
 
     public void proximo() {
@@ -94,17 +157,21 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         abas.setSelectedIndex(abas.getSelectedIndex() - 1);
     }
 
-    public void trocaMascara() throws ParseException {
-        if (cbx_tipo.getSelectedIndex() == 0) {
-            txt_cpf.setValue(null);
-            MaskFormatter cpf = new MaskFormatter("###.###.###-##");
-            txt_cpf.setFormatterFactory(
-                    new DefaultFormatterFactory(cpf));
-        } else {
-            txt_cpf.setValue(null);
-            MaskFormatter cnpj = new MaskFormatter("##.###.###/####-##");
-            txt_cpf.setFormatterFactory(
-                    new DefaultFormatterFactory(cnpj));
+    public void trocaMascara() {
+        try {
+            if (cbx_tipo.getSelectedIndex() == 0) {
+                txt_cpf.setValue(null);
+                MaskFormatter cpf = new MaskFormatter("###.###.###-##");
+                txt_cpf.setFormatterFactory(
+                        new DefaultFormatterFactory(cpf));
+            } else {
+                txt_cpf.setValue(null);
+                MaskFormatter cnpj = new MaskFormatter("##.###.###/####-##");
+                txt_cpf.setFormatterFactory(
+                        new DefaultFormatterFactory(cnpj));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Selecione um Tipo para o Cliente");
         }
         txt_cpf.requestFocus();
     }
@@ -119,80 +186,138 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         }
 
     }
-    
-    public void carregaTipos(){
-        tipoPessoaDAO= new TipoPessoaDAO();
-        int i=0;
-        while(i<tipoPessoaDAO.lista().size()){
-            String[] linha = new String[]{tipoPessoaDAO.lista().get(i).getDescricao()};
-            cbx_tipo.addItem(linha);
-            i++;
+
+    public void carregaTipos() {
+        tipoPessoaDAO = new TipoPessoaDAO();
+        try {
+            int i = 0;
+            cbx_tipo.removeAllItems();
+            while (i < tipoPessoaDAO.lista().size()) {
+                cbx_tipo.addItem(tipoPessoaDAO.lista().get(i).getDescricao());
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
-    
-    public void carregaSegmentos(){
-        segmentosDao= new SegmentoDAO();
-        int i=0;
-        while(i<tipoPessoaDAO.lista().size()){
-            String[] linha = new String[]{segmentosDao.lista().get(i).getDescricao()};
-            cbx_segmento.addItem(linha);
-            i++;
+
+    public void carregaAplicativos() {
+        aplicativoDAO = new AplicativoDAO();
+        try {
+            int i = 0;
+            cbx_aplicativo.removeAllItems();
+            while (i < aplicativoDAO.lista().size()) {
+                cbx_aplicativo.addItem(aplicativoDAO.lista().get(i).getDescricao());
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
-    
-    public void carregaCidades(){
-        cidadesDAO= new CidadesDAO();
-        int i=0;
-        while(i<cidadesDAO.lista().size()){
-            String[] linha = new String[]{cidadesDAO.lista().get(i).getDescricao()};
-            cbx_cidades.addItem(linha);
-            i++;
+
+    public void carregaLinks(Aplicativo app) {
+        linksDAO = new LinksDAO();
+        try {
+            int i = 0;
+            cbx_links.removeAllItems();
+            while (i < linksDAO.listaLinksByAplicativo(app).size()) {
+                cbx_links.addItem(linksDAO.listaLinksByAplicativo(app).get(i).getDescricao());
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }
-    
-    public void carregaEstados(){
-        estadosDAO= new EstadosDAO();
-        int i=0;
-        while(i<estadosDAO.lista().size()){
-            String[] linha = new String[]{estadosDAO.lista().get(i).getDescricao()};
-            cbx_estados.addItem(linha);
-            i++;
+
+    public void carregaSegmentos() {
+        segmentosDao = new SegmentoDAO();
+        try {
+            cbx_segmento.removeAllItems();
+            int i = 0;
+            while (i < segmentosDao.lista().size()) {
+                cbx_segmento.addItem(segmentosDao.lista().get(i).getDescricao());
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Segmentos");
         }
     }
-    
-    public void getStatusPessoa(Cliente cliente){
-        if (cliente.getCodstatuspessoa().equals("BLOQUEADO") == true) {
-            chx_bloqueado.setSelected(true);
-        } else {
-            chx_bloqueado.setSelected(false);
+
+    public void carregaCidades() {
+        cidadesDAO = new CidadesDAO();
+        try {
+            int i = 0;
+            cbx_cidades.removeAllItems();
+            while (i < cidadesDAO.lista().size()) {
+                cbx_cidades.addItem(cidadesDAO.lista().get(i).getDescricao());
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Cidades");
+        }
+
+    }
+
+    public void carregaEstados() {
+        estadosDAO = new EstadosDAO();
+        try {
+            int i = 0;
+            cbx_estados.removeAllItems();
+            while (i < estadosDAO.lista().size()) {
+                cbx_estados.addItem(estadosDAO.lista().get(i).getSigla());
+                i++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar Estados");
+        }
+
+    }
+
+    public void getStatusPessoa(Cliente cliente) {
+        try {
+            if (cliente.getCodstatuspessoa().getDescricao().equals("BLOQUEADO") == true) {
+                chx_bloqueado.setSelected(true);
+            } else {
+                chx_bloqueado.setSelected(false);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao selecionar Status");
         }
     }
     //Fim das validações de interface.
 
     public void getCliente(Cliente cliente) {
         //dados da aba dados pessoais
-        if(cliente.getCodcliente()!=null){
-        txt_codigo.setText(cliente.getCodcliente() + "");
+        try {
+            if (cliente.getCodcliente() != null) {
+                txt_codigo.setText(cliente.getCodcliente() + "");
+            }
+            cbx_tipo.setSelectedItem(cliente.getCodtipopessoa().getDescricao());
+            txt_cpf.setText(cliente.getCnpjCpf());
+            txt_inscEstadual.setText(cliente.getInscricaoEstadual());
+            txt_razaoSocial.setText(cliente.getRazaoSocial());
+            txt_nomeFantasia.setText(cliente.getNomeFantasia());
+            txt_referencia.setText(cliente.getReferencia() + "");
+            txt_responsavel.setText(cliente.getResponsavel());
+            txt_email.setText(cliente.getEmail());
+            txt_data.setText(cliente.getDataAtualizacao() + "");
+            cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
+            getStatusPessoa(cliente);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao retornar dados Pessoais de cliente");
         }
-        cbx_tipo.setSelectedItem(cliente.getCodtipopessoa().getDescricao());
-        txt_cpf.setText(cliente.getCnpjCpf());
-        txt_inscEstadual.setText(cliente.getInscricaoEstadual());
-        txt_razaoSocial.setText(cliente.getRazaoSocial());
-        txt_nomeFantasia.setText(cliente.getNomeFantasia());
-        txt_referencia.setText(cliente.getReferencia() + "");
-        txt_responsavel.setText(cliente.getResponsavel());
-        txt_email.setText(cliente.getEmail());
-        txt_data.setText(cliente.getDataAtualizacao() + "");
-        cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
-        getStatusPessoa(cliente);
-        //dados da aba endereco
-        txt_cep.setText(cliente.getEnderecoList().get(0).getCep());
-        txt_rua.setText(cliente.getEnderecoList().get(0).getRua());
-        cbx_cidades.setSelectedItem(cliente.getEnderecoList().get(0).getCodcidade().getDescricao());
-        cbx_estados.setSelectedItem(cliente.getEnderecoList().get(0).getCodcidade().getCoduf().getDescricao());
-        txt_bairro.setText(cliente.getEnderecoList().get(0).getBairro());
-        txt_numero.setText(cliente.getEnderecoList().get(0).getNumero() + "");
-        txt_complemento.setText(cliente.getEnderecoList().get(0).getComplemento());
+        try {
+            //dados da aba endereco
+            txt_cep.setText(cliente.getEnderecoList().get(0).getCep());
+            txt_rua.setText(cliente.getEnderecoList().get(0).getRua());
+            cbx_cidades.setSelectedItem(cliente.getEnderecoList().get(0).getCodcidade().getDescricao());
+            cbx_estados.setSelectedItem(cliente.getEnderecoList().get(0).getCodcidade().getCoduf().getDescricao());
+            txt_bairro.setText(cliente.getEnderecoList().get(0).getBairro());
+            txt_numero.setText(cliente.getEnderecoList().get(0).getNumero() + "");
+            txt_complemento.setText(cliente.getEnderecoList().get(0).getComplemento());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao retornar Endereço de cliente");
+        }
 
         //dados da aba telefones
         listaTelefones(cliente);
@@ -203,78 +328,92 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         listaLinks(cliente);
         txt_quantidade.setText(null);
     }
-//
-//    public void setCliente() {
-//        //dados da aba dados pessoais
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        Date data = new Date();
-//        sdf.format(txt_data.getText());
-//        cliente = new Cliente();
-//        cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
-//        cliente.getCodtipopessoa().setCodtipopessoa(WIDTH);
-//        cliente.setCnpjCpf(txt_cpf.getText());
-//        cliente.setInscricaoEstadual(txt_inscEstadual.getText());
-//        cliente.setRazaoSocial(txt_razaoSocial.getText());
-//        cliente.setNomeFantasia(txt_nomeFantasia.getText());
-//        cliente.setResponsavel(txt_responsavel.getText());
-//        cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
-//        cliente.setEmail(txt_email.getText());
-//        cliente.setDataAtualizacao(data);
-//        cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
-//        if (chx_bloqueado.getSelectedObjects() != null) {
-//            cliente.setBloqueado('S');
-//        } else {
-//            cliente.setBloqueado('N');
-//        }
-//        //dados da aba endereco
-//        cliente.getEnderecoList().add(setEndereco(cliente));
-//
-//    }
-//
-//    public void setTelefones(Cliente cliente) {
-//        try {
-//            contato = new Telefone();
-//            model = (DefaultTableModel) tb_telefones.getModel();
-//            contato.setDescricao(txt_contato.getText());
-//            contato.setTelefone(txt_contato.getText());
-//            String[] linha = new String[]{contato.getDescricao(), contato.getTelefone()};
-//            model.addRow(linha);
-//            cliente.getTelefoneList().add(contato);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao inserir o Telefone na lista!");
-//        }
-//    }
-//
-//    public void setLinks(Cliente cliente) {
-//        try {
-//            linksClientes = new LinkCliente();
-//            link = new Link();
-//            model = (DefaultTableModel) tb_telefones.getModel();
-//            link.setCodaplicativo(aplicativoDAO.buscaAplicativo(cbx_aplicativo.getSelectedItem().toString()));
-//            link.setDescricao(cbx_aplicativo.getSelectedItem().toString());
-//            linksClientes.setCliente(cliente);
-//            linksClientes.setLink(link);
-//            linksClientes.setQuantidade(Integer.parseInt(txt_quantidade.getText()));
-//            String[] linha = new String[]{link.getDescricao(), txt_quantidade.getText()};
-//            model.addRow(linha);
-//            cliente.getLinkClienteList().add(linksClientes);
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao inserir o Links na lista!");
-//        }
-//    }
-//
-//    public Endereco setEndereco(Cliente cliente) {
-//        endereco = new Endereco();
-//        endereco.setBairro(txt_bairro.getText());
-//        endereco.setCep(txt_cep.getText());
-//        endereco.getCodcidade().setDescricao(txt_cidade.getText());
-//        endereco.setComplemento(txt_complemento.getText());
-//        endereco.getCodcidade().setDescricao(cbx_estados.getSelectedItem().toString());
-//        endereco.setNumero(Integer.parseInt(txt_numero.getText()));
-//        endereco.setRua(txt_rua.getText());
-//        endereco.setCodcliente(cliente);
-//        return endereco;
-//    }
+
+    public void setCliente() {
+        //dados da aba dados pessoais
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = new Date();
+        sdf.format(txt_data.getText());
+        statusPessoaDAO = new StatusPessoaDAO();
+        tipoPessoaDAO = new TipoPessoaDAO();
+        segmentosDao = new SegmentoDAO();
+        try {
+            if (txt_codigo.getText().equals("") == false) {
+                cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
+            }
+            cliente.setCodtipopessoa(tipoPessoaDAO.buscaTipoPessoa(cbx_tipo.getSelectedItem().toString()));
+            cliente.setCnpjCpf(txt_cpf.getText());
+            cliente.setInscricaoEstadual(txt_inscEstadual.getText());
+            cliente.setRazaoSocial(txt_razaoSocial.getText());
+            cliente.setNomeFantasia(txt_nomeFantasia.getText());
+            cliente.setResponsavel(txt_responsavel.getText());
+            cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
+            cliente.setEmail(txt_email.getText());
+            cliente.setDataAtualizacao(data);
+            cliente.setCodsegmento(segmentosDao.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
+            if (chx_bloqueado.getSelectedObjects() != null) {
+                cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("BLOQUEADO"));
+            } else {
+                cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO"));
+            }
+            //dados da aba endereco
+            cliente.getEnderecoList().add(setEndereco(cliente));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao capturar dados do cliente.\n" + e.getMessage());
+        }
+    }
+
+    public void setTelefones(Cliente cliente) {
+        try {
+            telefone = new Telefone();
+            model = (DefaultTableModel) tb_telefones.getModel();
+            telefone.setDescricao(txt_contato.getText());
+            telefone.setTelefone(txt_telefone.getText());
+            cliente.getTelefoneList().add(telefone);
+            String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};
+            model.addRow(linha);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir o Telefone na lista!");
+        }
+    }
+
+    public void setLinks(Cliente cliente) {
+        try {
+            linksClientes = new LinkCliente();
+            aplicativoDAO = new AplicativoDAO();
+            link = new Link();
+            model = (DefaultTableModel) tb_links.getModel();
+            link.setCodaplicativo(aplicativoDAO.buscaAplicativo(cbx_aplicativo.getSelectedItem().toString()));
+            link.setDescricao(cbx_links.getSelectedItem().toString());
+            linksClientes.setLink(link);
+            linksClientes.setQuantidade(Integer.parseInt(txt_quantidade.getText()));
+            cliente.getLinkClienteList().add(linksClientes);
+
+            String[] linha = new String[]{link.getDescricao(), txt_quantidade.getText()};
+            model.addRow(linha);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir o Links na lista!");
+        }
+    }
+
+    public Endereco setEndereco(Cliente cliente) {
+        endereco = new Endereco();
+        try {
+            endereco.setBairro(txt_bairro.getText());
+            endereco.setCep(txt_cep.getText());
+            endereco.getCodcidade().setDescricao(cbx_cidades.getSelectedItem().toString());
+            if (txt_complemento.getText().equals("") == false) {
+                endereco.setComplemento(txt_complemento.getText());
+            }
+            endereco.setNumero(Integer.parseInt(txt_numero.getText()));
+            endereco.setRua(txt_rua.getText());
+            endereco.getCodcidade().getCoduf().setSigla(cbx_estados.getSelectedItem().toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao capturar endereço do cliente.\n" + e.getMessage());
+        }
+
+        return endereco;
+    }
 
     public void listaTelefones(Cliente cliente) {
         telefoneDAO = new TelefoneDAO();
@@ -290,7 +429,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao Listar Telefones do cliente: " + cliente);
         }
     }
 
@@ -308,7 +447,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao Listar Links do cliente: " + cliente);
         }
     }
 
@@ -413,6 +552,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel1.setText("Código *:");
 
+        txt_codigo.setEnabled(false);
+
         jLabel2.setText("Tipo *:");
 
         cbx_tipo.addActionListener(new java.awt.event.ActionListener() {
@@ -486,19 +627,19 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     .addComponent(txt_nomeFantasia)
                     .addComponent(txt_razaoSocial)
                     .addGroup(pnl_dadosPessoaisLayout.createSequentialGroup()
-                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbx_tipo, 0, 108, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_inscEstadual, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_inscEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_dadosPessoaisLayout.createSequentialGroup()
                         .addGroup(pnl_dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(pnl_dadosPessoaisLayout.createSequentialGroup()
@@ -613,6 +754,13 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel16.setText("CEP *:");
 
+        try {
+            txt_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txt_cep.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         jLabel17.setText("Cidade *:");
 
         jLabel18.setText("Estado:");
@@ -642,6 +790,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 cbx_cidadesActionPerformed(evt);
             }
         });
+        cbx_cidades.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_cidadesFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbx_cidadesFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_dadosEnderecoLayout = new javax.swing.GroupLayout(pnl_dadosEndereco);
         pnl_dadosEndereco.setLayout(pnl_dadosEnderecoLayout);
@@ -658,7 +814,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_rua, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                        .addComponent(txt_rua, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -804,7 +960,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_cadTelefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_cadTelefonesLayout.createSequentialGroup()
-                        .addGap(0, 100, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(txt_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txt_contato))
                 .addContainerGap())
@@ -823,14 +979,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btn_inserirTelefone.setText("Inserir");
+        btn_inserirTelefone.setText(">>");
         btn_inserirTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirTelefoneActionPerformed(evt);
             }
         });
 
-        btn_removerTelefone.setText("Remover");
+        btn_removerTelefone.setText("<<");
         btn_removerTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_removerTelefoneActionPerformed(evt);
@@ -843,12 +999,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(pnl_cadTelefones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_cadTelefones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
-                        .addComponent(btn_removerTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_inserirTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_removerTelefone)
+                    .addComponent(btn_inserirTelefone))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -859,12 +1014,15 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
-                        .addComponent(pnl_cadTelefones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                        .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_inserirTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_removerTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dados_telefonesLayout.createSequentialGroup()
+                        .addGap(0, 42, Short.MAX_VALUE)
+                        .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnl_cadTelefones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
+                                .addComponent(btn_inserirTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_removerTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(32, 32, 32)))
                 .addContainerGap())
         );
 
@@ -878,7 +1036,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     .addComponent(pnl_dados_telefones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_telefonesLayout.createSequentialGroup()
                         .addComponent(btn_anteriorTelefones)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 635, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 662, Short.MAX_VALUE)
                         .addComponent(btn_proximoTelefones)))
                 .addContainerGap())
         );
@@ -943,6 +1101,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 cbx_aplicativoActionPerformed(evt);
             }
         });
+        cbx_aplicativo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbx_aplicativoFocusLost(evt);
+            }
+        });
 
         cbx_links.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -968,7 +1131,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     .addComponent(cbx_links, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_CadLinksLayout.createSequentialGroup()
                         .addComponent(txt_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 78, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnl_CadLinksLayout.setVerticalGroup(
@@ -989,14 +1152,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_inserirLinks.setText("Inserir");
+        btn_inserirLinks.setText(">>");
         btn_inserirLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirLinksActionPerformed(evt);
             }
         });
 
-        btn_removerLinks.setText("Remover");
+        btn_removerLinks.setText("<<");
         btn_removerLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_removerLinksActionPerformed(evt);
@@ -1009,12 +1172,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             pnl_dadosLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_dadosLinksLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(pnl_CadLinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(pnl_dadosLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_CadLinks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLinksLayout.createSequentialGroup()
-                        .addComponent(btn_removerLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                        .addComponent(btn_inserirLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btn_inserirLinks, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_removerLinks, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1023,15 +1185,18 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             pnl_dadosLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_dadosLinksLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_dadosLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(pnl_dadosLinksLayout.createSequentialGroup()
-                        .addComponent(pnl_CadLinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addGroup(pnl_dadosLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_inserirLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_removerLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLinksLayout.createSequentialGroup()
+                .addGap(0, 36, Short.MAX_VALUE)
+                .addComponent(pnl_CadLinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLinksLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_inserirLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_removerLinks, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout pnl_linksLayout = new javax.swing.GroupLayout(pnl_links);
@@ -1065,6 +1230,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         pnl_botoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btn_inclusao.setText("Inclusão");
+        btn_inclusao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inclusaoActionPerformed(evt);
+            }
+        });
 
         btn_alteracao.setText("Alteração");
 
@@ -1072,7 +1242,15 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         btn_consulta.setText("Consulta");
 
+        txt_operacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_operacao.setEnabled(false);
+
         btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_botoesLayout = new javax.swing.GroupLayout(pnl_botoes);
         pnl_botoes.setLayout(pnl_botoesLayout);
@@ -1088,10 +1266,10 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_operacao)
                 .addGap(18, 18, 18)
                 .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pnl_botoesLayout.setVerticalGroup(
             pnl_botoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1114,7 +1292,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(abas)
                     .addComponent(pnl_botoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1157,11 +1335,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_anteriorActionPerformed
 
     private void cbx_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tipoActionPerformed
-        try {
-            trocaMascara();
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(null, "Selecione Um Tipo de Cliente");
-        }
+        trocaMascara();
     }//GEN-LAST:event_cbx_tipoActionPerformed
 
     private void cbx_estadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_estadosActionPerformed
@@ -1173,7 +1347,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_numeroActionPerformed
 
     private void btn_inserirTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirTelefoneActionPerformed
-        
+
     }//GEN-LAST:event_btn_inserirTelefoneActionPerformed
 
     private void btn_removerTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerTelefoneActionPerformed
@@ -1202,6 +1376,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     private void txt_dataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataKeyPressed
         if (evt.getKeyCode() == Event.ENTER) {
+            data = new Data();
             txt_data.setText(data.completaData(txt_data.getText(), "dd/MM/yyyy"));
         }
     }//GEN-LAST:event_txt_dataKeyPressed
@@ -1209,6 +1384,33 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private void cbx_cidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_cidadesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbx_cidadesActionPerformed
+
+    private void btn_inclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inclusaoActionPerformed
+        limpaCampos();
+        cliente = new Cliente();
+        txt_operacao.setText("INSCLUSÃO");
+        camposON();
+    }//GEN-LAST:event_btn_inclusaoActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        while (abas.getSelectedIndex() != 0) {
+            abas.setSelectedIndex(abas.getSelectedIndex() - 1);
+        }
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void cbx_cidadesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_cidadesFocusGained
+
+    }//GEN-LAST:event_cbx_cidadesFocusGained
+
+    private void cbx_cidadesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_cidadesFocusLost
+        cbx_estados.setSelectedItem(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()).getCoduf().getSigla());
+    }//GEN-LAST:event_cbx_cidadesFocusLost
+
+    private void cbx_aplicativoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_aplicativoFocusLost
+        if (cbx_aplicativo.getSelectedItem() != null) {
+            carregaLinks(aplicativoDAO.buscaAplicativo(cbx_aplicativo.getSelectedItem().toString()));
+        }
+    }//GEN-LAST:event_cbx_aplicativoFocusLost
 
     /**
      * @param args the command line arguments
