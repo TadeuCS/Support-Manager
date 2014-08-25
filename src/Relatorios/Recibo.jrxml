@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Recibo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e2d247c7-fe66-4892-88a7-7d7b8161ae14">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="CODIGO" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select * from usuario where codusuario = $P{CODIGO}]]>
+	</queryString>
+	<field name="CODUSUARIO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CPF" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EMAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SENHA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SEXO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="USUARIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODSTATUSPESSOA" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODTIPOUSUARIO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="401" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="58" uuid="4a9d201b-fcf6-4153-96b1-17cc1060f62e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="0" width="252" height="16" uuid="91f2f77c-48d0-487c-8513-28efe584a0f6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OLIVET SISTEMAS - B2B SISTEMAS LTDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="16" width="252" height="14" uuid="e5fcbec7-dfa0-4fd8-88aa-ef06754b6a08"/>
+				<text><![CDATA[Rua Dona Luiza, 521, sala 4 Fone: (34) 3822-2250]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="30" width="252" height="14" uuid="036a169d-07af-438a-b0a3-8ef3914c4aae"/>
+				<text><![CDATA[Patos de Minas - MG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="44" width="252" height="14" forecolor="#00159D" uuid="6a334037-c934-441a-ac71-90c610fdc6f5"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[www.olivetsistemas.com.br]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="63" width="555" height="24" uuid="11aefa3d-7311-4f48-a375-b7f292532983"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="69" width="37" height="14" uuid="b6d83d17-e53b-4ec6-952a-a38be8e851d2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="87" width="555" height="221" uuid="de68087a-2f36-4a81-89c0-3b581e69bc79"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="465" y="87" width="90" height="26" backcolor="#999999" uuid="8277fca6-04ae-4c27-ba53-f6dd591f45a5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="375" y="87" width="90" height="26" backcolor="#999999" uuid="4a63f5bc-f9e3-47de-9b09-19a65334b89f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="467" y="87" width="87" height="26" uuid="cbe6f7c5-4e7a-45d2-921e-530e7986d2fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Descontos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="89" width="89" height="24" uuid="d94fff47-b474-4263-ad20-d0137f78491a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Valor Parcela]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="87" width="375" height="26" backcolor="#999999" uuid="9687e118-558e-4d25-a4ae-e4cd8f24586b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="89" width="374" height="24" uuid="24f31fbf-4812-40af-826c-71438c6d3287"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="113" width="375" height="165" backcolor="#FFFFFF" uuid="39da318e-2afd-4ac9-b382-fdf916576c50"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="376" y="256" width="90" height="22" backcolor="#999999" uuid="ab053a07-6ff9-41f6-b0fc-a561c2a99d88"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="376" y="257" width="90" height="20" uuid="963a88b8-aa33-4cd7-b85e-cf86789069db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="122" width="236" height="14" uuid="67c24f56-c37a-483c-b6ba-e2579a5de6ad"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pagamento referente a manutenção do sistema:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="147" width="35" height="14" uuid="1467e823-cfff-49bd-9a86-93b8ab555152"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="313" width="555" height="70" backcolor="#FFFFFF" uuid="b71a722f-806d-49b9-83ca-43264540ae88"/>
+			</rectangle>
+			<image>
+				<reportElement x="463" y="3" width="90" height="53" uuid="cd981a42-cf3f-450b-bdbb-122df46631a7"/>
+				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Desktop\\OLIVET.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="4" y="315" width="549" height="14" uuid="e9027126-c721-4c41-9b7d-bcea6be68fc0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DECLARO TER RECEBIDO A IMPORTANCIA LIQUIDA DISCRIMINADA NESTE RECIBO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="147" y="367" width="372" height="1" uuid="3f66ba3e-103b-459e-a971-1c6ed3ebcc7d"/>
+			</line>
+			<staticText>
+				<reportElement x="147" y="367" width="372" height="14" uuid="3db48af0-1944-4228-b4c2-dfc70b2f39da"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ASSINATURA DO FUNCIONARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="" x="18" y="349" width="107" height="18" uuid="89e1db24-2e79-4351-884c-d11b39247ebb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[__ /__ /_____]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="48" y="65" width="505" height="20" uuid="3ee88410-c0fa-414b-a88b-a68fea6ae674"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="368" width="107" height="14" uuid="d9e05f8d-bf59-4c3c-83b1-428d6974a68a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DATA PAGAMENTO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="465" y="113" width="90" height="165" backcolor="#FFFFFF" uuid="5f4e8c04-4012-41a5-8572-74d875a18609"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="465" y="256" width="90" height="22" backcolor="#FFFFFF" uuid="013aee06-7c93-4b2b-8274-000093572318"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="50" y="144" width="97" height="20" uuid="7ec2090f-a3ae-4c41-bddc-68213bfe41f1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DATA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="252" y="119" width="97" height="20" uuid="ec0b5f3c-380b-493d-be8d-7edbd6fad477"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SISTEMA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="377" y="116" width="87" height="20" uuid="01a4b1aa-d7e1-427e-a7d2-789186933175"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PARCELA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="467" y="116" width="87" height="20" uuid="57e1ed8e-588a-4aef-a821-cd59340eb4a3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DESCONTO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="467" y="257" width="87" height="20" uuid="a19a4da2-2e9e-4c59-b427-5091675b1eee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
