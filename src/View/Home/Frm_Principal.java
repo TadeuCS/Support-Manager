@@ -101,6 +101,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu12 = new javax.swing.JMenu();
         jMenuItem23 = new javax.swing.JMenuItem();
         jMenuItem33 = new javax.swing.JMenuItem();
+        jMenuItem37 = new javax.swing.JMenuItem();
         jMenu14 = new javax.swing.JMenu();
         jMenuItem28 = new javax.swing.JMenuItem();
         jMenuItem29 = new javax.swing.JMenuItem();
@@ -370,6 +371,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenuItem33.setText("Ponto");
         jMenu3.add(jMenuItem33);
 
+        jMenuItem37.setText("Recibo");
+        jMenu3.add(jMenuItem37);
+
         jMenuBar1.add(jMenu3);
 
         jMenu14.setText("Ultilitarios");
@@ -579,6 +583,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem34;
     private javax.swing.JMenuItem jMenuItem35;
     private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;

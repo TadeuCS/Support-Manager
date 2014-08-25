@@ -1395,7 +1395,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         while (abas.getSelectedIndex() != 0) {
             abas.setSelectedIndex(abas.getSelectedIndex() - 1);
+            limpaCampos();
+            camposOFF();
+            txt_operacao.setText(null);
         }
+        
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void cbx_cidadesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_cidadesFocusGained
