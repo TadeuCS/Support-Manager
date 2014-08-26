@@ -55,8 +55,16 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txt_usuarioLogado = new javax.swing.JTextField();
         lb_boasVindas = new javax.swing.JLabel();
+        txt_usuarioLogado = new javax.swing.JTextField();
+        lb_qtdeConcluidos = new javax.swing.JLabel();
+        lb_qtdeExecutando = new javax.swing.JLabel();
+        lb_qtdePendentes = new javax.swing.JLabel();
+        lb_lembretes = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -73,13 +81,12 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu7 = new javax.swing.JMenu();
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem35 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenu8 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu15 = new javax.swing.JMenu();
         jMenuItem30 = new javax.swing.JMenuItem();
         jMenuItem31 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu9 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
@@ -119,30 +126,85 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        lb_boasVindas.setText("Bem Vindo ");
+
         txt_usuarioLogado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_usuarioLogado.setEnabled(false);
 
-        lb_boasVindas.setText("Bem Vindo ");
+        lb_qtdeConcluidos.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeConcluidos.setForeground(new java.awt.Color(102, 102, 102));
+        lb_qtdeConcluidos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_qtdeConcluidos.setText("5000");
+
+        lb_qtdeExecutando.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeExecutando.setForeground(new java.awt.Color(102, 102, 102));
+        lb_qtdeExecutando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_qtdeExecutando.setText("5000");
+
+        lb_qtdePendentes.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdePendentes.setForeground(new java.awt.Color(102, 102, 102));
+        lb_qtdePendentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_qtdePendentes.setText("5000");
+
+        lb_lembretes.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_lembretes.setForeground(new java.awt.Color(102, 102, 102));
+        lb_lembretes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_lembretes.setText("5000");
+
+        jLabel1.setText("Concluídos:");
+
+        jLabel4.setText("Executando:");
+
+        jLabel6.setText("Pendentes:");
+
+        jLabel8.setText("Lembretes:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(375, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(lb_boasVindas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(375, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_qtdeConcluidos)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_qtdeExecutando)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_qtdePendentes)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_lembretes)
+                .addContainerGap(275, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_boasVindas)
                     .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lb_boasVindas))
-                .addGap(2, 2, 2))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lb_lembretes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(5, 5, 5))
         );
 
         jMenu1.setText("Cadastros");
@@ -243,13 +305,25 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jMenu1.add(jMenu7);
 
-        jMenuItem13.setText("Empresa");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jMenu15.setText("Informação");
+
+        jMenuItem30.setText("Informação");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                jMenuItem30ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem13);
+        jMenu15.add(jMenuItem30);
+
+        jMenuItem31.setText("Tipo Informação");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu15.add(jMenuItem31);
+
+        jMenu1.add(jMenu15);
 
         jMenu8.setText("Usuário");
 
@@ -270,26 +344,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu8.add(jMenuItem14);
 
         jMenu1.add(jMenu8);
-
-        jMenu15.setText("Informação");
-
-        jMenuItem30.setText("Informação");
-        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem30ActionPerformed(evt);
-            }
-        });
-        jMenu15.add(jMenuItem30);
-
-        jMenuItem31.setText("Tipo Informação");
-        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem31ActionPerformed(evt);
-            }
-        });
-        jMenu15.add(jMenuItem31);
-
-        jMenu1.add(jMenu15);
 
         jMenuBar1.add(jMenu1);
 
@@ -411,7 +465,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(502, Short.MAX_VALUE)
+                .addContainerGap(488, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -478,10 +532,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadTipoInformacao f = new Frm_CadTipoInformacao();
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        Frm_CadEmpresa f = new Frm_CadEmpresa();
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
-
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
         Frm_CadTelefone f = new Frm_CadTelefone();
     }//GEN-LAST:event_jMenuItem34ActionPerformed
@@ -539,6 +589,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
@@ -558,7 +612,6 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
@@ -592,6 +645,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lb_boasVindas;
+    private javax.swing.JLabel lb_lembretes;
+    private javax.swing.JLabel lb_qtdeConcluidos;
+    private javax.swing.JLabel lb_qtdeExecutando;
+    private javax.swing.JLabel lb_qtdePendentes;
     private javax.swing.JTextField txt_usuarioLogado;
     // End of variables declaration//GEN-END:variables
 }
