@@ -10,7 +10,6 @@ import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
-import Model.Grupo;
 import Model.StatusPessoa;
 import Model.Telefone;
 import Model.TipoUsuario;
@@ -364,6 +363,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_contato.setText(null);
         txt_telefone.setText(null);
         limpaTabela();
+
     }
 
     public void limpaTabela() {
@@ -377,6 +377,19 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 
     }
 
+    public void validaTelefoneExistente(String grupo, String contato, String numTelefone) {
+        boolean existe = false;
+        for (int i = 0; i < tb_telefones.getRowCount(); i++) {
+            if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
+                JOptionPane.showMessageDialog(null, "Telefone já existe");
+                existe = true;
+            }
+        }
+        if (existe == false) {
+            insereTelefoneNalista(grupo, contato, numTelefone);
+        }
+    }
+
     public void insereTelefoneNalista(String grupo, String contato, String numTelefone) {
         try {
             telefone = new Telefone();
@@ -388,7 +401,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};
             model.addRow(linha);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Erro ao inserir Telefone na Lista");
         } finally {
             txt_contato.setText(null);
             txt_telefone.setText(null);
@@ -417,10 +430,9 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     public void salva() {
         try {
             setUsuario();
-
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Salvo com Sucesso!");
-            limpaCampos();
+            cancelar();
         } catch (Exception e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario\n" + "Usuário já cadastrado!", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -433,7 +445,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             setUsuario();
             usuarioDAO.salvar(usuario);
             JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!");
-            limpaCampos();
+            cancelar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Alterar Usuario\n", "Alerta", JOptionPane.ERROR_MESSAGE);
 
@@ -461,12 +473,12 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             telefone = new Telefone();
             telefoneDAO = new TelefoneDAO();
             try {
-            telefone = telefoneDAO.busca(numeroTelefone);    
+                telefone = telefoneDAO.busca(numeroTelefone);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: "+numeroTelefone);
+                JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: " + numeroTelefone);
                 System.out.println(e);
             }
-            
+
             try {
                 telefoneDAO.apagar(telefone);
                 model.removeRow(tb_telefones.getSelectedRow());
@@ -478,6 +490,16 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Selecione Uma linha para Remover!");
         }
+    }
+
+    public void cancelar() {
+        while (abas.getSelectedIndex() != 0) {
+            abas.setSelectedIndex(abas.getSelectedIndex() - 1);
+        }
+        limpaCampos();
+        camposOFF();
+        codigoUsuario = 0;
+        txt_operacao.setText(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -527,9 +549,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         jLabel45 = new javax.swing.JLabel();
         txt_contato = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        btn_cadGrupo = new javax.swing.JButton();
         btn_anterior = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_adicionarContato = new javax.swing.JButton();
+        btn_removerContato = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Usuario");
@@ -805,6 +828,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 
         jLabel12.setText("Grupo *:");
 
+        cbx_grupo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_grupoFocusGained(evt);
+            }
+        });
         cbx_grupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_grupoActionPerformed(evt);
@@ -835,10 +863,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_cadTelefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_contato)
                     .addGroup(pnl_cadTelefonesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txt_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_contato))
+                        .addComponent(txt_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 88, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnl_cadTelefonesLayout.setVerticalGroup(
@@ -855,6 +883,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_cadGrupo.setToolTipText("Adicionar Contato");
+        btn_cadGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cadGrupoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -866,17 +901,20 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_grupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(cbx_grupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbx_grupo)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_cadGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnl_cadTelefones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
         );
@@ -889,19 +927,19 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText(">>");
-        jButton1.setToolTipText("Adicionar Contato");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_adicionarContato.setText(">>");
+        btn_adicionarContato.setToolTipText("Adicionar Contato");
+        btn_adicionarContato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_adicionarContatoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("<<");
-        jButton2.setToolTipText("Remover Contato");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_removerContato.setText("<<");
+        btn_removerContato.setToolTipText("Remover Contato");
+        btn_removerContato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_removerContatoActionPerformed(evt);
             }
         });
 
@@ -912,14 +950,14 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dados_telefonesLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
+                            .addComponent(btn_adicionarContato)
+                            .addComponent(btn_removerContato))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dados_telefonesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -928,19 +966,21 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         pnl_dados_telefonesLayout.setVerticalGroup(
             pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dados_telefonesLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                    .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_dados_telefonesLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(btn_adicionarContato, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(btn_removerContato, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(btn_anterior)
                 .addContainerGap())
-            .addGroup(pnl_dados_telefonesLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
         );
 
         abas.addTab("Contatos", pnl_dados_telefones);
@@ -999,10 +1039,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_rbt_masculinoActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        txt_operacao.setText(null);
-        codigoUsuario = 0;
-        limpaCampos();
-        camposOFF();
+        cancelar();
+
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_alteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteracaoActionPerformed
@@ -1080,26 +1118,38 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         anterior();
     }//GEN-LAST:event_btn_anteriorActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_adicionarContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adicionarContatoActionPerformed
         if (txt_contato.getText().equals("") == true) {
             JOptionPane.showMessageDialog(null, "Contato Inválido");
         } else {
             if (txt_telefone.getText().equals("") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone Inválido");
             } else {
-                insereTelefoneNalista(cbx_grupo.getSelectedItem().toString(),
-                        txt_contato.getText().toUpperCase(),
-                        txt_telefone.getText());
+                if (cbx_grupo.getSelectedItem()==null) {
+                    JOptionPane.showMessageDialog(null, "Selecione um Grupo");
+                } else {
+                    validaTelefoneExistente(cbx_grupo.getSelectedItem().toString(),
+                            txt_contato.getText(),
+                            txt_telefone.getText());
+                }
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_adicionarContatoActionPerformed
 
     private void cbx_grupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_grupoActionPerformed
     }//GEN-LAST:event_cbx_grupoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_removerContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerContatoActionPerformed
         remove(tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString());
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_removerContatoActionPerformed
+
+    private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
+        Frm_CadGrupo f = new Frm_CadGrupo();
+    }//GEN-LAST:event_btn_cadGrupoActionPerformed
+
+    private void cbx_grupoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_grupoFocusGained
+        carregaGrupos();
+    }//GEN-LAST:event_cbx_grupoFocusGained
 
     /**
      * @param args the command line arguments
@@ -1143,18 +1193,19 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abas;
+    private javax.swing.JButton btn_adicionarContato;
     private javax.swing.JButton btn_alteracao;
     private javax.swing.JButton btn_anterior;
     private javax.swing.JButton btn_bloqueado;
+    private javax.swing.JButton btn_cadGrupo;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_consulta;
     private javax.swing.JButton btn_inclusao;
     private javax.swing.JButton btn_proximo;
+    private javax.swing.JButton btn_removerContato;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JComboBox cbx_grupo;
     private javax.swing.JComboBox cbx_tipoUsuario;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
