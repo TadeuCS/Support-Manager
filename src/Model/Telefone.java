@@ -43,7 +43,7 @@ public class Telefone implements Serializable {
     @Column(name = "DESCRICAO")
     private String descricao;
     @Basic(optional = false)
-    @Column(name = "TELEFONE",unique = true)
+    @Column(name = "TELEFONE")
     private String telefone;
     @JoinColumn(name = "CODGRUPO", referencedColumnName = "CODGRUPO")
     @ManyToOne(optional = false)
