@@ -2,7 +2,7 @@
 
 INSERT INTO smdados.aplicativo (`CODAPLICATIVO`,`DESCRICAO`)
 	VALUES (1,'ATS');
-INSERT INTO smdados.aplicativo (`DESCRICAO`)
+INSERT INTO smdados.aplicativo (`CODAPLICATIVO`,`DESCRICAO`)
 	VALUES (2,'YUNES');
 
 --INSERÇÃO DE LINKS

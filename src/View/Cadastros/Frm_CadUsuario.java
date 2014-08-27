@@ -10,8 +10,6 @@ import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
-import Model.Grupo;
-import Model.LinkCliente_;
 import Model.StatusPessoa;
 import Model.Telefone;
 import Model.TipoUsuario;
@@ -23,8 +21,6 @@ import Util.Classes.ValidarCpf;
 import View.Consultas.Frm_ConUsuarios;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -381,19 +377,17 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 
     }
 
-    public void validaTelefoneExistente(String numTelefone) {
-       int i=0;
-       if(tb_telefones.getRowCount()==0){
-        insereTelefoneNalista(cbx_grupo.getSelectedItem().toString(), txt_contato.getText(), txt_telefone.getText());   
-       }
-       while(i<tb_telefones.getRowCount()){
-           if((tb_telefones.getValueAt(i, 1).equals(numTelefone)==false)&&(i<tb_telefones.getRowCount())){
-               i++;
-           }else{
-               
-           }
-       }
-        
+    public void validaTelefoneExistente(String grupo, String contato, String numTelefone) {
+        boolean existe = false;
+        for (int i = 0; i < tb_telefones.getRowCount(); i++) {
+            if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
+                JOptionPane.showMessageDialog(null, "Telefone já existe");
+                existe = true;
+            }
+        }
+        if (existe == false) {
+            insereTelefoneNalista(grupo, contato, numTelefone);
+        }
     }
 
     public void insereTelefoneNalista(String grupo, String contato, String numTelefone) {
@@ -1131,7 +1125,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             if (txt_telefone.getText().equals("") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone Inválido");
             } else {
-                validaTelefoneExistente(txt_telefone.getText());
+                if (cbx_grupo.getSelectedItem()==null) {
+                    JOptionPane.showMessageDialog(null, "Selecione um Grupo");
+                } else {
+                    validaTelefoneExistente(cbx_grupo.getSelectedItem().toString(),
+                            txt_contato.getText(),
+                            txt_telefone.getText());
+                }
             }
         }
     }//GEN-LAST:event_btn_adicionarContatoActionPerformed
