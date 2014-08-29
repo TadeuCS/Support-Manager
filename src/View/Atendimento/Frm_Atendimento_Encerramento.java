@@ -62,8 +62,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         txt_detectado1 = new javax.swing.JTextArea();
         jLabel13 = new javax.swing.JLabel();
-        txt_dataFim1 = new javax.swing.JFormattedTextField();
-        jLabel12 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -153,15 +151,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
         jLabel13.setText("Solução *:");
 
-        try {
-            txt_dataFim1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/#### ##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txt_dataFim1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jLabel12.setText("Data Solução *:");
-
         javax.swing.GroupLayout pnl_dadosLayout = new javax.swing.GroupLayout(pnl_dados);
         pnl_dados.setLayout(pnl_dadosLayout);
         pnl_dadosLayout.setHorizontalGroup(
@@ -193,10 +182,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                                 .addComponent(rbt_nao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(rbt_sim)))
-                        .addGap(286, 286, 286)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_dataFim1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnl_dadosLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -208,7 +194,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
                                 .addComponent(jLabel13)
@@ -240,10 +226,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(rbt_sim)
-                    .addComponent(rbt_nao)
-                    .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel12)
-                        .addComponent(txt_dataFim1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rbt_nao))
                 .addGap(7, 7, 7)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_dadosLayout.createSequentialGroup()
@@ -366,7 +349,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -385,7 +367,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbt_sim;
     private javax.swing.JTextField txt_cliente;
     private javax.swing.JFormattedTextField txt_dataFim;
-    private javax.swing.JFormattedTextField txt_dataFim1;
     private javax.swing.JTextArea txt_detectado;
     private javax.swing.JTextArea txt_detectado1;
     private javax.swing.JTextArea txt_informado;
