@@ -74,7 +74,7 @@ public class Frm_CadInformacao extends javax.swing.JFrame {
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir Informação");
+            JOptionPane.showMessageDialog(null, "Erro ao inserir Informação\n"+e);
             System.out.println(e);
             cbx_tipo.requestFocus();
         }
@@ -211,6 +211,8 @@ public class Frm_CadInformacao extends javax.swing.JFrame {
             f = new Frm_Principal();
             Date data = new Date();
             salvar(txt_descricao.getText(), f.getUsuarioLogado(), data, cbx_tipo.getSelectedItem().toString());
+        }else{
+            JOptionPane.showMessageDialog(null, "Informe uma Observação!");
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
 

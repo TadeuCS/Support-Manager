@@ -5,10 +5,12 @@
  */
 package View.Cadastros;
 
-import Controller.TelefoneDAO;
 import Controller.GrupoDAO;
-import Model.Telefone;
+import Controller.TelefoneDAO;
 import Model.Grupo;
+import Model.Telefone;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -74,9 +76,9 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
             telefone.setDescricao(nome);
             telefone.setTelefone(numTelefone);
             telefoneDAO.salvar(telefone);
-            JOptionPane.showMessageDialog(null, "Telefone Inserido com Sucesso!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar o Telefone" + e);
+            JOptionPane.showMessageDialog(null, "Contato Inserido com Sucesso!");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Telefone "+numTelefone+" já existe!");
         }
         limpaCampos();
     }

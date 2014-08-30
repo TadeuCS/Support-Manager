@@ -17,7 +17,8 @@ import Model.Usuario;
 import Util.Classes.Criptografia;
 import Util.Classes.FixedLengthDocument;
 import Util.Classes.IntegerDocument;
-import Util.Classes.ValidarCpf;
+import Util.Classes.ValidaEmail;
+import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConUsuarios;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
@@ -143,19 +144,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             btn_bloqueado.setText("SIM");
             btn_bloqueado.setToolTipText("Clique aqui para mudar para NÃO");
         }
-    }
-
-    public boolean validarEmail(String email) {
-        boolean isEmailIdValid = false;
-        if (email != null && email.length() > 0) {
-            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
-                isEmailIdValid = true;
-            }
-        }
-        return isEmailIdValid;
     }
 
     public void trocaMascara() throws ParseException {
@@ -292,7 +280,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "CPF Inválido");
                 txt_cpf.requestFocus();
             } else {
-                ValidarCpf v = new ValidarCpf();
+                ValidarCGCCPF v = new ValidarCGCCPF();
                 if (v.validarCpf(txt_cpf.getText()) == false) {
                     JOptionPane.showMessageDialog(null, "CPF Inválido");
                     txt_cpf.requestFocus();
@@ -301,7 +289,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Email Inválido");
                         txt_email.requestFocus();
                     } else {
-                        if (validarEmail(email) == false) {
+                        if (ValidaEmail.validarEmail(email) == false) {
                             JOptionPane.showMessageDialog(null, "Email Inválido");
                             txt_email.requestFocus();
                         } else {
@@ -382,6 +370,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         for (int i = 0; i < tb_telefones.getRowCount(); i++) {
             if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
                 JOptionPane.showMessageDialog(null, "Telefone já existe");
+                txt_telefone.requestFocus();
                 existe = true;
             }
         }
@@ -473,7 +462,9 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             telefone = new Telefone();
             telefoneDAO = new TelefoneDAO();
             try {
-                telefone = telefoneDAO.busca(numeroTelefone);
+                if (txt_codigo.getText().equals("") == false) {
+                    telefone = telefoneDAO.busca(numeroTelefone);
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: " + numeroTelefone);
                 System.out.println(e);
@@ -1121,11 +1112,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     private void btn_adicionarContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_adicionarContatoActionPerformed
         if (txt_contato.getText().equals("") == true) {
             JOptionPane.showMessageDialog(null, "Contato Inválido");
+            txt_contato.requestFocus();
         } else {
             if (txt_telefone.getText().equals("") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone Inválido");
+                txt_telefone.requestFocus();
             } else {
-                if (cbx_grupo.getSelectedItem()==null) {
+                if (cbx_grupo.getSelectedItem() == null) {
                     JOptionPane.showMessageDialog(null, "Selecione um Grupo");
                 } else {
                     validaTelefoneExistente(cbx_grupo.getSelectedItem().toString(),

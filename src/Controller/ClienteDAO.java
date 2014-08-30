@@ -6,8 +6,9 @@
 package Controller;
 
 import Model.Cliente;
-import Model.Telefone;
+import Model.Endereco;
 import Model.LinkCliente;
+import Model.Telefone;
 import Util.Classes.Manager;
 import java.util.List;
 
@@ -50,5 +51,10 @@ public class ClienteDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-
+    public Endereco findEnderecoByCEP(String cep){
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Endereco.findByCep").setParameter("cep", cep);
+        em.getTransaction().commit();
+        return (Endereco) query.getResultList();
+    }
 }

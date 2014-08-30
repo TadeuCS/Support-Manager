@@ -27,9 +27,9 @@ public class CidadesDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-    public Cidade consulta(String grupo) {
+    public Cidade consulta(String cidade) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Cidade.findByDescricao").setParameter("descricao", grupo);
+        query = em.createNamedQuery("Cidade.findByDescricao").setParameter("descricao", cidade);
         em.getTransaction().commit();
         return (Cidade) query.getSingleResult();
     }

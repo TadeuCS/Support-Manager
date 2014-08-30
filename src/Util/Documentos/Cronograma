@@ -1,0 +1,48 @@
+---------------------------------------------------------CLIENTE-----------------------------------------------------
+validar campos obrigatórios cadastro de cliente
+validar email e cpf cliente
+inserir varios links
+inserir varios contatos
+salvar cliente
+alterar cliente
+consultar cliente
+excluir cliente se não houver movimentação
+cadastro de cidade
+----------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------ATENDIMENTO--------------------------------------------------
+ABRIR ATENDIMENTO POR USUARIO LOGADO.
+NO CASO DE ATENDENTE ATT PODE SER ABERTO PRA QUALQUER USUARIO QUE NÃO ESTEJA BLOQUEADO.
+AO ALTERAR ATENDIMENTO LISTADO EM EXECUÇÃO, VOLTAR PARA TELA DE FECHAMENTO DE ATT POSSIBILITANDO SOMENTE SALVAR O ATT.
+TRATAR PENDENCIA, SE OUVER SALVAR NO BANCO.
+NA TABELA DE ATENDIMENTOS EM EXECUÇÃO, POSSIBILIDADE DE CANCELAR UM ATENDIMENTO PARA USUARIO ATENDENTE.
+NA TABELA DE ATENDIMENTOS EM EXECUÇÃO, POSSIBILIDADE DE FINALIZAR UM ATT OU ALTERAR-LO PARA USUARIO SUPORTE.
+NA TABELA DE PENDENTES POSSIBILITAR PARA USUARIOS SUPORTE QUE ABRIU O ATT, FECHAR-LO.
+EM TODAS AS TABELAS DEVE SER PERMITIDO FILTRAR POR QUALQUER COLUNA/VALOR.
+AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
+AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
+----------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------EMPRESA------------------------------------------------------
+TRATAR CAMPOS OBRIGATÓRIOS NO CADASTRO DE EMPRESA/EMAIL
+CRIAR INTERFACE DE TESTE ENVIO DE EMAIL.
+CONFIGURAR RELATORIO DE RECIBO POR CLIENTE.
+----------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------EMPRESA------------------------------------------------------
+CRIAR INTERFACE E RELATORIO DE CLIENTE COM OS FILTROS: DATA ATUALIZAÇÃO, POR CLIENTE, POR SEGMENTO.
+CRIAR INTERFACE E RELATORIO DE ATENDIMENTO COM OS FILTROS: TOTAL ATENDIMENTOS, USUARIO, CLIENTE, PERIODO, STATUS.
+----------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------OUTROS------------------------------------------------------
+SISTEMA MINIMIZAR PARA AREA DE NOTIFICAÇÃO.
+INSERIR ICONES NOS BOTOES.
+TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
+TRATAR CAMPOS CRESCENDO COM O FOCUS.
+IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
+MALA DIRETA.
+CRIAR WEBSERVICE COM METODO: LOGIN, CONSULTAR ATENDIMENTO POR USUARIO E DATA.
+CRIAR INTERFACE ANDROID PARA EFETUAR ESTA CONSULTA.
+CRIAR INTERFACE DE ABERTURA DE ATENDIMENTO WEB.
+DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
+----------------------------------------------------------------------------------------------------------------------
