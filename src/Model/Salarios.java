@@ -6,6 +6,7 @@
 
 package Model;
 
+import com.sun.org.apache.xalan.internal.xsltc.trax.StAXEvent2SAX;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -31,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Salarios.findAll", query = "SELECT s FROM Salarios s"),
     @NamedQuery(name = "Salarios.findByCodsalario", query = "SELECT s FROM Salarios s WHERE s.codsalario = :codsalario"),
-    @NamedQuery(name = "Salarios.findByAno", query = "SELECT s FROM Salarios s WHERE s.ano = :ano"),
+    @NamedQuery(name = "Salarios.findByAno", query = "SELECT MAX(s.valor) FROM Salarios s WHERE s.ano = :ano"),
     @NamedQuery(name = "Salarios.findByValor", query = "SELECT s FROM Salarios s WHERE s.valor = :valor")})
 public class Salarios implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -42,8 +43,7 @@ public class Salarios implements Serializable {
     private Integer codsalario;
     @Basic(optional = false)
     @Column(name = "ANO")
-    @Temporal(TemporalType.DATE)
-    private Date ano;
+    private int ano;
     @Basic(optional = false)
     @Column(name = "VALOR")
     private double valor;
@@ -55,7 +55,7 @@ public class Salarios implements Serializable {
         this.codsalario = codsalario;
     }
 
-    public Salarios(Integer codsalario, Date ano, double valor) {
+    public Salarios(Integer codsalario, int ano, double valor) {
         this.codsalario = codsalario;
         this.ano = ano;
         this.valor = valor;
@@ -69,11 +69,11 @@ public class Salarios implements Serializable {
         this.codsalario = codsalario;
     }
 
-    public Date getAno() {
+    public int getAno() {
         return ano;
     }
 
-    public void setAno(Date ano) {
+    public void setAno(int ano) {
         this.ano = ano;
     }
 

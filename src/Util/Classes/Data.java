@@ -22,18 +22,18 @@ public class Data {
     }
     public String completaData(String texto,String formato) {
         if (texto.contains("  /  /    ")) {
-            texto = getData("dd/MM/yyyy");
+            texto = getData(formato);
         } else {
             if (texto.endsWith("/  /    ")) {
-                String dataAtual = getData("dd/MM/yyyy");
+                String dataAtual = getData(formato);
                 texto = dataAtual.replace(dataAtual.substring(0, 2), texto.substring(0, 2));
             } else {
                 if (texto.endsWith("/    ")) {
-                    String dataAtual = getData("dd/MM/yyyy");
+                    String dataAtual = getData(formato);
                     texto = texto.replaceAll("    ", dataAtual.substring(6, 10));
                 } else {
                     if ("  ".equals(texto.substring(8, 10))) {
-                        String dataAtual = getData("dd/MM/yyyy");
+                        String dataAtual = getData(formato);
                         texto = texto.replaceAll(texto.substring(6,8)+"  ", dataAtual.substring(6,8)+texto.substring(6,8));
                     }
                 }

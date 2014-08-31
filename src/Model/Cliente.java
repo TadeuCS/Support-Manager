@@ -7,6 +7,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -52,7 +53,7 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "CODCLIENTE")
     private Integer codcliente;
-    @Column(name = "REFERENCIA")
+    @Column(name = "REFERENCIA",nullable = true)
     private Integer referencia;
     @Basic(optional = false)
     @Column(name = "NOME_FANTASIA")
@@ -90,11 +91,11 @@ public class Cliente implements Serializable {
     @ManyToOne(optional = false)
     private Parcela codparcela;
     @OneToMany(mappedBy = "codcliente")
-    private List<Telefone> telefoneList;
+    private List<Telefone> telefoneList=new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<LinkCliente> linkClienteList;
+    private List<LinkCliente> linkClienteList=new ArrayList<>();
     @OneToMany(mappedBy = "codcliente")
-    private List<Endereco> enderecoList;
+    private List<Endereco> enderecoList=new ArrayList<>();;
 
     public Cliente() {
     }
