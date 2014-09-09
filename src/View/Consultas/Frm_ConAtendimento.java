@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package View.Atendimento;
+package View.Consultas;
 
 import Controller.ClienteDAO;
 import View.Cadastros.Frm_CadUsuario;
@@ -17,11 +17,11 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Tadeu
  */
-public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
+public class Frm_ConAtendimento extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ClienteDAO clienteDAO;
-    public Frm_ConAtendimento_Concluidos() {
+    public Frm_ConAtendimento() {
         initComponents();
         model = (DefaultTableModel) tb_clientes.getModel();
         setVisible(true);
@@ -100,6 +100,7 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
         txt_filtro = new javax.swing.JTextField();
         btn_cancelar1 = new javax.swing.JButton();
         btn_cancelar2 = new javax.swing.JButton();
+        btn_cancelar3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Clientes");
@@ -157,7 +158,7 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
         );
 
-        btn_cancelar.setText("Excluir");
+        btn_cancelar.setText("Cancelar");
 
         btn_selecionar.setText("Finalizar");
 
@@ -166,6 +167,8 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
         btn_cancelar1.setText("Alterar");
 
         btn_cancelar2.setText("Detalhar");
+
+        btn_cancelar3.setText("Fechar");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -176,7 +179,9 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 150, Short.MAX_VALUE)
+                        .addComponent(btn_cancelar3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_cancelar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,7 +193,7 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 190, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -205,7 +210,8 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
                     .addComponent(btn_selecionar)
                     .addComponent(btn_cancelar)
                     .addComponent(btn_cancelar1)
-                    .addComponent(btn_cancelar2))
+                    .addComponent(btn_cancelar2)
+                    .addComponent(btn_cancelar3))
                 .addContainerGap())
         );
 
@@ -252,20 +258,20 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_ConAtendimento_Concluidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_ConAtendimento_Concluidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_ConAtendimento_Concluidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_ConAtendimento_Concluidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_ConAtendimento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_ConAtendimento_Concluidos().setVisible(true);
+                new Frm_ConAtendimento().setVisible(true);
             }
         });
     }
@@ -274,6 +280,7 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_cancelar1;
     private javax.swing.JButton btn_cancelar2;
+    private javax.swing.JButton btn_cancelar3;
     private javax.swing.JButton btn_selecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
