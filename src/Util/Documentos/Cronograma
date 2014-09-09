@@ -1,8 +1,8 @@
 ---------------------------------------------------------CLIENTE-----------------------------------------------------
 ok validar campos obrigatórios cadastro de cliente
 ok validar email e cpf cliente
-inserir varios links
-inserir varios contatos
+ok inserir varios links
+ok inserir varios contatos
 salvar cliente
 alterar cliente
 consultar cliente

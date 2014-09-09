@@ -96,7 +96,7 @@ public class Cliente implements Serializable {
     private List<LinkCliente> linkClienteList=new ArrayList<>();
     @OneToMany(mappedBy = "codcliente")
     private List<Endereco> enderecoList=new ArrayList<>();;
-
+    
     public Cliente() {
     }
 

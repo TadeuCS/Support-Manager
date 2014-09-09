@@ -98,6 +98,8 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
         btn_selecionar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_filtro = new javax.swing.JTextField();
+        btn_cancelar1 = new javax.swing.JButton();
+        btn_cancelar2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Clientes");
@@ -109,14 +111,14 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Referência", "Nome Fantasia", "CPF/CNPJ", "Telefone", "Contato"
+                "Código", "Data Agendamento", "Cliente", "Tipo", "Prioridade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -133,18 +135,15 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
             tb_clientes.getColumnModel().getColumn(0).setMinWidth(70);
             tb_clientes.getColumnModel().getColumn(0).setPreferredWidth(70);
             tb_clientes.getColumnModel().getColumn(0).setMaxWidth(70);
-            tb_clientes.getColumnModel().getColumn(1).setMinWidth(70);
-            tb_clientes.getColumnModel().getColumn(1).setPreferredWidth(70);
-            tb_clientes.getColumnModel().getColumn(1).setMaxWidth(70);
+            tb_clientes.getColumnModel().getColumn(1).setMinWidth(100);
+            tb_clientes.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tb_clientes.getColumnModel().getColumn(1).setMaxWidth(100);
             tb_clientes.getColumnModel().getColumn(3).setMinWidth(120);
             tb_clientes.getColumnModel().getColumn(3).setPreferredWidth(120);
             tb_clientes.getColumnModel().getColumn(3).setMaxWidth(120);
             tb_clientes.getColumnModel().getColumn(4).setMinWidth(85);
             tb_clientes.getColumnModel().getColumn(4).setPreferredWidth(85);
             tb_clientes.getColumnModel().getColumn(4).setMaxWidth(85);
-            tb_clientes.getColumnModel().getColumn(5).setMinWidth(150);
-            tb_clientes.getColumnModel().getColumn(5).setPreferredWidth(150);
-            tb_clientes.getColumnModel().getColumn(5).setMaxWidth(150);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -158,11 +157,15 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
         );
 
-        btn_cancelar.setText("Cancelar");
+        btn_cancelar.setText("Excluir");
 
-        btn_selecionar.setText("Selecionar");
+        btn_selecionar.setText("Finalizar");
 
         jLabel1.setText("Filtro:");
+
+        btn_cancelar1.setText("Alterar");
+
+        btn_cancelar2.setText("Detalhar");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -174,6 +177,10 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_cancelar2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,7 +203,9 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_selecionar)
-                    .addComponent(btn_cancelar))
+                    .addComponent(btn_cancelar)
+                    .addComponent(btn_cancelar1)
+                    .addComponent(btn_cancelar2))
                 .addContainerGap())
         );
 
@@ -263,6 +272,8 @@ public class Frm_ConAtendimento_Concluidos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_cancelar1;
+    private javax.swing.JButton btn_cancelar2;
     private javax.swing.JButton btn_selecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
