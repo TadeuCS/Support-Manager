@@ -1938,7 +1938,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private void btn_inclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inclusaoActionPerformed
         limpaCampos();
         cliente = new Cliente();
-        txt_operacao.setText("INSCLUSÃO");
+        txt_operacao.setText("INCLUSÃO");
         txt_cpf.requestFocus();
         camposON();
         chx_bloqueado.setEnabled(false);
