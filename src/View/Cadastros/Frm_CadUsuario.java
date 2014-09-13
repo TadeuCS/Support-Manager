@@ -270,7 +270,62 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
+    public void validaProximo(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha, StatusPessoa bloqueado, TipoUsuario tipo) {
+        if (nome.equals("") == true) {
+            JOptionPane.showMessageDialog(null, "Nome Inválido");
+            txt_nome.requestFocus();
+        } else {
+            if (cpf.equals("   .   .   -  ") == true) {
+                JOptionPane.showMessageDialog(null, "CPF Inválido");
+                txt_cpf.requestFocus();
+            } else {
+                ValidarCGCCPF v = new ValidarCGCCPF();
+                if (v.validarCpf(txt_cpf.getText()) == false) {
+                    JOptionPane.showMessageDialog(null, "CPF Inválido");
+                    txt_cpf.requestFocus();
+                } else {
+                    if (email.equals("") == true) {
+                        JOptionPane.showMessageDialog(null, "Email Inválido");
+                        txt_email.requestFocus();
+                    } else {
+                        if (ValidaEmail.validarEmail(email) == false) {
+                            JOptionPane.showMessageDialog(null, "Email Inválido");
+                            txt_email.requestFocus();
+                        } else {
+                            if (usuario.equals("") == true) {
+                                JOptionPane.showMessageDialog(null, "Usuário Inválido");
+                                txt_usuario.requestFocus();
+                            } else {
+                                if (senha.equals("") == true) {
+                                    JOptionPane.showMessageDialog(null, "Senha Inválida");
+                                    txt_senha.requestFocus();
+                                } else {
+                                    if (confirmaSenha.equals("") == true) {
+                                        JOptionPane.showMessageDialog(null, "Confirma Senha Inválida");
+                                        txt_confirmaSenha.requestFocus();
+                                    } else {
+                                        if (senha.equals(confirmaSenha) == false) {
+                                            JOptionPane.showMessageDialog(null, "Senhas Diferentes");
+                                            txt_confirmaSenha.setText(null);
+                                            txt_senha.setText(null);
+                                            txt_senha.requestFocus();
+                                        } else {
+                                            if ((rbt_feminino.getSelectedObjects() == null) && (rbt_masculino.getSelectedObjects() == null)) {
+                                                JOptionPane.showMessageDialog(null, "Sexo Inválido");
+                                                rbt_masculino.requestFocus();
+                                            } else {
+                                                proximo();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     public void validaNullos(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha, StatusPessoa bloqueado, TipoUsuario tipo) {
         if (nome.equals("") == true) {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
@@ -366,25 +421,21 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void validaTelefoneExistente(String grupo, String contato, String numTelefone) {
-        boolean existe = false;
-        for (int i = 0; i < tb_telefones.getRowCount(); i++) {
-            if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
-                JOptionPane.showMessageDialog(null, "Telefone já existe");
-                txt_telefone.requestFocus();
-                existe = true;
-            }
-        }
-        if (existe == false) {
-            insereTelefoneNalista(grupo, contato, numTelefone);
-        }
-    }
-
-    public void insereTelefoneNalista(String grupo, String contato, String numTelefone) {
+        grupoDAO= new GrupoDAO();
+        telefone= new Telefone();
         try {
-            telefone = new Telefone();
             telefone.setCodgrupo(grupoDAO.consulta(grupo));
             telefone.setTelefone(numTelefone);
             telefone.setDescricao(contato);
+            telefoneDAO.salvar(telefone);
+            insereTelefoneNalista(telefone);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Telefone já cadastrado!");
+        }
+    }
+
+    public void insereTelefoneNalista(Telefone telefone) {
+        try {
             telefone.setCodusuario(usuario);
             usuario.getTelefoneList().add(telefone);
             String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};
@@ -1053,6 +1104,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         btn_bloqueado.setEnabled(false);
         txt_codigo.setEnabled(false);
         txt_nome.requestFocus();
+        usuario = new Usuario();
     }//GEN-LAST:event_btn_inclusaoActionPerformed
 
     private void txt_codigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_codigoKeyPressed
@@ -1084,25 +1136,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_consultaActionPerformed
 
     private void btn_proximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoActionPerformed
-        if (txt_senha.getText().equals("") == true) {
-            txt_senha.setText(null);
-            txt_confirmaSenha.setText(null);
-            txt_senha.requestFocus();
-        } else {
-            if (txt_confirmaSenha.getText().equals("") == true) {
-                txt_senha.setText(null);
-                txt_confirmaSenha.setText(null);
-                txt_senha.requestFocus();
-            } else {
-                if (txt_senha.getText().compareTo(txt_confirmaSenha.getText()) != 0) {
-                    txt_senha.setText(null);
-                    txt_confirmaSenha.setText(null);
-                    txt_senha.requestFocus();
-                } else {
-                    proximo();
-                }
-            }
-        }
+        validaProximo(txt_codigo.getText(), txt_nome.getText(), txt_cpf.getText(), txt_email.getText(), txt_usuario.getText(), txt_senha.getText(),
+                txt_confirmaSenha.getText(), getBloqueado(), tipoUsuarioDAO.buscaTipoUsuario(cbx_tipoUsuario.getSelectedItem().toString()));
     }//GEN-LAST:event_btn_proximoActionPerformed
 
     private void btn_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anteriorActionPerformed

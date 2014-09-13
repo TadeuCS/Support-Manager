@@ -22,7 +22,6 @@ import Model.Cliente;
 import Model.Endereco;
 import Model.Link;
 import Model.LinkCliente;
-import Model.Parcela;
 import Model.Telefone;
 import Model.TipoPessoa;
 import Util.Classes.Data;
@@ -30,12 +29,8 @@ import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
 import java.awt.Event;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
@@ -104,6 +99,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         chx_bloqueado.setEnabled(false);
         btn_proximoDados.setEnabled(false);
         btn_cancelar.setEnabled(false);
+        btn_cadSegmento.setEnabled(false);
         botoesON();
     }
 
@@ -121,6 +117,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         cbx_segmento.setEnabled(true);
         chx_bloqueado.setEnabled(true);
         btn_proximoDados.setEnabled(true);
+        btn_cadSegmento.setEnabled(true);
         botoesOFF();
     }
 
@@ -375,34 +372,34 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         tipoPessoaDAO = new TipoPessoaDAO();
         segmentoDAO = new SegmentoDAO();
         parcelaDAO = new ParcelaDAO();
-//        try {
-        if (txt_codigo.getText().equals("") == false) {
-            cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
+        try {
+            if (txt_codigo.getText().equals("") == false) {
+                cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
+            }
+            cliente.setCodtipopessoa(tipoPessoaDAO.buscaTipoPessoa(cbx_tipo.getSelectedItem().toString()));
+            cliente.setCnpjCpf(txt_cpf.getText());
+            cliente.setInscricaoEstadual(txt_inscEstadual.getText());
+            cliente.setRazaoSocial(txt_razaoSocial.getText());
+            cliente.setNomeFantasia(txt_nomeFantasia.getText());
+            if (txt_referencia.getText().equals("") == false) {
+                cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
+            }
+            cliente.setResponsavel(txt_responsavel.getText());
+            cliente.setEmail(txt_email.getText());
+            Date data = new Date(txt_data.getText());
+            cliente.setDataAtualizacao(data);
+            cliente.setCodparcela(parcelaDAO.consulta(cbx_parcela.getSelectedItem().toString()));
+            cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
+            if (chx_bloqueado.getSelectedObjects() != null) {
+                cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("BLOQUEADO"));
+            } else {
+                cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO"));
+            }
+            //dados da aba endereco
+            cliente.getEnderecoList().add(setEndereco(cliente));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao capturar dados do cliente.\n" + e);
         }
-        cliente.setCodtipopessoa(tipoPessoaDAO.buscaTipoPessoa(cbx_tipo.getSelectedItem().toString()));
-        cliente.setCnpjCpf(txt_cpf.getText());
-        cliente.setInscricaoEstadual(txt_inscEstadual.getText());
-        cliente.setRazaoSocial(txt_razaoSocial.getText());
-        cliente.setNomeFantasia(txt_nomeFantasia.getText());
-        if (txt_referencia.getText().equals("") == false) {
-            cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
-        }
-        cliente.setResponsavel(txt_responsavel.getText());
-        cliente.setEmail(txt_email.getText());
-        Date data = new Date(txt_data.getText());
-        cliente.setDataAtualizacao(data);
-        cliente.setCodparcela(parcelaDAO.consulta(cbx_parcela.getSelectedItem().toString()));
-        cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
-        if (chx_bloqueado.getSelectedObjects() != null) {
-            cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("BLOQUEADO"));
-        } else {
-            cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO"));
-        }
-        //dados da aba endereco
-        cliente.getEnderecoList().add(setEndereco(cliente));
-////        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao capturar dados do cliente.\n" + e);
-//        }
     }
 
     public void setTelefones(Cliente cliente) {
@@ -440,7 +437,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public Endereco setEndereco(Cliente cliente) {
         endereco = new Endereco();
-        cidadesDAO=new CidadesDAO();
+        cidadesDAO = new CidadesDAO();
         try {
             endereco.setBairro(txt_bairro.getText());
             endereco.setCep(txt_cep.getText());
@@ -604,30 +601,27 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }
 
     public void validaTelefoneExistente(String grupo, String contato, String numTelefone) {
-        boolean existe = false;
-        for (int i = 0; i < tb_telefones.getRowCount(); i++) {
-            if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
-                JOptionPane.showMessageDialog(null, "Telefone já existe");
-                txt_telefone.requestFocus();
-                existe = true;
-            }
-        }
-        if (existe == false) {
-            insereTelefoneNalista(grupo, contato, numTelefone);
+        grupoDAO = new GrupoDAO();
+        telefoneDAO = new TelefoneDAO();
+        telefone = new Telefone();
+        telefone.setCodgrupo(grupoDAO.consulta(grupo));
+        telefone.setTelefone(numTelefone);
+        telefone.setDescricao(contato);
+        try {
+            telefoneDAO.busca(numTelefone);
+            JOptionPane.showMessageDialog(null, "Telefone ja existe!");
+        } catch (NoResultException e) {
+            insereTelefoneNalista(telefone);
+            txt_telefone.requestFocus();
+            txt_telefone.setText(null);
         }
     }
 
-    public void insereTelefoneNalista(String grupo, String contato, String numTelefone) {
+    public void insereTelefoneNalista(Telefone telefone) {
         try {
-            model = (DefaultTableModel) tb_telefones.getModel();
-            telefone = new Telefone();
-            telefone.setCodgrupo(grupoDAO.consulta(grupo));
-            telefone.setTelefone(numTelefone);
-            telefone.setDescricao(contato);
-            if (txt_codigo.getText().equals("") == false) {
-                telefone.setCodcliente(cliente);
-            }
+            telefone.setCodcliente(cliente);
             cliente.getTelefoneList().add(telefone);
+            model = (DefaultTableModel) tb_telefones.getModel();
             String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};
             model.addRow(linha);
         } catch (Exception e) {
@@ -656,32 +650,16 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }
 
     public void removeTelefone(String numeroTelefone) {
-        if (tb_telefones.getSelectedRowCount() == 1) {
-            telefone = new Telefone();
-            telefoneDAO = new TelefoneDAO();
-            try {
-                if (txt_codigo.getText().equals("") == false) {
-                    telefone = telefoneDAO.busca(numeroTelefone);
+        try {
+            for (int i = 0; i < cliente.getTelefoneList().size(); i++) {
+                if (cliente.getTelefoneList().get(i).getTelefone().equals(numeroTelefone) == true) {
+                    cliente.getTelefoneList().remove(i);
                 }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: " + numeroTelefone);
-                System.out.println(e);
             }
-
-            try {
-                for (int i = 0; i < cliente.getTelefoneList().size(); i++) {
-                    if (cliente.getTelefoneList().get(i).getTelefone().equals(numeroTelefone) == true) {
-                        cliente.getTelefoneList().remove(i);
-                    }
-                }
-                model.removeRow(tb_telefones.getSelectedRow());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Remover Telefone: " + numeroTelefone);
-                System.out.println(e);
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione Uma linha para Remover!");
+            model.removeRow(tb_telefones.getSelectedRow());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Remover Telefone: " + numeroTelefone);
+            System.out.println(e);
         }
     }
 
@@ -713,8 +691,12 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void salvar() {
         try {
-        setCliente();
-        clienteDAO.salvar(cliente);
+            setCliente();
+            clienteDAO = new ClienteDAO();
+            clienteDAO.salvar(cliente);
+            JOptionPane.showMessageDialog(null, "Cliente Salvo com Sucesso!");
+            camposOFF();
+            limpaCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar Cliente!\n" + e);
         }
@@ -744,14 +726,15 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void insereLinkNalista(String aplicativo, String link, String qtde) {
         try {
-            model = (DefaultTableModel) tb_links.getModel();
             linksClientes = new LinkCliente();
+            linksDAO = new LinksDAO();
             linksClientes.setLink(linksDAO.buscaLink(link));
-            if (txt_codigo.getText().equals("") == false) {
+            if (txt_codigo.getText().isEmpty()) {
                 linksClientes.setCliente(cliente);
             }
             linksClientes.setQuantidade(Integer.parseInt(qtde));
             cliente.getLinkClienteList().add(linksClientes);
+            model = (DefaultTableModel) tb_links.getModel();
             String[] linha = new String[]{linksClientes.getLink().getDescricao(), linksClientes.getQuantidade() + ""};
             model.addRow(linha);
         } catch (Exception e) {
@@ -800,6 +783,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         jLabel53 = new javax.swing.JLabel();
         chx_bloqueado = new javax.swing.JCheckBox();
         txt_data = new javax.swing.JFormattedTextField();
+        btn_cadSegmento = new javax.swing.JButton();
         pnl_endereco = new javax.swing.JPanel();
         btn_proximoEndereco = new javax.swing.JButton();
         btn_anteriorEndereco = new javax.swing.JButton();
@@ -818,6 +802,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         txt_rua = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         cbx_cidades = new javax.swing.JComboBox();
+        btn_cadCidade = new javax.swing.JButton();
         pnl_telefones = new javax.swing.JPanel();
         btn_proximoTelefones = new javax.swing.JButton();
         btn_anteriorTelefones = new javax.swing.JButton();
@@ -857,11 +842,13 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         jLabel56 = new javax.swing.JLabel();
         txt_mensalidade = new javax.swing.JTextField();
         cbx_ano = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
         cbx_parcela = new javax.swing.JComboBox();
         jLabel54 = new javax.swing.JLabel();
         btn_calcularMensalidade = new javax.swing.JButton();
         btn_cadParcela = new javax.swing.JButton();
         btn_salvar = new javax.swing.JButton();
+        btn_salvar1 = new javax.swing.JButton();
         pnl_botoes = new javax.swing.JPanel();
         btn_inclusao = new javax.swing.JButton();
         btn_alteracao = new javax.swing.JButton();
@@ -889,6 +876,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo *:");
 
+        cbx_tipo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_tipoFocusGained(evt);
+            }
+        });
         cbx_tipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_tipoActionPerformed(evt);
@@ -913,6 +905,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel51.setText("Segmento *:");
 
+        cbx_segmento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_segmentoFocusGained(evt);
+            }
+        });
         cbx_segmento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_segmentoActionPerformed(evt);
@@ -924,7 +921,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         jLabel53.setText("Bloqueado *:");
 
         try {
-            txt_data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/#### ##:##")));
+            txt_data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -932,6 +929,13 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         txt_data.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_dataKeyPressed(evt);
+            }
+        });
+
+        btn_cadSegmento.setText("Proximo");
+        btn_cadSegmento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cadSegmentoActionPerformed(evt);
             }
         });
 
@@ -964,7 +968,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_tipo, 0, 108, Short.MAX_VALUE)
+                        .addComponent(cbx_tipo, 0, 125, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -994,7 +998,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                             .addGroup(pnl_dadosPessoaisLayout.createSequentialGroup()
                                 .addComponent(jLabel51)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbx_segmento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(cbx_segmento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_cadSegmento, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         pnl_dadosPessoaisLayout.setVerticalGroup(
@@ -1032,7 +1038,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                         .addComponent(cbx_segmento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel51)
                         .addComponent(jLabel52)
-                        .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_cadSegmento))
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chx_bloqueado))
                 .addContainerGap())
@@ -1058,7 +1065,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addComponent(pnl_dadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_proximoDados)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         abas.addTab("Dados Pessoais", pnl_dadosCliente);
@@ -1100,6 +1107,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel18.setText("Estado *:");
 
+        cbx_estados.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_estadosFocusGained(evt);
+            }
+        });
         cbx_estados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_estadosActionPerformed(evt);
@@ -1120,17 +1132,24 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel22.setText("Logradouro *:");
 
-        cbx_cidades.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_cidadesActionPerformed(evt);
-            }
-        });
         cbx_cidades.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cbx_cidadesFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 cbx_cidadesFocusLost(evt);
+            }
+        });
+        cbx_cidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_cidadesActionPerformed(evt);
+            }
+        });
+
+        btn_cadCidade.setText("...");
+        btn_cadCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cadCidadeActionPerformed(evt);
             }
         });
 
@@ -1149,7 +1168,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(jLabel22)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_rua, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                        .addComponent(txt_rua, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1163,13 +1182,16 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                             .addComponent(cbx_cidades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_bairro))
                         .addGap(18, 18, 18)
-                        .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel20))
+                        .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(btn_cadCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_complemento, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosEnderecoLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         pnl_dadosEnderecoLayout.setVerticalGroup(
@@ -1192,13 +1214,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     .addComponent(txt_bairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
                     .addComponent(txt_complemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(cbx_cidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
-                    .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cadCidade))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnl_enderecoLayout = new javax.swing.GroupLayout(pnl_endereco);
@@ -1331,7 +1354,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     .addComponent(txt_contato)
                     .addGroup(pnl_cadTelefonesLayout.createSequentialGroup()
                         .addComponent(txt_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 97, Short.MAX_VALUE)))
+                        .addGap(0, 114, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnl_cadTelefonesLayout.setVerticalGroup(
@@ -1551,7 +1574,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             .addGroup(pnl_dadosLinksLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_CadLinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(pnl_dadosLinksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_inserirLinks, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btn_removerLinks, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -1625,9 +1648,21 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         txt_mensalidade.setForeground(new java.awt.Color(102, 0, 0));
         txt_mensalidade.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
+        cbx_ano.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_anoFocusGained(evt);
+            }
+        });
         cbx_ano.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_anoActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -1641,9 +1676,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                     .addComponent(jLabel56)
                     .addComponent(jLabel55))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_mensalidade)
-                    .addComponent(cbx_ano, 0, 90, Short.MAX_VALUE))
+                .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbx_ano, 0, 82, Short.MAX_VALUE)
+                    .addComponent(txt_mensalidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnl_CadLinks1Layout.setVerticalGroup(
@@ -1652,7 +1689,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel55)
-                    .addComponent(cbx_ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel56)
@@ -1660,6 +1698,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        cbx_parcela.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_parcelaFocusGained(evt);
+            }
+        });
         cbx_parcela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbx_parcelaActionPerformed(evt);
@@ -1676,6 +1719,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         });
 
         btn_cadParcela.setText("...");
+        btn_cadParcela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cadParcelaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_dadosLinks1Layout = new javax.swing.GroupLayout(pnl_dadosLinks1);
         pnl_dadosLinks1.setLayout(pnl_dadosLinks1Layout);
@@ -1690,7 +1738,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                         .addComponent(cbx_parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_cadParcela, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 399, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 382, Short.MAX_VALUE)
                         .addComponent(pnl_CadLinks1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_dadosLinks1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -1719,6 +1767,13 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             }
         });
 
+        btn_salvar1.setText("Anterior");
+        btn_salvar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salvar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1728,7 +1783,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_dadosLinks1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_salvar1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_salvar)))
                 .addContainerGap())
         );
@@ -1738,7 +1794,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnl_dadosLinks1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_salvar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_salvar)
+                    .addComponent(btn_salvar1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1828,16 +1886,27 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_proximoDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoDadosActionPerformed
-        if (cbx_tipo.getSelectedItem().toString().equals("FISICA") == true) {
-            txt_inscEstadual.setText("ISENTO");
+        try {
+            if (cbx_segmento.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um segmento!");
+            } else {
+                validaDadosPessoais(txt_cpf.getText(), txt_inscEstadual.getText(), txt_razaoSocial.getText(),
+                        txt_nomeFantasia.getText(), txt_responsavel.getText(), txt_email.getText(), cbx_segmento.getSelectedItem().toString());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        validaDadosPessoais(txt_cpf.getText(), txt_inscEstadual.getText(), txt_razaoSocial.getText(),
-                txt_nomeFantasia.getText(), txt_responsavel.getText(), txt_email.getText(), cbx_segmento.getSelectedItem().toString());
     }//GEN-LAST:event_btn_proximoDadosActionPerformed
 
     private void btn_proximoEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoEnderecoActionPerformed
-        if (cbx_cidades.getSelectedItem().equals("") == false) {
-            validaEndereco(txt_cep.getText(), txt_rua.getText(), txt_numero.getText(), txt_bairro.getText(), cbx_cidades.getSelectedItem().toString());
+        try {
+            if (cbx_cidades.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione uma Cidade!");
+            } else {
+                validaEndereco(txt_cep.getText(), txt_rua.getText(), txt_numero.getText(), txt_bairro.getText(), cbx_cidades.getSelectedItem().toString());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btn_proximoEnderecoActionPerformed
 
@@ -1890,7 +1959,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_inserirTelefoneActionPerformed
 
     private void btn_removerTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerTelefoneActionPerformed
-        removeTelefone(tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString());
+        String tel = tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString();
+        try {
+            telefoneDAO.apagar(telefoneDAO.busca(tel));
+            removeTelefone(tel);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao remover telefone " + tel + " da Lista!");
+        }
+
     }//GEN-LAST:event_btn_removerTelefoneActionPerformed
 
     private void btn_inserirLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirLinksActionPerformed
@@ -1921,13 +1997,13 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_removerLinksActionPerformed
 
     private void cbx_segmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_segmentoActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_cbx_segmentoActionPerformed
 
     private void txt_dataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataKeyPressed
         if (evt.getKeyCode() == Event.ENTER) {
             data = new Data();
-            txt_data.setText(data.completaData(txt_data.getText(), "dd/MM/yyyy HH:mm"));
+            txt_data.setText(data.completaData(txt_data.getText(), "dd/MM/yyyy"));
         }
     }//GEN-LAST:event_txt_dataKeyPressed
 
@@ -1955,11 +2031,18 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void cbx_cidadesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_cidadesFocusGained
-
+        carregaCidades();
     }//GEN-LAST:event_cbx_cidadesFocusGained
 
     private void cbx_cidadesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_cidadesFocusLost
-        cbx_estados.setSelectedItem(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()).getCoduf().getSigla());
+        try {
+            if (cbx_cidades.getSelectedItem() != null) {
+                cbx_estados.setSelectedItem(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()).getCoduf().getSigla());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao consultar Estado da cidade: " + cbx_cidades.getSelectedItem().toString());
+        }
+
     }//GEN-LAST:event_cbx_cidadesFocusLost
 
     private void txt_cepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cepKeyReleased
@@ -2003,11 +2086,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_linksFocusGained
 
     private void cbx_parcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_parcelaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_cbx_parcelaActionPerformed
 
     private void cbx_anoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_anoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_cbx_anoActionPerformed
 
     private void btn_proximoLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoLinksActionPerformed
@@ -2022,6 +2103,45 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private void txt_telefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_telefoneFocusLost
         btn_inserirTelefone.requestFocus();
     }//GEN-LAST:event_txt_telefoneFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Frm_CadSalario f = new Frm_CadSalario();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_cadSegmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadSegmentoActionPerformed
+        Frm_CadSegmento f = new Frm_CadSegmento();
+    }//GEN-LAST:event_btn_cadSegmentoActionPerformed
+
+    private void cbx_segmentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_segmentoFocusGained
+        carregaSegmentos();
+    }//GEN-LAST:event_cbx_segmentoFocusGained
+
+    private void btn_cadCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadCidadeActionPerformed
+        Frm_CadCidade f = new Frm_CadCidade();
+    }//GEN-LAST:event_btn_cadCidadeActionPerformed
+
+    private void btn_cadParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadParcelaActionPerformed
+        Frm_CadParcela f = new Frm_CadParcela();
+    }//GEN-LAST:event_btn_cadParcelaActionPerformed
+
+    private void cbx_parcelaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_parcelaFocusGained
+        carregaParcelas();
+    }//GEN-LAST:event_cbx_parcelaFocusGained
+
+    private void cbx_anoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_anoFocusGained
+        carregaAno();
+    }//GEN-LAST:event_cbx_anoFocusGained
+
+    private void cbx_tipoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_tipoFocusGained
+        carregaTipos();
+    }//GEN-LAST:event_cbx_tipoFocusGained
+
+    private void cbx_estadosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_estadosFocusGained
+    }//GEN-LAST:event_cbx_estadosFocusGained
+
+    private void btn_salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvar1ActionPerformed
+        anterior();
+    }//GEN-LAST:event_btn_salvar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2064,8 +2184,10 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private javax.swing.JButton btn_anterior;
     private javax.swing.JButton btn_anteriorEndereco;
     private javax.swing.JButton btn_anteriorTelefones;
+    private javax.swing.JButton btn_cadCidade;
     private javax.swing.JButton btn_cadGrupo;
     private javax.swing.JButton btn_cadParcela;
+    private javax.swing.JButton btn_cadSegmento;
     private javax.swing.JButton btn_calcularMensalidade;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_consulta;
@@ -2080,6 +2202,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private javax.swing.JButton btn_removerLinks;
     private javax.swing.JButton btn_removerTelefone;
     private javax.swing.JButton btn_salvar;
+    private javax.swing.JButton btn_salvar1;
     private javax.swing.JComboBox cbx_ano;
     private javax.swing.JComboBox cbx_aplicativo;
     private javax.swing.JComboBox cbx_cidades;
@@ -2090,6 +2213,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private javax.swing.JComboBox cbx_segmento;
     private javax.swing.JComboBox cbx_tipo;
     private javax.swing.JCheckBox chx_bloqueado;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

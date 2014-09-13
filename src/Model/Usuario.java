@@ -7,6 +7,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -76,7 +77,7 @@ public class Usuario implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
     private List<Atendimento> atendimentoList;
     @OneToMany(mappedBy = "codusuario")
-    private List<Telefone> telefoneList;
+    private List<Telefone> telefoneList=new ArrayList<>();
 
     public Usuario() {
     }

@@ -27,9 +27,15 @@ public class EstadosDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-    public Uf consulta(String estado) {
+    public Uf cunsultaByEstado(String estado) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Uf.findByDescricao").setParameter("descricao", estado);
+        em.getTransaction().commit();
+        return (Uf) query.getSingleResult();
+    }
+    public Uf cunsultaBySigla(String sigla) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Uf.findBySigla").setParameter("sigla", sigla);
         em.getTransaction().commit();
         return (Uf) query.getSingleResult();
     }

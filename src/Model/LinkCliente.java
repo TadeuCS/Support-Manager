@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -27,13 +30,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LinkCliente.findAll", query = "SELECT l FROM LinkCliente l"),
-    @NamedQuery(name = "LinkCliente.findByLinkcodlink", query = "SELECT l FROM LinkCliente l WHERE l.linkClientePK.linkcodlink = :linkcodlink"),
-    @NamedQuery(name = "LinkCliente.findByClientecodcliente", query = "SELECT l FROM LinkCliente l WHERE l.linkClientePK.clientecodcliente = :clientecodcliente"),
+    @NamedQuery(name = "LinkCliente.findByLinkcodlink", query = "SELECT l FROM LinkCliente l WHERE l.codLinkCliente = :linkcodlink"),
+    @NamedQuery(name = "LinkCliente.findByClientecodcliente", query = "SELECT l FROM LinkCliente l WHERE l.codLinkCliente = :clientecodcliente"),
     @NamedQuery(name = "LinkCliente.findByQuantidade", query = "SELECT l FROM LinkCliente l WHERE l.quantidade = :quantidade")})
 public class LinkCliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected LinkClientePK linkClientePK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "CODLINK_CLIENTE")
+    private Integer codLinkCliente;
     @Basic(optional = false)
     @Column(name = "QUANTIDADE")
     private int quantidade;
@@ -47,25 +54,12 @@ public class LinkCliente implements Serializable {
     public LinkCliente() {
     }
 
-    public LinkCliente(LinkClientePK linkClientePK) {
-        this.linkClientePK = linkClientePK;
+    public int getCodLinkCliente() {
+        return codLinkCliente;
     }
 
-    public LinkCliente(LinkClientePK linkClientePK, int quantidade) {
-        this.linkClientePK = linkClientePK;
-        this.quantidade = quantidade;
-    }
-
-    public LinkCliente(int linkcodlink, int clientecodcliente) {
-        this.linkClientePK = new LinkClientePK(linkcodlink, clientecodcliente);
-    }
-
-    public LinkClientePK getLinkClientePK() {
-        return linkClientePK;
-    }
-
-    public void setLinkClientePK(LinkClientePK linkClientePK) {
-        this.linkClientePK = linkClientePK;
+    public void setCodLinkCliente(int codLinkCliente) {
+        this.codLinkCliente = codLinkCliente;
     }
 
     public int getQuantidade() {
@@ -94,19 +88,21 @@ public class LinkCliente implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (linkClientePK != null ? linkClientePK.hashCode() : 0);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.codLinkCliente);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof LinkCliente)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        LinkCliente other = (LinkCliente) object;
-        if ((this.linkClientePK == null && other.linkClientePK != null) || (this.linkClientePK != null && !this.linkClientePK.equals(other.linkClientePK))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LinkCliente other = (LinkCliente) obj;
+        if (!Objects.equals(this.codLinkCliente, other.codLinkCliente)) {
             return false;
         }
         return true;
@@ -114,7 +110,7 @@ public class LinkCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.LinkCliente[ linkClientePK=" + linkClientePK + " ]";
+        return "LinkCliente{" + "codLinkCliente=" + codLinkCliente + '}';
     }
-    
+
 }

@@ -57,7 +57,7 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Aplicativo");
+        setTitle("Cadastro de Segmento");
         setResizable(false);
 
         pnl_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
