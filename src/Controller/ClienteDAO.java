@@ -55,6 +55,6 @@ public class ClienteDAO extends Manager {
         em.getTransaction().begin();
         query = em.createNamedQuery("Endereco.findByCep").setParameter("cep", cep);
         em.getTransaction().commit();
-        return (Endereco) query.getResultList();
+        return (Endereco) query.getSingleResult();
     }
 }

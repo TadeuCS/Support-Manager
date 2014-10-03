@@ -242,7 +242,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="C&#xf3;digo *:"/>
+                    <Property name="text" type="java.lang.String" value="C&#xf3;digo :"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_codigo">
@@ -280,7 +280,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Insc Estadual *:"/>
+                    <Property name="text" type="java.lang.String" value="Insc Estadual :"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
@@ -308,7 +308,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel49">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Refer&#xea;ncia *:"/>
+                    <Property name="text" type="java.lang.String" value="Refer&#xea;ncia :"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel50">
@@ -336,12 +336,12 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel52">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Atualiza&#xe7;&#xe3;o *:"/>
+                    <Property name="text" type="java.lang.String" value="Atualiza&#xe7;&#xe3;o :"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel53">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Bloqueado *:"/>
+                    <Property name="text" type="java.lang.String" value="Bloqueado :"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_bloqueado">
@@ -1493,6 +1493,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Consulta"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_consultaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_operacao">
           <Properties>

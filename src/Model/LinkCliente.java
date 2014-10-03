@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LinkCliente.findAll", query = "SELECT l FROM LinkCliente l"),
-    @NamedQuery(name = "LinkCliente.findByLinkcodlink", query = "SELECT l FROM LinkCliente l WHERE l.codLinkCliente = :linkcodlink"),
-    @NamedQuery(name = "LinkCliente.findByClientecodcliente", query = "SELECT l FROM LinkCliente l WHERE l.codLinkCliente = :clientecodcliente"),
+    @NamedQuery(name = "LinkCliente.findByLinkcodlink", query = "SELECT l FROM LinkCliente l WHERE l.codLink = :linkcodlink"),
+    @NamedQuery(name = "LinkCliente.findByClientecodcliente", query = "SELECT l FROM LinkCliente l WHERE l.codCliente = :clientecodcliente"),
     @NamedQuery(name = "LinkCliente.findByQuantidade", query = "SELECT l FROM LinkCliente l WHERE l.quantidade = :quantidade")})
 public class LinkCliente implements Serializable {
 
@@ -44,12 +44,12 @@ public class LinkCliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "QUANTIDADE")
     private int quantidade;
-    @JoinColumn(name = "CLIENTECODCLIENTE", referencedColumnName = "CODCLIENTE", insertable = false, updatable = false)
+    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
     @ManyToOne(optional = false)
-    private Cliente cliente;
-    @JoinColumn(name = "LINKCODLINK", referencedColumnName = "CODLINK", insertable = false, updatable = false)
+    private Cliente codCliente;
+    @JoinColumn(name = "CODLINK", referencedColumnName = "CODLINK")
     @ManyToOne(optional = false)
-    private Link link;
+    private Link codLink;
 
     public LinkCliente() {
     }
@@ -71,19 +71,19 @@ public class LinkCliente implements Serializable {
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return codCliente;
     }
 
     public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+        this.codCliente = cliente;
     }
 
     public Link getLink() {
-        return link;
+        return codLink;
     }
 
     public void setLink(Link link) {
-        this.link = link;
+        this.codLink = link;
     }
 
     @Override

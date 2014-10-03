@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.io.Serializable;
@@ -47,13 +46,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByEmail", query = "SELECT c FROM Cliente c WHERE c.email = :email"),
     @NamedQuery(name = "Cliente.findByDataAtualizacao", query = "SELECT c FROM Cliente c WHERE c.dataAtualizacao = :dataAtualizacao")})
 public class Cliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "CODCLIENTE")
     private Integer codcliente;
-    @Column(name = "REFERENCIA",nullable = true)
+    @Column(name = "REFERENCIA", nullable = true)
     private Integer referencia;
     @Basic(optional = false)
     @Column(name = "NOME_FANTASIA")
@@ -91,11 +91,13 @@ public class Cliente implements Serializable {
     @ManyToOne(optional = false)
     private Parcela codparcela;
     @OneToMany(mappedBy = "codcliente")
-    private List<Telefone> telefoneList=new ArrayList<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<LinkCliente> linkClienteList=new ArrayList<>();
+    private List<Telefone> telefoneList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCliente")
+    private List<LinkCliente> linkClienteList = new ArrayList<>();
     @OneToMany(mappedBy = "codcliente")
-    private List<Endereco> enderecoList=new ArrayList<>();;
+    private List<Endereco> enderecoList = new ArrayList<>();
+
+    ;
     
     public Cliente() {
     }
@@ -278,5 +280,5 @@ public class Cliente implements Serializable {
     public String toString() {
         return "Model.Cliente[ codcliente=" + codcliente + " ]";
     }
-    
+
 }

@@ -48,7 +48,7 @@ public class Link implements Serializable {
     @JoinColumn(name = "CODAPLICATIVO", referencedColumnName = "CODAPLICATIVO")
     @ManyToOne(optional = false)
     private Aplicativo codaplicativo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "link")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codLink")
     private List<LinkCliente> linkClienteList;
 
     public Link() {

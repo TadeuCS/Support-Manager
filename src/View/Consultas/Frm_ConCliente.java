@@ -3,10 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View.Consultas;
 
+import Controller.AplicativoDAO;
+import Controller.CidadesDAO;
 import Controller.ClienteDAO;
+import Controller.EstadosDAO;
+import Controller.GrupoDAO;
+import Controller.LinksDAO;
+import Controller.ParcelaDAO;
+import Controller.SalarioDAO;
+import Controller.SegmentoDAO;
+import Controller.StatusPessoaDAO;
+import Controller.TelefoneDAO;
+import Controller.TipoPessoaDAO;
+import Model.Cliente;
 import View.Cadastros.Frm_CadUsuario;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -21,6 +32,18 @@ public class Frm_ConCliente extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ClienteDAO clienteDAO;
+    EstadosDAO estadosDAO;
+    TelefoneDAO telefoneDAO;
+    SegmentoDAO segmentoDAO;
+    StatusPessoaDAO statusPessoaDAO;
+    CidadesDAO cidadesDAO;
+    ParcelaDAO parcelaDAO;
+    LinksDAO linksDAO;
+    GrupoDAO grupoDAO;
+    SalarioDAO salarioDAO;
+    TipoPessoaDAO tipoPessoaDAO;
+    AplicativoDAO aplicativoDAO;
+
     public Frm_ConCliente() {
         initComponents();
         model = (DefaultTableModel) tb_clientes.getModel();
@@ -28,12 +51,12 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         listaClientes();
     }
 
-        public void listaClientes() {
+    public void listaClientes() {
         clienteDAO = new ClienteDAO();
+        telefoneDAO= new TelefoneDAO();
         try {
-            int i = 0;
             limpaTabela();
-            while (i < clienteDAO.lista().size()) {
+            for (int i = 0; i < clienteDAO.lista().size(); i++) {
                 String[] linha = new String[]{
                     clienteDAO.lista().get(i).getCodcliente().toString(),
                     clienteDAO.lista().get(i).getReferencia().toString(),
@@ -42,10 +65,10 @@ public class Frm_ConCliente extends javax.swing.JFrame {
                     clienteDAO.lista().get(i).getTelefoneList().get(0).getTelefone(),
                     clienteDAO.lista().get(i).getTelefoneList().get(0).getDescricao()};
                 model.addRow(linha);
-                i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao Listar Clientes");
+            System.out.println(e);
         }
     }
 
@@ -77,14 +100,15 @@ public class Frm_ConCliente extends javax.swing.JFrame {
 
     public void limpaTabela() {
         try {
-            while (0<model.getRowCount()) {
-                    model.removeRow(0);
+            while (0 < model.getRowCount()) {
+                model.removeRow(0);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -159,6 +183,11 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         );
 
         btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
         btn_selecionar.setText("Selecionar");
 
@@ -225,6 +254,10 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
     /**
      * @param args the command line arguments

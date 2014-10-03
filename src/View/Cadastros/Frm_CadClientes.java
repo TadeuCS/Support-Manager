@@ -28,6 +28,7 @@ import Util.Classes.Data;
 import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
+import View.Consultas.Frm_ConCliente;
 import java.awt.Event;
 import java.util.Date;
 import javax.persistence.NoResultException;
@@ -80,61 +81,38 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         carregaParcelas();
         carregaAno();
         trocaMascara();
-        camposOFF();
+        setEnabledFields(false);
     }
 
     //Início das validações de interface.
-    private void camposOFF() {
-        txt_cpf.setEnabled(false);
-        txt_inscEstadual.setEnabled(false);
-        txt_razaoSocial.setEnabled(false);
-        txt_nomeFantasia.setEnabled(false);
-        txt_referencia.setEnabled(false);
-        cbx_parcela.setEnabled(false);
-        txt_responsavel.setEnabled(false);
-        txt_email.setEnabled(false);
-        txt_data.setEnabled(false);
-        cbx_tipo.setEnabled(false);
-        cbx_segmento.setEnabled(false);
-        chx_bloqueado.setEnabled(false);
-        btn_proximoDados.setEnabled(false);
-        btn_cancelar.setEnabled(false);
-        btn_cadSegmento.setEnabled(false);
-        botoesON();
+    private void setEnabledFields(boolean valor) {
+        txt_cpf.setEnabled(valor);
+        txt_inscEstadual.setEnabled(valor);
+        txt_razaoSocial.setEnabled(valor);
+        txt_nomeFantasia.setEnabled(valor);
+        txt_referencia.setEnabled(valor);
+        cbx_parcela.setEnabled(valor);
+        txt_responsavel.setEnabled(valor);
+        txt_email.setEnabled(valor);
+        txt_data.setEnabled(valor);
+        cbx_tipo.setEnabled(valor);
+        cbx_segmento.setEnabled(valor);
+        chx_bloqueado.setEnabled(valor);
+        btn_proximoDados.setEnabled(valor);
+        btn_cancelar.setEnabled(valor);
+        btn_cadSegmento.setEnabled(valor);
     }
 
-    private void camposON() {
-        txt_cpf.setEnabled(true);
-        cbx_parcela.setEnabled(true);
-        txt_inscEstadual.setEnabled(true);
-        txt_razaoSocial.setEnabled(true);
-        txt_nomeFantasia.setEnabled(true);
-        txt_referencia.setEnabled(true);
-        txt_responsavel.setEnabled(true);
-        txt_email.setEnabled(true);
-        txt_data.setEnabled(true);
-        cbx_tipo.setEnabled(true);
-        cbx_segmento.setEnabled(true);
-        chx_bloqueado.setEnabled(true);
-        btn_proximoDados.setEnabled(true);
-        btn_cadSegmento.setEnabled(true);
-        botoesOFF();
-    }
-
-    private void botoesOFF() {
-        btn_inclusao.setEnabled(false);
-        btn_alteracao.setEnabled(false);
-        btn_exclusao.setEnabled(false);
-        btn_consulta.setEnabled(false);
-        btn_cancelar.setEnabled(true);
-    }
-
-    private void botoesON() {
-        btn_inclusao.setEnabled(true);
-        btn_alteracao.setEnabled(true);
-        btn_exclusao.setEnabled(true);
-        btn_consulta.setEnabled(true);
-        btn_cancelar.setEnabled(false);
+    private void setEnabledButtons(boolean valor) {
+        btn_inclusao.setEnabled(valor);
+        btn_alteracao.setEnabled(valor);
+        btn_exclusao.setEnabled(valor);
+        btn_consulta.setEnabled(valor);
+        if(valor==false){
+        btn_cancelar.setEnabled(true);    
+        }else{
+            btn_cancelar.setEnabled(false);
+        }
     }
 
     public void limpaCampos() {
@@ -156,8 +134,17 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         txt_telefone.setText(null);
         txt_quantidade.setText(null);
         chx_bloqueado.setSelected(false);
+        txt_operacao.setText(null);
+        limpaTabela((DefaultTableModel) tb_links.getModel());
+        limpaTabela((DefaultTableModel) tb_telefones.getModel());
     }
 
+    public void limpaLista(DefaultTableModel model){
+        for(int i=0;i<model.getRowCount();i++){
+            model.removeRow(i);
+        }
+    }
+    
     public void proximo() {
         abas.setSelectedIndex(abas.getSelectedIndex() + 1);
     }
@@ -447,6 +434,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             endereco.setNumero(Integer.parseInt(txt_numero.getText()));
             endereco.setRua(txt_rua.getText());
             endereco.setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
+            endereco.setCodcliente(cliente);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar endereço do cliente.\n" + e.getMessage());
         }
@@ -456,10 +444,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void listaTelefones(Cliente cliente) {
         telefoneDAO = new TelefoneDAO();
-        model = (DefaultTableModel) tb_telefones.getModel();
         try {
             int i = 0;
-            limpaTabela(model);
+            limpaTabela((DefaultTableModel) tb_telefones.getModel());
             while (i < telefoneDAO.listaTelefoneByCliente(cliente).size()) {
                 String[] linha = new String[]{
                     telefoneDAO.listaTelefoneByCliente(cliente).get(i).getDescricao(),
@@ -474,10 +461,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void listaLinks(Cliente cliente) {
         linksDAO = new LinksDAO();
-        model = (DefaultTableModel) tb_telefones.getModel();
         try {
             int i = 0;
-            limpaTabela(model);
+            limpaTabela((DefaultTableModel) tb_links.getModel());
             while (i < clienteDAO.listalinksByCliente(cliente).size()) {
                 String[] linha = new String[]{
                     clienteDAO.listalinksByCliente(cliente).get(i).getLink().getDescricao(),
@@ -566,6 +552,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void buscaCEP(String cep) {
         endereco = new Endereco();
+        clienteDAO= new ClienteDAO();
         try {
             endereco = clienteDAO.findEnderecoByCEP(cep);
             if (endereco.getCep() != null) {
@@ -576,6 +563,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 txt_numero.requestFocus();
             }
         } catch (Exception e) {
+            System.out.println(cep+"\n"+e);
             JOptionPane.showMessageDialog(null, "CEP não Encontrado, Preencha os campos obrigatórios!");
         }
     }
@@ -587,17 +575,6 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         } else {
             proximo();
         }
-    }
-
-    public void limpaTabela() {
-        try {
-            while (0 < model.getRowCount()) {
-                model.removeRow(0);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-
     }
 
     public void validaTelefoneExistente(String grupo, String contato, String numTelefone) {
@@ -695,8 +672,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             clienteDAO = new ClienteDAO();
             clienteDAO.salvar(cliente);
             JOptionPane.showMessageDialog(null, "Cliente Salvo com Sucesso!");
-            camposOFF();
-            limpaCampos();
+            btn_cancelar.doClick();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar Cliente!\n" + e);
         }
@@ -728,10 +704,10 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         try {
             linksClientes = new LinkCliente();
             linksDAO = new LinksDAO();
-            linksClientes.setLink(linksDAO.buscaLink(link));
             if (txt_codigo.getText().isEmpty()) {
                 linksClientes.setCliente(cliente);
             }
+            linksClientes.setLink(linksDAO.buscaLink(link));
             linksClientes.setQuantidade(Integer.parseInt(qtde));
             cliente.getLinkClienteList().add(linksClientes);
             model = (DefaultTableModel) tb_links.getModel();
@@ -870,7 +846,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         pnl_dadosPessoais.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel1.setText("Código *:");
+        jLabel1.setText("Código :");
 
         txt_codigo.setEnabled(false);
 
@@ -891,7 +867,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         txt_cpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jLabel4.setText("Insc Estadual *:");
+        jLabel4.setText("Insc Estadual :");
 
         jLabel5.setText("Razão Social/Nome *:");
 
@@ -899,7 +875,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
         jLabel46.setText("Email *:");
 
-        jLabel49.setText("Referência *:");
+        jLabel49.setText("Referência :");
 
         jLabel50.setText("Responsavel *:");
 
@@ -916,9 +892,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             }
         });
 
-        jLabel52.setText("Atualização *:");
+        jLabel52.setText("Atualização :");
 
-        jLabel53.setText("Bloqueado *:");
+        jLabel53.setText("Bloqueado :");
 
         try {
             txt_data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -1816,6 +1792,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         btn_exclusao.setText("Exclusão");
 
         btn_consulta.setText("Consulta");
+        btn_consulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultaActionPerformed(evt);
+            }
+        });
 
         txt_operacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_operacao.setEnabled(false);
@@ -2016,7 +1997,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         cliente = new Cliente();
         txt_operacao.setText("INCLUSÃO");
         txt_cpf.requestFocus();
-        camposON();
+        setEnabledFields(true);
+        setEnabledButtons(false);
         chx_bloqueado.setEnabled(false);
     }//GEN-LAST:event_btn_inclusaoActionPerformed
 
@@ -2025,9 +2007,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             abas.setSelectedIndex(abas.getSelectedIndex() - 1);
         }
         limpaCampos();
-        camposOFF();
-        txt_operacao.setText(null);
-
+        setEnabledFields(false);
+        setEnabledButtons(true);
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void cbx_cidadesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_cidadesFocusGained
@@ -2142,6 +2123,10 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private void btn_salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvar1ActionPerformed
         anterior();
     }//GEN-LAST:event_btn_salvar1ActionPerformed
+
+    private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
+        Frm_ConCliente f = new Frm_ConCliente();
+    }//GEN-LAST:event_btn_consultaActionPerformed
 
     /**
      * @param args the command line arguments
