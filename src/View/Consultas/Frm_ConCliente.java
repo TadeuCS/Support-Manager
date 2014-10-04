@@ -18,7 +18,12 @@ import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
 import Model.Cliente;
+import Model.Telefone;
+import View.Cadastros.Frm_CadClientes;
 import View.Cadastros.Frm_CadUsuario;
+import java.util.List;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -51,19 +56,26 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         listaClientes();
     }
 
+    public void carregaContatos(List<Telefone> telefones) {
+        DefaultTableModel model = (DefaultTableModel) tb_contatos.getModel();
+        limpaTabela(model);
+        for (int i = 0; i < telefones.size(); i++) {
+            String[] linha = new String[]{telefones.get(i).getDescricao(), telefones.get(i).getTelefone()};
+            model.addRow(linha);
+        }
+    }
+
     public void listaClientes() {
         clienteDAO = new ClienteDAO();
-        telefoneDAO= new TelefoneDAO();
+        JComboBox combo = new JComboBox();
         try {
-            limpaTabela();
+            limpaTabela((DefaultTableModel) tb_clientes.getModel());
             for (int i = 0; i < clienteDAO.lista().size(); i++) {
                 String[] linha = new String[]{
                     clienteDAO.lista().get(i).getCodcliente().toString(),
                     clienteDAO.lista().get(i).getReferencia().toString(),
                     clienteDAO.lista().get(i).getNomeFantasia(),
-                    clienteDAO.lista().get(i).getCnpjCpf(),
-                    clienteDAO.lista().get(i).getTelefoneList().get(0).getTelefone(),
-                    clienteDAO.lista().get(i).getTelefoneList().get(0).getDescricao()};
+                    clienteDAO.lista().get(i).getCnpjCpf()};
                 model.addRow(linha);
             }
         } catch (Exception e) {
@@ -79,8 +91,8 @@ public class Frm_ConCliente extends javax.swing.JFrame {
             if (tb_clientes.getSelectedRowCount() > 1) {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
-                Frm_CadUsuario f = new Frm_CadUsuario();
-                f.setCodigoUsuario(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString()));
+                Frm_CadClientes f = new Frm_CadClientes();
+                f.setCodigoCliente(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString()));
                 f.buscar();
                 dispose();
             }
@@ -98,7 +110,7 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         }
     }
 
-    public void limpaTabela() {
+    public void limpaTabela(DefaultTableModel model) {
         try {
             while (0 < model.getRowCount()) {
                 model.removeRow(0);
@@ -118,6 +130,8 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_clientes = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tb_contatos = new javax.swing.JTable();
         btn_cancelar = new javax.swing.JButton();
         btn_selecionar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -133,14 +147,14 @@ public class Frm_ConCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Referência", "Nome Fantasia", "CPF/CNPJ", "Telefone", "Contato"
+                "Código", "Referência", "Nome Fantasia", "CPF/CNPJ"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -152,6 +166,57 @@ public class Frm_ConCliente extends javax.swing.JFrame {
             }
         });
         tb_clientes.getTableHeader().setReorderingAllowed(false);
+        tb_clientes.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                tb_clientesHierarchyChanged(evt);
+            }
+        });
+        tb_clientes.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                tb_clientesAncestorMoved(evt);
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tb_clientes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                tb_clientesFocusGained(evt);
+            }
+        });
+        tb_clientes.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+                tb_clientesAncestorMoved1(evt);
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+            }
+        });
+        tb_clientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_clientesMouseClicked(evt);
+            }
+        });
+        tb_clientes.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                tb_clientesCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        tb_clientes.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tb_clientesPropertyChange(evt);
+            }
+        });
+        tb_clientes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tb_clientesKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tb_clientesKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb_clientes);
         if (tb_clientes.getColumnModel().getColumnCount() > 0) {
             tb_clientes.getColumnModel().getColumn(0).setMinWidth(70);
@@ -160,26 +225,50 @@ public class Frm_ConCliente extends javax.swing.JFrame {
             tb_clientes.getColumnModel().getColumn(1).setMinWidth(70);
             tb_clientes.getColumnModel().getColumn(1).setPreferredWidth(70);
             tb_clientes.getColumnModel().getColumn(1).setMaxWidth(70);
-            tb_clientes.getColumnModel().getColumn(3).setMinWidth(120);
-            tb_clientes.getColumnModel().getColumn(3).setPreferredWidth(120);
-            tb_clientes.getColumnModel().getColumn(3).setMaxWidth(120);
-            tb_clientes.getColumnModel().getColumn(4).setMinWidth(85);
-            tb_clientes.getColumnModel().getColumn(4).setPreferredWidth(85);
-            tb_clientes.getColumnModel().getColumn(4).setMaxWidth(85);
-            tb_clientes.getColumnModel().getColumn(5).setMinWidth(150);
-            tb_clientes.getColumnModel().getColumn(5).setPreferredWidth(150);
-            tb_clientes.getColumnModel().getColumn(5).setMaxWidth(150);
+            tb_clientes.getColumnModel().getColumn(3).setMinWidth(200);
+            tb_clientes.getColumnModel().getColumn(3).setPreferredWidth(200);
+            tb_clientes.getColumnModel().getColumn(3).setMaxWidth(200);
         }
+
+        tb_contatos.setBackground(new java.awt.Color(204, 204, 204));
+        tb_contatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Contato", "Telefone"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tb_contatos);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 883, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         btn_cancelar.setText("Cancelar");
@@ -190,8 +279,19 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         });
 
         btn_selecionar.setText("Selecionar");
+        btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_selecionarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Filtro:");
+
+        txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_filtroKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -210,7 +310,7 @@ public class Frm_ConCliente extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 190, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -259,6 +359,47 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
+    private void tb_clientesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tb_clientesFocusGained
+    }//GEN-LAST:event_tb_clientesFocusGained
+
+    private void tb_clientesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tb_clientesPropertyChange
+    }//GEN-LAST:event_tb_clientesPropertyChange
+
+    private void tb_clientesCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tb_clientesCaretPositionChanged
+    }//GEN-LAST:event_tb_clientesCaretPositionChanged
+
+    private void tb_clientesAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tb_clientesAncestorMoved
+    }//GEN-LAST:event_tb_clientesAncestorMoved
+
+    private void tb_clientesHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_tb_clientesHierarchyChanged
+    }//GEN-LAST:event_tb_clientesHierarchyChanged
+
+    private void tb_clientesAncestorMoved1(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_tb_clientesAncestorMoved1
+    }//GEN-LAST:event_tb_clientesAncestorMoved1
+
+    private void tb_clientesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_clientesKeyPressed
+    }//GEN-LAST:event_tb_clientesKeyPressed
+
+    private void tb_clientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tb_clientesKeyReleased
+        if (tb_clientes.getSelectedRowCount() == 1) {
+            carregaContatos(clienteDAO.buscaClienteByCodigo(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString())).getTelefoneList());
+        }
+    }//GEN-LAST:event_tb_clientesKeyReleased
+
+    private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
+        filtrar(evt);
+    }//GEN-LAST:event_txt_filtroKeyReleased
+
+    private void tb_clientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_clientesMouseClicked
+        if (tb_clientes.getSelectedRowCount() == 1) {
+            carregaContatos(clienteDAO.buscaClienteByCodigo(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString())).getTelefoneList());
+        }
+    }//GEN-LAST:event_tb_clientesMouseClicked
+
+    private void btn_selecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarActionPerformed
+        selecionarCliente();
+    }//GEN-LAST:event_btn_selecionarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -302,7 +443,9 @@ public class Frm_ConCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tb_clientes;
+    private javax.swing.JTable tb_contatos;
     private javax.swing.JTextField txt_filtro;
     // End of variables declaration//GEN-END:variables
 }

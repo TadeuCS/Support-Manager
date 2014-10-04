@@ -17,6 +17,7 @@ import Controller.SegmentoDAO;
 import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
+import Controller.UsuarioDAO;
 import Model.Aplicativo;
 import Model.Cliente;
 import Model.Endereco;
@@ -24,6 +25,7 @@ import Model.Link;
 import Model.LinkCliente;
 import Model.Telefone;
 import Model.TipoPessoa;
+import Model.Usuario;
 import Util.Classes.Data;
 import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
@@ -64,10 +66,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     TipoPessoa tipo;
     LinkCliente linksClientes;
     DefaultTableModel model;
+    private static int codigoCliente;
+
+   
 
     public Frm_CadClientes() {
         initComponents();
         setVisible(true);
+        codigoCliente=0;
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
@@ -85,6 +91,13 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }
 
     //Início das validações de interface.
+     public static int getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public static void setCodigoCliente(int codigoCliente) {
+        Frm_CadClientes.codigoCliente = codigoCliente;
+    }
     private void setEnabledFields(boolean valor) {
         txt_cpf.setEnabled(valor);
         txt_inscEstadual.setEnabled(valor);
@@ -370,6 +383,8 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             cliente.setNomeFantasia(txt_nomeFantasia.getText());
             if (txt_referencia.getText().equals("") == false) {
                 cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
+            }else{
+                cliente.setReferencia(0);
             }
             cliente.setResponsavel(txt_responsavel.getText());
             cliente.setEmail(txt_email.getText());
@@ -675,6 +690,23 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             btn_cancelar.doClick();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar Cliente!\n" + e);
+        }
+    }
+    
+    public void buscar() {
+        try {
+            clienteDAO = new ClienteDAO();
+            cliente= new Cliente();
+            cliente = clienteDAO.buscaClienteByCodigo(codigoCliente);
+            getCliente(cliente);
+            txt_operacao.setText("CONSULTA");
+            setEnabledFields(false);
+            setEnabledButtons(true);
+            btn_inclusao.setEnabled(false);
+            btn_consulta.setEnabled(false);
+            btn_cancelar.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao Buscar Cliente: " + codigoCliente);
         }
     }
 
