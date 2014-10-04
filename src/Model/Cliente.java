@@ -90,11 +90,11 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "CODPARCELA", referencedColumnName = "CODPARCELA")
     @ManyToOne(optional = false)
     private Parcela codparcela;
-    @OneToMany(mappedBy = "codcliente")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codcliente")
     private List<Telefone> telefoneList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCliente")
     private List<LinkCliente> linkClienteList = new ArrayList<>();
-    @OneToMany(mappedBy = "codcliente")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codcliente")
     private List<Endereco> enderecoList = new ArrayList<>();
 
     ;

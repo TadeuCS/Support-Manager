@@ -8,7 +8,7 @@ package Controller;
 import Model.Aplicativo;
 import Model.Cliente;
 import Model.Link;
-import Model.Telefone;
+import Model.LinkCliente;
 import Util.Classes.Manager;
 import java.util.List;
 
@@ -23,14 +23,23 @@ public class LinksDAO extends Manager {
         em.merge(link);
         em.getTransaction().commit();
     }
-
+    public void removerLinkCliente(LinkCliente link){
+        em.getTransaction().begin();
+        em.remove(link);
+        em.getTransaction().commit();
+    }
     public List<Link> lista() {
         em.getTransaction().begin();
         query = em.createNamedQuery("Link.findAll");
         em.getTransaction().commit();
         return query.getResultList();
     }
-
+    public LinkCliente findLinkClienteByCodigo(int codigo){
+        em.getTransaction().begin();
+        query = em.createQuery("SELECT lc  FROM LinkCliente lc WHERE lc.codLinkCliente=:codigo").setParameter("codigo", codigo);
+        em.getTransaction().commit();
+        return (LinkCliente) query.getSingleResult();
+    }
     public Link buscaLink(String descricao) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Link.findByDescricao").setParameter("descricao", descricao);

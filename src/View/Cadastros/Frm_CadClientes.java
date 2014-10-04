@@ -68,12 +68,10 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     DefaultTableModel model;
     private static int codigoCliente;
 
-   
-
     public Frm_CadClientes() {
         initComponents();
         setVisible(true);
-        codigoCliente=0;
+        codigoCliente = 0;
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
@@ -91,13 +89,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }
 
     //Início das validações de interface.
-     public static int getCodigoCliente() {
+    public static int getCodigoCliente() {
         return codigoCliente;
     }
 
     public static void setCodigoCliente(int codigoCliente) {
         Frm_CadClientes.codigoCliente = codigoCliente;
     }
+
     private void setEnabledFields(boolean valor) {
         txt_cpf.setEnabled(valor);
         txt_inscEstadual.setEnabled(valor);
@@ -121,9 +120,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         btn_alteracao.setEnabled(valor);
         btn_exclusao.setEnabled(valor);
         btn_consulta.setEnabled(valor);
-        if(valor==false){
-        btn_cancelar.setEnabled(true);    
-        }else{
+        if (valor == false) {
+            btn_cancelar.setEnabled(true);
+        } else {
             btn_cancelar.setEnabled(false);
         }
     }
@@ -152,12 +151,12 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         limpaTabela((DefaultTableModel) tb_telefones.getModel());
     }
 
-    public void limpaLista(DefaultTableModel model){
-        for(int i=0;i<model.getRowCount();i++){
+    public void limpaLista(DefaultTableModel model) {
+        for (int i = 0; i < model.getRowCount(); i++) {
             model.removeRow(i);
         }
     }
-    
+
     public void proximo() {
         abas.setSelectedIndex(abas.getSelectedIndex() + 1);
     }
@@ -337,7 +336,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             txt_referencia.setText(cliente.getReferencia() + "");
             txt_responsavel.setText(cliente.getResponsavel());
             txt_email.setText(cliente.getEmail());
-            txt_data.setText(cliente.getDataAtualizacao() + "");
+            txt_data.setText(Data.getData(cliente.getDataAtualizacao(), "dd/MM/yyyy"));
             cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
             getStatusPessoa(cliente);
         } catch (Exception e) {
@@ -353,7 +352,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             txt_numero.setText(cliente.getEnderecoList().get(0).getNumero() + "");
             txt_complemento.setText(cliente.getEnderecoList().get(0).getComplemento());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao retornar Endereço de cliente");
+            JOptionPane.showMessageDialog(null, "Erro ao retornar Endereço de cliente");
         }
 
         //dados da aba telefones
@@ -383,7 +382,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             cliente.setNomeFantasia(txt_nomeFantasia.getText());
             if (txt_referencia.getText().equals("") == false) {
                 cliente.setReferencia(Integer.parseInt(txt_referencia.getText()));
-            }else{
+            } else {
                 cliente.setReferencia(0);
             }
             cliente.setResponsavel(txt_responsavel.getText());
@@ -440,51 +439,63 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     public Endereco setEndereco(Cliente cliente) {
         endereco = new Endereco();
         cidadesDAO = new CidadesDAO();
-        try {
-            endereco.setBairro(txt_bairro.getText());
-            endereco.setCep(txt_cep.getText());
-            if (txt_complemento.getText().equals("") == false) {
-                endereco.setComplemento(txt_complemento.getText());
+        if (txt_codigo.getText().isEmpty()) {
+            try {
+                endereco.setBairro(txt_bairro.getText());
+                endereco.setCep(txt_cep.getText());
+                if (txt_complemento.getText().equals("") == false) {
+                    endereco.setComplemento(txt_complemento.getText());
+                }
+                endereco.setNumero(Integer.parseInt(txt_numero.getText()));
+                endereco.setRua(txt_rua.getText());
+                endereco.setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
+                endereco.setCodcliente(cliente);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao capturar endereço do cliente.\n" + e.getMessage());
             }
-            endereco.setNumero(Integer.parseInt(txt_numero.getText()));
-            endereco.setRua(txt_rua.getText());
-            endereco.setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
-            endereco.setCodcliente(cliente);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao capturar endereço do cliente.\n" + e.getMessage());
+        } else {
+            try {
+                cliente.getEnderecoList().get(0).setBairro(txt_bairro.getText());
+                cliente.getEnderecoList().get(0).setCep(txt_cep.getText());
+                if (txt_complemento.getText().equals("") == false) {
+                    cliente.getEnderecoList().get(0).setComplemento(txt_complemento.getText());
+                }
+                cliente.getEnderecoList().get(0).setNumero(Integer.parseInt(txt_numero.getText()));
+                cliente.getEnderecoList().get(0).setRua(txt_rua.getText());
+                cliente.getEnderecoList().get(0).setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao capturar endereço do cliente.\n" + e.getMessage());
+            }
         }
 
         return endereco;
     }
 
     public void listaTelefones(Cliente cliente) {
-        telefoneDAO = new TelefoneDAO();
         try {
-            int i = 0;
-            limpaTabela((DefaultTableModel) tb_telefones.getModel());
-            while (i < telefoneDAO.listaTelefoneByCliente(cliente).size()) {
+            model = (DefaultTableModel) tb_telefones.getModel();
+            limpaTabela(model);
+            for (int i = 0; i < cliente.getTelefoneList().size(); i++) {
                 String[] linha = new String[]{
-                    telefoneDAO.listaTelefoneByCliente(cliente).get(i).getDescricao(),
-                    telefoneDAO.listaTelefoneByCliente(cliente).get(i).getTelefone()};
+                    cliente.getTelefoneList().get(i).getDescricao(),
+                    cliente.getTelefoneList().get(i).getTelefone()};
                 model.addRow(linha);
-                i++;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Listar Telefones do cliente: " + cliente);
+            System.out.println(e);
         }
     }
 
     public void listaLinks(Cliente cliente) {
-        linksDAO = new LinksDAO();
         try {
-            int i = 0;
-            limpaTabela((DefaultTableModel) tb_links.getModel());
-            while (i < clienteDAO.listalinksByCliente(cliente).size()) {
+            model = (DefaultTableModel) tb_links.getModel();
+            limpaTabela(model);
+            for (int i = 0; i < cliente.getLinkClienteList().size(); i++) {
                 String[] linha = new String[]{
-                    clienteDAO.listalinksByCliente(cliente).get(i).getLink().getDescricao(),
-                    clienteDAO.listalinksByCliente(cliente).get(i).getQuantidade() + ""};
+                    cliente.getLinkClienteList().get(i).getLink().getDescricao(),
+                    cliente.getLinkClienteList().get(i).getQuantidade() + ""};
                 model.addRow(linha);
-                i++;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Listar Links do cliente: " + cliente);
@@ -567,7 +578,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void buscaCEP(String cep) {
         endereco = new Endereco();
-        clienteDAO= new ClienteDAO();
+        clienteDAO = new ClienteDAO();
         try {
             endereco = clienteDAO.findEnderecoByCEP(cep);
             if (endereco.getCep() != null) {
@@ -578,7 +589,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 txt_numero.requestFocus();
             }
         } catch (Exception e) {
-            System.out.println(cep+"\n"+e);
+            System.out.println(cep + "\n" + e);
             JOptionPane.showMessageDialog(null, "CEP não Encontrado, Preencha os campos obrigatórios!");
         }
     }
@@ -599,13 +610,25 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         telefone.setCodgrupo(grupoDAO.consulta(grupo));
         telefone.setTelefone(numTelefone);
         telefone.setDescricao(contato);
+        boolean existe = false;
         try {
             telefoneDAO.busca(numTelefone);
             JOptionPane.showMessageDialog(null, "Telefone ja existe!");
-        } catch (NoResultException e) {
-            insereTelefoneNalista(telefone);
             txt_telefone.requestFocus();
-            txt_telefone.setText(null);
+        } catch (NoResultException e) {
+            for (int i = 0; i < tb_telefones.getRowCount(); i++) {
+                if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
+                    JOptionPane.showMessageDialog(null, numTelefone + " já está na lista");
+                    txt_telefone.requestFocus();
+                    existe = true;
+                }
+            }
+            if (existe == false) {
+                insereTelefoneNalista(telefone);
+                txt_telefone.setText(null);
+                txt_contato.setText(null);
+                txt_contato.requestFocus();
+            }
         }
     }
 
@@ -643,6 +666,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void removeTelefone(String numeroTelefone) {
         try {
+            model = (DefaultTableModel) tb_telefones.getModel();
             for (int i = 0; i < cliente.getTelefoneList().size(); i++) {
                 if (cliente.getTelefoneList().get(i).getTelefone().equals(numeroTelefone) == true) {
                     cliente.getTelefoneList().remove(i);
@@ -659,21 +683,14 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         this.link = new Link();
         linksDAO = new LinksDAO();
         try {
-            if (txt_codigo.getText().equals("") == false) {
-                this.link = linksDAO.buscaLink(link);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Buscar Link: " + link);
-            System.out.println(e);
-        }
-
-        try {
+            model = (DefaultTableModel) tb_links.getModel();
             for (int i = 0; i < cliente.getLinkClienteList().size(); i++) {
-                if (cliente.getLinkClienteList().get(i).getLink().equals(link) == true) {
+                if (cliente.getLinkClienteList().get(i).getLink().getDescricao().equals(link) == true) {
+                    linksDAO.removerLinkCliente(linksDAO.findLinkClienteByCodigo(cliente.getLinkClienteList().get(i).getCodLinkCliente()));
                     cliente.getLinkClienteList().remove(i);
+                    model.removeRow(tb_links.getSelectedRow());
                 }
             }
-            model.removeRow(tb_links.getSelectedRow());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Remover Link: " + link);
             System.out.println(e);
@@ -692,11 +709,11 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao salvar Cliente!\n" + e);
         }
     }
-    
+
     public void buscar() {
         try {
             clienteDAO = new ClienteDAO();
-            cliente= new Cliente();
+            cliente = new Cliente();
             cliente = clienteDAO.buscaClienteByCodigo(codigoCliente);
             getCliente(cliente);
             txt_operacao.setText("CONSULTA");
@@ -736,15 +753,15 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         try {
             linksClientes = new LinkCliente();
             linksDAO = new LinksDAO();
-            if (txt_codigo.getText().isEmpty()) {
-                linksClientes.setCliente(cliente);
-            }
+            linksClientes.setCliente(cliente);
             linksClientes.setLink(linksDAO.buscaLink(link));
             linksClientes.setQuantidade(Integer.parseInt(qtde));
             cliente.getLinkClienteList().add(linksClientes);
             model = (DefaultTableModel) tb_links.getModel();
             String[] linha = new String[]{linksClientes.getLink().getDescricao(), linksClientes.getQuantidade() + ""};
             model.addRow(linha);
+            txt_quantidade.setText(null);
+            cbx_links.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir Link na Lista\n" + e);
         } finally {
@@ -1820,8 +1837,18 @@ public class Frm_CadClientes extends javax.swing.JFrame {
         });
 
         btn_alteracao.setText("Alteração");
+        btn_alteracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alteracaoActionPerformed(evt);
+            }
+        });
 
         btn_exclusao.setText("Exclusão");
+        btn_exclusao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exclusaoActionPerformed(evt);
+            }
+        });
 
         btn_consulta.setText("Consulta");
         btn_consulta.addActionListener(new java.awt.event.ActionListener() {
@@ -1974,6 +2001,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     private void btn_removerTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerTelefoneActionPerformed
         String tel = tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString();
         try {
+            telefoneDAO = new TelefoneDAO();
             telefoneDAO.apagar(telefoneDAO.busca(tel));
             removeTelefone(tel);
         } catch (Exception e) {
@@ -2002,7 +2030,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_inserirLinksActionPerformed
 
     private void btn_removerLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerLinksActionPerformed
-        if (tb_links.getSelectedRowCount() != 0) {
+        if (tb_links.getSelectedRowCount() != 1) {
             JOptionPane.showMessageDialog(null, "Selecione UM Link na lista para remover!");
         } else {
             removeLink(tb_links.getValueAt(tb_links.getSelectedRow(), 0).toString());
@@ -2158,7 +2186,36 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
         Frm_ConCliente f = new Frm_ConCliente();
+        dispose();
     }//GEN-LAST:event_btn_consultaActionPerformed
+
+    private void btn_alteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteracaoActionPerformed
+        if (txt_codigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um cliente atraves do botão consultar para poder altera-lo");
+        } else {
+            setEnabledButtons(false);
+            setEnabledFields(true);
+            txt_operacao.setText("ALTERAÇÃO");
+        }
+    }//GEN-LAST:event_btn_alteracaoActionPerformed
+
+    private void btn_exclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclusaoActionPerformed
+        if (txt_codigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um cliente atraves do botão consultar para poder excluí-lo");
+        } else {
+            txt_operacao.setText("EXCLUSÃO");
+            try {
+                clienteDAO.remover(cliente);
+                JOptionPane.showMessageDialog(null, "Cliente " + cliente.getNomeFantasia() + " removido com sucesso!");
+                setEnabledButtons(true);
+                setEnabledFields(false);
+                limpaCampos();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Impossivel remover este Cliente pois o mesmo ja teve movimentações!");
+            }
+
+        }
+    }//GEN-LAST:event_btn_exclusaoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -356,6 +356,7 @@ public class Frm_ConCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        Frm_CadClientes F = new Frm_CadClientes();
         dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 

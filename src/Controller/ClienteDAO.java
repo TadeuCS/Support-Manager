@@ -24,6 +24,12 @@ public class ClienteDAO extends Manager {
         em.getTransaction().commit();
     }
 
+    public void remover(Cliente cliente) {
+        em.getTransaction().begin();
+        em.remove(cliente);
+        em.getTransaction().commit();
+    }
+
     public List<Cliente> lista() {
         em.getTransaction().begin();
         query = em.createNamedQuery("Cliente.findAll");
@@ -31,12 +37,13 @@ public class ClienteDAO extends Manager {
         return query.getResultList();
     }
 
-    public Cliente buscaClienteByCodigo(int codigo){
+    public Cliente buscaClienteByCodigo(int codigo) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Cliente.findByCodcliente").setParameter("codcliente", codigo);
         em.getTransaction().commit();
         return (Cliente) query.getSingleResult();
     }
+    
     public Cliente buscaCliente(String descricao) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Cliente.findByDescricao").setParameter("descricao", descricao);
@@ -57,7 +64,8 @@ public class ClienteDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-    public Endereco findEnderecoByCEP(String cep){
+
+    public Endereco findEnderecoByCEP(String cep) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Endereco.findByCep").setParameter("cep", cep);
         em.getTransaction().commit();

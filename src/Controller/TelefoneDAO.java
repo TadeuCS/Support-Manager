@@ -52,7 +52,7 @@ public class TelefoneDAO extends Manager {
 
     public List<Telefone> listaTelefoneByCliente(Cliente cliente) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT t FROM Telefone t where t.codcliente :cliente order by t.descricao").setParameter("cliente", cliente);
+        query = em.createQuery("SELECT t FROM Telefone t where t.codcliente =:codcliente order by t.descricao").setParameter("codcliente", cliente);
         em.getTransaction().commit();
         return query.getResultList();
     }
