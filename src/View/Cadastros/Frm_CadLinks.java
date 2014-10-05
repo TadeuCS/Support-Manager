@@ -10,6 +10,7 @@ import Controller.LinksDAO;
 import Model.Aplicativo;
 import Model.Link;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,19 +56,27 @@ public class Frm_CadLinks extends javax.swing.JFrame {
 
     public void salvar(String descricao) {
         novo();
-        aplicativo.setDescricao(cbx_aplicativos.getSelectedItem().toString());
         link.setDescricao(descricao);
-        link.setCodaplicativo(aplicativo);
         try {
-            linksDAO.salvar(link);
-            JOptionPane.showMessageDialog(null, "Link salvo com sucesso!");
-            txt_descricao.setText(null);
-            txt_descricao.requestFocus();
-        } catch (Exception e) {
+            linksDAO.buscaLink(descricao);
             JOptionPane.showMessageDialog(null, "Link já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
             txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                link.setCodaplicativo(aplicativoDAO.buscaAplicativo(cbx_aplicativos.getSelectedItem().toString()));
+                linksDAO.salvar(link);
+                JOptionPane.showMessageDialog(null, "Link salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Link\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Link " + descricao);
+            txt_descricao.setText(null);
+            txt_descricao.requestFocus();
         }
-
     }
 
     @SuppressWarnings("unchecked")

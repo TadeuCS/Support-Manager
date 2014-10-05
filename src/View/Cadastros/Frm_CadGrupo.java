@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.GrupoDAO;
 import Model.Grupo;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,22 +28,31 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
 
     public void novo() {
         grupoDAO = new GrupoDAO();
-        grupo= new Grupo();
+        grupo = new Grupo();
     }
 
     public void salvar(String descricao) {
         novo();
         grupo.setDescricao(descricao);
         try {
-            grupoDAO.salvar(grupo);
-            JOptionPane.showMessageDialog(null, "Grupo salvo com sucesso!");
+            grupoDAO.consulta(descricao);
+            JOptionPane.showMessageDialog(null, "Grupo já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                grupoDAO.salvar(grupo);
+                JOptionPane.showMessageDialog(null, "Grupo salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Grupo\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Grupo "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Grupo já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -144,7 +154,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         if (txt_descricao.getText().equals("") == false) {
             salvar(txt_descricao.getText());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Descrição inválida");
         }
     }//GEN-LAST:event_btn_salvarActionPerformed

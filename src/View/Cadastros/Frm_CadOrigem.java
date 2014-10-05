@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.OrigemDAO;
 import Model.Origem;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,18 +32,27 @@ public class Frm_CadOrigem extends javax.swing.JFrame {
     }
 
     public void salvar(String descricao) {
-        novo();
+      novo();
         origem.setDescricao(descricao);
         try {
-            origemDAO.salvar(origem);
-            JOptionPane.showMessageDialog(null, "Origem salvo com sucesso!");
+            origemDAO.buscaOrigem(descricao);
+            JOptionPane.showMessageDialog(null, "Origem já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                origemDAO.salvar(origem);
+                JOptionPane.showMessageDialog(null, "Origem salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Origem\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Origem "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Origem já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")

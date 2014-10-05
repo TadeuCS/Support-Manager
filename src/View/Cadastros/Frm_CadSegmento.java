@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.SegmentoDAO;
 import Model.Segmento;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,15 +35,24 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
         novo();
         segmento.setDescricao(descricao);
         try {
-            segmentoDAO.salvar(segmento);
-            JOptionPane.showMessageDialog(null, "Segmento salvo com sucesso!");
+            segmentoDAO.buscaSegmento(descricao);
+            JOptionPane.showMessageDialog(null, "Segmento já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                segmentoDAO.salvar(segmento);
+                JOptionPane.showMessageDialog(null, "Segmento salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Segmento\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Segmento "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Segmento já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")

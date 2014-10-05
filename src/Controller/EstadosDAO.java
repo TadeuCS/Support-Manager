@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Cidade;
 import Model.Uf;
 import Util.Classes.Manager;
 import java.util.List;
@@ -32,6 +33,12 @@ public class EstadosDAO extends Manager {
         query = em.createNamedQuery("Uf.findByDescricao").setParameter("descricao", estado);
         em.getTransaction().commit();
         return (Uf) query.getSingleResult();
+    }
+    public Cidade cunsultaByIBGE(int ibge) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Cidade.findByCodibgemunicipio").setParameter("codibgemunicipio", ibge);
+        em.getTransaction().commit();
+        return  (Cidade) query.getSingleResult();
     }
     public Uf cunsultaBySigla(String sigla) {
         em.getTransaction().begin();

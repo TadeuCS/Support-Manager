@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.TipoAtendimentoDAO;
 import Model.TipoAtendimento;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,18 +32,27 @@ public class Frm_CadTipoAtendimento extends javax.swing.JFrame {
     }
 
     public void salvar(String descricao) {
-        novo();
+      novo();
         tipoAtendimento.setDescricao(descricao);
         try {
-            tipoAtendimentoDAO.salvar(tipoAtendimento);
-            JOptionPane.showMessageDialog(null, "Tipo de Atendimento salvo com sucesso!");
+            tipoAtendimentoDAO.buscaTipoAtendimento(descricao);
+            JOptionPane.showMessageDialog(null, "Tipo de Atendimento já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                tipoAtendimentoDAO.salvar(tipoAtendimento);
+                JOptionPane.showMessageDialog(null, "Tipo de Atendimento salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Tipo de Atendimento\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de Atendimento "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Tipo de Atendimento já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")

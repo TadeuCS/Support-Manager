@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.TipoInformacaoDAO;
 import Model.TipoInformacao;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,22 +28,31 @@ public class Frm_CadTipoInformacao extends javax.swing.JFrame {
 
     public void novo() {
         tipoInformacaoDAO = new TipoInformacaoDAO();
-        tipoInformacao= new TipoInformacao();
+        tipoInformacao = new TipoInformacao();
     }
 
     public void salvar(String descricao) {
         novo();
         tipoInformacao.setDescricao(descricao);
         try {
-            tipoInformacaoDAO.salvar(tipoInformacao);
-            JOptionPane.showMessageDialog(null, "TipoInformacao salvo com sucesso!");
+            tipoInformacaoDAO.buscaTipoInformacao(descricao);
+            JOptionPane.showMessageDialog(null, "Tipo de Informação já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                tipoInformacaoDAO.salvar(tipoInformacao);
+                JOptionPane.showMessageDialog(null, "Tipo de Informação salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Tipo de Informação\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de Informação " + descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "TipoInformacao já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -144,7 +154,7 @@ public class Frm_CadTipoInformacao extends javax.swing.JFrame {
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         if (txt_descricao.getText().equals("") == false) {
             salvar(txt_descricao.getText());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Descrição inválida");
         }
     }//GEN-LAST:event_btn_salvarActionPerformed

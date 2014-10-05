@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.ParcelaDAO;
 import Model.Parcela;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,19 +31,28 @@ public class Frm_CadParcela extends javax.swing.JFrame {
         parcela= new Parcela();
     }
 
-    public void salvar(double percentual) {
-        novo();
-        parcela.setPercentual(percentual);
+    public void salvar(double descricao) {
+       novo();
+        parcela.setPercentual(descricao);
         try {
-            parcelaDAO.salvar(parcela);
-            JOptionPane.showMessageDialog(null, "Parcela salvo com sucesso!");
+            parcelaDAO.consulta(descricao+"");
+            JOptionPane.showMessageDialog(null, "Parcela já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                parcelaDAO.salvar(parcela);
+                JOptionPane.showMessageDialog(null, "Parcela salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Parcela\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Parcela "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Parcela já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")

@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.PrioridadeDAO;
 import Model.Prioridade;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,15 +35,24 @@ public class Frm_CadPrioridade extends javax.swing.JFrame {
         novo();
         prioridade.setDescricao(descricao);
         try {
-            prioridadeDAO.salvar(prioridade);
-            JOptionPane.showMessageDialog(null, "Prioridade salvo com sucesso!");
-            txt_descricao.setText(null);
-            txt_descricao.requestFocus();
-        } catch (Exception e) {
+            prioridadeDAO.buscaPrioridade(descricao);
             JOptionPane.showMessageDialog(null, "Prioridade já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
             txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                prioridadeDAO.salvar(prioridade);
+                JOptionPane.showMessageDialog(null, "Prioridade salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Prioridade\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Prioridade " + descricao);
+            txt_descricao.setText(null);
+            txt_descricao.requestFocus();
         }
-
     }
 
     @SuppressWarnings("unchecked")

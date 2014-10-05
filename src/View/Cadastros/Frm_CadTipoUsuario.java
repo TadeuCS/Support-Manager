@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.TipoUsuarioDAO;
 import Model.TipoUsuario;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,18 +32,27 @@ public class Frm_CadTipoUsuario extends javax.swing.JFrame {
     }
 
     public void salvar(String descricao) {
-        novo();
+       novo();
         tipo.setDescricao(descricao);
         try {
-            tipoUsuarioDAO.salvar(tipo);
-            JOptionPane.showMessageDialog(null, "Tipo de Usuário salvo com sucesso!");
+            tipoUsuarioDAO.buscaTipoUsuario(descricao);
+            JOptionPane.showMessageDialog(null, "Tipo de Usuário já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                tipoUsuarioDAO.salvar(tipo);
+                JOptionPane.showMessageDialog(null, "Tipo de Usuário salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Tipo de Usuário\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de Usuário "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Tipo de Usuário ja existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")

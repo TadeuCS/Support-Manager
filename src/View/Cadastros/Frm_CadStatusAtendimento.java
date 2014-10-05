@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.StatusAtendimentoDAO;
 import Model.StatusAtendimento;
 import Util.Classes.FixedLengthDocument;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,15 +35,24 @@ public class Frm_CadStatusAtendimento extends javax.swing.JFrame {
         novo();
         status.setDescricao(descricao);
         try {
-            statusDAO.salvar(status);
-            JOptionPane.showMessageDialog(null, "StatusAtendimento salvo com sucesso!");
+            statusDAO.buscaStatusAtendimento(descricao);
+            JOptionPane.showMessageDialog(null, "Status já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_descricao.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                statusDAO.salvar(status);
+                JOptionPane.showMessageDialog(null, "Status salvo com sucesso!");
+                txt_descricao.setText(null);
+                txt_descricao.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Status\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_descricao.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Status "+descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "StatusAtendimento já existe\n","Alerta",JOptionPane.ERROR_MESSAGE);
-            txt_descricao.requestFocus();
         }
-        
     }
 
     @SuppressWarnings("unchecked")

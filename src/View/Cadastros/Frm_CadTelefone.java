@@ -9,10 +9,8 @@ import Controller.GrupoDAO;
 import Controller.TelefoneDAO;
 import Model.Grupo;
 import Model.Telefone;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
-import java.sql.SQLException;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -43,12 +41,12 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Telefones");
         }
 
     }
 
-    public void validaCampos(String grupo, String nome, String numTelefone){
+    public void validaCampos(String grupo, String nome, String numTelefone) {
         if (nome.equals("") == true) {
             JOptionPane.showMessageDialog(null, "Contato em branco!");
             txt_contato.requestFocus();
@@ -70,23 +68,38 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }
 
     public void salvar(String grupo, String nome, String numTelefone) {
+        novo();
+        telefone.setCodgrupo(grupoDAO.consulta(grupo));
+        telefone.setDescricao(nome);
+        telefone.setTelefone(numTelefone);
         try {
-            novo();
-            telefone.setCodgrupo(grupoDAO.consulta(grupo));
-            telefone.setDescricao(nome);
-            telefone.setTelefone(numTelefone);
-            telefoneDAO.salvar(telefone);
-            JOptionPane.showMessageDialog(null, "Contato Inserido com Sucesso!");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Telefone "+numTelefone+" já existe!");
+            telefoneDAO.busca(numTelefone);
+            JOptionPane.showMessageDialog(null, "Telefone já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            txt_telefone.requestFocus();
+        } catch (NoResultException ex) {
+            try {
+                telefoneDAO.salvar(telefone);
+                JOptionPane.showMessageDialog(null, "Telefone salvo com sucesso!");
+                txt_contato.setText(null);
+                txt_telefone.setText(null);
+                txt_contato.requestFocus();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Salvar Telefone\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_contato.requestFocus();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone " + numTelefone);
+                txt_contato.setText(null);
+                txt_telefone.setText(null);
+                txt_contato.requestFocus();
         }
-        limpaCampos();
     }
 
-    public void limpaCampos(){
+    public void limpaCampos() {
         txt_contato.setText(null);
         txt_telefone.setText(null);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,7 +108,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         pnl_fundo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbx_grupo = new javax.swing.JComboBox();
-        txt_dados = new javax.swing.JPanel();
+        pnl_dados = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txt_contato = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -116,7 +129,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
             }
         });
 
-        txt_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnl_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel3.setText("Telefone:");
 
@@ -129,30 +142,30 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         }
         txt_telefone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        javax.swing.GroupLayout txt_dadosLayout = new javax.swing.GroupLayout(txt_dados);
-        txt_dados.setLayout(txt_dadosLayout);
-        txt_dadosLayout.setHorizontalGroup(
-            txt_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(txt_dadosLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_dadosLayout = new javax.swing.GroupLayout(pnl_dados);
+        pnl_dados.setLayout(pnl_dadosLayout);
+        pnl_dadosLayout.setHorizontalGroup(
+            pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_dadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(txt_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(txt_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_contato)
                     .addComponent(txt_telefone))
                 .addContainerGap())
         );
-        txt_dadosLayout.setVerticalGroup(
-            txt_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(txt_dadosLayout.createSequentialGroup()
+        pnl_dadosLayout.setVerticalGroup(
+            pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_dadosLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(txt_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_contato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(txt_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txt_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -192,7 +205,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                         .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_cadGrupo))
-                    .addComponent(txt_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -208,7 +221,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                     .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cadGrupo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
@@ -232,7 +245,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        validaCampos(cbx_grupo.getSelectedItem().toString(),txt_contato.getText().toUpperCase(), txt_telefone.getText());
+        validaCampos(cbx_grupo.getSelectedItem().toString(), txt_contato.getText().toUpperCase(), txt_telefone.getText());
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
@@ -240,7 +253,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_fecharActionPerformed
 
     private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
-        Frm_CadGrupo f = new Frm_CadGrupo();
+        Frm_CadTelefone f = new Frm_CadTelefone();
     }//GEN-LAST:event_btn_cadGrupoActionPerformed
 
     private void cbx_grupoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_grupoFocusGained
@@ -293,9 +306,9 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel pnl_dados;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JTextField txt_contato;
-    private javax.swing.JPanel txt_dados;
     private javax.swing.JFormattedTextField txt_telefone;
     // End of variables declaration//GEN-END:variables
 }

@@ -58,7 +58,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_cadGrupo" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txt_dados" alignment="0" max="32767" attributes="0"/>
+                      <Component id="pnl_dados" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="btn_fechar" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -79,7 +79,7 @@
                       <Component id="btn_cadGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="txt_dados" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnl_dados" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_salvar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -106,7 +106,7 @@
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cbx_grupoFocusGained"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JPanel" name="txt_dados">
+        <Container class="javax.swing.JPanel" name="pnl_dados">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
