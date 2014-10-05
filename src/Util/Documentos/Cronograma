@@ -4,7 +4,7 @@ ok validar email e cpf cliente
 ok inserir varios links
 ok inserir varios contatos
 ok salvar cliente
-alterar cliente
+ok alterar cliente
 ok consultar cliente
 ok excluir cliente se não houver movimentação
 ok cadastro de cidade

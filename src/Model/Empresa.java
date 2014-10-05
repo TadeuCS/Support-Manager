@@ -7,8 +7,10 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,13 +50,13 @@ public class Empresa implements Serializable {
     @Basic(optional = false)
     @Column(name = "CNPJ_CPF")
     private String cnpjCpf;
-    @OneToMany(mappedBy = "codempresa")
-    private List<Telefone> telefoneList;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codempresa")
+    private List<Telefone> telefoneList=new ArrayList<>();
     @JoinColumn(name = "CODEMAIL", referencedColumnName = "CODEMAIL")
     @ManyToOne(optional = false)
     private Email codemail;
-    @OneToMany(mappedBy = "codempresa")
-    private List<Endereco> enderecoList;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codempresa")
+    private List<Endereco> enderecoList= new ArrayList<>();
 
     public Empresa() {
     }

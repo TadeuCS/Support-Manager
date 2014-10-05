@@ -8,6 +8,7 @@ package View.Cadastros;
 import Controller.AplicativoDAO;
 import Controller.CidadesDAO;
 import Controller.ClienteDAO;
+import Controller.EnderecoDAO;
 import Controller.EstadosDAO;
 import Controller.GrupoDAO;
 import Controller.LinksDAO;
@@ -43,7 +44,7 @@ import javax.swing.text.MaskFormatter;
  *
  * @author Tadeu
  */
-public class Frm_CadClientes extends javax.swing.JFrame {
+public class Frm_CadCliente extends javax.swing.JFrame {
 
     ClienteDAO clienteDAO;
     EstadosDAO estadosDAO;
@@ -57,7 +58,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     SalarioDAO salarioDAO;
     TipoPessoaDAO tipoPessoaDAO;
     AplicativoDAO aplicativoDAO;
-
+    EnderecoDAO enderecoDAO;
     Data data;
     Cliente cliente;
     Endereco endereco;
@@ -68,7 +69,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     DefaultTableModel model;
     private static int codigoCliente;
 
-    public Frm_CadClientes() {
+    public Frm_CadCliente() {
         initComponents();
         setVisible(true);
         codigoCliente = 0;
@@ -94,7 +95,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
     }
 
     public static void setCodigoCliente(int codigoCliente) {
-        Frm_CadClientes.codigoCliente = codigoCliente;
+        Frm_CadCliente.codigoCliente = codigoCliente;
     }
 
     private void setEnabledFields(boolean valor) {
@@ -573,9 +574,9 @@ public class Frm_CadClientes extends javax.swing.JFrame {
 
     public void buscaCEP(String cep) {
         endereco = new Endereco();
-        clienteDAO = new ClienteDAO();
+        enderecoDAO= new EnderecoDAO();
         try {
-            endereco = clienteDAO.findEnderecoByCEP(cep);
+            endereco = enderecoDAO.findEnderecoByCEP(cep);
             if (endereco.getCep() != null) {
                 txt_rua.setText(endereco.getRua());
                 txt_bairro.setText(endereco.getBairro());
@@ -1979,7 +1980,7 @@ public class Frm_CadClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Contato Inválido");
             txt_contato.requestFocus();
         } else {
-            if (txt_telefone.getText().equals("") == true) {
+            if (txt_telefone.getText().replaceAll("(", "").replaceAll(")", "").replaceAll("-", "").equals("") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone Inválido");
                 txt_telefone.requestFocus();
             } else {
@@ -2242,20 +2243,21 @@ public class Frm_CadClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadClientes().setVisible(true);
+                new Frm_CadCliente().setVisible(true);
             }
         });
     }

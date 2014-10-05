@@ -6,7 +6,7 @@
 package View.Home;
 
 import View.Cadastros.Frm_CadAplicativo;
-import View.Cadastros.Frm_CadClientes;
+import View.Cadastros.Frm_CadCliente;
 import View.Cadastros.Frm_CadEmpresa;
 import View.Cadastros.Frm_CadGrupo;
 import View.Cadastros.Frm_CadInformacao;
@@ -542,7 +542,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        Frm_CadClientes f = new Frm_CadClientes();
+        Frm_CadCliente f = new Frm_CadCliente();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed

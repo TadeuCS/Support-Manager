@@ -7,6 +7,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -50,6 +51,8 @@ public class Email implements Serializable {
     @Basic(optional = false)
     @Column(name = "SMTP")
     private String smtp;
+    @Column(name = "SERVIDOR_SSL")
+    private String ssl;
     @Basic(optional = false)
     @Column(name = "PORTA")
     private int porta;
@@ -60,7 +63,7 @@ public class Email implements Serializable {
     @Column(name = "SENHA")
     private String senha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codemail")
-    private List<Empresa> empresaList;
+    private List<Empresa> empresaList= new ArrayList<>();
 
     public Email() {
     }
@@ -124,6 +127,14 @@ public class Email implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getSsl() {
+        return ssl;
+    }
+
+    public void setSsl(String ssl) {
+        this.ssl = ssl;
     }
 
     @XmlTransient

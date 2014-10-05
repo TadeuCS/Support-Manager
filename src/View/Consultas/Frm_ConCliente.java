@@ -19,7 +19,7 @@ import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
 import Model.Cliente;
 import Model.Telefone;
-import View.Cadastros.Frm_CadClientes;
+import View.Cadastros.Frm_CadCliente;
 import View.Cadastros.Frm_CadUsuario;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
@@ -91,7 +91,7 @@ public class Frm_ConCliente extends javax.swing.JFrame {
             if (tb_clientes.getSelectedRowCount() > 1) {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
-                Frm_CadClientes f = new Frm_CadClientes();
+                Frm_CadCliente f = new Frm_CadCliente();
                 f.setCodigoCliente(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString()));
                 f.buscar();
                 dispose();
@@ -356,7 +356,7 @@ public class Frm_ConCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        Frm_CadClientes F = new Frm_CadClientes();
+        Frm_CadCliente F = new Frm_CadCliente();
         dispose();
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
