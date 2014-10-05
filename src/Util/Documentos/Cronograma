@@ -3,11 +3,11 @@ ok validar campos obrigatórios cadastro de cliente
 ok validar email e cpf cliente
 ok inserir varios links
 ok inserir varios contatos
-salvar cliente
+ok salvar cliente
 alterar cliente
-consultar cliente
-excluir cliente se não houver movimentação
-cadastro de cidade
+ok consultar cliente
+ok excluir cliente se não houver movimentação
+ok cadastro de cidade
 ----------------------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------ATENDIMENTO--------------------------------------------------
@@ -29,7 +29,7 @@ CRIAR INTERFACE DE TESTE ENVIO DE EMAIL.
 CONFIGURAR RELATORIO DE RECIBO POR CLIENTE.
 ----------------------------------------------------------------------------------------------------------------------
 
----------------------------------------------------------EMPRESA------------------------------------------------------
+---------------------------------------------------------RELATÓRIO------------------------------------------------------
 CRIAR INTERFACE E RELATORIO DE CLIENTE COM OS FILTROS: DATA ATUALIZAÇÃO, POR CLIENTE, POR SEGMENTO.
 CRIAR INTERFACE E RELATORIO DE ATENDIMENTO COM OS FILTROS: TOTAL ATENDIMENTOS, USUARIO, CLIENTE, PERIODO, STATUS.
 ----------------------------------------------------------------------------------------------------------------------
