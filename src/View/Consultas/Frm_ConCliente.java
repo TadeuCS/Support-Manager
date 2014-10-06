@@ -67,7 +67,6 @@ public class Frm_ConCliente extends javax.swing.JFrame {
 
     public void listaClientes() {
         clienteDAO = new ClienteDAO();
-        JComboBox combo = new JComboBox();
         try {
             limpaTabela((DefaultTableModel) tb_clientes.getModel());
             for (int i = 0; i < clienteDAO.lista().size(); i++) {

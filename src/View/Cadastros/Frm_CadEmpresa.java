@@ -13,14 +13,15 @@ import Controller.EstadosDAO;
 import Controller.GrupoDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
+import Model.Cliente;
 import Model.Email;
 import Model.Empresa;
 import Model.Endereco;
 import Model.Telefone;
 import Util.Classes.FixedLengthDocument;
-import Util.Classes.UpperCaseDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
+import View.Consultas.Frm_ConEmpresa;
 import java.awt.Event;
 import java.text.ParseException;
 import javax.persistence.NoResultException;
@@ -45,17 +46,30 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     Empresa empresa;
     Endereco endereco;
     Telefone telefone;
+    private int codigoEmpresa;
 
     public Frm_CadEmpresa() {
         initComponents();
+        setVisible(true);
         txt_nomeFantasia.setDocument(new FixedLengthDocument(255));
         carregaTipos();
         carregaEstados();
         carregaCidades();
         txt_nomeFantasia.requestFocus();
+        abas.setEnabled(false);
+        btn_cancelar.doClick();
+        codigoEmpresa = 0;
     }
 
-    private void carregaTipos() {
+    public int getCodigoEmpresa() {
+        return codigoEmpresa;
+    }
+
+    public void setCodigoEmpresa(int codigoEmpresa) {
+        this.codigoEmpresa = codigoEmpresa;
+    }
+
+    public void carregaTipos() {
         tipoPessoaDAO = new TipoPessoaDAO();
         try {
             int i = 0;
@@ -69,7 +83,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         }
     }
 
-    private void carregaCidades() {
+    public void carregaCidades() {
         cidadesDAO = new CidadesDAO();
         try {
             int i = 0;
@@ -84,7 +98,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
     }
 
-    private void carregaEstados() {
+    public void carregaEstados() {
         estadosDAO = new EstadosDAO();
         try {
             int i = 0;
@@ -100,11 +114,61 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     }
 
     public void proximo() {
-        btn_proximo.setSelectedIndex(btn_proximo.getSelectedIndex() + 1);
+        abas.setSelectedIndex(abas.getSelectedIndex() + 1);
     }
 
     public void anterior() {
-        btn_proximo.setSelectedIndex(btn_proximo.getSelectedIndex() - 1);
+        abas.setSelectedIndex(abas.getSelectedIndex() - 1);
+    }
+
+    public void setEnabledFields(boolean valor) {
+        txt_nomeFantasia.setEnabled(valor);
+        cbx_tipo.setEnabled(valor);
+        txt_cpf.setEnabled(valor);
+        btn_proximoEmpresa.setEnabled(valor);
+        btn_cancelar.setEnabled(valor);
+    }
+
+    public void setEnabledButtons(boolean valor) {
+        btn_inclusao.setEnabled(valor);
+        btn_alteracao.setEnabled(valor);
+        btn_consulta.setEnabled(valor);
+    }
+
+    public void limpaCampos() {
+        txt_nomeFantasia.setText(null);
+        txt_cpf.setText(null);
+        txt_cep.setText(null);
+        txt_rua.setText(null);
+        txt_numero.setText(null);
+        txt_bairro.setText(null);
+        txt_complemento.setText(null);
+        txt_contato.setText(null);
+        txt_telefone.setText(null);
+        txt_email.setText(null);
+        txt_usuario.setText(null);
+        txt_senha.setText(null);
+        txt_smtp.setText(null);
+        txt_porta.setText(null);
+        txt_operacao.setText(null);
+        chx_ssl.setSelected(false);
+    }
+
+    public void buscar() {
+        try {
+            empresaDAO = new EmpresaDAO();
+            empresa = new Empresa();
+            empresa = empresaDAO.findByCodigo(codigoEmpresa);
+            getDados(empresa);
+            txt_operacao.setText("CONSULTA");
+            setEnabledFields(false);
+            setEnabledButtons(true);
+            btn_inclusao.setEnabled(false);
+            btn_consulta.setEnabled(false);
+            btn_cancelar.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao Buscar Empresa: " + codigoEmpresa);
+        }
     }
 
     public void trocaMascara() throws ParseException {
@@ -136,7 +200,17 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "CNPJ Inválido!");
                     txt_cpf.requestFocus();
                 } else {
-                    proximo();
+                    if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                        try {
+                            empresaDAO = new EmpresaDAO();
+                            empresaDAO.findByNomeFantasiaOrCNPJ(nomeFantasia, cpf);
+                            JOptionPane.showMessageDialog(null, "Empresa já cadastrada!");
+                        } catch (NoResultException e) {
+                            proximo();
+                        }
+                    } else {
+                        proximo();
+                    }
                 }
             }
         }
@@ -213,11 +287,15 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Contato Inválido");
                     txt_contato.requestFocus();
                 } else {
-                    try {
-                        telefoneDAO = new TelefoneDAO();
-                        telefoneDAO.busca(telefone);
-                        JOptionPane.showMessageDialog(null, "Telefone já Existe!");
-                    } catch (NoResultException e) {
+                    if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                        try {
+                            telefoneDAO = new TelefoneDAO();
+                            telefoneDAO.busca(telefone);
+                            JOptionPane.showMessageDialog(null, "Telefone já cadastrado!");
+                        } catch (NoResultException e) {
+                            proximo();
+                        }
+                    } else {
                         proximo();
                     }
                 }
@@ -250,13 +328,14 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             txt_rua.setText(empresa.getEnderecoList().get(0).getRua());
             txt_numero.setText(empresa.getEnderecoList().get(0).getNumero() + "");
             txt_bairro.setText(empresa.getEnderecoList().get(0).getBairro());
-            if (!empresa.getEnderecoList().get(0).getComplemento().isEmpty()) {
+            if (empresa.getEnderecoList().get(0).getComplemento() != null) {
                 txt_complemento.setText(empresa.getEnderecoList().get(0).getComplemento());
             }
             cbx_cidades.setSelectedItem(empresa.getEnderecoList().get(0).getCodcidade().getDescricao());
             cbx_estados.setSelectedItem(empresa.getEnderecoList().get(0).getCodcidade().getCoduf().getSigla());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar dados do Endereco");
+            System.out.println(empresa.getEnderecoList().get(0).getCep());
         }
     }
 
@@ -273,15 +352,27 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         }
     }
 
+    public void getDados(Empresa empresa) {
+        getDadosEmail(empresa);
+        getDadosEndereco(empresa);
+        getDadosTelefone(empresa);
+        getDadosEmpresa(empresa);
+    }
+
     public Telefone setTelefone(Empresa empresa) {
         try {
             telefone = new Telefone();
             grupoDAO = new GrupoDAO();
-
-            telefone.setCodempresa(empresa);
-            telefone.setDescricao(txt_nomeFantasia.getText());
-            telefone.setTelefone(txt_telefone.getText());
-            telefone.setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
+            if (txt_operacao.getText().equals("INCLUSÃO")) {
+                telefone.setCodempresa(empresa);
+                telefone.setDescricao(txt_nomeFantasia.getText());
+                telefone.setTelefone(txt_telefone.getText());
+                telefone.setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
+            } else {
+                empresa.getTelefoneList().get(0).setDescricao(txt_contato.getText());
+                empresa.getTelefoneList().get(0).setTelefone(txt_telefone.getText());
+                empresa.getTelefoneList().get(0).setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Telefone");
         }
@@ -292,16 +383,26 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         try {
             endereco = new Endereco();
             cidadesDAO = new CidadesDAO();
-
-            endereco.setCep(txt_cep.getText());
-            endereco.setRua(txt_rua.getText());
-            endereco.setNumero(Integer.parseInt(txt_numero.getText()));
-            endereco.setBairro(txt_bairro.getText());
-            if (!txt_complemento.getText().isEmpty()) {
-                endereco.setComplemento(txt_complemento.getText());
+            if (txt_operacao.getText().equals("INCLUSÃO")) {
+                endereco.setCep(txt_cep.getText());
+                endereco.setRua(txt_rua.getText());
+                endereco.setNumero(Integer.parseInt(txt_numero.getText()));
+                endereco.setBairro(txt_bairro.getText());
+                if (!txt_complemento.getText().isEmpty()) {
+                    endereco.setComplemento(txt_complemento.getText());
+                }
+                endereco.setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
+                endereco.setCodempresa(empresa);
+            } else {
+                empresa.getEnderecoList().get(0).setCep(txt_cep.getText());
+                empresa.getEnderecoList().get(0).setRua(txt_rua.getText());
+                empresa.getEnderecoList().get(0).setNumero(Integer.parseInt(txt_numero.getText()));
+                empresa.getEnderecoList().get(0).setBairro(txt_bairro.getText());
+                if (!txt_complemento.getText().isEmpty()) {
+                    empresa.getEnderecoList().get(0).setComplemento(txt_complemento.getText());
+                }
+                empresa.getEnderecoList().get(0).setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
             }
-            endereco.setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
-            endereco.setCodempresa(empresa);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Endereco");
         }
@@ -311,17 +412,30 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     public Email setEmail(Empresa empresa) {
         try {
             email = new Email();
-            email.setEmail(txt_email.getText());
-            email.setNome(txt_usuario.getText());
-            email.setSenha(txt_senha.getText());
-            email.setSmtp(txt_smtp.getText());
-            email.setPorta(Integer.parseInt(txt_porta.getText()));
-            if (chx_ssl.getSelectedObjects() != null) {
-                email.setSsl("S");
+            if (txt_operacao.getText().equals("INCLUSÃO")) {
+                email.setEmail(txt_email.getText());
+                email.setNome(txt_usuario.getText());
+                email.setSenha(txt_senha.getText());
+                email.setSmtp(txt_smtp.getText());
+                email.setPorta(Integer.parseInt(txt_porta.getText()));
+                if (chx_ssl.getSelectedObjects() != null) {
+                    email.setSsl("S");
+                } else {
+                    email.setSsl("N");
+                }
+                email.getEmpresaList().add(empresa);
             } else {
-                email.setSsl("N");
+                empresa.getCodemail().setEmail(txt_email.getText());
+                empresa.getCodemail().setNome(txt_nomeFantasia.getText());
+                empresa.getCodemail().setSenha(txt_senha.getText());
+                empresa.getCodemail().setSmtp(txt_smtp.getText());
+                empresa.getCodemail().setPorta(Integer.parseInt(txt_porta.getText()));
+                if (chx_ssl.getSelectedObjects() != null) {
+                    empresa.getCodemail().setSsl("S");
+                } else {
+                    empresa.getCodemail().setSsl("N");
+                }
             }
-            email.getEmpresaList().add(empresa);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Email");
             System.out.println(e);
@@ -341,13 +455,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Capturar dados da Empresa!");
             System.out.println(e);
         }
-    }
-
-    public void getDados(Empresa empresa) {
-        getDadosEmail(empresa);
-        getDadosEndereco(empresa);
-        getDadosTelefone(empresa);
-        getDadosEmpresa(empresa);
     }
 
     public void buscaCEP(String cep) {
@@ -403,6 +510,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             empresaDAO = new EmpresaDAO();
             empresaDAO.salvar(empresa);
             JOptionPane.showMessageDialog(null, "Empresa " + empresa.getNomeFantasia() + " salva com sucesso!");
+            btn_cancelar.doClick();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Salvar Empresa!");
         }
@@ -413,8 +521,8 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btn_fechar = new javax.swing.JButton();
-        btn_proximo = new javax.swing.JTabbedPane();
+        btn_cancelar = new javax.swing.JButton();
+        abas = new javax.swing.JTabbedPane();
         pnl_dadosEmpresa = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txt_nomeFantasia = new javax.swing.JTextField();
@@ -467,14 +575,18 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         chx_ssl = new javax.swing.JCheckBox();
         btn_salvar = new javax.swing.JButton();
         btn_anteriorEmail = new javax.swing.JButton();
+        btn_inclusao = new javax.swing.JButton();
+        btn_alteracao = new javax.swing.JButton();
+        txt_operacao = new javax.swing.JTextField();
+        btn_consulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Empresa");
 
-        btn_fechar.setText("Fechar");
-        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_fecharActionPerformed(evt);
+                btn_cancelarActionPerformed(evt);
             }
         });
 
@@ -543,7 +655,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btn_proximo.addTab("Dados da Empresa", pnl_dadosEmpresa);
+        abas.addTab("Dados da Empresa", pnl_dadosEmpresa);
 
         jLabel10.setText("Grupo:");
 
@@ -665,7 +777,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             .addComponent(pnl_fundo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        btn_proximo.addTab("Telefone", pnl_dadosTelefone);
+        abas.addTab("Telefone", pnl_dadosTelefone);
 
         jLabel16.setText("CEP *:");
 
@@ -831,7 +943,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btn_proximo.addTab("Endereço", pnl_dadosEndereco);
+        abas.addTab("Endereço", pnl_dadosEndereco);
 
         jLabel4.setText("Email *:");
 
@@ -928,7 +1040,31 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        btn_proximo.addTab("Email", pnl_dadosEmail);
+        abas.addTab("Email", pnl_dadosEmail);
+
+        btn_inclusao.setText("Inclusão");
+        btn_inclusao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inclusaoActionPerformed(evt);
+            }
+        });
+
+        btn_alteracao.setText("Alteração");
+        btn_alteracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alteracaoActionPerformed(evt);
+            }
+        });
+
+        txt_operacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_operacao.setEnabled(false);
+
+        btn_consulta.setText("Consulta");
+        btn_consulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -937,19 +1073,31 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btn_proximo, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(abas, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_inclusao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_alteracao, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_operacao)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_proximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_fechar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cancelar)
+                    .addComponent(btn_inclusao)
+                    .addComponent(btn_alteracao)
+                    .addComponent(txt_operacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_consulta))
                 .addContainerGap())
         );
 
@@ -983,9 +1131,14 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         validaCamposEmail(txt_email.getText(), txt_usuario.getText(), txt_porta.getText(), txt_smtp.getText(), txt_senha.getText());
     }//GEN-LAST:event_btn_salvarActionPerformed
 
-    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
-        dispose();
-    }//GEN-LAST:event_btn_fecharActionPerformed
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        while (abas.getSelectedIndex() != 0) {
+            abas.setSelectedIndex(abas.getSelectedIndex() - 1);
+        }
+        limpaCampos();
+        setEnabledFields(false);
+        setEnabledButtons(true);
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void txt_cepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cepKeyPressed
         if (evt.getKeyCode() == Event.ENTER) {
@@ -1077,6 +1230,24 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         anterior();
     }//GEN-LAST:event_btn_anteriorEmailActionPerformed
 
+    private void btn_inclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inclusaoActionPerformed
+        txt_operacao.setText("INCLUSÃO");
+        setEnabledButtons(false);
+        setEnabledFields(true);
+    }//GEN-LAST:event_btn_inclusaoActionPerformed
+
+    private void btn_alteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteracaoActionPerformed
+        txt_operacao.setText("ALTERAÇÃO");
+        setEnabledFields(true);
+        setEnabledButtons(false);
+        txt_nomeFantasia.requestFocus();
+    }//GEN-LAST:event_btn_alteracaoActionPerformed
+
+    private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
+        Frm_ConEmpresa f = new Frm_ConEmpresa();
+        dispose();
+    }//GEN-LAST:event_btn_consultaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1118,13 +1289,16 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane abas;
+    private javax.swing.JButton btn_alteracao;
     private javax.swing.JButton btn_anteriorEmail;
     private javax.swing.JButton btn_anteriorEndereco;
     private javax.swing.JButton btn_anteriorTelefone;
     private javax.swing.JButton btn_cadCidade;
     private javax.swing.JButton btn_cadGrupo;
-    private javax.swing.JButton btn_fechar;
-    private javax.swing.JTabbedPane btn_proximo;
+    private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_consulta;
+    private javax.swing.JButton btn_inclusao;
     private javax.swing.JButton btn_proximoEmpresa;
     private javax.swing.JButton btn_proximoEndereco;
     private javax.swing.JButton btn_proximoTelefone;
@@ -1167,6 +1341,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_nomeFantasia;
     private javax.swing.JTextField txt_numero;
+    private javax.swing.JTextField txt_operacao;
     private javax.swing.JTextField txt_porta;
     private javax.swing.JTextField txt_rua;
     private javax.swing.JPasswordField txt_senha;
