@@ -28,6 +28,7 @@ import Model.Telefone;
 import Model.TipoPessoa;
 import Model.Usuario;
 import Util.Classes.Data;
+import Util.Classes.FixedLengthDocument;
 import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
@@ -73,6 +74,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         codigoCliente = 0;
+        txt_nomeFantasia.setDocument(new FixedLengthDocument(255));
+        txt_razaoSocial.setDocument(new FixedLengthDocument(255));
+        txt_rua.setDocument(new FixedLengthDocument(255));
+        txt_bairro.setDocument(new FixedLengthDocument(255));
+        txt_complemento.setDocument(new FixedLengthDocument(255));
+        txt_inscEstadual.setDocument(new FixedLengthDocument(100));
+        txt_responsavel.setDocument(new FixedLengthDocument(100));
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
@@ -543,6 +551,39 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         }
     }
 
+    public boolean existeEmail(String email) {
+        try {
+            clienteDAO = new ClienteDAO();
+            clienteDAO.buscaClienteByEmail(email);
+            JOptionPane.showMessageDialog(null, "Email já cadastrado!");
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existeCNPJ(String cnpj) {
+        try {
+            clienteDAO = new ClienteDAO();
+            clienteDAO.buscaClienteByCNPJ(cnpj);
+            JOptionPane.showMessageDialog(null, "CNPJ já cadastrado!");
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existeRazao(String razao) {
+        try {
+            clienteDAO = new ClienteDAO();
+            clienteDAO.buscaClienteByRazao(razao);
+            JOptionPane.showMessageDialog(null, "Razão Social já cadastrada!");
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
     public void validaEndereco(String cep, String rua, String numero, String bairro, String cidade) {
         if (cep.replaceAll("-", "").trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "CEP Inválido");
@@ -574,7 +615,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     public void buscaCEP(String cep) {
         endereco = new Endereco();
-        enderecoDAO= new EnderecoDAO();
+        enderecoDAO = new EnderecoDAO();
         try {
             endereco = enderecoDAO.findEnderecoByCEP(cep);
             if (endereco.getCep() != null) {
@@ -1924,8 +1965,19 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     private void btn_proximoDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoDadosActionPerformed
         try {
-            if (cbx_segmento.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(null, "Selecione um segmento!");
+            if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                if (cbx_segmento.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(null, "Selecione um segmento!");
+                } else {
+                    if (existeCNPJ(txt_cpf.getText()) == false) {
+                        if (existeRazao(txt_razaoSocial.getText()) == false) {
+                            if (existeEmail(txt_email.getText()) == false) {
+                                validaDadosPessoais(txt_cpf.getText(), txt_inscEstadual.getText(), txt_razaoSocial.getText(),
+                                        txt_nomeFantasia.getText(), txt_responsavel.getText(), txt_email.getText(), cbx_segmento.getSelectedItem().toString());
+                            }
+                        }
+                    }
+                }
             } else {
                 validaDadosPessoais(txt_cpf.getText(), txt_inscEstadual.getText(), txt_razaoSocial.getText(),
                         txt_nomeFantasia.getText(), txt_responsavel.getText(), txt_email.getText(), cbx_segmento.getSelectedItem().toString());
@@ -1980,7 +2032,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Contato Inválido");
             txt_contato.requestFocus();
         } else {
-            if (txt_telefone.getText().replaceAll("(", "").replaceAll(")", "").replaceAll("-", "").equals("") == true) {
+            if (txt_telefone.getText().equals("(  )     -    ") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone Inválido");
                 txt_telefone.requestFocus();
             } else {
@@ -2146,8 +2198,19 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_proximoLinksActionPerformed
 
     private void btn_calcularMensalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calcularMensalidadeActionPerformed
-        calcularMensalidade(Double.parseDouble(cbx_parcela.getSelectedItem().toString()),
-                salarioDAO.buscaSalario(Integer.parseInt(cbx_ano.getSelectedItem().toString())));
+        if (cbx_parcela.getSelectedObjects() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um percentual da parcela do Cliente");
+            cbx_parcela.requestFocus();
+        } else {
+            if (cbx_ano.getSelectedObjects() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um ano para calculo do salario do Cliente");
+                cbx_ano.requestFocus();
+            } else {
+                calcularMensalidade(Double.parseDouble(cbx_parcela.getSelectedItem().toString()),
+                        salarioDAO.buscaSalario(Integer.parseInt(cbx_ano.getSelectedItem().toString())));
+            }
+        }
+
     }//GEN-LAST:event_btn_calcularMensalidadeActionPerformed
 
     private void txt_telefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_telefoneFocusLost

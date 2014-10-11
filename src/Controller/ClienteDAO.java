@@ -44,9 +44,23 @@ public class ClienteDAO extends Manager {
         return (Cliente) query.getSingleResult();
     }
     
-    public Cliente buscaCliente(String descricao) {
+    public Cliente buscaClienteByRazao(String razao) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Cliente.findByDescricao").setParameter("descricao", descricao);
+        query = em.createNamedQuery("Cliente.findByRazaoSocial").setParameter("razaoSocial", razao);
+        em.getTransaction().commit();
+        return (Cliente) query.getSingleResult();
+    }
+    
+    public Cliente buscaClienteByCNPJ(String cnpj) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Cliente.findByCnpjCpf").setParameter("cnpjCpf", cnpj);
+        em.getTransaction().commit();
+        return (Cliente) query.getSingleResult();
+    }
+    
+    public Cliente buscaClienteByEmail(String email) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Cliente.findByEmail").setParameter("email", email);
         em.getTransaction().commit();
         return (Cliente) query.getSingleResult();
     }
