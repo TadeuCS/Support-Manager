@@ -78,6 +78,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_empresas = new javax.swing.JTable();
         btn_selecionar = new javax.swing.JButton();
+        btn_voltar = new javax.swing.JButton();
         btn_fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -122,13 +123,23 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
         }
 
         btn_selecionar.setText("Selecionar");
+        btn_selecionar.setToolTipText("Carrega os dados do Cliente selecionado, no cadastro de Empresa");
         btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_selecionarActionPerformed(evt);
             }
         });
 
+        btn_voltar.setText("Voltar");
+        btn_voltar.setToolTipText("Volta para o Cadastro de Empresa");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_voltarActionPerformed(evt);
+            }
+        });
+
         btn_fechar.setText("Fechar");
+        btn_fechar.setToolTipText("Fecha a tela de Consulta de Empresa");
         btn_fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_fecharActionPerformed(evt);
@@ -147,6 +158,8 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -158,6 +171,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_selecionar)
+                    .addComponent(btn_voltar)
                     .addComponent(btn_fechar))
                 .addGap(6, 6, 6))
         );
@@ -177,14 +191,18 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         Frm_CadEmpresa f= new Frm_CadEmpresa();
         dispose();
-    }//GEN-LAST:event_btn_fecharActionPerformed
+    }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void btn_selecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarActionPerformed
         selecionarCliente();
     }//GEN-LAST:event_btn_selecionarActionPerformed
+
+    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_fecharActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,6 +242,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_selecionar;
+    private javax.swing.JButton btn_voltar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tb_empresas;

@@ -81,11 +81,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         txt_complemento.setDocument(new FixedLengthDocument(255));
         txt_inscEstadual.setDocument(new FixedLengthDocument(100));
         txt_responsavel.setDocument(new FixedLengthDocument(100));
+        txt_contato.setDocument(new FixedLengthDocument(100));
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
         txt_quantidade.setDocument(new IntegerDocument(2));
         abas.setEnabled(false);
+
         carregaSegmentos();
         carregaTipos();
         carregaEstados();
@@ -95,6 +97,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         carregaAno();
         trocaMascara();
         setEnabledFields(false);
+        cbx_estados.setSelectedItem("MG");
     }
 
     //Início das validações de interface.
@@ -344,7 +347,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             txt_referencia.setText(cliente.getReferencia() + "");
             txt_responsavel.setText(cliente.getResponsavel());
             txt_email.setText(cliente.getEmail());
-            txt_data.setText(Data.getData(cliente.getDataAtualizacao(), "dd/MM/yyyy"));
+            if (cliente.getDataAtualizacao() != null) {
+                txt_data.setText(Data.getData(cliente.getDataAtualizacao(), "dd/MM/yyyy"));
+            }
             cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
             getStatusPessoa(cliente);
         } catch (Exception e) {
@@ -380,6 +385,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         segmentoDAO = new SegmentoDAO();
         parcelaDAO = new ParcelaDAO();
         try {
+
             if (txt_codigo.getText().equals("") == false) {
                 cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
             }
@@ -395,8 +401,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
             cliente.setResponsavel(txt_responsavel.getText());
             cliente.setEmail(txt_email.getText());
-            Date data = new Date(txt_data.getText());
-            cliente.setDataAtualizacao(data);
+            if (txt_data.getText().equals("  /  /    ") == true) {
+                cliente.setDataAtualizacao(null);
+            } else {
+                cliente.setDataAtualizacao(Data.getDataByDate(txt_data.getText(), "dd/MM/yyyy"));
+            }
             cliente.setCodparcela(parcelaDAO.consulta(cbx_parcela.getSelectedItem().toString()));
             cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
             if (chx_bloqueado.getSelectedObjects() != null) {
@@ -404,7 +413,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             } else {
                 cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO"));
             }
-            //dados da aba endereco
+            if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                cliente.getEnderecoList().add(setEndereco(cliente));
+            }
+
             if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
                 cliente.getEnderecoList().get(0).setBairro(txt_bairro.getText());
                 cliente.getEnderecoList().get(0).setCep(txt_cep.getText());
@@ -414,8 +426,6 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 }
                 cliente.getEnderecoList().get(0).setNumero(Integer.parseInt(txt_numero.getText()));
                 cliente.getEnderecoList().get(0).setRua(txt_rua.getText());
-            } else {
-                cliente.getEnderecoList().add(setEndereco(cliente));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do cliente.\n" + e);
@@ -458,7 +468,6 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     public Endereco setEndereco(Cliente cliente) {
         endereco = new Endereco();
         cidadesDAO = new CidadesDAO();
-
         try {
             endereco.setCodcliente(cliente);
             endereco.setBairro(txt_bairro.getText());
@@ -721,6 +730,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             for (int i = 0; i < cliente.getLinkClienteList().size(); i++) {
                 if (cliente.getLinkClienteList().get(i).getLink().getDescricao().equals(link) == true) {
                     if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
+                        linksDAO=new LinksDAO();
                         linksDAO.removerLinkCliente(linksDAO.findLinkClienteByCodigo(cliente.getLinkClienteList().get(i).getCodLinkCliente()));
                         cliente.getLinkClienteList().remove(i);
                         model.removeRow(tb_links.getSelectedRow());
@@ -731,6 +741,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
+            System.out.println(e);
             JOptionPane.showMessageDialog(null, "Erro ao Remover Link: " + link);
         }
 
@@ -2051,6 +2062,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         if (tb_telefones.getSelectedRowCount() == 1) {
             String tel = tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString();
             try {
+                telefoneDAO=new TelefoneDAO();
                 telefoneDAO.busca(tel);
                 if (telefoneDAO.busca(tel).getCodtelefone() != null) {
                     try {
@@ -2072,10 +2084,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_removerTelefoneActionPerformed
 
     private void btn_inserirLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirLinksActionPerformed
-        if (cbx_aplicativo.getSelectedItem().toString().equals("") == true) {
+        if (cbx_aplicativo.getSelectedItem()==null) {
             JOptionPane.showMessageDialog(null, "Selecione um Aplicativo");
         } else {
-            if (cbx_links.getSelectedItem().toString().equals("") == true) {
+            if (cbx_links.getSelectedItem()==null) {
                 JOptionPane.showMessageDialog(null, "Selecione um Link");
             } else {
                 if (txt_quantidade.getText().isEmpty()) {
@@ -2174,10 +2186,16 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cadGrupoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        if (cbx_parcela.getSelectedItem().toString().equals("") == true) {
-            JOptionPane.showMessageDialog(null, "Selecione uma Parcela");
+        if (cbx_parcela.getSelectedObjects() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um percentual da parcela do Cliente");
+            cbx_parcela.requestFocus();
         } else {
-            salvar();
+            if (cbx_ano.getSelectedObjects() == null) {
+                JOptionPane.showMessageDialog(null, "Selecione um ano para calculo do salario do Cliente");
+                cbx_ano.requestFocus();
+            } else {
+                salvar();
+            }
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
@@ -2303,16 +2321,21 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_CadCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_CadCliente.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

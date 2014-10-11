@@ -98,7 +98,8 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_usuario = new javax.swing.JTextField();
         btn_selecionar = new javax.swing.JButton();
-        btn_sair = new javax.swing.JButton();
+        btn_voltar = new javax.swing.JButton();
+        btn_fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Usuarios");
@@ -191,16 +192,26 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
         );
 
         btn_selecionar.setText("Selecionar");
+        btn_selecionar.setToolTipText("Carrega os dados do Cliente selecionado, no cadastro de Usuário");
         btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_selecionarActionPerformed(evt);
             }
         });
 
-        btn_sair.setText("Sair");
-        btn_sair.addActionListener(new java.awt.event.ActionListener() {
+        btn_voltar.setText("Voltar");
+        btn_voltar.setToolTipText("Volta para o Cadastro de Usuário");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_sairActionPerformed(evt);
+                btn_voltarActionPerformed(evt);
+            }
+        });
+
+        btn_fechar.setText("Fechar");
+        btn_fechar.setToolTipText("Fecha a tela de Consulta de Usuarios");
+        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fecharActionPerformed(evt);
             }
         });
 
@@ -215,7 +226,9 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -230,7 +243,8 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_selecionar)
-                    .addComponent(btn_sair))
+                    .addComponent(btn_voltar)
+                    .addComponent(btn_fechar))
                 .addGap(6, 6, 6))
         );
 
@@ -267,10 +281,14 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txt_usuarioKeyPressed
 
-    private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         Frm_CadUsuario f = new Frm_CadUsuario();
         dispose();
-    }//GEN-LAST:event_btn_sairActionPerformed
+    }//GEN-LAST:event_btn_voltarActionPerformed
+
+    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_fecharActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,8 +326,9 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_sair;
+    private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_selecionar;
+    private javax.swing.JButton btn_voltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;

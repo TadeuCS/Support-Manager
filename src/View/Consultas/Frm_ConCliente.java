@@ -131,10 +131,11 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         tb_clientes = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tb_contatos = new javax.swing.JTable();
-        btn_cancelar = new javax.swing.JButton();
+        btn_voltar = new javax.swing.JButton();
         btn_selecionar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_filtro = new javax.swing.JTextField();
+        btn_fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Clientes");
@@ -270,14 +271,16 @@ public class Frm_ConCliente extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        btn_cancelar.setText("Cancelar");
-        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+        btn_voltar.setText("Voltar");
+        btn_voltar.setToolTipText("Volta para o Cadastro de Cliente");
+        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cancelarActionPerformed(evt);
+                btn_voltarActionPerformed(evt);
             }
         });
 
         btn_selecionar.setText("Selecionar");
+        btn_selecionar.setToolTipText("Carrega os dados do Cliente selecionado, no cadastro de Cliente");
         btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_selecionarActionPerformed(evt);
@@ -292,6 +295,14 @@ public class Frm_ConCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_fechar.setText("Fechar");
+        btn_fechar.setToolTipText("Fecha a tela de Consulta de Clientes");
+        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -302,7 +313,9 @@ public class Frm_ConCliente extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -324,7 +337,8 @@ public class Frm_ConCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_selecionar)
-                    .addComponent(btn_cancelar))
+                    .addComponent(btn_voltar)
+                    .addComponent(btn_fechar))
                 .addContainerGap())
         );
 
@@ -354,10 +368,10 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         Frm_CadCliente F = new Frm_CadCliente();
         dispose();
-    }//GEN-LAST:event_btn_cancelarActionPerformed
+    }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void tb_clientesFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tb_clientesFocusGained
     }//GEN-LAST:event_tb_clientesFocusGained
@@ -400,6 +414,10 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         selecionarCliente();
     }//GEN-LAST:event_btn_selecionarActionPerformed
 
+    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_fecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -436,8 +454,9 @@ public class Frm_ConCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_selecionar;
+    private javax.swing.JButton btn_voltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

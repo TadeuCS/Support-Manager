@@ -118,7 +118,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         btn_cadGrupo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Grupo");
+        setTitle("Cadastro de Contatos");
         setResizable(false);
 
         jLabel1.setText("Grupo:");
@@ -253,7 +253,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_fecharActionPerformed
 
     private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
-        Frm_CadTelefone f = new Frm_CadTelefone();
+        Frm_CadGrupo f = new Frm_CadGrupo();
     }//GEN-LAST:event_btn_cadGrupoActionPerformed
 
     private void cbx_grupoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_grupoFocusGained

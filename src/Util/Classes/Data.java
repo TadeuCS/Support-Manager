@@ -1,5 +1,6 @@
 package Util.Classes;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -15,16 +16,29 @@ public class Data {
      * Coverta "data" para inteiro E valida Mês e Dia verificando o retorno de
      * cada metodo
      */
-    public static String getDataByTexto(String formato){
+    public static Date getDataByDate(String data, String formato) {
+        try {
+            Date date = null;
+            DateFormat formatter = new SimpleDateFormat(formato);
+            date = (java.util.Date) formatter.parse(data);
+            return date;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String getDataByTexto(String formato) {
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         Date data = new Date();
         return sdf.format(data);
     }
-    public static String getData(Date data,String formato){
+
+    public static String getData(Date data, String formato) {
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         return sdf.format(data);
     }
-    public String completaData(String texto,String formato) {
+
+    public String completaData(String texto, String formato) {
         if (texto.contains("  /  /    ")) {
             texto = getDataByTexto(formato);
         } else {
@@ -38,16 +52,16 @@ public class Data {
                 } else {
                     if ("  ".equals(texto.substring(8, 10))) {
                         String dataAtual = getDataByTexto(formato);
-                        texto = texto.replaceAll(texto.substring(6,8)+"  ", dataAtual.substring(6,8)+texto.substring(6,8));
+                        texto = texto.replaceAll(texto.substring(6, 8) + "  ", dataAtual.substring(6, 8) + texto.substring(6, 8));
                     }
                 }
             }
         }
         return validaData(texto);
     }
-    
+
     public String validaData(String dataTemp) {
-        
+
         int mesTemp;
         int diaTemp;
         data = dataTemp.replace("/", "");
@@ -62,11 +76,11 @@ public class Data {
                 dia = diaTemp;
             } else {
                 JOptionPane.showMessageDialog(null, "Data Inválida");
-                dataTemp=null;
+                dataTemp = null;
             }
         } else {
             JOptionPane.showMessageDialog(null, "Data Inválida!");
-            dataTemp=null;
+            dataTemp = null;
         }
         return dataTemp;
     }
