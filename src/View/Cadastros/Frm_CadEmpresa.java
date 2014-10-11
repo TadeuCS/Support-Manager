@@ -211,10 +211,15 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     if (txt_operacao.getText().equals("INCLUSÃO") == true) {
                         try {
                             empresaDAO = new EmpresaDAO();
-                            empresaDAO.findByNomeFantasiaOrCNPJ(nomeFantasia, cpf);
-                            JOptionPane.showMessageDialog(null, "Empresa já cadastrada!");
+                            empresaDAO.findByNomeFantasia(nomeFantasia);
+                            JOptionPane.showMessageDialog(null, "Empresa "+nomeFantasia+" já cadastrada!");
+                            txt_nomeFantasia.requestFocus();
                         } catch (NoResultException e) {
-                            proximo();
+                            try {
+                                
+                            } catch (NoResultException e) {
+                            
+                            }
                         }
                     } else {
                         proximo();

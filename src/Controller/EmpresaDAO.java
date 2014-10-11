@@ -21,9 +21,16 @@ public class EmpresaDAO extends Manager {
         em.getTransaction().commit();
     }
 
-    public Empresa findByNomeFantasiaOrCNPJ(String nomeFantasia, String cnpj) {
+    public Empresa findByNomeFantasia(String nomeFantasia) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT e FROM Empresa e WHERE e.cnpjCpf = :cnpj OR e.nomeFantasia = :nome").setParameter("cnpj", cnpj).setParameter("nome", nomeFantasia);
+        query = em.createNamedQuery("Empresa.findByNomeFantasia").setParameter("nomeFantasia", nomeFantasia);
+        em.getTransaction().commit();
+        return (Empresa) query.getSingleResult();
+    }
+
+    public Empresa findByCNPJ(String cnpj) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Empresa.findByCnpjCpf").setParameter("cnpj", cnpj);
         em.getTransaction().commit();
         return (Empresa) query.getSingleResult();
     }
@@ -34,7 +41,8 @@ public class EmpresaDAO extends Manager {
         em.getTransaction().commit();
         return query.getResultList();
     }
-    public Empresa findByCodigo(int codigo){
+
+    public Empresa findByCodigo(int codigo) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Empresa.findByCodempresa").setParameter("codempresa", codigo);
         em.getTransaction().commit();
