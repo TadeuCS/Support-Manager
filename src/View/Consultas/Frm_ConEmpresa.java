@@ -178,6 +178,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        Frm_CadEmpresa f= new Frm_CadEmpresa();
         dispose();
     }//GEN-LAST:event_btn_fecharActionPerformed
 

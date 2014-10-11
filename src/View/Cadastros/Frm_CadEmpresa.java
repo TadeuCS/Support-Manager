@@ -19,6 +19,8 @@ import Model.Empresa;
 import Model.Endereco;
 import Model.Telefone;
 import Util.Classes.FixedLengthDocument;
+import Util.Classes.IntegerDocument;
+import Util.Classes.UpperCaseDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConEmpresa;
@@ -52,6 +54,12 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         txt_nomeFantasia.setDocument(new FixedLengthDocument(255));
+        txt_contato.setDocument(new UpperCaseDocument());
+        txt_rua.setDocument(new UpperCaseDocument());
+        txt_bairro.setDocument(new UpperCaseDocument());
+        txt_complemento.setDocument(new UpperCaseDocument());
+        txt_porta.setDocument(new IntegerDocument(3));
+        txt_numero.setDocument(new IntegerDocument(5));
         carregaTipos();
         carregaEstados();
         carregaCidades();
@@ -359,31 +367,31 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         getDadosEmpresa(empresa);
     }
 
-    public Telefone setTelefone(Empresa empresa) {
+    public void setTelefone(Empresa empresa) {
         try {
-            telefone = new Telefone();
-            grupoDAO = new GrupoDAO();
-            if (txt_operacao.getText().equals("INCLUSÃO")) {
+            if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                telefone = new Telefone();
+                grupoDAO = new GrupoDAO();
                 telefone.setCodempresa(empresa);
                 telefone.setDescricao(txt_nomeFantasia.getText());
                 telefone.setTelefone(txt_telefone.getText());
                 telefone.setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
+                empresa.getTelefoneList().add(telefone);
             } else {
+                empresa.getTelefoneList().get(0).setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
                 empresa.getTelefoneList().get(0).setDescricao(txt_contato.getText());
                 empresa.getTelefoneList().get(0).setTelefone(txt_telefone.getText());
-                empresa.getTelefoneList().get(0).setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Telefone");
         }
-        return telefone;
     }
 
-    public Endereco setEndereco(Empresa empresa) {
+    public void setEndereco(Empresa empresa) {
         try {
-            endereco = new Endereco();
-            cidadesDAO = new CidadesDAO();
-            if (txt_operacao.getText().equals("INCLUSÃO")) {
+            if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                endereco = new Endereco();
+                cidadesDAO = new CidadesDAO();
                 endereco.setCep(txt_cep.getText());
                 endereco.setRua(txt_rua.getText());
                 endereco.setNumero(Integer.parseInt(txt_numero.getText()));
@@ -393,26 +401,24 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 }
                 endereco.setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
                 endereco.setCodempresa(empresa);
+                empresa.getEnderecoList().add(endereco);
             } else {
-                empresa.getEnderecoList().get(0).setCep(txt_cep.getText());
-                empresa.getEnderecoList().get(0).setRua(txt_rua.getText());
-                empresa.getEnderecoList().get(0).setNumero(Integer.parseInt(txt_numero.getText()));
                 empresa.getEnderecoList().get(0).setBairro(txt_bairro.getText());
-                if (!txt_complemento.getText().isEmpty()) {
-                    empresa.getEnderecoList().get(0).setComplemento(txt_complemento.getText());
-                }
+                empresa.getEnderecoList().get(0).setCep(txt_cep.getText());
                 empresa.getEnderecoList().get(0).setCodcidade(cidadesDAO.consulta(cbx_cidades.getSelectedItem().toString()));
+                empresa.getEnderecoList().get(0).setComplemento(txt_complemento.getText());
+                empresa.getEnderecoList().get(0).setNumero(Integer.parseInt(txt_numero.getText()));
+                empresa.getEnderecoList().get(0).setRua(txt_rua.getText());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Endereco");
         }
-        return endereco;
     }
 
-    public Email setEmail(Empresa empresa) {
+    public void setEmail(Empresa empresa) {
         try {
-            email = new Email();
-            if (txt_operacao.getText().equals("INCLUSÃO")) {
+            if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                email = new Email();
                 email.setEmail(txt_email.getText());
                 email.setNome(txt_usuario.getText());
                 email.setSenha(txt_senha.getText());
@@ -423,13 +429,13 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 } else {
                     email.setSsl("N");
                 }
-                email.getEmpresaList().add(empresa);
+                empresa.setCodemail(email);
             } else {
                 empresa.getCodemail().setEmail(txt_email.getText());
-                empresa.getCodemail().setNome(txt_nomeFantasia.getText());
+                empresa.getCodemail().setNome(txt_usuario.getText());
+                empresa.getCodemail().setPorta(Integer.parseInt(txt_porta.getText()));
                 empresa.getCodemail().setSenha(txt_senha.getText());
                 empresa.getCodemail().setSmtp(txt_smtp.getText());
-                empresa.getCodemail().setPorta(Integer.parseInt(txt_porta.getText()));
                 if (chx_ssl.getSelectedObjects() != null) {
                     empresa.getCodemail().setSsl("S");
                 } else {
@@ -440,17 +446,15 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Email");
             System.out.println(e);
         }
-        return email;
     }
 
-    public void setEmpresa() {
-        empresa = new Empresa();
-        empresa.setNomeFantasia(txt_nomeFantasia.getText());
-        empresa.setCnpjCpf(txt_cpf.getText());
+    public void setEmpresa(Empresa empresa) {
         try {
-            empresa.getEnderecoList().add(setEndereco(empresa));
-            empresa.getTelefoneList().add(setTelefone(empresa));
-            empresa.setCodemail(setEmail(empresa));
+            empresa.setNomeFantasia(txt_nomeFantasia.getText());
+            empresa.setCnpjCpf(txt_cpf.getText());
+            setEndereco(empresa);
+            setTelefone(empresa);
+            setEmail(empresa);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Capturar dados da Empresa!");
             System.out.println(e);
@@ -505,7 +509,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     }
 
     public void salvar() {
-        setEmpresa();
+        setEmpresa(empresa);
         try {
             empresaDAO = new EmpresaDAO();
             empresaDAO.salvar(empresa);
@@ -1205,7 +1209,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_grupoFocusGained
 
     private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
-        Frm_CadTelefone f = new Frm_CadTelefone();
+        Frm_CadGrupo f = new Frm_CadGrupo();
     }//GEN-LAST:event_btn_cadGrupoActionPerformed
 
     private void btn_proximoTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoTelefoneActionPerformed
@@ -1232,6 +1236,8 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
     private void btn_inclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inclusaoActionPerformed
         txt_operacao.setText("INCLUSÃO");
+        empresa = new Empresa();
+        txt_nomeFantasia.requestFocus();
         setEnabledButtons(false);
         setEnabledFields(true);
     }//GEN-LAST:event_btn_inclusaoActionPerformed

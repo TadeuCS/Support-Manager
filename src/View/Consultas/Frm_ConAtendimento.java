@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package View.Consultas;
 
 import Controller.ClienteDAO;
+import Model.StatusAtendimento;
 import View.Cadastros.Frm_CadUsuario;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -21,6 +21,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ClienteDAO clienteDAO;
+
     public Frm_ConAtendimento() {
         initComponents();
         model = (DefaultTableModel) tb_clientes.getModel();
@@ -28,7 +29,11 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         listaClientes();
     }
 
-        public void listaClientes() {
+    public void listaAtendimentoByStatus(StatusAtendimento statusAtendimento){
+        
+    }
+    
+    public void listaClientes() {
         clienteDAO = new ClienteDAO();
         try {
             int i = 0;
@@ -77,14 +82,15 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
 
     public void limpaTabela() {
         try {
-            while (0<model.getRowCount()) {
-                    model.removeRow(0);
+            while (0 < model.getRowCount()) {
+                model.removeRow(0);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

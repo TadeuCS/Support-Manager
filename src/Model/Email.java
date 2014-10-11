@@ -62,7 +62,8 @@ public class Email implements Serializable {
     @Basic(optional = false)
     @Column(name = "SENHA")
     private String senha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codemail")
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codemail")
+    @OneToMany()
     private List<Empresa> empresaList= new ArrayList<>();
 
     public Email() {

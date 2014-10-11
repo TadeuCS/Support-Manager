@@ -53,7 +53,7 @@ public class Empresa implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "codempresa")
     private List<Telefone> telefoneList=new ArrayList<>();
     @JoinColumn(name = "CODEMAIL", referencedColumnName = "CODEMAIL")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Email codemail;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "codempresa")
     private List<Endereco> enderecoList= new ArrayList<>();

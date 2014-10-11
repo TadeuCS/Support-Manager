@@ -1,3 +1,7 @@
+
+empresa: erros no cadastro de empresa
+email: criar interface de testar envio de email.
+usuario: trocar metodos de buscar telefone, e validar campos unicos
 ---------------------------------------------------------CLIENTE-----------------------------------------------------
 ok validar campos obrigatórios cadastro de cliente
 ok validar email e cpf cliente
@@ -39,9 +43,7 @@ CRIAR INTERFACE E RELATORIO: RECIBO DE CLIENTES PASSANDO COMO PARAMETRO UMA LIST
 SISTEMA MINIMIZAR PARA AREA DE NOTIFICAÇÃO.
 INSERIR ICONES NOS BOTOES.
 TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
-TRATAR CAMPOS CRESCENDO COM O FOCUS.
 IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
-MALA DIRETA.
 CRIAR WEBSERVICE COM METODO: LOGIN, CONSULTAR ATENDIMENTO POR USUARIO E DATA.
 CRIAR INTERFACE ANDROID PARA EFETUAR ESTA CONSULTA.
 CRIAR INTERFACE DE ABERTURA DE ATENDIMENTO WEB.
