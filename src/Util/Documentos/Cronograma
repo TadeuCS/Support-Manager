@@ -1,6 +1,4 @@
-
-empresa: erros no cadastro de empresa
-email: criar interface de testar envio de email.
+ok empresa: erros no cadastro de empresa
 usuario: trocar metodos de buscar telefone, e validar campos unicos
 ---------------------------------------------------------CLIENTE-----------------------------------------------------
 ok validar campos obrigatórios cadastro de cliente
