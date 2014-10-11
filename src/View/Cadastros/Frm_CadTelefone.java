@@ -41,7 +41,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar Telefones");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
         }
 
     }

@@ -142,9 +142,9 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             tb_clientes.getColumnModel().getColumn(0).setMinWidth(70);
             tb_clientes.getColumnModel().getColumn(0).setPreferredWidth(70);
             tb_clientes.getColumnModel().getColumn(0).setMaxWidth(70);
-            tb_clientes.getColumnModel().getColumn(1).setMinWidth(100);
-            tb_clientes.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tb_clientes.getColumnModel().getColumn(1).setMaxWidth(100);
+            tb_clientes.getColumnModel().getColumn(1).setMinWidth(120);
+            tb_clientes.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tb_clientes.getColumnModel().getColumn(1).setMaxWidth(120);
             tb_clientes.getColumnModel().getColumn(3).setMinWidth(120);
             tb_clientes.getColumnModel().getColumn(3).setPreferredWidth(120);
             tb_clientes.getColumnModel().getColumn(3).setMaxWidth(120);
@@ -175,6 +175,11 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         btn_cancelar2.setText("Detalhar");
 
         btn_cancelar3.setText("Fechar");
+        btn_cancelar3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelar3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -246,6 +251,10 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_cancelar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar3ActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_cancelar3ActionPerformed
 
     /**
      * @param args the command line arguments

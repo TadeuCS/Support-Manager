@@ -39,7 +39,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
                 model.addRow(linha);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Listar Clientes");
+            JOptionPane.showMessageDialog(null, "Erro ao Listar Empresas");
             System.out.println(e);
         }
     }
