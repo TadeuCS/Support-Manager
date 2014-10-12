@@ -68,7 +68,7 @@ public class Frm_CadInformacao extends javax.swing.JFrame {
             informacao.setObservacao(observacao);
             informacao.setData(data);
             informacao.setCodtipoinformacao(tipoInformacaoDAO.buscaTipoInformacao(tipoInformacao));
-            informacao.setCodusuario(usuarioDAO.consulta(usuario));
+            informacao.setCodusuario(usuarioDAO.consultaByUsuario(usuario));
             informacaoDAO.salvar(informacao);
             JOptionPane.showMessageDialog(null, "Informação salva com sucesso!");
             txt_descricao.setText(null);

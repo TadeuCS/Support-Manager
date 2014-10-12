@@ -41,7 +41,7 @@ public class Aplicativo implements Serializable {
     @Column(name = "CODAPLICATIVO")
     private Integer codaplicativo;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaplicativo")
     private List<Link> linkList;

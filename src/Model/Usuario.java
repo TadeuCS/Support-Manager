@@ -52,16 +52,16 @@ public class Usuario implements Serializable {
     @Column(name = "NOME")
     private String nome;
     @Basic(optional = false)
-    @Column(name = "CPF")
+    @Column(name = "CPF",unique = true)
     private String cpf;
     @Basic(optional = false)
     @Column(name = "SEXO")
     private Character sexo;
     @Basic(optional = false)
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL",unique = true)
     private String email;
     @Basic(optional = false)
-    @Column(name = "USUARIO")
+    @Column(name = "USUARIO",unique = true)
     private String usuario;
     @Basic(optional = false)
     @Column(name = "SENHA")
@@ -76,7 +76,7 @@ public class Usuario implements Serializable {
     private List<Informacao> informacaoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
     private List<Atendimento> atendimentoList;
-    @OneToMany(mappedBy = "codusuario")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codusuario")
     private List<Telefone> telefoneList=new ArrayList<>();
 
     public Usuario() {

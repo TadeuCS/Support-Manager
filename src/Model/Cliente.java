@@ -59,10 +59,10 @@ public class Cliente implements Serializable {
     @Column(name = "NOME_FANTASIA")
     private String nomeFantasia;
     @Basic(optional = false)
-    @Column(name = "RAZAO_SOCIAL")
+    @Column(name = "RAZAO_SOCIAL",unique = true)
     private String razaoSocial;
     @Basic(optional = false)
-    @Column(name = "CNPJ_CPF")
+    @Column(name = "CNPJ_CPF",unique = true)
     private String cnpjCpf;
     @Basic(optional = false)
     @Column(name = "INSCRICAO_ESTADUAL")
@@ -71,7 +71,7 @@ public class Cliente implements Serializable {
     @Column(name = "RESPONSAVEL")
     private String responsavel;
     @Basic(optional = false)
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL",unique = true)
     private String email;
     @Column(name = "DATA_ATUALIZACAO")
     @Temporal(TemporalType.TIMESTAMP)

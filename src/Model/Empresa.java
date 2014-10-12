@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Model;
 
 import java.io.Serializable;
@@ -38,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empresa.findByNomeFantasia", query = "SELECT e FROM Empresa e WHERE e.nomeFantasia = :nomeFantasia"),
     @NamedQuery(name = "Empresa.findByCnpjCpf", query = "SELECT e FROM Empresa e WHERE e.cnpjCpf = :cnpjCpf")})
 public class Empresa implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,18 +45,18 @@ public class Empresa implements Serializable {
     @Column(name = "CODEMPRESA")
     private Integer codempresa;
     @Basic(optional = false)
-    @Column(name = "NOME_FANTASIA")
+    @Column(name = "NOME_FANTASIA", unique = true)
     private String nomeFantasia;
     @Basic(optional = false)
-    @Column(name = "CNPJ_CPF")
+    @Column(name = "CNPJ_CPF", unique = true)
     private String cnpjCpf;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codempresa")
-    private List<Telefone> telefoneList=new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codempresa")
+    private List<Telefone> telefoneList = new ArrayList<>();
     @JoinColumn(name = "CODEMAIL", referencedColumnName = "CODEMAIL")
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Email codemail;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "codempresa")
-    private List<Endereco> enderecoList= new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codempresa")
+    private List<Endereco> enderecoList = new ArrayList<>();
 
     public Empresa() {
     }
@@ -145,5 +145,5 @@ public class Empresa implements Serializable {
     public String toString() {
         return "Model.Empresa[ codempresa=" + codempresa + " ]";
     }
-    
+
 }

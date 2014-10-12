@@ -41,7 +41,7 @@ public class Prioridade implements Serializable {
     @Column(name = "CODPRIORIDADE")
     private Integer codprioridade;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codprioridade")
     private List<Atendimento> atendimentoList;

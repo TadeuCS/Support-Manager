@@ -41,7 +41,7 @@ public class Parcela implements Serializable {
     @Column(name = "CODPARCELA")
     private Integer codparcela;
     @Basic(optional = false)
-    @Column(name = "PERCENTUAL")
+    @Column(name = "PERCENTUAL",unique = true)
     private double percentual;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codparcela")
     private List<Cliente> clienteList;

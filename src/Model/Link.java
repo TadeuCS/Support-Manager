@@ -43,7 +43,7 @@ public class Link implements Serializable {
     @Column(name = "CODLINK")
     private Integer codlink;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @JoinColumn(name = "CODAPLICATIVO", referencedColumnName = "CODAPLICATIVO")
     @ManyToOne(optional = false)

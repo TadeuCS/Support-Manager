@@ -6,9 +6,7 @@
 package View.Home;
 
 import Controller.EmpresaDAO;
-import Controller.GrupoDAO;
 import Model.Empresa;
-import Util.Classes.EnviaEmail;
 import View.Cadastros.Frm_CadEmpresa;
 import javax.swing.JOptionPane;
 
@@ -20,7 +18,6 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
 
     EmpresaDAO empresaDAO;
     Empresa empresa;
-    EnviaEmail sendEmail;
 
     public Frm_TestaEmail() {
         initComponents();
@@ -59,7 +56,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                         txt_menssagem.requestFocus();
                     } else {
                         boolean ssl = false;
-                        sendEmail = new EnviaEmail();
+//                        sendEmail = new EnviaEmail();
                         try {
                             empresaDAO = new EmpresaDAO();
                             empresa = new Empresa();
@@ -72,14 +69,14 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, "Erro ao Carregar dados da Empresa");
                         }
-                        sendEmail.enviarEmail(empresa.getCodemail().getSmtp(),
-                                empresa.getCodemail().getPorta(),
-                                empresa.getCodemail().getEmail(),
-                                empresa.getCodemail().getSenha(),
-                                ssl,
-                                emailDestinatario,
-                                empresa.getCodemail().getEmail(),
-                                assunto, messagem);
+//                        sendEmail.enviarEmail(empresa.getCodemail().getSmtp(),
+//                                empresa.getCodemail().getPorta(),
+//                                empresa.getCodemail().getEmail(),
+//                                empresa.getCodemail().getSenha(),
+//                                ssl,
+//                                emailDestinatario,
+//                                empresa.getCodemail().getEmail(),
+//                                assunto, messagem);
                     }
                 }
             }

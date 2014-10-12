@@ -730,7 +730,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             for (int i = 0; i < cliente.getLinkClienteList().size(); i++) {
                 if (cliente.getLinkClienteList().get(i).getLink().getDescricao().equals(link) == true) {
                     if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
-                        linksDAO=new LinksDAO();
+                        linksDAO = new LinksDAO();
                         linksDAO.removerLinkCliente(linksDAO.findLinkClienteByCodigo(cliente.getLinkClienteList().get(i).getCodLinkCliente()));
                         cliente.getLinkClienteList().remove(i);
                         model.removeRow(tb_links.getSelectedRow());
@@ -1980,13 +1980,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 if (cbx_segmento.getSelectedItem() == null) {
                     JOptionPane.showMessageDialog(null, "Selecione um segmento!");
                 } else {
-                    if (existeCNPJ(txt_cpf.getText()) == false) {
-                        if (existeRazao(txt_razaoSocial.getText()) == false) {
-                            if (existeEmail(txt_email.getText()) == false) {
-                                validaDadosPessoais(txt_cpf.getText(), txt_inscEstadual.getText(), txt_razaoSocial.getText(),
-                                        txt_nomeFantasia.getText(), txt_responsavel.getText(), txt_email.getText(), cbx_segmento.getSelectedItem().toString());
-                            }
-                        }
+                    if ((existeCNPJ(txt_cpf.getText()) == false) && (existeRazao(txt_razaoSocial.getText()) == false) && (existeEmail(txt_email.getText()) == false)) {
+                        validaDadosPessoais(txt_cpf.getText(), txt_inscEstadual.getText(), txt_razaoSocial.getText(),
+                                txt_nomeFantasia.getText(), txt_responsavel.getText(), txt_email.getText(), cbx_segmento.getSelectedItem().toString());
                     }
                 }
             } else {
@@ -2062,7 +2058,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         if (tb_telefones.getSelectedRowCount() == 1) {
             String tel = tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString();
             try {
-                telefoneDAO=new TelefoneDAO();
+                telefoneDAO = new TelefoneDAO();
                 telefoneDAO.busca(tel);
                 if (telefoneDAO.busca(tel).getCodtelefone() != null) {
                     try {
@@ -2084,10 +2080,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_removerTelefoneActionPerformed
 
     private void btn_inserirLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirLinksActionPerformed
-        if (cbx_aplicativo.getSelectedItem()==null) {
+        if (cbx_aplicativo.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Selecione um Aplicativo");
         } else {
-            if (cbx_links.getSelectedItem()==null) {
+            if (cbx_links.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, "Selecione um Link");
             } else {
                 if (txt_quantidade.getText().isEmpty()) {

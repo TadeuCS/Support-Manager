@@ -41,7 +41,7 @@ public class Origem implements Serializable {
     @Column(name = "CODORIGEM")
     private Integer codorigem;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codorigem")
     private List<Atendimento> atendimentoList;

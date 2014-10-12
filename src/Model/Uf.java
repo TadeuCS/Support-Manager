@@ -45,7 +45,7 @@ public class Uf implements Serializable {
     @Column(name = "DESCRICAO")
     private String descricao;
     @Basic(optional = false)
-    @Column(name = "SIGLA")
+    @Column(name = "SIGLA",unique = true)
     private String sigla;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "coduf")
     private List<Cidade> cidadeList;

@@ -47,7 +47,7 @@ public class Cidade implements Serializable {
     @Column(name = "DESCRICAO")
     private String descricao;
     @Basic(optional = false)
-    @Column(name = "CODIBGEMUNICIPIO")
+    @Column(name = "CODIBGEMUNICIPIO", unique = true)
     private int codibgemunicipio;
     @JoinColumn(name = "CODUF", referencedColumnName = "CODUF")
     @ManyToOne(optional = false)

@@ -41,7 +41,7 @@ public class TipoAtendimento implements Serializable {
     @Column(name = "CODTIPOATENDIMENTO")
     private Integer codtipoatendimento;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codtipoatendimento")
     private List<Atendimento> atendimentoList;

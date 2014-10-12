@@ -41,7 +41,7 @@ public class TipoUsuario implements Serializable {
     @Column(name = "CODTIPOUSUARIO")
     private Integer codtipousuario;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codtipousuario")
     private List<Usuario> usuarioList;

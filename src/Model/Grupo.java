@@ -41,7 +41,7 @@ public class Grupo implements Serializable {
     @Column(name = "CODGRUPO")
     private Integer codgrupo;
     @Basic(optional = false)
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO",unique = true)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codgrupo")
     private List<Telefone> telefoneList;

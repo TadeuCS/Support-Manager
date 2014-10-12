@@ -28,9 +28,21 @@ public class UsuarioDAO extends Manager {
         em.getTransaction().commit();
     }
 
-    public Usuario consulta(String usuario) {
+    public Usuario consultaByUsuario(String usuario) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Usuario.findByUsuario").setParameter("usuario", usuario);
+        em.getTransaction().commit();
+        return (Usuario) query.getSingleResult();
+    }
+    public Usuario consultaByCPF(String cpf) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Usuario.findByCpf").setParameter("cpf", cpf);
+        em.getTransaction().commit();
+        return (Usuario) query.getSingleResult();
+    }
+    public Usuario consultaByEmail(String email) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Usuario.findByEmail").setParameter("email", email);
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }

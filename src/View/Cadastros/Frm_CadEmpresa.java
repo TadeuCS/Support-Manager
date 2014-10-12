@@ -209,23 +209,38 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     txt_cpf.requestFocus();
                 } else {
                     if (txt_operacao.getText().equals("INCLUSÃO") == true) {
-                        try {
-                            empresaDAO = new EmpresaDAO();
-                            empresaDAO.findByNomeFantasia(nomeFantasia);
-                            JOptionPane.showMessageDialog(null, "Empresa "+nomeFantasia+" já cadastrada!");
-                            txt_nomeFantasia.requestFocus();
-                        } catch (NoResultException e) {
-                            try {
-                                
-                            } catch (NoResultException e) {
-                            
-                            }
+                        if ((existeCNPJ(cpf) == false) && (existeNomeFantasia(nomeFantasia) == false)) {
+                            proximo();
                         }
                     } else {
                         proximo();
                     }
                 }
             }
+        }
+    }
+
+    public boolean existeNomeFantasia(String nomeFantasia) {
+        try {
+            empresaDAO = new EmpresaDAO();
+            empresaDAO.findByNomeFantasia(nomeFantasia);
+            JOptionPane.showMessageDialog(this, "Existe uma empresa já cadastrada com este Nome Fantasia");
+            txt_nomeFantasia.requestFocus();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existeCNPJ(String cnpj) {
+        try {
+            empresaDAO = new EmpresaDAO();
+            empresaDAO.findByCNPJ(cnpj);
+            JOptionPane.showMessageDialog(this, "Existe uma empresa já cadastrada com este CNPJ");
+            txt_cpf.requestFocus();
+            return true;
+        } catch (NoResultException e) {
+            return false;
         }
     }
 

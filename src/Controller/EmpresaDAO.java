@@ -30,7 +30,7 @@ public class EmpresaDAO extends Manager {
 
     public Empresa findByCNPJ(String cnpj) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Empresa.findByCnpjCpf").setParameter("cnpj", cnpj);
+        query = em.createNamedQuery("Empresa.findByCnpjCpf").setParameter("cnpjCpf", cnpj);
         em.getTransaction().commit();
         return (Empresa) query.getSingleResult();
     }

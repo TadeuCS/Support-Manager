@@ -22,8 +22,7 @@ import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConUsuarios;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
@@ -270,6 +269,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+
     public void validaProximo(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha, StatusPessoa bloqueado, TipoUsuario tipo) {
         if (nome.equals("") == true) {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
@@ -314,7 +314,13 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                                                 JOptionPane.showMessageDialog(null, "Sexo Inválido");
                                                 rbt_masculino.requestFocus();
                                             } else {
-                                                proximo();
+                                                if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                                                    if ((existeCPF(cpf) == false) && (existeEmail(email) == false) && (existeUsuario(usuario) == false)) {
+                                                        proximo();
+                                                    }
+                                                } else {
+                                                    proximo();
+                                                }
                                             }
                                         }
                                     }
@@ -326,6 +332,43 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             }
         }
     }
+
+    public boolean existeCPF(String cpf) {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuarioDAO.consultaByCPF(cpf);
+            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este CPF!");
+            txt_cpf.requestFocus();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existeEmail(String email) {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuarioDAO.consultaByEmail(email);
+            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este email!");
+            txt_email.requestFocus();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
+    public boolean existeUsuario(String usuario) {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuarioDAO.consultaByUsuario(usuario);
+            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este Usuario!");
+            txt_usuario.requestFocus();
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
     public void validaNullos(String codigo, String nome, String cpf, String email, String usuario, String senha, String confirmaSenha, StatusPessoa bloqueado, TipoUsuario tipo) {
         if (nome.equals("") == true) {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
@@ -421,22 +464,24 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void validaTelefoneExistente(String grupo, String contato, String numTelefone) {
-        grupoDAO= new GrupoDAO();
-        telefone= new Telefone();
         try {
-            telefone.setCodgrupo(grupoDAO.consulta(grupo));
-            telefone.setTelefone(numTelefone);
-            telefone.setDescricao(contato);
-            telefoneDAO.salvar(telefone);
-            insereTelefoneNalista(telefone);
-        } catch (Exception e) {
+            telefoneDAO = new TelefoneDAO();
+            telefoneDAO.busca(numTelefone);
             JOptionPane.showMessageDialog(null, "Telefone já cadastrado!");
+            txt_telefone.requestFocus();
+        } catch (NoResultException e) {
+            insereTelefoneNalista(grupo, contato, numTelefone);
         }
     }
 
-    public void insereTelefoneNalista(Telefone telefone) {
+    public void insereTelefoneNalista(String grupo, String contato, String numTelefone) {
         try {
+            grupoDAO = new GrupoDAO();
+            telefone = new Telefone();
             telefone.setCodusuario(usuario);
+            telefone.setTelefone(numTelefone);
+            telefone.setDescricao(contato);
+            telefone.setCodgrupo(grupoDAO.consulta(grupo));
             usuario.getTelefoneList().add(telefone);
             String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};
             model.addRow(linha);
@@ -509,29 +554,26 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }
 
     public void remove(String numeroTelefone) {
-        if (tb_telefones.getSelectedRowCount() == 1) {
-            telefone = new Telefone();
-            telefoneDAO = new TelefoneDAO();
-            try {
-                if (txt_codigo.getText().equals("") == false) {
-                    telefone = telefoneDAO.busca(numeroTelefone);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: " + numeroTelefone);
-                System.out.println(e);
-            }
 
-            try {
-                telefoneDAO.apagar(telefone);
-                model.removeRow(tb_telefones.getSelectedRow());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Remover Telefone: " + numeroTelefone);
-                System.out.println(e);
+        telefone = new Telefone();
+        telefoneDAO = new TelefoneDAO();
+        try {
+            if (txt_codigo.getText().equals("") == false) {
+                telefone = telefoneDAO.busca(numeroTelefone);
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione Uma linha para Remover!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: " + numeroTelefone);
+            System.out.println(e);
         }
+
+        try {
+            telefoneDAO.apagar(telefone);
+            model.removeRow(tb_telefones.getSelectedRow());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Remover Telefone: " + numeroTelefone);
+            System.out.println(e);
+        }
+
     }
 
     public void cancelar() {
@@ -1168,7 +1210,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_grupoActionPerformed
 
     private void btn_removerContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerContatoActionPerformed
-        remove(tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString());
+        if (tb_telefones.getSelectedRowCount() == 1) {
+            remove(tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString());
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione um Telefone na lista para remover!");
+        }
     }//GEN-LAST:event_btn_removerContatoActionPerformed
 
     private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
