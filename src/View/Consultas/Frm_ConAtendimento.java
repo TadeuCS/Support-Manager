@@ -22,7 +22,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
     DefaultTableModel model;
     ClienteDAO clienteDAO;
 
-    public Frm_ConAtendimento() {
+    public Frm_ConAtendimento(StatusAtendimento status) {
         initComponents();
         model = (DefaultTableModel) tb_clientes.getModel();
         setVisible(true);
@@ -283,12 +283,12 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Frm_ConAtendimento().setVisible(true);
-            }
-        });
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Frm_ConAtendimento().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
