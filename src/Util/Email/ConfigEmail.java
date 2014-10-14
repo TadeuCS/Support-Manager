@@ -3,7 +3,7 @@ package Util.Email;
 import java.util.List;
 import java.util.Map;
 
-public class MailJava {
+public class ConfigEmail {
     //indica se o formato de texto será texto ou html
     public static final String TYPE_TEXT_PLAIN = "text/plain";
     public static final String TYPE_TEXT_HTML = "text/html";
@@ -37,22 +37,6 @@ public class MailJava {
  
     // gere os métodos getters and setters
 
-    public String getSmtpHostMail() {
-        return smtpHostMail;
-    }
-
-    public void setSmtpHostMail(String smtpHostMail) {
-        this.smtpHostMail = smtpHostMail;
-    }
-
-    public String getSmtpPortMail() {
-        return smtpPortMail;
-    }
-
-    public void setSmtpPortMail(String smtpPortMail) {
-        this.smtpPortMail = smtpPortMail;
-    }
-
     public String getSmtpAuth() {
         return smtpAuth;
     }
@@ -67,6 +51,22 @@ public class MailJava {
 
     public void setSmtpStarttls(String smtpStarttls) {
         this.smtpStarttls = smtpStarttls;
+    }
+
+    public String getSmtpHostMail() {
+        return smtpHostMail;
+    }
+
+    public void setSmtpHostMail(String smtpHostMail) {
+        this.smtpHostMail = smtpHostMail;
+    }
+
+    public String getSmtpPortMail() {
+        return smtpPortMail;
+    }
+
+    public void setSmtpPortMail(String smtpPortMail) {
+        this.smtpPortMail = smtpPortMail;
     }
 
     public String getFromNameMail() {

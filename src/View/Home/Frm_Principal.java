@@ -10,6 +10,7 @@ import Util.Classes.PopMenu;
 import View.Atendimento.Frm_Atendimento_Abertura;
 import View.Cadastros.Frm_CadAplicativo;
 import View.Cadastros.Frm_CadCliente;
+import View.Cadastros.Frm_CadEmpresa;
 import View.Cadastros.Frm_CadGrupo;
 import View.Cadastros.Frm_CadInformacao;
 import View.Cadastros.Frm_CadLinks;
@@ -135,6 +136,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         menuI_Usuario = new javax.swing.JMenu();
         item_usuario = new javax.swing.JMenuItem();
         item_tipoUsuario = new javax.swing.JMenuItem();
+        menuI_empresa = new javax.swing.JMenuItem();
         Menu_Consulta = new javax.swing.JMenu();
         menuI_Atendimentos = new javax.swing.JMenu();
         item_abertos = new javax.swing.JMenuItem();
@@ -243,7 +245,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_RodapeLayout.setVerticalGroup(
             pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,6 +401,14 @@ public class Frm_Principal extends javax.swing.JFrame {
         menuI_Usuario.add(item_tipoUsuario);
 
         Menu_Cadastro.add(menuI_Usuario);
+
+        menuI_empresa.setText("Empresa");
+        menuI_empresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuI_empresaActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(menuI_empresa);
 
         Menu_barra.add(Menu_Cadastro);
 
@@ -764,6 +774,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lb_qtdeConcluidosMouseClicked
 
+    private void menuI_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_empresaActionPerformed
+        Frm_CadEmpresa f= new Frm_CadEmpresa();
+    }//GEN-LAST:event_menuI_empresaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -854,6 +868,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuI_atendimento;
     private javax.swing.JMenuItem menuI_clientes;
     private javax.swing.JMenuItem menuI_contatos;
+    private javax.swing.JMenuItem menuI_empresa;
     private javax.swing.JPanel pnl_Rodape;
     private javax.swing.JTextField txt_usuarioLogado;
     // End of variables declaration//GEN-END:variables

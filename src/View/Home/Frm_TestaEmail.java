@@ -7,7 +7,14 @@ package View.Home;
 
 import Controller.EmpresaDAO;
 import Model.Empresa;
+import Util.Classes.ValidaEmail;
+import Util.Email.ConfigEmail;
+import Util.Email.EnviaEmail;
 import View.Cadastros.Frm_CadEmpresa;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,12 +45,18 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
 
     }
 
+    public void limpaCampos() {
+        txt_email.setText(null);
+        txt_assunto.setText(null);
+        txt_menssagem.setText(null);
+    }
+
     public void validaCampos(String nomeEmpresa, String emailDestinatario, String assunto, String messagem) {
         if (nomeEmpresa.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Selecione uma Empresa Remetente");
             cbx_empresas.requestFocus();
         } else {
-            if (emailDestinatario.isEmpty()) {
+            if (ValidaEmail.validarEmail(emailDestinatario) == false) {
                 JOptionPane.showMessageDialog(null, "Email do destinatário inválido!");
                 txt_email.requestFocus();
             } else {
@@ -55,32 +68,75 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "Menssagem inválida!");
                         txt_menssagem.requestFocus();
                     } else {
+
                         boolean ssl = false;
-//                        sendEmail = new EnviaEmail();
                         try {
                             empresaDAO = new EmpresaDAO();
                             empresa = new Empresa();
                             empresa = empresaDAO.findByNomeFantasia(nomeEmpresa);
-
-                            if (empresa.getCodemail().getSsl().equals("S") == true) {
-                                ssl = true;
-                            }
-
+                            List<String> destinatarios = new ArrayList<>();
+                            destinatarios.add(emailDestinatario);
+                            enviaEmail(empresa.getCodemail().getSmtp(),
+                                    empresa.getCodemail().getPorta(),
+                                    empresa.getCodemail().getNome(),
+                                    empresa.getCodemail().getSenha(),
+                                    destinatarios, assunto, messagem, null);
                         } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Erro ao Carregar dados da Empresa");
+                            JOptionPane.showMessageDialog(null, "Erro ao Testar envio de Email");
                         }
-//                        sendEmail.enviarEmail(empresa.getCodemail().getSmtp(),
-//                                empresa.getCodemail().getPorta(),
-//                                empresa.getCodemail().getEmail(),
-//                                empresa.getCodemail().getSenha(),
-//                                ssl,
-//                                emailDestinatario,
-//                                empresa.getCodemail().getEmail(),
-//                                assunto, messagem);
+
                     }
                 }
             }
         }
+    }
+
+    public void enviaEmail(String smtp, int porta, String usuario, String senha, List<String> destinatarios, String assunto, String mensagem, List<String> anexos) {
+        ConfigEmail mj = new ConfigEmail();
+        //configuracoes de envio
+        mj.setSmtpHostMail(smtp);
+        mj.setSmtpPortMail(porta + "");
+        mj.setSmtpAuth("true");
+        mj.setSmtpStarttls("true");
+        mj.setUserMail(usuario);
+        mj.setFromNameMail("Olivet Sistemas");
+        mj.setPassMail(senha);
+        mj.setCharsetMail("ISO-8859-1");
+        mj.setSubjectMail(assunto);
+        mj.setBodyMail(mensagem);//aqui vc passa o texto do email, ou o texto em html usando o metodo "htmlMessage()".
+        mj.setTypeTextMail(ConfigEmail.TYPE_TEXT_HTML);
+
+        //sete quantos destinatarios desejar
+        Map<String, String> map = new HashMap<String, String>();
+        for (int i = 0; i < destinatarios.size(); i++) {
+            map.put(destinatarios.get(i), "");
+        }
+        mj.setToMailsUsers(map);
+        
+        //seta quantos anexos for nescessário
+        if (anexos != null) {
+            mj.setFileMails(anexos);
+        }
+        Thread acao = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                lb_status.setText("Enviando Email...");
+                try {
+                    EnviaEmail sender = new EnviaEmail();
+                    sender.senderMail(mj);
+                    lb_status.setText("Email enviado com sucesso!");
+                    limpaCampos();
+                    Thread.sleep(1000);
+                    lb_status.setText(null);
+                } catch (Exception e) {
+                    lb_status.setText("Erro ao enviar Email.");
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    lb_status.setText(null);
+                }
+            }
+        });
+        acao.start();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -99,10 +155,10 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
         pnl_remetente = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbx_empresas = new javax.swing.JComboBox();
-        btn_fechar1 = new javax.swing.JButton();
+        btn_cadEmpresa = new javax.swing.JButton();
         btn_testar = new javax.swing.JButton();
-        msg = new javax.swing.JLabel();
         btn_fechar = new javax.swing.JButton();
+        lb_status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Teste de envio de Email");
@@ -143,7 +199,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                         .addGroup(pnl_destinatarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_assunto, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 218, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnl_destinatarioLayout.setVerticalGroup(
@@ -176,10 +232,10 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
             }
         });
 
-        btn_fechar1.setText("...");
-        btn_fechar1.addActionListener(new java.awt.event.ActionListener() {
+        btn_cadEmpresa.setText("...");
+        btn_cadEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_fechar1ActionPerformed(evt);
+                btn_cadEmpresaActionPerformed(evt);
             }
         });
 
@@ -191,9 +247,9 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbx_empresas, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_fechar1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, Short.MAX_VALUE)
+                .addComponent(cbx_empresas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_cadEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnl_remetenteLayout.setVerticalGroup(
@@ -203,8 +259,8 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                 .addGroup(pnl_remetenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cbx_empresas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_fechar1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_cadEmpresa))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         btn_testar.setText("Testar Envio");
@@ -221,6 +277,10 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
             }
         });
 
+        lb_status.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lb_status.setForeground(new java.awt.Color(153, 0, 0));
+        lb_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
         pnl_fundo.setLayout(pnl_fundoLayout);
         pnl_fundoLayout.setHorizontalGroup(
@@ -230,8 +290,8 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(msg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lb_status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_testar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnl_destinatario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -247,11 +307,13 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                 .addComponent(pnl_destinatario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_testar)
-                        .addComponent(msg, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_fechar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lb_status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_testar)
+                            .addComponent(btn_fechar))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,17 +335,17 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btn_fecharActionPerformed
 
-    private void btn_fechar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fechar1ActionPerformed
-        Frm_CadEmpresa f = new Frm_CadEmpresa();
-    }//GEN-LAST:event_btn_fechar1ActionPerformed
-
     private void cbx_empresasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_empresasFocusGained
         carregaEmpresas();
     }//GEN-LAST:event_cbx_empresasFocusGained
 
     private void btn_testarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_testarActionPerformed
-        // TODO add your handling code here:
+        validaCampos(cbx_empresas.getSelectedItem().toString(), txt_email.getText(), txt_assunto.getText(), txt_menssagem.getText());
     }//GEN-LAST:event_btn_testarActionPerformed
+
+    private void btn_cadEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadEmpresaActionPerformed
+        Frm_CadEmpresa f = new Frm_CadEmpresa();
+    }//GEN-LAST:event_btn_cadEmpresaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,8 +383,8 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cadEmpresa;
     private javax.swing.JButton btn_fechar;
-    private javax.swing.JButton btn_fechar1;
     private javax.swing.JButton btn_testar;
     private javax.swing.JComboBox cbx_empresas;
     private javax.swing.JLabel jLabel1;
@@ -330,7 +392,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel msg;
+    private javax.swing.JLabel lb_status;
     private javax.swing.JPanel pnl_destinatario;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JPanel pnl_remetente;

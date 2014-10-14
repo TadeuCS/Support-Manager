@@ -1,61 +1,107 @@
 package Util.Email;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Multipart;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 public class EnviaEmail {
 
-    public static void main(String[] args) {
+    //cria as propriedades necessárias para o envio de email
+    public void senderMail(ConfigEmail mail) throws
+            UnsupportedEncodingException, MessagingException {
+        Properties properties = new Properties();
+        properties.setProperty("mail.transport.protocol", "smtp");
+        properties.setProperty("mail.host", mail.getSmtpHostMail());
+        properties.setProperty("mail.smtp.auth", mail.getSmtpAuth());
+        properties.setProperty("mail.smtp.starttls.enable", mail.getSmtpStarttls());
+        properties.setProperty("mail.smtp.port", mail.getSmtpPortMail());
+        properties.setProperty("mail.mime.charset", mail.getCharsetMail());
+        
+        properties.getProperty("mail.host");
+        properties.getProperty("mail.smtp.port");
+        //classe anonima que realiza a autenticação
+        //do usuario no servidor de email.
+        Authenticator auth = new Authenticator() {
+            public PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(
+                        mail.getUserMail(), mail.getPassMail()
+                );
+            }
+        };
 
-        MailJava mj = new MailJava();
+        // Cria a sessao passando as propriedades e a autenticação
+        Session session = Session.getInstance(properties, auth);
+        // Gera um log no console referente ao processo de envio
+        session.setDebug(true);
 
-        //configuracoes de envio
-        mj.setSmtpHostMail("smtp.mail.yahoo.com");
-        mj.setSmtpPortMail("587");
-        mj.setSmtpAuth("true");
-        mj.setSmtpStarttls("true");
-        mj.setUserMail("tadeucaixeta@yahoo.com.br");
-        mj.setFromNameMail("TadeuY");
-        mj.setPassMail("88015736");
-        mj.setCharsetMail("ISO-8859-1");
-        mj.setSubjectMail("Teste Email");
-        mj.setBodyMail("Teste envio de email");//aqui vc passa o texto do email, ou o texto em html usando o metodo "htmlMessage()".
-        mj.setTypeTextMail(MailJava.TYPE_TEXT_HTML);
-
-        //sete quantos destinatarios desejar
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("suporte4.olivet@hotmail.com", "Suporte4");
-//        map.put("destinatario2@msn.com", "email msn");
-//        map.put("destinatario3@ig.com.br", "email ig");
-
-        mj.setToMailsUsers(map);
-
-        //seta quatos anexos desejar
-        List<String> files = new ArrayList<>();
-        files.add("C:/teste.txt");
-//        files.add("C:/images/hover_next.png");
-//        files.add("C:/images/hover_prev.png");
-
-        mj.setFileMails(files);
-
-        try {
-            new MailJavaSender().senderMail(mj);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        //cria a mensagem setando o remetente e seus destinatários
+        Message msg = new MimeMessage(session);
+        //aqui seta o remetente
+        msg.setFrom(new InternetAddress(
+                mail.getUserMail(), mail.getFromNameMail())
+        );
+        boolean first = true;
+        for (Map.Entry<String, String> map : mail.getToMailsUsers().entrySet()) {
+            if (first) {
+                //setamos o 1° destinatario
+                msg.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress(map.getKey(), map.getValue())
+                );
+                first = false;
+            } else {
+                //setamos os demais destinatarios
+                msg.addRecipient(Message.RecipientType.CC,
+                        new InternetAddress(map.getKey(), map.getValue())
+                );
+            }
         }
-    }
 
-    private static String htmlMessage() {
-        return "<html>\n"
-                + "<body>\n"
-                + "<h1>Teste html</h1>\n"
-                + "</body\n"
-                + "</html>";
+        // Adiciona um Assunto a Mensagem
+        msg.setSubject(mail.getSubjectMail());
+
+        // Cria o objeto que recebe o texto do corpo do email
+        MimeBodyPart textPart = new MimeBodyPart();
+        textPart.setContent(mail.getBodyMail(), mail.getTypeTextMail());
+
+        // Monta a mensagem SMTP  inserindo o conteudo, texto e anexos
+        Multipart mps = new MimeMultipart();
+        if (mail.getFileMails() != null) {
+            for (int index = 0; index < mail.getFileMails().size(); index++) {
+
+                // Cria um novo objeto para cada arquivo, e anexa o arquivo
+                MimeBodyPart attachFilePart = new MimeBodyPart();
+                FileDataSource fds = new FileDataSource(
+                        mail.getFileMails().get(index)
+                );
+                attachFilePart.setDataHandler(new DataHandler(fds));
+                attachFilePart.setFileName(fds.getName());
+
+                //adiciona os anexos da mensagem
+                mps.addBodyPart(attachFilePart, index);
+
+            }
+        }
+
+        //adiciona o corpo texto da mensagem
+        mps.addBodyPart(textPart);
+
+        //adiciona a mensagem o conteúdo texto e anexo
+        msg.setContent(mps);
+
+        // Envia a Mensagem
+        Transport.send(msg);
     }
 }

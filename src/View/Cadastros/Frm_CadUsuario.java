@@ -54,6 +54,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_usuario.setDocument(new FixedLengthDocument(20));
         txt_senha.setDocument(new FixedLengthDocument(18));
         txt_confirmaSenha.setDocument(new FixedLengthDocument(18));
+        txt_contato.setDocument(new FixedLengthDocument(100));
         codigoUsuario = 0;
         carregaTipoUsuarios();
         carregaGrupos();
@@ -553,25 +554,37 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         }
     }
 
-    public void remove(String numeroTelefone) {
-
-        telefone = new Telefone();
-        telefoneDAO = new TelefoneDAO();
+    public void removeTelefone(String numeroTelefone) {
         try {
-            if (txt_codigo.getText().equals("") == false) {
-                telefone = telefoneDAO.busca(numeroTelefone);
+            model = (DefaultTableModel) tb_telefones.getModel();
+            for (int i = 0; i < usuario.getTelefoneList().size(); i++) {
+                if (usuario.getTelefoneList().get(i).getTelefone().equals(numeroTelefone) == true) {
+                    usuario.getTelefoneList().remove(i);
+                    model.removeRow(tb_telefones.getSelectedRow());
+                }
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone: " + numeroTelefone);
-            System.out.println(e);
-        }
-
-        try {
-            telefoneDAO.apagar(telefone);
-            model.removeRow(tb_telefones.getSelectedRow());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Remover Telefone: " + numeroTelefone);
             System.out.println(e);
+        }
+    }
+
+    public void remove(String numeroTelefone) {
+        try {
+            telefoneDAO = new TelefoneDAO();
+            telefoneDAO.busca(numeroTelefone);
+            if (telefoneDAO.busca(numeroTelefone).getCodtelefone() != null) {
+                try {
+                    telefoneDAO.apagar(telefoneDAO.busca(numeroTelefone));
+                    removeTelefone(numeroTelefone);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao remover telefone " + numeroTelefone);
+                }
+
+            }
+        } catch (NoResultException e) {
+            removeTelefone(numeroTelefone);
+
         }
 
     }
@@ -1212,7 +1225,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     private void btn_removerContatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerContatoActionPerformed
         if (tb_telefones.getSelectedRowCount() == 1) {
             remove(tb_telefones.getValueAt(tb_telefones.getSelectedRow(), 1).toString());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um Telefone na lista para remover!");
         }
     }//GEN-LAST:event_btn_removerContatoActionPerformed

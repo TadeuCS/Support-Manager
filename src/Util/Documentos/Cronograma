@@ -1,5 +1,5 @@
 ok empresa: erros no cadastro de empresa
-usuario: trocar metodos de buscar telefone, e validar campos unicos
+ok usuario: trocar metodos de buscar telefone, e validar campos unicos
 ---------------------------------------------------------CLIENTE-----------------------------------------------------
 ok validar campos obrigatórios cadastro de cliente
 ok validar email e cpf cliente
@@ -27,7 +27,7 @@ AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENT
 
 ---------------------------------------------------------EMPRESA------------------------------------------------------
 OK TRATAR CAMPOS OBRIGATÓRIOS NO CADASTRO DE EMPRESA/EMAIL
-CRIAR INTERFACE DE TESTE ENVIO DE EMAIL.
+OK CRIAR INTERFACE DE TESTE ENVIO DE EMAIL.
 CONFIGURAR RELATORIO DE RECIBO POR CLIENTE.
 ----------------------------------------------------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ CRIAR INTERFACE E RELATORIO: RECIBO DE CLIENTES PASSANDO COMO PARAMETRO UMA LIST
 ----------------------------------------------------------------------------------------------------------------------
 
 ----------------------------------------------------------OUTROS------------------------------------------------------
-SISTEMA MINIMIZAR PARA AREA DE NOTIFICAÇÃO.
+OK SISTEMA MINIMIZAR PARA AREA DE NOTIFICAÇÃO.
 INSERIR ICONES NOS BOTOES.
 TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
 IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.

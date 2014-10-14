@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class PropertiesManager {
     
     //altere de acordo com o nome do arquivo properties criado
-    static String file = "dados.properties";
+    public static String file;
     FileOutputStream fos;
     FileInputStream fis;
     Properties properties = new Properties();
@@ -22,21 +22,25 @@ public class PropertiesManager {
     public PropertiesManager() {
         cria();
     }
-
+    public Properties getProperties(){
+        return properties;
+    }
     private String getCaminho() {
         File file = new File(this.file);
         //altere de acordo com o diretorio do seu arquivo properties
-        return file.getAbsolutePath().replaceAll(this.file, "").concat("src\\Util\\Classes\\");
+        System.out.println(file.getAbsolutePath().replaceAll(this.file, "").concat("src\\Util\\Email\\"));
+        return file.getAbsolutePath().replaceAll(this.file, "").concat("src\\Util\\Email\\");
+//        return file.getAbsolutePath().replaceAll(this.file, "").concat("src\\Util\\Classes\\");
     }
 
     private void cria() {
         try {
             //Criamos um objeto FileOutputStream
             //Setamos o arquivo que será lido
-            fis = new FileInputStream(getCaminho() + file);
+            fis = new FileInputStream(getCaminho()+file);
             properties.load(fis);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+//            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 
@@ -57,7 +61,6 @@ public class PropertiesManager {
         try {
             //método load faz a leitura através do objeto fis
             properties.load(fis);
-
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

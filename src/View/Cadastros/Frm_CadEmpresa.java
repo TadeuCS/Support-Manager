@@ -6,14 +6,12 @@
 package View.Cadastros;
 
 import Controller.CidadesDAO;
-import Controller.ClienteDAO;
 import Controller.EmpresaDAO;
 import Controller.EnderecoDAO;
 import Controller.EstadosDAO;
 import Controller.GrupoDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
-import Model.Cliente;
 import Model.Email;
 import Model.Empresa;
 import Model.Endereco;
