@@ -348,7 +348,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             txt_responsavel.setText(cliente.getResponsavel());
             txt_email.setText(cliente.getEmail());
             if (cliente.getDataAtualizacao() != null) {
-                txt_data.setText(Data.getData(cliente.getDataAtualizacao(), "dd/MM/yyyy"));
+                txt_data.setText(Data.getDataByDate(cliente.getDataAtualizacao(), "dd/MM/yyyy"));
             }
             cbx_segmento.setSelectedItem(cliente.getCodsegmento().getDescricao());
             getStatusPessoa(cliente);
@@ -404,7 +404,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             if (txt_data.getText().equals("  /  /    ") == true) {
                 cliente.setDataAtualizacao(null);
             } else {
-                cliente.setDataAtualizacao(Data.getDataByDate(txt_data.getText(), "dd/MM/yyyy"));
+                cliente.setDataAtualizacao(Data.getDataByTexto(txt_data.getText(), "dd/MM/yyyy"));
             }
             cliente.setCodparcela(parcelaDAO.consulta(cbx_parcela.getSelectedItem().toString()));
             cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));

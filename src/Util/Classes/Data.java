@@ -16,7 +16,7 @@ public class Data {
      * Coverta "data" para inteiro E valida Mês e Dia verificando o retorno de
      * cada metodo
      */
-    public static Date getDataByDate(String data, String formato) {
+    public static Date getDataByTexto(String data, String formato) {
         try {
             Date date = null;
             DateFormat formatter = new SimpleDateFormat(formato);
@@ -27,31 +27,31 @@ public class Data {
         }
     }
 
-    public String getDataByTexto(String formato) {
+    public String getData(String formato) {
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         Date data = new Date();
         return sdf.format(data);
     }
 
-    public static String getData(Date data, String formato) {
+    public static String getDataByDate(Date data, String formato) {
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         return sdf.format(data);
     }
 
     public String completaData(String texto, String formato) {
         if (texto.contains("  /  /    ")) {
-            texto = getDataByTexto(formato);
+            texto = getData(formato);
         } else {
             if (texto.endsWith("/  /    ")) {
-                String dataAtual = getDataByTexto(formato);
+                String dataAtual = getData(formato);
                 texto = dataAtual.replace(dataAtual.substring(0, 2), texto.substring(0, 2));
             } else {
                 if (texto.endsWith("/    ")) {
-                    String dataAtual = getDataByTexto(formato);
+                    String dataAtual = getData(formato);
                     texto = texto.replaceAll("    ", dataAtual.substring(6, 10));
                 } else {
                     if ("  ".equals(texto.substring(8, 10))) {
-                        String dataAtual = getDataByTexto(formato);
+                        String dataAtual = getData(formato);
                         texto = texto.replaceAll(texto.substring(6, 8) + "  ", dataAtual.substring(6, 8) + texto.substring(6, 8));
                     }
                 }

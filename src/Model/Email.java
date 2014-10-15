@@ -63,8 +63,8 @@ public class Email implements Serializable {
     @Column(name = "SENHA")
     private String senha;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codemail")
-    @OneToMany()
-    private List<Empresa> empresaList= new ArrayList<>();
+//    @OneToMany()
+//    private List<Empresa> empresaList= new ArrayList<>();
 
     public Email() {
     }
@@ -137,15 +137,15 @@ public class Email implements Serializable {
     public void setSsl(String ssl) {
         this.ssl = ssl;
     }
-
-    @XmlTransient
-    public List<Empresa> getEmpresaList() {
-        return empresaList;
-    }
-
-    public void setEmpresaList(List<Empresa> empresaList) {
-        this.empresaList = empresaList;
-    }
+//
+//    @XmlTransient
+//    public List<Empresa> getEmpresaList() {
+//        return empresaList;
+//    }
+//
+//    public void setEmpresaList(List<Empresa> empresaList) {
+//        this.empresaList = empresaList;
+//    }
 
     @Override
     public int hashCode() {

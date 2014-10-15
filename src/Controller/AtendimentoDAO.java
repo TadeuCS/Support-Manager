@@ -6,17 +6,26 @@
 package Controller;
 
 import Model.Atendimento;
+import Model.StatusAtendimento;
 import Util.Classes.Manager;
+import java.util.List;
 
 /**
  *
  * @author Tadeu
  */
-public class AtendimentoDAO extends Manager{
-    
-    public void salvar(Atendimento att){
+public class AtendimentoDAO extends Manager {
+
+    public void salvar(Atendimento att) {
         em.getTransaction().begin();
         em.merge(att);
         em.getTransaction().commit();
+    }
+
+    public List<Atendimento> listaByStatus(StatusAtendimento status) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Atendimento.findByStatus").setParameter("status", status);
+        em.getTransaction().commit();
+        return query.getResultList();
     }
 }

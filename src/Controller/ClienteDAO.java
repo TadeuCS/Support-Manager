@@ -44,6 +44,12 @@ public class ClienteDAO extends Manager {
         return (Cliente) query.getSingleResult();
     }
     
+    public Cliente buscaClienteByNomeFantasia(String nomeFantasia) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Cliente.findByNomeFantasia").setParameter("nomeFantasia", nomeFantasia);
+        em.getTransaction().commit();
+        return (Cliente) query.getSingleResult();
+    }
     public Cliente buscaClienteByRazao(String razao) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Cliente.findByRazaoSocial").setParameter("razaoSocial", razao);

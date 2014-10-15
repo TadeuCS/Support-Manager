@@ -5,15 +5,24 @@
  */
 package View.Atendimento;
 
+import Controller.AtendimentoDAO;
 import Controller.ClienteDAO;
 import Controller.OrigemDAO;
 import Controller.PrioridadeDAO;
+import Controller.StatusAtendimentoDAO;
 import Controller.TipoAtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Atendimento;
-import Model.Prioridade;
+import Model.Usuario;
+import Util.Classes.AutoComplete;
+import Util.Classes.Data;
+import Util.Classes.FixedLengthDocument;
+import View.Home.Frm_Principal;
 import java.awt.Event;
+import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
 
 /**
  *
@@ -22,20 +31,114 @@ import javax.swing.JOptionPane;
 public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
     Atendimento atendimento;
+    Data data;
+    Usuario usuario;
+    AtendimentoDAO atendimentoDAO;
     ClienteDAO clienteDAO;
     UsuarioDAO usuarioDAO;
     TipoAtendimentoDAO tipoAtendimentoDAO;
     OrigemDAO origemDAO;
     PrioridadeDAO prioridadeDAO;
-    
-    
+    StatusAtendimentoDAO statusAtendimentoDAO;
+    Frm_Principal principal;
+
     public Frm_Atendimento_Abertura() {
         initComponents();
         setVisible(true);
+        carregaUsuarios();
+        carregaClientes();
+        carregaTipos();
+        carregaOrigem();
+        carregaPrioridade();
+        selecioneUsuarioLogado();
+        principal = new Frm_Principal();
+        txt_problemaInformado.setDocument(new FixedLengthDocument(255));
+        txt_solicitante.setDocument(new FixedLengthDocument(100));
+        AutoComplete.decorate(cbx_cliente);
+        qtde.setText(txt_problemaInformado.getText().length()+"");
+        selecionaOsPadroes(cbx_tipoAtendimento, cbx_origem, cbx_prioridade);
     }
 
-    public void validaCampos(String usuario, String dataAgendamento, String cliente, String solicitante, String tipoAtendimento, String origem, String prioridade, String problemaInformado) {
-        if (usuario.isEmpty()) {
+    public void selecionaOsPadroes(JComboBox tipo,JComboBox origem, JComboBox prioridade){
+        tipo.setSelectedItem("SUPORTE");
+        origem.setSelectedItem("TELEFONE");
+        prioridade.setSelectedItem("NORMAL");
+    }
+    public void selecioneUsuarioLogado() {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuario = new Usuario();
+            usuario = usuarioDAO.consultaByUsuario(principal.getUsuarioLogado());
+            if (usuario.getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
+                cbx_usuario.setSelectedItem(usuario.getCodtipousuario().getDescricao());
+                cbx_usuario.setEnabled(false);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void carregaUsuarios() {
+        usuarioDAO = new UsuarioDAO();
+        try {
+            cbx_usuario.removeAllItems();
+            for (int i = 0; i < usuarioDAO.lista().size(); i++) {
+                cbx_usuario.addItem(usuarioDAO.lista().get(i).getUsuario());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
+        }
+    }
+
+    private void carregaClientes() {
+        clienteDAO = new ClienteDAO();
+        try {
+            cbx_cliente.removeAllItems();
+            for (int i = 0; i < clienteDAO.lista().size(); i++) {
+                cbx_cliente.addItem(clienteDAO.lista().get(i).getNomeFantasia());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
+        }
+    }
+
+    private void carregaTipos() {
+        tipoAtendimentoDAO = new TipoAtendimentoDAO();
+        try {
+            cbx_tipoAtendimento.removeAllItems();
+            for (int i = 0; i < tipoAtendimentoDAO.lista().size(); i++) {
+                cbx_tipoAtendimento.addItem(tipoAtendimentoDAO.lista().get(i).getDescricao());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar Tipos de Usuários");
+        }
+    }
+
+    private void carregaOrigem() {
+        origemDAO = new OrigemDAO();
+        try {
+            cbx_origem.removeAllItems();
+            for (int i = 0; i < origemDAO.lista().size(); i++) {
+                cbx_origem.addItem(origemDAO.lista().get(i).getDescricao());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar Origens");
+        }
+    }
+
+    private void carregaPrioridade() {
+        prioridadeDAO = new PrioridadeDAO();
+        try {
+            cbx_prioridade.removeAllItems();
+            for (int i = 0; i < prioridadeDAO.lista().size(); i++) {
+                cbx_prioridade.addItem(prioridadeDAO.lista().get(i).getDescricao());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar Prioridades");
+        }
+    }
+
+    public void validaCampos(JComboBox usuario, String dataAgendamento, String cliente, String solicitante, JComboBox tipoAtendimento, JComboBox origem, JComboBox prioridade, String problemaInformado) {
+        if (usuario.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Usuário inválido!");
             cbx_usuario.requestFocus();
         } else {
@@ -45,21 +148,21 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             } else {
                 if (cliente.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Cliente inválido!");
-                    txt_cliente.requestFocus();
+                    cbx_cliente.requestFocus();
                 } else {
                     if (solicitante.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Solicitante inválido!");
                         txt_solicitante.requestFocus();
                     } else {
-                        if (tipoAtendimento.isEmpty()) {
+                        if (tipoAtendimento.getSelectedItem() == null) {
                             JOptionPane.showMessageDialog(null, "Tipo de Atendimento inválido!");
                             cbx_tipoAtendimento.requestFocus();
                         } else {
-                            if (origem.isEmpty()) {
+                            if (origem.getSelectedItem() == null) {
                                 JOptionPane.showMessageDialog(null, "Origem inválida!");
                                 cbx_origem.requestFocus();
                             } else {
-                                if (prioridade.isEmpty()) {
+                                if (prioridade.getSelectedItem() == null) {
                                     JOptionPane.showMessageDialog(null, "Prioridade inválida!");
                                     cbx_prioridade.requestFocus();
                                 } else {
@@ -79,20 +182,57 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     }
 
     public void getAtendimento(Atendimento att) {
-        
-    }
-    public void setAtendimento(){
-        atendimento=new Atendimento();
-        atendimento.setDataAbertura(null);
-        atendimento.setSolicitante(txt_solicitante.getText());
-        atendimento.setProblemaInformado(txt_problemaInformado.getText());
-        atendimento.setCodcliente(clienteDAO.buscaClienteByCodigo(0));
+
     }
 
+    public void setAtendimento() {
+        try {
+            atendimento = new Atendimento();
+            clienteDAO = new ClienteDAO();
+            tipoAtendimentoDAO = new TipoAtendimentoDAO();
+            origemDAO = new OrigemDAO();
+            prioridadeDAO = new PrioridadeDAO();
+            statusAtendimentoDAO = new StatusAtendimentoDAO();
+            
+            if (txt_data.getText().equals("  /  /       :  ") == true) {
+                atendimento.setDataAgendamento(null);
+            } else {
+                atendimento.setDataAgendamento(Data.getDataByTexto(txt_data.getText(), "dd/MM/yyyy HH:mm"));
+            }
+            atendimento.setCodusuario(usuarioDAO.consultaByUsuario(cbx_usuario.getSelectedItem().toString()));
+            atendimento.setProblemaInformado(txt_problemaInformado.getText());
+            atendimento.setCodcliente(clienteDAO.buscaClienteByNomeFantasia(cbx_cliente.getSelectedItem().toString()));
+            atendimento.setCodtipoatendimento(tipoAtendimentoDAO.buscaTipoAtendimento(cbx_tipoAtendimento.getSelectedItem().toString()));
+            atendimento.setCodorigem(origemDAO.buscaOrigem(cbx_origem.getSelectedItem().toString()));
+            atendimento.setCodprioridade(prioridadeDAO.buscaPrioridade(cbx_prioridade.getSelectedItem().toString()));
+            atendimento.setSolicitante(txt_solicitante.getText());
+            atendimento.setProblemaInformado(txt_problemaInformado.getText());
+            atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("ABERTO"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao capturar informações do Atendimento!");
+            System.out.println(e);
+        }
+
+    }
+    
     public void salvar() {
-
+        setAtendimento();
+        try {
+            atendimentoDAO = new AtendimentoDAO();
+            atendimentoDAO.salvar(atendimento);
+            JOptionPane.showMessageDialog(null, "Atendimento Aberto com Sucesso!");
+            limpaCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao Salvar Atendimento!");
+        }
     }
-
+    
+    public void limpaCampos(){
+        txt_solicitante.setText(null);
+        txt_problemaInformado.setText(null);
+        txt_data.setText(null);
+        txt_data.requestFocus();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,7 +241,6 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txt_data = new javax.swing.JFormattedTextField();
-        txt_cliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txt_solicitante = new javax.swing.JTextField();
@@ -114,7 +253,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_problemaInformado = new javax.swing.JTextArea();
-        btn_sair1 = new javax.swing.JButton();
+        cbx_cliente = new javax.swing.JComboBox();
+        qtde = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cbx_usuario = new javax.swing.JComboBox();
         btn_salvar = new javax.swing.JButton();
@@ -129,16 +269,14 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         jLabel2.setText("Data Agendamento *:");
 
         try {
-            txt_data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txt_data.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/#### ##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         txt_data.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txt_cliente.setEditable(false);
-        txt_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_data.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_clienteKeyPressed(evt);
+                txt_dataKeyPressed(evt);
             }
         });
 
@@ -154,16 +292,19 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
         jLabel8.setText("Problema Informado *:");
 
-        txt_problemaInformado.setColumns(20);
+        txt_problemaInformado.setColumns(5);
+        txt_problemaInformado.setLineWrap(true);
         txt_problemaInformado.setRows(5);
-        jScrollPane1.setViewportView(txt_problemaInformado);
-
-        btn_sair1.setText("...");
-        btn_sair1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_sair1ActionPerformed(evt);
+        txt_problemaInformado.setWrapStyleWord(true);
+        txt_problemaInformado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_problemaInformadoKeyReleased(evt);
             }
         });
+        jScrollPane1.setViewportView(txt_problemaInformado);
+
+        cbx_cliente.setBackground(new java.awt.Color(204, 204, 204));
+        cbx_cliente.setEditable(true);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -181,53 +322,52 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_solicitante, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_tipoAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_origem, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbx_prioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txt_solicitante, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_data, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_tipoAtendimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_origem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_prioridade, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-                        .addGap(0, 237, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txt_cliente)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(btn_sair1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_solicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cbx_tipoAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cbx_origem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cbx_prioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(qtde, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txt_data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(cbx_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_solicitante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(cbx_tipoAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(cbx_origem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(cbx_prioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -275,12 +415,12 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(cbx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
                     .addComponent(btn_sair))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -303,18 +443,26 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_sairActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        // TODO add your handling code here:
+        validaCampos(cbx_usuario,
+                txt_data.getText(), cbx_cliente.getSelectedItem().toString(),
+                txt_solicitante.getText(),
+                cbx_tipoAtendimento,
+                cbx_origem,
+                cbx_prioridade,
+                txt_problemaInformado.getText());
     }//GEN-LAST:event_btn_salvarActionPerformed
 
-    private void btn_sair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sair1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sair1ActionPerformed
-
-    private void txt_clienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_clienteKeyPressed
-        if (evt.getKeyCode() == Event.ENTER) {
-            
+    private void txt_dataKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataKeyPressed
+        if ((evt.getKeyCode() == Event.ENTER) && (txt_data.getText().equals("  /  /       :  ") == true)) {
+            data = new Data();
+            Date dataAtual = new Date();
+            txt_data.setText(data.getDataByDate(dataAtual, "dd/MM/yyyy HH:mm"));
         }
-    }//GEN-LAST:event_txt_clienteKeyPressed
+    }//GEN-LAST:event_txt_dataKeyPressed
+
+    private void txt_problemaInformadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_problemaInformadoKeyReleased
+        qtde.setText(txt_problemaInformado.getText().length()+"");
+    }//GEN-LAST:event_txt_problemaInformadoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -353,8 +501,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_sair;
-    private javax.swing.JButton btn_sair1;
     private javax.swing.JButton btn_salvar;
+    private javax.swing.JComboBox cbx_cliente;
     private javax.swing.JComboBox cbx_origem;
     private javax.swing.JComboBox cbx_prioridade;
     private javax.swing.JComboBox cbx_tipoAtendimento;
@@ -370,7 +518,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txt_cliente;
+    private javax.swing.JLabel qtde;
     private javax.swing.JFormattedTextField txt_data;
     private javax.swing.JTextArea txt_problemaInformado;
     private javax.swing.JTextField txt_solicitante;

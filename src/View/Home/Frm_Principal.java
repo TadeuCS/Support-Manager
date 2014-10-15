@@ -6,6 +6,7 @@
 package View.Home;
 
 import Controller.StatusAtendimentoDAO;
+import Controller.UsuarioDAO;
 import Util.Classes.PopMenu;
 import View.Atendimento.Frm_Atendimento_Abertura;
 import View.Cadastros.Frm_CadAplicativo;
@@ -36,6 +37,7 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.persistence.NoResultException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,9 +46,11 @@ import javax.swing.WindowConstants;
 public class Frm_Principal extends javax.swing.JFrame {
 
     private String usuarioLogado;
+    UsuarioDAO usuarioDAO;
     private StatusAtendimentoDAO statusAtendimentoDAO;
     public static PopMenu an = null;
     public static Frm_Principal j = null;
+
     public Frm_Principal() {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -68,7 +72,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                             //Deixa a janela atual (Janelinha) invisevel!
                             setVisible(false);
                             //Instancia a classe responsavel pelo �cone na �rea de notifica��o.
-                             an=new PopMenu();
+                            an = new PopMenu();
                         }
                     }
             );
@@ -99,6 +103,15 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     public void setFocusOFFLabel(JLabel label) {
         label.setForeground(Color.gray);
+    }
+
+    public String verificaTipoUsuarioLogado() {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            return usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao();
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -712,6 +725,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private void item_abertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_abertosActionPerformed
         try {
+            statusAtendimentoDAO = new StatusAtendimentoDAO();
             Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("ABERTO"));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
@@ -775,7 +789,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lb_qtdeConcluidosMouseClicked
 
     private void menuI_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_empresaActionPerformed
-        Frm_CadEmpresa f= new Frm_CadEmpresa();
+        Frm_CadEmpresa f = new Frm_CadEmpresa();
     }//GEN-LAST:event_menuI_empresaActionPerformed
 
     /**
