@@ -33,6 +33,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
         actionByStatus(status);
+        usuarioDAO=new UsuarioDAO();
         if (principal.getTipoUsuarioLogado().equals("SUPORTE") == true) {
             btn_apagar.setEnabled(false);
             listaAtendimentoByStatusAndUsuario(status, usuarioDAO.consultaByUsuario(usuario));
