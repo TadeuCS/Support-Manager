@@ -8,6 +8,7 @@ package View.Home;
 import Controller.UsuarioDAO;
 import Model.Usuario;
 import Util.Classes.Criptografia;
+import Util.Classes.PopMenu;
 import java.awt.Event;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;

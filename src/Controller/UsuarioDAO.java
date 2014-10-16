@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.StatusPessoa;
 import Model.Usuario;
 import Util.Classes.Manager;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  */
 public class UsuarioDAO extends Manager {
 
-    StatusPessoaDAO statusPessoaDAO= new StatusPessoaDAO();
+    StatusPessoaDAO statusPessoaDAO = new StatusPessoaDAO();
+
     public void salvar(Usuario usuario) {
         em.getTransaction().begin();
         em.merge(usuario);
@@ -34,12 +36,14 @@ public class UsuarioDAO extends Manager {
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }
+
     public Usuario consultaByCPF(String cpf) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Usuario.findByCpf").setParameter("cpf", cpf);
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }
+
     public Usuario consultaByEmail(String email) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Usuario.findByEmail").setParameter("email", email);
@@ -65,6 +69,13 @@ public class UsuarioDAO extends Manager {
     public List<Usuario> lista() {
         em.getTransaction().begin();
         query = em.createNamedQuery("Usuario.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+
+    public List<Usuario> listaUsuariosDesbloqueados(StatusPessoa status) {
+        em.getTransaction().begin();
+        query = em.createQuery("SELECT u FROM Usuario u WHERE u.codstatuspessoa = :status").setParameter("status", status);
         em.getTransaction().commit();
         return query.getResultList();
     }

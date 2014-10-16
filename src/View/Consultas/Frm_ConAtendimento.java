@@ -6,11 +6,11 @@
 package View.Consultas;
 
 import Controller.AtendimentoDAO;
-import Controller.ClienteDAO;
 import Controller.UsuarioDAO;
 import Model.StatusAtendimento;
+import Model.Usuario;
 import Util.Classes.Data;
-import View.Cadastros.Frm_CadUsuario;
+import View.Atendimento.Frm_Atendimento_Encerramento;
 import View.Home.Frm_Principal;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -25,46 +25,49 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
 
     DefaultTableModel model;
     AtendimentoDAO atendimentoDAO;
-    Frm_Principal principal= new Frm_Principal();
-    public Frm_ConAtendimento(StatusAtendimento status) {
+    Frm_Principal principal = new Frm_Principal();
+    UsuarioDAO usuarioDAO;
+
+    public Frm_ConAtendimento(StatusAtendimento status, String usuario) {
         initComponents();
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
-        listaAtendimentoByStatus(status);
-        
+        actionByStatus(status);
+        if (principal.getTipoUsuarioLogado().equals("SUPORTE") == true) {
+            btn_apagar.setEnabled(false);
+            listaAtendimentoByStatusAndUsuario(status, usuarioDAO.consultaByUsuario(usuario));
+        } else {
+            listaAtendimentoByStatus(status);
+        }
     }
-    
-    public void actionByStatus(StatusAtendimento status){
-        if(status.getDescricao().equals("ABERTO")==true){
+
+    public void actionByStatus(StatusAtendimento status) {
+        if (status.getDescricao().equals("ABERTO") == true) {
             setTitle("Consulta de Atendimentos Abertos");
-            btn_executar.setEnabled(true);
             btn_alterar.setEnabled(true);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(true);
             btn_sair.setEnabled(true);
             btn_finalizar.setEnabled(false);
         }
-        if(status.getDescricao().equals("CONCLUIDO")==true){
+        if (status.getDescricao().equals("CONCLUIDO") == true) {
             setTitle("Consulta de Atendimentos Concluídos");
-            btn_executar.setEnabled(false);
             btn_alterar.setEnabled(false);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(false);
             btn_sair.setEnabled(true);
             btn_finalizar.setEnabled(false);
         }
-        if(status.getDescricao().equals("EXECUCAO")==true){
+        if (status.getDescricao().equals("EXECUCAO") == true) {
             setTitle("Consulta de Atendimentos em Execução");
-            btn_executar.setEnabled(false);
             btn_alterar.setEnabled(true);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(true);
             btn_sair.setEnabled(true);
             btn_finalizar.setEnabled(true);
         }
-        if(status.getDescricao().equals("PENDENTE")==true){
+        if (status.getDescricao().equals("PENDENTE") == true) {
             setTitle("Consulta de Atendimentos Pendentes");
-            btn_executar.setEnabled(false);
             btn_alterar.setEnabled(true);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(false);
@@ -72,17 +75,36 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             btn_finalizar.setEnabled(true);
         }
     }
+
     public void listaAtendimentoByStatus(StatusAtendimento statusAtendimento) {
         atendimentoDAO = new AtendimentoDAO();
         try {
             limpaTabela();
-            for (int i=0;i < atendimentoDAO.listaByStatus(statusAtendimento).size();i++) {
+            for (int i = 0; i < atendimentoDAO.listaByStatus(statusAtendimento).size(); i++) {
                 String[] linha = new String[]{
                     atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodatendimento().toString(),
                     Data.getDataByDate(atendimentoDAO.listaByStatus(statusAtendimento).get(i).getDataAgendamento(), "dd/MM/yyyy HH:mm"),
                     atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodcliente().getNomeFantasia(),
                     atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodtipoatendimento().getDescricao(),
                     atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodprioridade().getDescricao()};
+                model.addRow(linha);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
+    public void listaAtendimentoByStatusAndUsuario(StatusAtendimento statusAtendimento, Usuario usuario) {
+        atendimentoDAO = new AtendimentoDAO();
+        try {
+            limpaTabela();
+            for (int i = 0; i < atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).size(); i++) {
+                String[] linha = new String[]{
+                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodatendimento().toString(),
+                    Data.getDataByDate(atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getDataAgendamento(), "dd/MM/yyyy HH:mm"),
+                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodcliente().getNomeFantasia(),
+                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodtipoatendimento().getDescricao(),
+                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodprioridade().getDescricao()};
                 model.addRow(linha);
             }
         } catch (Exception e) {
@@ -97,9 +119,9 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             if (tb_atendimentos.getSelectedRowCount() > 1) {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
-                Frm_CadUsuario f = new Frm_CadUsuario();
-                f.setCodigoUsuario(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
-                f.buscar();
+                Frm_Atendimento_Encerramento f = new Frm_Atendimento_Encerramento();
+//                f.setCodigoAtendimento(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
+                f.getAtendimento(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
                 dispose();
             }
         }
@@ -142,7 +164,6 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         btn_finalizar = new javax.swing.JButton();
         btn_alterar = new javax.swing.JButton();
         btn_consultar = new javax.swing.JButton();
-        btn_executar = new javax.swing.JButton();
         btn_sair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -205,19 +226,22 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         btn_apagar.setText("Apagar");
 
         btn_finalizar.setText("Finalizar");
-
-        btn_alterar.setText("Alterar");
-
-        btn_consultar.setText("Consultar");
-
-        btn_executar.setText("Executar");
-        btn_executar.addActionListener(new java.awt.event.ActionListener() {
+        btn_finalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_executarActionPerformed(evt);
+                btn_finalizarActionPerformed(evt);
             }
         });
 
+        btn_alterar.setText("Alterar");
+
+        btn_consultar.setText("Detalhar");
+
         btn_sair.setText("Sair");
+        btn_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -233,18 +257,16 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 243, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(btn_executar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_consultar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_apagar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_finalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,8 +287,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
                     .addComponent(btn_apagar)
                     .addComponent(btn_alterar)
                     .addComponent(btn_consultar)
-                    .addComponent(btn_sair)
-                    .addComponent(btn_executar))
+                    .addComponent(btn_sair))
                 .addContainerGap())
         );
 
@@ -296,9 +317,13 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_executarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_executarActionPerformed
+    private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
         dispose();
-    }//GEN-LAST:event_btn_executarActionPerformed
+    }//GEN-LAST:event_btn_sairActionPerformed
+
+    private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
+        finalizar();
+    }//GEN-LAST:event_btn_finalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,7 +364,6 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
     private javax.swing.JButton btn_alterar;
     private javax.swing.JButton btn_apagar;
     private javax.swing.JButton btn_consultar;
-    private javax.swing.JButton btn_executar;
     private javax.swing.JButton btn_finalizar;
     private javax.swing.JButton btn_sair;
     private javax.swing.JLabel jLabel1;

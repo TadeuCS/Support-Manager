@@ -7,6 +7,7 @@ package Controller;
 
 import Model.Atendimento;
 import Model.StatusAtendimento;
+import Model.Usuario;
 import Util.Classes.Manager;
 import java.util.List;
 
@@ -22,6 +23,18 @@ public class AtendimentoDAO extends Manager {
         em.getTransaction().commit();
     }
 
+    public Atendimento getByCodigo(int codigo){
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Atendimento.findByCodatendimento").setParameter("codatendimento", codigo);
+        em.getTransaction().commit();
+        return (Atendimento) query.getSingleResult();
+    }
+    public List<Atendimento> listaByStatusAndUsuario(StatusAtendimento status,Usuario usuario) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Atendimento.findByStatusAndUsuario").setParameter("status", status).setParameter("codUsuario", usuario);
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
     public List<Atendimento> listaByStatus(StatusAtendimento status) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Atendimento.findByStatus").setParameter("status", status);

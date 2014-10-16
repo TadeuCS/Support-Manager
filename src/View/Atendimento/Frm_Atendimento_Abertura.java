@@ -10,15 +10,19 @@ import Controller.ClienteDAO;
 import Controller.OrigemDAO;
 import Controller.PrioridadeDAO;
 import Controller.StatusAtendimentoDAO;
+import Controller.StatusPessoaDAO;
 import Controller.TipoAtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Atendimento;
+import Model.StatusPessoa;
 import Model.Usuario;
 import Util.Classes.AutoComplete;
 import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
 import View.Home.Frm_Principal;
 import java.awt.Event;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -41,6 +45,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     PrioridadeDAO prioridadeDAO;
     StatusAtendimentoDAO statusAtendimentoDAO;
     Frm_Principal principal;
+    StatusPessoaDAO statusPessoaDAO;
+    StatusPessoa statusPessoa;
 
     public Frm_Atendimento_Abertura() {
         initComponents();
@@ -51,38 +57,42 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         carregaOrigem();
         carregaPrioridade();
         selecioneUsuarioLogado();
-        principal = new Frm_Principal();
         txt_problemaInformado.setDocument(new FixedLengthDocument(255));
         txt_solicitante.setDocument(new FixedLengthDocument(100));
         AutoComplete.decorate(cbx_cliente);
-        qtde.setText(txt_problemaInformado.getText().length()+"");
+        qtde.setText(txt_problemaInformado.getText().length() + "");
         selecionaOsPadroes(cbx_tipoAtendimento, cbx_origem, cbx_prioridade);
     }
 
-    public void selecionaOsPadroes(JComboBox tipo,JComboBox origem, JComboBox prioridade){
+    public void selecionaOsPadroes(JComboBox tipo, JComboBox origem, JComboBox prioridade) {
         tipo.setSelectedItem("SUPORTE");
         origem.setSelectedItem("TELEFONE");
         prioridade.setSelectedItem("NORMAL");
     }
+
     public void selecioneUsuarioLogado() {
         try {
-            usuarioDAO = new UsuarioDAO();
             usuario = new Usuario();
+            principal = new Frm_Principal();
+            usuarioDAO = new UsuarioDAO();
             usuario = usuarioDAO.consultaByUsuario(principal.getUsuarioLogado());
             if (usuario.getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
-                cbx_usuario.setSelectedItem(usuario.getCodtipousuario().getDescricao());
+                cbx_usuario.setSelectedItem(usuario.getUsuario());
                 cbx_usuario.setEnabled(false);
             }
         } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
     private void carregaUsuarios() {
-        usuarioDAO = new UsuarioDAO();
         try {
+            usuarioDAO = new UsuarioDAO();
             cbx_usuario.removeAllItems();
-            for (int i = 0; i < usuarioDAO.lista().size(); i++) {
-                cbx_usuario.addItem(usuarioDAO.lista().get(i).getUsuario());
+            statusPessoaDAO = new StatusPessoaDAO();
+            statusPessoa = statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO");
+            for (int i = 0; i < usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).size(); i++) {
+                cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).get(i).getUsuario());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
@@ -181,10 +191,6 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         }
     }
 
-    public void getAtendimento(Atendimento att) {
-
-    }
-
     public void setAtendimento() {
         try {
             atendimento = new Atendimento();
@@ -193,7 +199,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             origemDAO = new OrigemDAO();
             prioridadeDAO = new PrioridadeDAO();
             statusAtendimentoDAO = new StatusAtendimentoDAO();
-            
+
             if (txt_data.getText().equals("  /  /       :  ") == true) {
                 atendimento.setDataAgendamento(null);
             } else {
@@ -207,14 +213,18 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             atendimento.setCodprioridade(prioridadeDAO.buscaPrioridade(cbx_prioridade.getSelectedItem().toString()));
             atendimento.setSolicitante(txt_solicitante.getText());
             atendimento.setProblemaInformado(txt_problemaInformado.getText());
-            atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("ABERTO"));
+            atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("EXECUCAO"));
+            Date data = new Date();
+            String formato = "dd/MM/yyyy HH:mm";
+            Date date = new SimpleDateFormat(formato).parse(Data.getDataByDate(data, formato));
+            atendimento.setDataAbertura(date);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao capturar informações do Atendimento!");
             System.out.println(e);
         }
 
     }
-    
+
     public void salvar() {
         setAtendimento();
         try {
@@ -226,13 +236,14 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao Salvar Atendimento!");
         }
     }
-    
-    public void limpaCampos(){
+
+    public void limpaCampos() {
         txt_solicitante.setText(null);
         txt_problemaInformado.setText(null);
         txt_data.setText(null);
         txt_data.requestFocus();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -461,7 +472,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_dataKeyPressed
 
     private void txt_problemaInformadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_problemaInformadoKeyReleased
-        qtde.setText(txt_problemaInformado.getText().length()+"");
+        qtde.setText(txt_problemaInformado.getText().length() + "");
     }//GEN-LAST:event_txt_problemaInformadoKeyReleased
 
     /**

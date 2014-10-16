@@ -37,11 +37,9 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.persistence.NoResultException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 
 public class Frm_Principal extends javax.swing.JFrame {
 
@@ -56,16 +54,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
         criaPopMenu();
+        statusAtendimentoDAO = new StatusAtendimentoDAO();
     }
 
     private void criaPopMenu() {
         try {
-//            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-//            setLocationRelativeTo(null);
-//            pack();
-//            setSize(400, 300);
-
-            //Listener que capitura o evento "minimizar"
             addWindowListener(
                     new WindowAdapter() {
                         public void windowIconified(WindowEvent evnt) {
@@ -73,6 +66,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                             setVisible(false);
                             //Instancia a classe responsavel pelo �cone na �rea de notifica��o.
                             an = new PopMenu();
+                            dispose();
                         }
                     }
             );
@@ -105,15 +99,24 @@ public class Frm_Principal extends javax.swing.JFrame {
         label.setForeground(Color.gray);
     }
 
-    public String verificaTipoUsuarioLogado() {
+    public String getTipoUsuarioLogado() {
         try {
             usuarioDAO = new UsuarioDAO();
-            return usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao();
+            return usuarioDAO.consultaByUsuario(getUsuarioLogado()).getCodtipousuario().getDescricao();
         } catch (Exception e) {
             return "";
         }
     }
 
+    public void listaAtendimentos(String status){
+        try {
+            statusAtendimentoDAO=new StatusAtendimentoDAO();
+            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento(status),txt_usuarioLogado.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
+            System.out.println(e);
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -194,14 +197,14 @@ public class Frm_Principal extends javax.swing.JFrame {
         lb_qtdeConcluidos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_qtdeConcluidos.setText("0");
         lb_qtdeConcluidos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_qtdeConcluidosMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lb_qtdeConcluidosMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lb_qtdeConcluidosMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_qtdeConcluidosMousePressed(evt);
             }
         });
 
@@ -216,6 +219,9 @@ public class Frm_Principal extends javax.swing.JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lb_qtdeExecutandoMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_qtdeExecutandoMousePressed(evt);
+            }
         });
 
         lb_qtdePendentes.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
@@ -228,6 +234,9 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lb_qtdePendentesMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_qtdePendentesMousePressed(evt);
             }
         });
 
@@ -700,11 +709,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_abrirAtendimentoActionPerformed
 
     private void item_cancelarAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_cancelarAtendimentoActionPerformed
-        try {
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("ABERTO"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
-        }
+        listaAtendimentos("EXECUCAO");
     }//GEN-LAST:event_item_cancelarAtendimentoActionPerformed
 
     private void item_atendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_atendimentoActionPerformed
@@ -724,36 +729,19 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_enviaEmailActionPerformed
 
     private void item_abertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_abertosActionPerformed
-        try {
-            statusAtendimentoDAO = new StatusAtendimentoDAO();
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("ABERTO"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
-        }
+        listaAtendimentos("ABERTO");
     }//GEN-LAST:event_item_abertosActionPerformed
 
     private void item_executandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_executandoActionPerformed
-        try {
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("EXECUCAO"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
-        }
+        listaAtendimentos("EXECUCAO");
     }//GEN-LAST:event_item_executandoActionPerformed
 
     private void item_concluidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_concluidosActionPerformed
-        try {
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("CONCLUIDO"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
-        }
+        listaAtendimentos("CONCLUIDO");
     }//GEN-LAST:event_item_concluidosActionPerformed
 
     private void item_pendentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_pendentesActionPerformed
-        try {
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("PENDENTE"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
-        }
+        listaAtendimentos("PENDENTE");
     }//GEN-LAST:event_item_pendentesActionPerformed
 
     private void lb_qtdeConcluidosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeConcluidosMouseEntered
@@ -780,17 +768,21 @@ public class Frm_Principal extends javax.swing.JFrame {
         setFocusOFFLabel(lb_qtdePendentes);
     }//GEN-LAST:event_lb_qtdePendentesMouseExited
 
-    private void lb_qtdeConcluidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeConcluidosMouseClicked
-        try {
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento("CONCLUIDO"));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
-        }
-    }//GEN-LAST:event_lb_qtdeConcluidosMouseClicked
-
     private void menuI_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_empresaActionPerformed
         Frm_CadEmpresa f = new Frm_CadEmpresa();
     }//GEN-LAST:event_menuI_empresaActionPerformed
+
+    private void lb_qtdeExecutandoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeExecutandoMousePressed
+        listaAtendimentos("EXECUCAO");
+    }//GEN-LAST:event_lb_qtdeExecutandoMousePressed
+
+    private void lb_qtdeConcluidosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeConcluidosMousePressed
+        listaAtendimentos("CONCLUIDO");
+    }//GEN-LAST:event_lb_qtdeConcluidosMousePressed
+
+    private void lb_qtdePendentesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdePendentesMousePressed
+        listaAtendimentos("PENDENTE");
+    }//GEN-LAST:event_lb_qtdePendentesMousePressed
 
     /**
      * @param args the command line arguments
