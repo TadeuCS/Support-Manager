@@ -10,6 +10,7 @@ import Controller.UsuarioDAO;
 import Model.StatusAtendimento;
 import Model.Usuario;
 import Util.Classes.Data;
+import View.Atendimento.Frm_Atendimento_Detalhe;
 import View.Atendimento.Frm_Atendimento_Encerramento;
 import View.Home.Frm_Principal;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
         actionByStatus(status);
-        usuarioDAO=new UsuarioDAO();
+        usuarioDAO = new UsuarioDAO();
         if (principal.getTipoUsuarioLogado().equals("SUPORTE") == true) {
             btn_apagar.setEnabled(false);
             listaAtendimentoByStatusAndUsuario(status, usuarioDAO.consultaByUsuario(usuario));
@@ -121,10 +122,22 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
                 Frm_Atendimento_Encerramento f = new Frm_Atendimento_Encerramento();
-//                f.setCodigoAtendimento(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
+                f.setTitle("Fechamento de Atendimento");
                 f.getAtendimento(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
                 dispose();
             }
+        }
+    }
+
+    public void apagar(int codigo) {
+        try {
+            atendimentoDAO = new AtendimentoDAO();
+            atendimentoDAO.remove(atendimentoDAO.getByCodigo(codigo));
+            JOptionPane.showMessageDialog(null, "Atendimento removido com sucesso!");
+            model = (DefaultTableModel) tb_atendimentos.getModel();
+            model.removeRow(tb_atendimentos.getSelectedRow());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao apagar o atendimento: " + codigo);
         }
     }
 
@@ -225,6 +238,11 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         jLabel1.setText("Filtro:");
 
         btn_apagar.setText("Apagar");
+        btn_apagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_apagarActionPerformed(evt);
+            }
+        });
 
         btn_finalizar.setText("Finalizar");
         btn_finalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -236,6 +254,11 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         btn_alterar.setText("Alterar");
 
         btn_consultar.setText("Detalhar");
+        btn_consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_consultarActionPerformed(evt);
+            }
+        });
 
         btn_sair.setText("Sair");
         btn_sair.addActionListener(new java.awt.event.ActionListener() {
@@ -325,6 +348,28 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
     private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
         finalizar();
     }//GEN-LAST:event_btn_finalizarActionPerformed
+
+    private void btn_apagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apagarActionPerformed
+        if (tb_atendimentos.getSelectedRowCount() == 1) {
+            if (JOptionPane.showConfirmDialog(null, "Deseja relamente excluir o atendimento: " + tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString(), "", 0, JOptionPane.YES_NO_OPTION) == 0) {
+                apagar(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um Atendimento para APAGAR");
+        }
+    }//GEN-LAST:event_btn_apagarActionPerformed
+
+    private void btn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarActionPerformed
+        if (tb_atendimentos.getSelectedRowCount() == 1) {
+            try {
+                Frm_Atendimento_Detalhe f = new Frm_Atendimento_Detalhe(atendimentoDAO.getByCodigo(tb_atendimentos.getSelectedRow()));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Detalhar Atendimento");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma atendimento para DETALHAR");
+        }
+    }//GEN-LAST:event_btn_consultarActionPerformed
 
     /**
      * @param args the command line arguments

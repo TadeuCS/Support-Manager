@@ -199,6 +199,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Apagar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_apagarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_finalizar">
               <Properties>
@@ -217,6 +220,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Detalhar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_consultarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_sair">
               <Properties>

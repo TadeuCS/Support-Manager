@@ -22,6 +22,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
     public Frm_Atendimento_Encerramento() {
         initComponents();
+        setVisible(true);
         pendenciaGroup.add(rbt_nao);
         pendenciaGroup.add(rbt_sim);
         validaPendencia();
@@ -49,26 +50,32 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             atendimentoDAO = new AtendimentoDAO();
             atendimento = new Atendimento();
             atendimento = atendimentoDAO.getByCodigo(codigoAtendimento);
-            cbx_cliente.setSelectedItem(atendimento.getCodcliente().getNomeFantasia());
-            if (atendimento.getDataAbertura() != null) {
+            txt_cliente.setText(atendimento.getCodcliente().getNomeFantasia());
+            txt_usuario.setText(atendimento.getCodusuario().getUsuario());
+            if (atendimento.getDataInicio() != null) {
                 txt_dataInicio.setText(Data.getDataByDate(atendimento.getDataInicio(), "dd/MM/yyyy HH:mm"));
             }
-            if (atendimento.getDataFechamento() != null) {
+            if (atendimento.getDataFim() != null) {
                 txt_dataFim.setText(Data.getDataByDate(atendimento.getDataFim(), "dd/MM/yyyy HH:mm"));
             }
-            cbx_usuario.setSelectedItem(atendimento.getCodusuario());
-            if ((atendimento.getPendencia().equals("S") == true) && (atendimento.getProblemaPendencia().equals("") == false)) {
-                txt_pendencia.setText(atendimento.getProblemaPendencia());
+            if ((atendimento.getPendencia() != null) && (atendimento.getPendencia().equals('S') == true)) {
+                pnl_pendencia.setVisible(true);
+                rbt_sim.setSelected(true);
+                rbt_nao.setSelected(false);
+                if (atendimento.getProblemaPendencia() != null) {
+                    txt_pendencia.setText(atendimento.getProblemaPendencia());
+                }
             }
             txt_problemaInformado.setText(atendimento.getProblemaInformado());
-            if(atendimento.getProblemaDetectado().equals("")==false){
+            if (atendimento.getProblemaDetectado() != null) {
                 txt_problemaDetectado.setText(atendimento.getProblemaDetectado());
             }
-            if(atendimento.getProblemaSolucao().equals("")==false){
+            if (atendimento.getProblemaSolucao() != null) {
                 txt_problemaSolucao.setText(atendimento.getProblemaSolucao());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar dados do Atendimento Selecionado!");
+            System.out.println(e);
         }
     }
 
@@ -86,7 +93,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_problemaInformado = new javax.swing.JTextArea();
-        cbx_usuario = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         txt_dataFim = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -102,7 +108,8 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         txt_problemaSolucao = new javax.swing.JTextArea();
         jLabel13 = new javax.swing.JLabel();
-        cbx_cliente = new javax.swing.JComboBox();
+        txt_cliente = new javax.swing.JTextField();
+        txt_usuario = new javax.swing.JTextField();
         btn_salvar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
 
@@ -192,8 +199,9 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
         jLabel13.setText("Solução *:");
 
-        cbx_cliente.setBackground(new java.awt.Color(204, 204, 204));
-        cbx_cliente.setEditable(true);
+        txt_cliente.setEnabled(false);
+
+        txt_usuario.setEnabled(false);
 
         javax.swing.GroupLayout pnl_dadosLayout = new javax.swing.GroupLayout(pnl_dados);
         pnl_dados.setLayout(pnl_dadosLayout);
@@ -210,11 +218,11 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt_dataFim, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(cbx_usuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosLayout.createSequentialGroup()
                                 .addComponent(rbt_nao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rbt_sim))))
+                                .addComponent(rbt_sim))
+                            .addComponent(txt_usuario)))
                     .addGroup(pnl_dadosLayout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -223,7 +231,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbx_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnl_dadosLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -250,7 +258,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(cbx_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -261,8 +269,8 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                     .addComponent(txt_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -353,7 +361,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     }//GEN-LAST:event_rbt_naoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        
+
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     /**
@@ -394,8 +402,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_salvar;
-    private javax.swing.JComboBox cbx_cliente;
-    private javax.swing.JComboBox cbx_usuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -415,11 +421,13 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_pendencia;
     private javax.swing.JRadioButton rbt_nao;
     private javax.swing.JRadioButton rbt_sim;
+    private javax.swing.JTextField txt_cliente;
     private javax.swing.JFormattedTextField txt_dataFim;
     private javax.swing.JFormattedTextField txt_dataInicio;
     private javax.swing.JTextArea txt_pendencia;
     private javax.swing.JTextArea txt_problemaDetectado;
     private javax.swing.JTextArea txt_problemaInformado;
     private javax.swing.JTextArea txt_problemaSolucao;
+    private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }

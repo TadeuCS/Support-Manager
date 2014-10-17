@@ -214,6 +214,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             atendimento.setSolicitante(txt_solicitante.getText());
             atendimento.setProblemaInformado(txt_problemaInformado.getText());
             atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("EXECUCAO"));
+            atendimento.setPendencia('N');
             Date data = new Date();
             String formato = "dd/MM/yyyy HH:mm";
             Date date = new SimpleDateFormat(formato).parse(Data.getDataByDate(data, formato));
