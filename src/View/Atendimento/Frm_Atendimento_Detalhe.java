@@ -65,7 +65,7 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
             if (atendimento.getProblemaSolucao() != null) {
                 txt_probSolucao.setText(atendimento.getProblemaSolucao());
             }
-            if (atendimento.getPendencia().equals("S") == true) {
+            if (atendimento.getProblemaPendencia()!= null) {
                 txt_probPendencia.setText(atendimento.getProblemaPendencia());
             }
         } catch (Exception e) {

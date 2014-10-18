@@ -121,10 +121,33 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             if (tb_atendimentos.getSelectedRowCount() > 1) {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
-                Frm_Atendimento_Encerramento f = new Frm_Atendimento_Encerramento();
-                f.setTitle("Fechamento de Atendimento");
-                f.getAtendimento(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
-                dispose();
+                try {
+                    atendimentoDAO = new AtendimentoDAO();
+                    Frm_Atendimento_Encerramento f = new Frm_Atendimento_Encerramento(btn_finalizar, atendimentoDAO.getByCodigo(
+                            Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString())
+                    ));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Selecionar Atendimento");
+                }
+            }
+        }
+    }
+
+    public void alterar() {
+        if (tb_atendimentos.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha!");
+        } else {
+            if (tb_atendimentos.getSelectedRowCount() > 1) {
+                JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
+            } else {
+                try {
+                    atendimentoDAO = new AtendimentoDAO();
+                    Frm_Atendimento_Encerramento f = new Frm_Atendimento_Encerramento(btn_alterar, atendimentoDAO.getByCodigo(
+                            Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString())
+                    ));
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Selecionar Atendimento");
+                }
             }
         }
     }
@@ -255,6 +278,11 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
 
         btn_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/alterar.png"))); // NOI18N
         btn_alterar.setText("Alterar");
+        btn_alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alterarActionPerformed(evt);
+            }
+        });
 
         btn_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/detalhe.png"))); // NOI18N
         btn_consultar.setText("Detalhar");
@@ -352,6 +380,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
 
     private void btn_finalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finalizarActionPerformed
         finalizar();
+        dispose();
     }//GEN-LAST:event_btn_finalizarActionPerformed
 
     private void btn_apagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apagarActionPerformed
@@ -379,6 +408,11 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma atendimento para DETALHAR");
         }
     }//GEN-LAST:event_btn_consultarActionPerformed
+
+    private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
+        alterar();
+        dispose();
+    }//GEN-LAST:event_btn_alterarActionPerformed
 
     /**
      * @param args the command line arguments

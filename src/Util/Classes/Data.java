@@ -27,7 +27,7 @@ public class Data {
         }
     }
 
-    public String getData(String formato) {
+    public static  String getData(String formato) {
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         Date data = new Date();
         return sdf.format(data);

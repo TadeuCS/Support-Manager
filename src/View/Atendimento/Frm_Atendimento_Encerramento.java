@@ -6,8 +6,12 @@
 package View.Atendimento;
 
 import Controller.AtendimentoDAO;
+import Controller.StatusAtendimentoDAO;
 import Model.Atendimento;
 import Util.Classes.Data;
+import java.awt.Event;
+import java.util.Date;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,16 +23,67 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     private static int codigoAtendimento;
     AtendimentoDAO atendimentoDAO;
     Atendimento atendimento;
+    StatusAtendimentoDAO statusAtendimentoDAO;
 
-    public Frm_Atendimento_Encerramento() {
+    public Frm_Atendimento_Encerramento(JButton botao, Atendimento atendimento) {
         initComponents();
         setVisible(true);
         pendenciaGroup.add(rbt_nao);
         pendenciaGroup.add(rbt_sim);
-        validaPendencia();
+        getPendencia();
+        this.atendimento = atendimento;
+        getAtendimento(atendimento);
+        if (botao.getText().equals("Finalizar") == true) {
+            setTitle("Encerramento de Atendimento");
+            btn_salvar.setText("Finalizar");
+            btn_salvar.setIcon(botao.getIcon());
+        } else {
+            setTitle("Alteração de Atendimento");
+            btn_salvar.setText("Salvar");
+        }
     }
 
-    public void validaPendencia() {
+    public void getAtendimento(Atendimento atendimento) {
+        try {
+            txt_cliente.setText(atendimento.getCodcliente().getNomeFantasia());
+            if (atendimento.getDataFim() != null) {
+                txt_dataFim.setText(Data.getDataByDate(atendimento.getDataFim(), "dd/MM/yyyy HH:mm"));
+            }
+            if (atendimento.getDataInicio() != null) {
+                txt_dataInicio.setText(Data.getDataByDate(atendimento.getDataInicio(), "dd/MM/yyyy HH:mm"));
+            }
+            if (atendimento.getCodusuario() != null) {
+                txt_usuario.setText(atendimento.getCodusuario().getUsuario());
+            }
+            Frm_Atendimento_Encerramento.this.getPendencia(atendimento);
+            if (atendimento.getProblemaPendencia() != null) {
+                txt_pendencia.setText(atendimento.getProblemaPendencia());
+            }
+            if (atendimento.getProblemaInformado() != null) {
+                txt_problemaInformado.setText(atendimento.getProblemaInformado());
+            }
+            if (atendimento.getProblemaDetectado() != null) {
+                txt_problemaDetectado.setText(atendimento.getProblemaDetectado());
+            }
+            if (atendimento.getProblemaSolucao() != null) {
+                txt_problemaSolucao.setText(atendimento.getProblemaSolucao());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar informações do atendimento: " + atendimento.getCodatendimento());
+        }
+    }
+
+    public void getPendencia(Atendimento atendimento) {
+        if (atendimento.getPendencia().equals("S") == true) {
+            rbt_sim.setSelected(true);
+            rbt_nao.setSelected(false);
+        } else {
+            rbt_nao.setSelected(true);
+            rbt_sim.setSelected(false);
+        }
+    }
+
+    public void getPendencia() {
         if (rbt_sim.getSelectedObjects() != null) {
             pnl_pendencia.setVisible(true);
             txt_pendencia.requestFocus();
@@ -45,37 +100,90 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         Frm_Atendimento_Encerramento.codigoAtendimento = codigoAtendimento;
     }
 
-    public void getAtendimento(int codigoAtendimento) {
+    public void setAtendimento(Atendimento atendimento) {
         try {
-            atendimentoDAO = new AtendimentoDAO();
-            atendimento = new Atendimento();
-            atendimento = atendimentoDAO.getByCodigo(codigoAtendimento);
-            txt_cliente.setText(atendimento.getCodcliente().getNomeFantasia());
-            txt_usuario.setText(atendimento.getCodusuario().getUsuario());
-            if (atendimento.getDataInicio() != null) {
-                txt_dataInicio.setText(Data.getDataByDate(atendimento.getDataInicio(), "dd/MM/yyyy HH:mm"));
+            atendimento.setDataInicio(Data.getDataByTexto(txt_dataInicio.getText(), "dd/MM/yyyy HH:mm"));
+            atendimento.setDataFim(Data.getDataByTexto(txt_dataFim.getText(), "dd/MM/yyyy HH:mm"));
+            if (btn_salvar.getText().equals("Finalizar") == true) {
+                atendimento.setDataFechamento(Data.getDataByTexto(Data.getData("dd/MM/yyyy HH:mm"), "dd/MM/yyyy HH:mm"));
+                statusAtendimentoDAO = new StatusAtendimentoDAO();
+                atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("CONCLUIDO"));
+                atendimento.setProblemaSolucao(txt_problemaSolucao.getText());
             }
-            if (atendimento.getDataFim() != null) {
-                txt_dataFim.setText(Data.getDataByDate(atendimento.getDataFim(), "dd/MM/yyyy HH:mm"));
+            setPendencia(atendimento);
+            if (!txt_problemaInformado.getText().isEmpty()) {
+                atendimento.setProblemaInformado(txt_problemaInformado.getText());
             }
-            if ((atendimento.getPendencia() != null) && (atendimento.getPendencia().equals('S') == true)) {
-                pnl_pendencia.setVisible(true);
-                rbt_sim.setSelected(true);
-                rbt_nao.setSelected(false);
-                if (atendimento.getProblemaPendencia() != null) {
-                    txt_pendencia.setText(atendimento.getProblemaPendencia());
+            if (!txt_problemaDetectado.getText().isEmpty()) {
+                atendimento.setProblemaDetectado(txt_problemaDetectado.getText());
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar informações do Atendimento");
+        }
+    }
+
+    public void setPendencia(Atendimento atendimento) {
+        if (rbt_sim.getSelectedObjects() != null) {
+            atendimento.setPendencia('S');
+            atendimento.setProblemaPendencia(txt_pendencia.getText());
+        } else {
+            atendimento.setPendencia('N');
+        }
+    }
+
+    public void limpaCampos() {
+        txt_cliente.setText(null);
+        txt_dataInicio.setText(null);
+        txt_dataFim.setText(null);
+        txt_usuario.setText(null);
+        rbt_nao.setSelected(false);
+        rbt_sim.setSelected(false);
+        txt_problemaInformado.setText(null);
+        txt_problemaDetectado.setText(null);
+        txt_problemaSolucao.setText(null);
+        txt_pendencia.setText(null);
+    }
+
+    public void salvar() {
+        atendimentoDAO = new AtendimentoDAO();
+        setAtendimento(atendimento);
+        try {
+            atendimentoDAO.salvar(atendimento);
+            JOptionPane.showMessageDialog(null, "Atendimento " + btn_salvar.getText() + " com sucesso!");
+            limpaCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao " + btn_salvar.getText() + " Atendimento!");
+        }
+
+    }
+
+    public void validaCampos(String operacao,String dataInicio, String dataFim, boolean pendencia, String probInformado, String probDetectado, String probSolucao, String probPendencia) {
+        if (dataInicio.equals("  /  /       :  ") == true) {
+            JOptionPane.showMessageDialog(null, "Data Início inválida!");
+            txt_dataInicio.requestFocus();
+        } else {
+            if (dataFim.equals("  /  /       :  ") == true) {
+                JOptionPane.showMessageDialog(null, "Data Fim inválida!");
+                txt_dataFim.requestFocus();
+            } else {
+                if ((rbt_sim.getSelectedObjects() != null) && (txt_pendencia.getText().isEmpty())) {
+                    JOptionPane.showMessageDialog(null, "o movito da Pendencia informada é inválida!");
+                    txt_pendencia.requestFocus();
+                } else {
+                    if (txt_problemaDetectado.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Problema Detectado inválido!");
+                        txt_problemaDetectado.requestFocus();
+                    } else {
+                        if (txt_problemaSolucao.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Solução do problema inválida!");
+                            txt_problemaSolucao.requestFocus();
+                        } else {
+                            salvar();
+                        }
+                    }
                 }
             }
-            txt_problemaInformado.setText(atendimento.getProblemaInformado());
-            if (atendimento.getProblemaDetectado() != null) {
-                txt_problemaDetectado.setText(atendimento.getProblemaDetectado());
-            }
-            if (atendimento.getProblemaSolucao() != null) {
-                txt_problemaSolucao.setText(atendimento.getProblemaSolucao());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar dados do Atendimento Selecionado!");
-            System.out.println(e);
         }
     }
 
@@ -127,6 +235,11 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txt_dataInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_dataInicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_dataInicioKeyPressed(evt);
+            }
+        });
 
         jLabel3.setText("Cliente*:");
 
@@ -136,6 +249,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
         txt_problemaInformado.setColumns(20);
         txt_problemaInformado.setRows(5);
+        txt_problemaInformado.setEnabled(false);
         jScrollPane1.setViewportView(txt_problemaInformado);
 
         jLabel1.setText("Usuário* :");
@@ -146,6 +260,11 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txt_dataFim.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_dataFim.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_dataFimKeyPressed(evt);
+            }
+        });
 
         jLabel9.setText("Data Fim *:");
 
@@ -355,16 +474,32 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void rbt_simActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_simActionPerformed
-        validaPendencia();
+        getPendencia();
     }//GEN-LAST:event_rbt_simActionPerformed
 
     private void rbt_naoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_naoActionPerformed
-        validaPendencia();
+        getPendencia();
     }//GEN-LAST:event_rbt_naoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-
+        salvar();
     }//GEN-LAST:event_btn_salvarActionPerformed
+
+    private void txt_dataInicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataInicioKeyPressed
+        if ((evt.getKeyCode() == Event.ENTER) && (txt_dataInicio.getText().equals("  /  /       :  ") == true)) {
+            Data data = new Data();
+            Date dataAtual = new Date();
+            txt_dataInicio.setText(data.getDataByDate(dataAtual, "dd/MM/yyyy HH:mm"));
+        }
+    }//GEN-LAST:event_txt_dataInicioKeyPressed
+
+    private void txt_dataFimKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataFimKeyPressed
+        if ((evt.getKeyCode() == Event.ENTER) && (txt_dataFim.getText().equals("  /  /       :  ") == true)) {
+            Data data = new Data();
+            Date dataAtual = new Date();
+            txt_dataFim.setText(data.getDataByDate(dataAtual, "dd/MM/yyyy HH:mm"));
+        }
+    }//GEN-LAST:event_txt_dataFimKeyPressed
 
     /**
      * @param args the command line arguments
@@ -396,7 +531,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_Atendimento_Encerramento().setVisible(true);
+//                new Frm_Atendimento_Encerramento().setVisible(true);
             }
         });
     }
