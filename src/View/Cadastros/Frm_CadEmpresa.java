@@ -605,6 +605,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Empresa");
 
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cancelar.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -626,6 +627,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
         txt_cpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        btn_proximoEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoEmpresa.setText("Proximo");
         btn_proximoEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -672,7 +674,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txt_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(btn_proximoEmpresa)
                 .addContainerGap())
         );
@@ -736,6 +738,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_proximoTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoTelefone.setText("Proximo");
         btn_proximoTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -743,6 +746,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_anteriorTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_anteriorTelefone.setText("Anterior");
         btn_anteriorTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -868,6 +872,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_anteriorEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_anteriorEndereco.setText("Anterior");
         btn_anteriorEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -875,6 +880,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_proximoEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoEndereco.setText("Proximo");
         btn_proximoEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -958,7 +964,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cadCidade))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_anteriorEndereco)
                     .addComponent(btn_proximoEndereco))
@@ -985,6 +991,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
         chx_ssl.setText("SSL");
 
+        btn_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/confirmar.png"))); // NOI18N
         btn_salvar.setText("Salvar");
         btn_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -992,6 +999,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_anteriorEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_anteriorEmail.setText("Anterior");
         btn_anteriorEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1055,7 +1063,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txt_porta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chx_ssl))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
                     .addComponent(btn_anteriorEmail))
@@ -1064,6 +1072,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
         abas.addTab("Email", pnl_dadosEmail);
 
+        btn_inclusao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/adicionar.png"))); // NOI18N
         btn_inclusao.setText("Inclusão");
         btn_inclusao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1071,6 +1080,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_alteracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/alterar.png"))); // NOI18N
         btn_alteracao.setText("Alteração");
         btn_alteracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1081,6 +1091,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         txt_operacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_operacao.setEnabled(false);
 
+        btn_consulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/buscar.png"))); // NOI18N
         btn_consulta.setText("Consulta");
         btn_consulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

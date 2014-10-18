@@ -93,6 +93,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btn_proximoDados">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/proximo.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Proximo"/>
               </Properties>
               <Events>
@@ -413,6 +416,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btn_proximoEndereco">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/proximo.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Proximo"/>
               </Properties>
               <Events>
@@ -421,6 +427,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_anteriorEndereco">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/anterior.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Anterior"/>
               </Properties>
               <Events>
@@ -519,7 +528,7 @@
                               <Component id="cbx_estados" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_cadCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="29" max="32767" attributes="0"/>
+                          <EmptySpace pref="27" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -662,6 +671,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btn_proximoTelefones">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/proximo.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Proximo"/>
               </Properties>
               <Events>
@@ -670,6 +682,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_anteriorTelefones">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/anterior.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Anterior"/>
               </Properties>
               <Events>
@@ -719,7 +734,7 @@
                                       <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -765,7 +780,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btn_inserirTelefone">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/inserir.png"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inserirTelefoneActionPerformed"/>
@@ -773,7 +790,10 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_removerTelefone">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/remover.png"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_removerTelefoneActionPerformed"/>
@@ -794,13 +814,13 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pnl_cadTelefones" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
+                                  <Component id="pnl_cadTelefones" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
                                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="cbx_grupo" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btn_cadGrupo" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="btn_cadGrupo" min="-2" pref="33" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -916,6 +936,7 @@
                     </Container>
                     <Component class="javax.swing.JButton" name="btn_cadGrupo">
                       <Properties>
+                        <Property name="text" type="java.lang.String" value="..."/>
                         <Property name="toolTipText" type="java.lang.String" value="Adicionar Contato"/>
                       </Properties>
                       <Events>
@@ -972,6 +993,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btn_anterior">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/anterior.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Anterior"/>
               </Properties>
               <Events>
@@ -1157,7 +1181,9 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btn_inserirLinks">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/inserir.png"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inserirLinksActionPerformed"/>
@@ -1165,7 +1191,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_removerLinks">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/remover.png"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_removerLinksActionPerformed"/>
@@ -1175,6 +1203,9 @@
             </Container>
             <Component class="javax.swing.JButton" name="btn_proximoLinks">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/proximo.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Proximo"/>
               </Properties>
               <Events>
@@ -1388,6 +1419,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_calcularMensalidade">
                   <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/carregar.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Calcular"/>
                   </Properties>
                   <Events>
@@ -1406,6 +1440,9 @@
             </Container>
             <Component class="javax.swing.JButton" name="btn_salvar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/confirmar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Salvar"/>
               </Properties>
               <Events>
@@ -1414,6 +1451,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_salvar1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/anterior.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Anterior"/>
               </Properties>
               <Events>
@@ -1473,6 +1513,9 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="btn_inclusao">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/adicionar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Inclus&#xe3;o"/>
           </Properties>
           <Events>
@@ -1481,6 +1524,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_alteracao">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/alterar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Altera&#xe7;&#xe3;o"/>
           </Properties>
           <Events>
@@ -1489,6 +1535,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_exclusao">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/excluir.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Exclus&#xe3;o"/>
           </Properties>
           <Events>
@@ -1497,6 +1546,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_consulta">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/buscar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Consulta"/>
           </Properties>
           <Events>
@@ -1511,6 +1563,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_cancelar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/cancelar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>
           <Events>

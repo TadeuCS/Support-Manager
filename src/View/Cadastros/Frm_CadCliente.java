@@ -935,6 +935,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         setTitle("Cadastro de Clientes");
         setResizable(false);
 
+        btn_proximoDados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoDados.setText("Proximo");
         btn_proximoDados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1144,6 +1145,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         abas.addTab("Dados Pessoais", pnl_dadosCliente);
 
+        btn_proximoEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoEndereco.setText("Proximo");
         btn_proximoEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1151,6 +1153,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_anteriorEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_anteriorEndereco.setText("Anterior");
         btn_anteriorEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1295,7 +1298,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_cadCidade))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnl_enderecoLayout = new javax.swing.GroupLayout(pnl_endereco);
@@ -1326,6 +1329,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         abas.addTab("Endereço", pnl_endereco);
 
+        btn_proximoTelefones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoTelefones.setText("Proximo");
         btn_proximoTelefones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1333,6 +1337,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_anteriorTelefones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_anteriorTelefones.setText("Anterior");
         btn_anteriorTelefones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1367,14 +1372,15 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tb_telefones);
 
-        btn_inserirTelefone.setText(">>");
+        btn_inserirTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
         btn_inserirTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirTelefoneActionPerformed(evt);
             }
         });
 
-        btn_removerTelefone.setText("<<");
+        btn_removerTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/remover.png"))); // NOI18N
+        btn_removerTelefone.setToolTipText("");
         btn_removerTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_removerTelefoneActionPerformed(evt);
@@ -1445,6 +1451,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_cadGrupo.setText("...");
         btn_cadGrupo.setToolTipText("Adicionar Contato");
         btn_cadGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1464,8 +1471,8 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbx_grupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1511,7 +1518,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                         .addGroup(pnl_dados_telefonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(26, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout pnl_telefonesLayout = new javax.swing.GroupLayout(pnl_telefones);
@@ -1542,6 +1549,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         abas.addTab("Telefones", pnl_telefones);
 
+        btn_anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_anterior.setText("Anterior");
         btn_anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1627,14 +1635,14 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_inserirLinks.setText(">>");
+        btn_inserirLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
         btn_inserirLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirLinksActionPerformed(evt);
             }
         });
 
-        btn_removerLinks.setText("<<");
+        btn_removerLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/remover.png"))); // NOI18N
         btn_removerLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_removerLinksActionPerformed(evt);
@@ -1674,6 +1682,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 .addGap(48, 48, 48))
         );
 
+        btn_proximoLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
         btn_proximoLinks.setText("Proximo");
         btn_proximoLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1785,6 +1794,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         jLabel54.setText("% Parcela *:");
 
+        btn_calcularMensalidade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/carregar.png"))); // NOI18N
         btn_calcularMensalidade.setText("Calcular");
         btn_calcularMensalidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1834,6 +1844,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/confirmar.png"))); // NOI18N
         btn_salvar.setText("Salvar");
         btn_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1841,6 +1852,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_salvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
         btn_salvar1.setText("Anterior");
         btn_salvar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1878,6 +1890,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         pnl_botoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        btn_inclusao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/adicionar.png"))); // NOI18N
         btn_inclusao.setText("Inclusão");
         btn_inclusao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1885,6 +1898,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_alteracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/alterar.png"))); // NOI18N
         btn_alteracao.setText("Alteração");
         btn_alteracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1892,6 +1906,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_exclusao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/excluir.png"))); // NOI18N
         btn_exclusao.setText("Exclusão");
         btn_exclusao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1899,6 +1914,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
+        btn_consulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/buscar.png"))); // NOI18N
         btn_consulta.setText("Consulta");
         btn_consulta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1909,6 +1925,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         txt_operacao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_operacao.setEnabled(false);
 
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cancelar.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
