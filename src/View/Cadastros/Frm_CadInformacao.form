@@ -169,6 +169,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btn_salvar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/salvar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
           <Events>
@@ -177,6 +180,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_fechar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/fechar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Fechar"/>
           </Properties>
           <Events>

@@ -61,11 +61,11 @@
                           <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="btn_fechar" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="btn_fechar" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btn_voltar" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="btn_voltar" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btn_selecionar" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="btn_selecionar" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -121,7 +121,7 @@
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" pref="398" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="396" max="32767" attributes="0"/>
                       <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
@@ -229,18 +229,30 @@
             </Container>
             <Component class="javax.swing.JButton" name="btn_voltar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/voltar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Voltar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Volta para o Cadastro de Cliente"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_voltarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_selecionar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/selecionar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Selecionar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Carrega os dados do Cliente selecionado, no cadastro de Cliente"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_selecionarActionPerformed"/>
               </Events>
@@ -257,9 +269,15 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_fechar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/fechar.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Fechar"/>
                 <Property name="toolTipText" type="java.lang.String" value="Fecha a tela de Consulta de Clientes"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_fecharActionPerformed"/>
               </Events>

@@ -232,11 +232,12 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
 
         jLabel1.setText("Filtro:");
 
+        btn_apagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/excluir.png"))); // NOI18N
         btn_apagar.setText("Apagar");
         btn_apagar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -244,6 +245,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             }
         });
 
+        btn_finalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/finalizar.png"))); // NOI18N
         btn_finalizar.setText("Finalizar");
         btn_finalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,8 +253,10 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             }
         });
 
+        btn_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/alterar.png"))); // NOI18N
         btn_alterar.setText("Alterar");
 
+        btn_consultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/detalhe.png"))); // NOI18N
         btn_consultar.setText("Detalhar");
         btn_consultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,7 +264,8 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             }
         });
 
-        btn_sair.setText("Sair");
+        btn_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
+        btn_sair.setText("Fechar");
         btn_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_sairActionPerformed(evt);
@@ -362,9 +367,13 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
     private void btn_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultarActionPerformed
         if (tb_atendimentos.getSelectedRowCount() == 1) {
             try {
-                Frm_Atendimento_Detalhe f = new Frm_Atendimento_Detalhe(atendimentoDAO.getByCodigo(tb_atendimentos.getSelectedRow()));
+                atendimentoDAO = new AtendimentoDAO();
+                Frm_Atendimento_Detalhe f = new Frm_Atendimento_Detalhe(atendimentoDAO.getByCodigo(
+                        Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()
+                        )));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao Detalhar Atendimento");
+                System.out.println(e);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma atendimento para DETALHAR");

@@ -40,7 +40,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="abas" min="-2" pref="256" max="-2" attributes="0"/>
+              <Component id="abas" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="pnl_botoes" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
@@ -225,19 +225,19 @@
                               <Component id="txt_responsavel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="cbx_segmento" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel51" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel52" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txt_data" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btn_cadSegmento" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btn_cadSegmento" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel51" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txt_data" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbx_segmento" alignment="1" max="32767" attributes="0"/>
                               </Group>
                               <Component id="jLabel53" alignment="0" min="-2" pref="21" max="-2" attributes="0"/>
                               <Component id="chx_bloqueado" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -362,7 +362,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_cadSegmento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Proximo"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/cadastro.png"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cadSegmentoActionPerformed"/>
@@ -523,12 +525,12 @@
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbx_cidades" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbx_cidades" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cbx_estados" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btn_cadCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
+                          <EmptySpace pref="39" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -617,7 +619,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_cadCidade">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="..."/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/cadastro.png"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cadCidadeActionPerformed"/>
@@ -936,7 +940,9 @@
                     </Container>
                     <Component class="javax.swing.JButton" name="btn_cadGrupo">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="..."/>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/Util/Img/cadastro.png"/>
+                        </Property>
                         <Property name="toolTipText" type="java.lang.String" value="Adicionar Contato"/>
                       </Properties>
                       <Events>
@@ -1296,7 +1302,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel54" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbx_parcela" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbx_parcela" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="btn_cadParcela" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="pnl_CadLinks1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1344,8 +1350,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel55" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbx_ano" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbx_ano" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="39" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -1393,7 +1399,9 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton1">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="..."/>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/Util/Img/cadastro.png"/>
+                        </Property>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -1430,7 +1438,9 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_cadParcela">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="..."/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Util/Img/cadastro.png"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cadParcelaActionPerformed"/>
@@ -1441,7 +1451,7 @@
             <Component class="javax.swing.JButton" name="btn_salvar">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Util/Img/confirmar.png"/>
+                  <Image iconType="3" name="/Util/Img/salvar.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Salvar"/>
               </Properties>

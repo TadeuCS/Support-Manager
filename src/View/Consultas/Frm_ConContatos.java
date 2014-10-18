@@ -196,6 +196,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/voltar.png"))); // NOI18N
         btn_voltar.setText("Voltar");
         btn_voltar.setToolTipText("Volta para o Cadastro de Contatos");
         btn_voltar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +205,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
             }
         });
 
+        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         btn_fechar.setText("Fechar");
         btn_fechar.setToolTipText("Fecha a tela de Consulta de Contatos");
         btn_fechar.addActionListener(new java.awt.event.ActionListener() {

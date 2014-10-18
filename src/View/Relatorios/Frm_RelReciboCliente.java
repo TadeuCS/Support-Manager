@@ -47,9 +47,9 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton3.setText(">>");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
 
-        jButton4.setText("<<");
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/remover.png"))); // NOI18N
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Clientes"));
 
@@ -179,11 +179,13 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/carregar.png"))); // NOI18N
         jButton1.setText("Gerar");
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         jButton2.setText("Fechar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

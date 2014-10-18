@@ -47,11 +47,11 @@
                       <Component id="jScrollPane1" alignment="0" pref="688" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="btn_fechar" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="btn_fechar" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btn_voltar" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="btn_voltar" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btn_selecionar" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="btn_selecionar" min="-2" pref="120" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -125,6 +125,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btn_selecionar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/selecionar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Selecionar"/>
             <Property name="toolTipText" type="java.lang.String" value="Carrega os dados do Cliente selecionado, no cadastro de Empresa"/>
           </Properties>
@@ -134,6 +137,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_voltar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/voltar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Voltar"/>
             <Property name="toolTipText" type="java.lang.String" value="Volta para o Cadastro de Empresa"/>
           </Properties>
@@ -143,6 +149,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_fechar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/fechar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Fechar"/>
             <Property name="toolTipText" type="java.lang.String" value="Fecha a tela de Consulta de Empresa"/>
           </Properties>

@@ -385,6 +385,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
         jLabel1.setText("Usuário* :");
 
+        btn_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/salvar.png"))); // NOI18N
         btn_salvar.setText("Salvar");
         btn_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -392,7 +393,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             }
         });
 
-        btn_sair.setText("Cancelar");
+        btn_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
+        btn_sair.setText("Fechar");
         btn_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_sairActionPerformed(evt);

@@ -44,19 +44,33 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
             if (atendimento.getDataSolucao() != null) {
                 txt_dataSolucao.setText(Data.getDataByDate(atendimento.getDataSolucao(), "dd/MM/yyyy HH:mm"));
             }
-            txt_prioridade.setText(atendimento.getCodprioridade().getDescricao());
-            txt_origem.setText(atendimento.getCodorigem().getDescricao());
-            txt_tipo.setText(atendimento.getCodtipoatendimento().getDescricao());
-            txt_usuario.setText(atendimento.getCodusuario().getUsuario());
-            txt_probInformado.setText(atendimento.getProblemaInformado());
-            txt_probDetectado.setText(atendimento.getProblemaDetectado());
-            txt_probSolucao.setText(atendimento.getProblemaSolucao());
-
+            if (atendimento.getCodprioridade() != null) {
+                txt_prioridade.setText(atendimento.getCodprioridade().getDescricao());
+            }
+            if (atendimento.getCodorigem() != null) {
+                txt_origem.setText(atendimento.getCodorigem().getDescricao());
+            }
+            if (atendimento.getCodtipoatendimento() != null) {
+                txt_tipo.setText(atendimento.getCodtipoatendimento().getDescricao());
+            }
+            if (atendimento.getCodusuario() != null) {
+                txt_usuario.setText(atendimento.getCodusuario().getUsuario());
+            }
+            if (atendimento.getProblemaInformado() != null) {
+                txt_probInformado.setText(atendimento.getProblemaInformado());
+            }
+            if (atendimento.getProblemaDetectado() != null) {
+                txt_probDetectado.setText(atendimento.getProblemaDetectado());
+            }
+            if (atendimento.getProblemaSolucao() != null) {
+                txt_probSolucao.setText(atendimento.getProblemaSolucao());
+            }
             if (atendimento.getPendencia().equals("S") == true) {
                 txt_probPendencia.setText(atendimento.getProblemaPendencia());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar Atendimento: "+atendimento.getCodatendimento());
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar Atendimento: " + atendimento.getCodatendimento());
+            System.out.println(e);
         }
     }
 
@@ -410,6 +424,7 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         btn_fechar.setText("Fechar");
         btn_fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -425,9 +440,9 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -435,7 +450,7 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_fechar)
                 .addContainerGap())
         );

@@ -45,11 +45,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="btn_fechar" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="btn_fechar" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="lb_status" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btn_testar" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="btn_testar" min="-2" pref="120" max="-2" attributes="0"/>
                       </Group>
                       <Component id="pnl_destinatario" max="32767" attributes="0"/>
                       <Component id="pnl_remetente" alignment="0" max="32767" attributes="0"/>
@@ -220,7 +220,7 @@
                           <Component id="cbx_empresas" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_cadEmpresa" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -243,7 +243,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_cadEmpresa">
               <Properties>
-                <Property name="text" type="java.lang.String" value="..."/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/Util/Img/cadastro.png"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cadEmpresaActionPerformed"/>
@@ -253,6 +255,9 @@
         </Container>
         <Component class="javax.swing.JButton" name="btn_testar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/email.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Testar Envio"/>
           </Properties>
           <Events>
@@ -261,6 +266,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_fechar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Util/Img/fechar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Fechar"/>
           </Properties>
           <Events>

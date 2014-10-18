@@ -156,8 +156,10 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        btn_gerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/carregar.png"))); // NOI18N
         btn_gerar.setText("Gerar");
 
+        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         btn_fechar.setText("Fechar");
         btn_fechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -122,6 +122,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
             tb_empresas.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
+        btn_selecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/selecionar.png"))); // NOI18N
         btn_selecionar.setText("Selecionar");
         btn_selecionar.setToolTipText("Carrega os dados do Cliente selecionado, no cadastro de Empresa");
         btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +131,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/voltar.png"))); // NOI18N
         btn_voltar.setText("Voltar");
         btn_voltar.setToolTipText("Volta para o Cadastro de Empresa");
         btn_voltar.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +140,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
             }
         });
 
+        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         btn_fechar.setText("Fechar");
         btn_fechar.setToolTipText("Fecha a tela de Consulta de Empresa");
         btn_fechar.addActionListener(new java.awt.event.ActionListener() {
@@ -156,11 +159,11 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
