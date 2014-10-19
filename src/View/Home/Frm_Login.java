@@ -8,9 +8,9 @@ package View.Home;
 import Controller.UsuarioDAO;
 import Model.Usuario;
 import Util.Classes.Criptografia;
-import Util.Classes.PopMenu;
 import java.awt.Event;
 import java.awt.event.KeyEvent;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
@@ -52,27 +52,25 @@ public class Frm_Login extends javax.swing.JFrame {
     }
 
     public void logar(String usuario, String senha) {
-        try {
-            if (isAdministrador(usuario, senha) == true) {
+        if (isAdministrador(usuario, senha) == true) {
+            p = new Frm_Principal();
+            p.setVisible(true);
+            dispose();
+        } else {
+            try {
+                usuarioDAO = new UsuarioDAO();
+                this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
                 p = new Frm_Principal();
                 p.setVisible(true);
                 dispose();
-            } else {
-                if (usuarioDAO.findByUsuarioAndSenha(usuario, senha).getUsuario() != null) {
-                    this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
-                    p = new Frm_Principal();
-                    p.setVisible(true);
-                    dispose();
-                } else {
-                    p.dispose();
-                }
+            } catch (NoResultException e) {
+                JOptionPane.showMessageDialog(null, "Usuário não existe ou Bloqueado!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            }finally{
+                txt_senha.setText(null);
+                txt_usuario.setText(null);
+                txt_usuario.requestFocus();
             }
-        } catch (Exception e) {
-            System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Usuário não existe ou Bloqueado!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            txt_senha.setText(null);
-            txt_usuario.setText(null);
-            txt_usuario.requestFocus();
+
         }
     }
 
@@ -225,7 +223,7 @@ public class Frm_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_senhaKeyPressed
 
     private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
-        if(evt.getKeyCode()==Event.ENTER){
+        if (evt.getKeyCode() == Event.ENTER) {
             txt_senha.requestFocus();
         }
     }//GEN-LAST:event_txt_usuarioKeyPressed

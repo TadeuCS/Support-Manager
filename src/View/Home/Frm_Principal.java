@@ -5,8 +5,11 @@
  */
 package View.Home;
 
+import Controller.PermissoesDAO;
 import Controller.StatusAtendimentoDAO;
 import Controller.UsuarioDAO;
+import Model.Permissoes;
+import Model.Usuario;
 import Util.Classes.PopMenu;
 import View.Atendimento.Frm_Atendimento_Abertura;
 import View.Cadastros.Frm_CadAplicativo;
@@ -45,9 +48,12 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     private String usuarioLogado;
     UsuarioDAO usuarioDAO;
+    Usuario usuario;
+    Permissoes permissoes;
+    PermissoesDAO permissoesDAO;
     private StatusAtendimentoDAO statusAtendimentoDAO;
     public static PopMenu an = null;
-    public static Frm_Principal j = null;
+    public static Frm_Principal j;
 
     public Frm_Principal() {
         initComponents();
@@ -55,6 +61,54 @@ public class Frm_Principal extends javax.swing.JFrame {
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
         criaPopMenu();
         statusAtendimentoDAO = new StatusAtendimentoDAO();
+    }
+
+    public void setPermissoes() {
+        try {
+            permissoesDAO = new PermissoesDAO();
+            usuarioDAO = new UsuarioDAO();
+            permissoes = new Permissoes();
+            permissoes = permissoesDAO.findByTipoUsuario(usuarioDAO.consultaByUsuario(getUsuarioLogado()).getCodtipousuario());
+
+            item_aplicativo.setVisible(permissoes.getCadAplicativo());
+            item_links.setVisible(permissoes.getCadLinks());
+            item_Atendimento.setVisible(permissoes.getCadAtendimento());
+            item_prioridade.setVisible(permissoes.getCadPrioridade());
+            item_origem.setVisible(permissoes.getCadOrigem());
+            item_status.setVisible(permissoes.getCadStatusAtendimento());
+            item_tipoAtendimento.setVisible(permissoes.getCadTipoAtendimento());
+            item_cliente.setVisible(permissoes.getCadCliente());
+            item_segmento.setVisible(permissoes.getCadSegmento());
+            item_parcela.setVisible(permissoes.getCadParcela());
+            item_salario.setVisible(permissoes.getCadSalario());
+            item_contato.setVisible(permissoes.getCadContato());
+            item_grupo.setVisible(permissoes.getCadGrupo());
+            item_usuario.setVisible(permissoes.getCadUsuario());
+            item_tipoUsuario.setVisible(permissoes.getCadTipoUsuario());
+            item_Empresa.setVisible(permissoes.getCadEmpresa());
+
+            item_abertos.setVisible(permissoes.getConsAtendimentoAbertos());
+            item_executando.setVisible(permissoes.getConsAtendimentoExecutando());
+            item_concluidos.setVisible(permissoes.getConsAtendimentoConcluidos());
+            item_pendentes.setVisible(permissoes.getConsAtendimentoPendentes());
+            item_cliente.setVisible(permissoes.getConsClientes());
+            item_contato.setVisible(permissoes.getConsContatos());
+            item_usuario.setVisible(permissoes.getConsUsuarios());
+
+            item_relAtendimento.setVisible(permissoes.getRelAtendimento());
+            item_relCliente.setVisible(permissoes.getRelClientes());
+
+            item_enviaEmail.setVisible(permissoes.getUtiEnviarEmail());
+            item_emiteRecibo.setVisible(permissoes.getUtiEmitirRecibo());
+            item_informacao.setVisible(permissoes.getUtiInformacao());
+            item_tipoInformacao.setVisible(permissoes.getUtiInformacao());
+            item_trocaUsuario.setVisible(permissoes.getUtiTrocaUsuario());
+            item_Permissoes.setVisible(permissoes.getUtiPermissoes());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuario: " + getUsuarioLogado());
+            Frm_Login f = new Frm_Login();
+            dispose();
+        }
     }
 
     private void criaPopMenu() {
@@ -85,10 +139,19 @@ public class Frm_Principal extends javax.swing.JFrame {
         if (usuarioLogado.equals("ADMIN") == true) {
             txt_usuarioLogado.setText("ADMINISTRADOR");
         } else {
-            if (Frm_Login.getUsuario().getSexo().equals('F') == true) {
+            setPermissoes();
+            if (usuarioDAO.consultaByUsuario(usuarioLogado).getSexo().equals('F') == true) {
                 lb_boasVindas.setText("Bem Vinda");
             }
         }
+//        try {
+//            usuarioDAO = new UsuarioDAO();
+//            if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
+//                Menu_Relatorios.setVisible(false);
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
+//        }
     }
 
     public void setFocusONLabel(JLabel label) {
@@ -108,15 +171,16 @@ public class Frm_Principal extends javax.swing.JFrame {
         }
     }
 
-    public void listaAtendimentos(String status){
+    public void listaAtendimentos(String status) {
         try {
-            statusAtendimentoDAO=new StatusAtendimentoDAO();
-            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento(status),txt_usuarioLogado.getText());
+            statusAtendimentoDAO = new StatusAtendimentoDAO();
+            Frm_ConAtendimento f = new Frm_ConAtendimento(statusAtendimentoDAO.buscaStatusAtendimento(status), txt_usuarioLogado.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao Listar atendimentos, Status inválido!");
             System.out.println(e);
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -125,34 +189,30 @@ public class Frm_Principal extends javax.swing.JFrame {
         lb_boasVindas = new javax.swing.JLabel();
         txt_usuarioLogado = new javax.swing.JTextField();
         lb_qtdeConcluidos = new javax.swing.JLabel();
-        lb_qtdeExecutando = new javax.swing.JLabel();
         lb_qtdePendentes = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lb_qtdeExecutando = new javax.swing.JLabel();
         lb_fundo = new javax.swing.JLabel();
         Menu_barra = new javax.swing.JMenuBar();
         Menu_Cadastro = new javax.swing.JMenu();
-        menuI_Aplicativo = new javax.swing.JMenu();
         item_aplicativo = new javax.swing.JMenuItem();
+        item_Atendimento = new javax.swing.JMenuItem();
+        item_cliente = new javax.swing.JMenuItem();
+        item_contato = new javax.swing.JMenuItem();
+        item_Empresa = new javax.swing.JMenuItem();
+        item_grupo = new javax.swing.JMenuItem();
         item_links = new javax.swing.JMenuItem();
-        menuI_Atendimento = new javax.swing.JMenu();
-        item_prioridade = new javax.swing.JMenuItem();
         item_origem = new javax.swing.JMenuItem();
+        item_parcela = new javax.swing.JMenuItem();
+        item_prioridade = new javax.swing.JMenuItem();
+        item_salario = new javax.swing.JMenuItem();
+        item_segmento = new javax.swing.JMenuItem();
         item_status = new javax.swing.JMenuItem();
         item_tipoAtendimento = new javax.swing.JMenuItem();
-        menuI_Cliente = new javax.swing.JMenu();
-        item_cliente = new javax.swing.JMenuItem();
-        item_segmento = new javax.swing.JMenuItem();
-        item_parcela = new javax.swing.JMenuItem();
-        item_salario = new javax.swing.JMenuItem();
-        menuI_Contato = new javax.swing.JMenu();
-        item_contato = new javax.swing.JMenuItem();
-        item_grupo = new javax.swing.JMenuItem();
-        menuI_Usuario = new javax.swing.JMenu();
-        item_usuario = new javax.swing.JMenuItem();
         item_tipoUsuario = new javax.swing.JMenuItem();
-        menuI_empresa = new javax.swing.JMenuItem();
+        item_usuario = new javax.swing.JMenuItem();
         Menu_Consulta = new javax.swing.JMenu();
         menuI_Atendimentos = new javax.swing.JMenu();
         item_abertos = new javax.swing.JMenuItem();
@@ -162,20 +222,17 @@ public class Frm_Principal extends javax.swing.JFrame {
         menuI_clientes = new javax.swing.JMenuItem();
         menuI_contatos = new javax.swing.JMenuItem();
         menuI_Usuarios = new javax.swing.JMenuItem();
-        Menu_Movimentacao = new javax.swing.JMenu();
-        menuI_atendimento = new javax.swing.JMenu();
-        item_abrirAtendimento = new javax.swing.JMenuItem();
-        item_cancelarAtendimento = new javax.swing.JMenuItem();
         Menu_Relatorios = new javax.swing.JMenu();
-        item_atendimento = new javax.swing.JMenuItem();
+        item_relAtendimento = new javax.swing.JMenuItem();
         item_relCliente = new javax.swing.JMenuItem();
-        Menu_Ultilitários = new javax.swing.JMenu();
+        Menu_Utilitários = new javax.swing.JMenu();
         item_enviaEmail = new javax.swing.JMenuItem();
         item_emiteRecibo = new javax.swing.JMenuItem();
         menuI_Informacao = new javax.swing.JMenu();
         item_informacao = new javax.swing.JMenuItem();
         item_tipoInformacao = new javax.swing.JMenuItem();
         item_trocaUsuario = new javax.swing.JMenuItem();
+        item_Permissoes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bem Vindo");
@@ -208,22 +265,6 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
 
-        lb_qtdeExecutando.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
-        lb_qtdeExecutando.setForeground(new java.awt.Color(102, 102, 102));
-        lb_qtdeExecutando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_qtdeExecutando.setText("0");
-        lb_qtdeExecutando.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lb_qtdeExecutandoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lb_qtdeExecutandoMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                lb_qtdeExecutandoMousePressed(evt);
-            }
-        });
-
         lb_qtdePendentes.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lb_qtdePendentes.setForeground(new java.awt.Color(102, 102, 102));
         lb_qtdePendentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -242,9 +283,25 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel1.setText("Concluídos:");
 
+        jLabel6.setText("Pendentes:");
+
         jLabel4.setText("Executando:");
 
-        jLabel6.setText("Pendentes:");
+        lb_qtdeExecutando.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeExecutando.setForeground(new java.awt.Color(102, 102, 102));
+        lb_qtdeExecutando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_qtdeExecutando.setText("0");
+        lb_qtdeExecutando.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_qtdeExecutandoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_qtdeExecutandoMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_qtdeExecutandoMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnl_RodapeLayout = new javax.swing.GroupLayout(pnl_Rodape);
         pnl_Rodape.setLayout(pnl_RodapeLayout);
@@ -256,13 +313,13 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -275,6 +332,9 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,9 +342,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                         .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lb_boasVindas)
-                        .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(5, 5, 5))
         );
 
@@ -292,63 +350,21 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_Cadastro.setText("Cadastros");
 
-        menuI_Aplicativo.setText("Aplicativo");
-
         item_aplicativo.setText("Aplicativo");
         item_aplicativo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_aplicativoActionPerformed(evt);
             }
         });
-        menuI_Aplicativo.add(item_aplicativo);
+        Menu_Cadastro.add(item_aplicativo);
 
-        item_links.setText("Links");
-        item_links.addActionListener(new java.awt.event.ActionListener() {
+        item_Atendimento.setText("Atendimento");
+        item_Atendimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_linksActionPerformed(evt);
+                item_AtendimentoActionPerformed(evt);
             }
         });
-        menuI_Aplicativo.add(item_links);
-
-        Menu_Cadastro.add(menuI_Aplicativo);
-
-        menuI_Atendimento.setText("Atendimento");
-
-        item_prioridade.setText("Prioridade");
-        item_prioridade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_prioridadeActionPerformed(evt);
-            }
-        });
-        menuI_Atendimento.add(item_prioridade);
-
-        item_origem.setText("Origem");
-        item_origem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_origemActionPerformed(evt);
-            }
-        });
-        menuI_Atendimento.add(item_origem);
-
-        item_status.setText("Status");
-        item_status.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_statusActionPerformed(evt);
-            }
-        });
-        menuI_Atendimento.add(item_status);
-
-        item_tipoAtendimento.setText("Tipo Atendimento");
-        item_tipoAtendimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_tipoAtendimentoActionPerformed(evt);
-            }
-        });
-        menuI_Atendimento.add(item_tipoAtendimento);
-
-        Menu_Cadastro.add(menuI_Atendimento);
-
-        menuI_Cliente.setText("Cliente");
+        Menu_Cadastro.add(item_Atendimento);
 
         item_cliente.setText("Cliente");
         item_cliente.addActionListener(new java.awt.event.ActionListener() {
@@ -356,35 +372,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_clienteActionPerformed(evt);
             }
         });
-        menuI_Cliente.add(item_cliente);
-
-        item_segmento.setText("Segmento");
-        item_segmento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_segmentoActionPerformed(evt);
-            }
-        });
-        menuI_Cliente.add(item_segmento);
-
-        item_parcela.setText("Parcela");
-        item_parcela.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_parcelaActionPerformed(evt);
-            }
-        });
-        menuI_Cliente.add(item_parcela);
-
-        item_salario.setText("Salário");
-        item_salario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_salarioActionPerformed(evt);
-            }
-        });
-        menuI_Cliente.add(item_salario);
-
-        Menu_Cadastro.add(menuI_Cliente);
-
-        menuI_Contato.setText("Contato");
+        Menu_Cadastro.add(item_cliente);
 
         item_contato.setText("Contato");
         item_contato.addActionListener(new java.awt.event.ActionListener() {
@@ -392,7 +380,15 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_contatoActionPerformed(evt);
             }
         });
-        menuI_Contato.add(item_contato);
+        Menu_Cadastro.add(item_contato);
+
+        item_Empresa.setText("Empresa");
+        item_Empresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_EmpresaActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_Empresa);
 
         item_grupo.setText("Grupo");
         item_grupo.addActionListener(new java.awt.event.ActionListener() {
@@ -400,19 +396,71 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_grupoActionPerformed(evt);
             }
         });
-        menuI_Contato.add(item_grupo);
+        Menu_Cadastro.add(item_grupo);
 
-        Menu_Cadastro.add(menuI_Contato);
-
-        menuI_Usuario.setText("Usuário");
-
-        item_usuario.setText("Usuário");
-        item_usuario.addActionListener(new java.awt.event.ActionListener() {
+        item_links.setText("Links");
+        item_links.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_usuarioActionPerformed(evt);
+                item_linksActionPerformed(evt);
             }
         });
-        menuI_Usuario.add(item_usuario);
+        Menu_Cadastro.add(item_links);
+
+        item_origem.setText("Origem");
+        item_origem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_origemActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_origem);
+
+        item_parcela.setText("Parcela");
+        item_parcela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_parcelaActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_parcela);
+
+        item_prioridade.setText("Prioridade");
+        item_prioridade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_prioridadeActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_prioridade);
+
+        item_salario.setText("Salário");
+        item_salario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_salarioActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_salario);
+
+        item_segmento.setText("Segmento");
+        item_segmento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_segmentoActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_segmento);
+
+        item_status.setText("Status Atendimento");
+        item_status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_statusActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_status);
+
+        item_tipoAtendimento.setText("Tipo Atendimento");
+        item_tipoAtendimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_tipoAtendimentoActionPerformed(evt);
+            }
+        });
+        Menu_Cadastro.add(item_tipoAtendimento);
 
         item_tipoUsuario.setText("Tipo Usuário");
         item_tipoUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -420,17 +468,15 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_tipoUsuarioActionPerformed(evt);
             }
         });
-        menuI_Usuario.add(item_tipoUsuario);
+        Menu_Cadastro.add(item_tipoUsuario);
 
-        Menu_Cadastro.add(menuI_Usuario);
-
-        menuI_empresa.setText("Empresa");
-        menuI_empresa.addActionListener(new java.awt.event.ActionListener() {
+        item_usuario.setText("Usuário");
+        item_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuI_empresaActionPerformed(evt);
+                item_usuarioActionPerformed(evt);
             }
         });
-        Menu_Cadastro.add(menuI_empresa);
+        Menu_Cadastro.add(item_usuario);
 
         Menu_barra.add(Menu_Cadastro);
 
@@ -498,39 +544,15 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(Menu_Consulta);
 
-        Menu_Movimentacao.setText("Movimentação");
-
-        menuI_atendimento.setText("Atendimento");
-
-        item_abrirAtendimento.setText("Abrir Atendimento");
-        item_abrirAtendimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_abrirAtendimentoActionPerformed(evt);
-            }
-        });
-        menuI_atendimento.add(item_abrirAtendimento);
-
-        item_cancelarAtendimento.setText("Cancelar Atendimento");
-        item_cancelarAtendimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_cancelarAtendimentoActionPerformed(evt);
-            }
-        });
-        menuI_atendimento.add(item_cancelarAtendimento);
-
-        Menu_Movimentacao.add(menuI_atendimento);
-
-        Menu_barra.add(Menu_Movimentacao);
-
         Menu_Relatorios.setText("Relatorios");
 
-        item_atendimento.setText("Atendimento");
-        item_atendimento.addActionListener(new java.awt.event.ActionListener() {
+        item_relAtendimento.setText("Atendimento");
+        item_relAtendimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_atendimentoActionPerformed(evt);
+                item_relAtendimentoActionPerformed(evt);
             }
         });
-        Menu_Relatorios.add(item_atendimento);
+        Menu_Relatorios.add(item_relAtendimento);
 
         item_relCliente.setText("Cliente");
         item_relCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -542,7 +564,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(Menu_Relatorios);
 
-        Menu_Ultilitários.setText("Ultilitarios");
+        Menu_Utilitários.setText("Utilitarios");
 
         item_enviaEmail.setText("Enviar Email");
         item_enviaEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -550,7 +572,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_enviaEmailActionPerformed(evt);
             }
         });
-        Menu_Ultilitários.add(item_enviaEmail);
+        Menu_Utilitários.add(item_enviaEmail);
 
         item_emiteRecibo.setText("Emitir Recibo");
         item_emiteRecibo.addActionListener(new java.awt.event.ActionListener() {
@@ -558,7 +580,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_emiteReciboActionPerformed(evt);
             }
         });
-        Menu_Ultilitários.add(item_emiteRecibo);
+        Menu_Utilitários.add(item_emiteRecibo);
 
         menuI_Informacao.setText("Informação");
 
@@ -578,7 +600,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         menuI_Informacao.add(item_tipoInformacao);
 
-        Menu_Ultilitários.add(menuI_Informacao);
+        Menu_Utilitários.add(menuI_Informacao);
 
         item_trocaUsuario.setText("Trocar de Usuário");
         item_trocaUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -586,9 +608,17 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_trocaUsuarioActionPerformed(evt);
             }
         });
-        Menu_Ultilitários.add(item_trocaUsuario);
+        Menu_Utilitários.add(item_trocaUsuario);
 
-        Menu_barra.add(Menu_Ultilitários);
+        item_Permissoes.setText("Permissões");
+        item_Permissoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_PermissoesActionPerformed(evt);
+            }
+        });
+        Menu_Utilitários.add(item_Permissoes);
+
+        Menu_barra.add(Menu_Utilitários);
 
         setJMenuBar(Menu_barra);
 
@@ -597,7 +627,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnl_Rodape, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lb_fundo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(lb_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(107, 107, 107))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -704,17 +736,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_ConCliente f = new Frm_ConCliente();
     }//GEN-LAST:event_menuI_clientesActionPerformed
 
-    private void item_abrirAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_abrirAtendimentoActionPerformed
-        Frm_Atendimento_Abertura f = new Frm_Atendimento_Abertura();
-    }//GEN-LAST:event_item_abrirAtendimentoActionPerformed
-
-    private void item_cancelarAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_cancelarAtendimentoActionPerformed
-        listaAtendimentos("EXECUCAO");
-    }//GEN-LAST:event_item_cancelarAtendimentoActionPerformed
-
-    private void item_atendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_atendimentoActionPerformed
+    private void item_relAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoActionPerformed
         Frm_RelAtendimento f = new Frm_RelAtendimento();
-    }//GEN-LAST:event_item_atendimentoActionPerformed
+    }//GEN-LAST:event_item_relAtendimentoActionPerformed
 
     private void item_relClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteActionPerformed
         Frm_RelCliente f = new Frm_RelCliente();
@@ -768,9 +792,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         setFocusOFFLabel(lb_qtdePendentes);
     }//GEN-LAST:event_lb_qtdePendentesMouseExited
 
-    private void menuI_empresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_empresaActionPerformed
+    private void item_EmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_EmpresaActionPerformed
         Frm_CadEmpresa f = new Frm_CadEmpresa();
-    }//GEN-LAST:event_menuI_empresaActionPerformed
+    }//GEN-LAST:event_item_EmpresaActionPerformed
 
     private void lb_qtdeExecutandoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeExecutandoMousePressed
         listaAtendimentos("EXECUCAO");
@@ -783,6 +807,14 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void lb_qtdePendentesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdePendentesMousePressed
         listaAtendimentos("PENDENTE");
     }//GEN-LAST:event_lb_qtdePendentesMousePressed
+
+    private void item_AtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_AtendimentoActionPerformed
+        Frm_Atendimento_Abertura f = new Frm_Atendimento_Abertura();
+    }//GEN-LAST:event_item_AtendimentoActionPerformed
+
+    private void item_PermissoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_PermissoesActionPerformed
+        Frm_Permissoes f = new Frm_Permissoes();
+    }//GEN-LAST:event_item_PermissoesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -824,15 +856,14 @@ public class Frm_Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Menu_Cadastro;
     private javax.swing.JMenu Menu_Consulta;
-    private javax.swing.JMenu Menu_Movimentacao;
     private javax.swing.JMenu Menu_Relatorios;
-    private javax.swing.JMenu Menu_Ultilitários;
+    private javax.swing.JMenu Menu_Utilitários;
     private javax.swing.JMenuBar Menu_barra;
+    private javax.swing.JMenuItem item_Atendimento;
+    private javax.swing.JMenuItem item_Empresa;
+    private javax.swing.JMenuItem item_Permissoes;
     private javax.swing.JMenuItem item_abertos;
-    private javax.swing.JMenuItem item_abrirAtendimento;
     private javax.swing.JMenuItem item_aplicativo;
-    private javax.swing.JMenuItem item_atendimento;
-    private javax.swing.JMenuItem item_cancelarAtendimento;
     private javax.swing.JMenuItem item_cliente;
     private javax.swing.JMenuItem item_concluidos;
     private javax.swing.JMenuItem item_contato;
@@ -846,6 +877,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem item_parcela;
     private javax.swing.JMenuItem item_pendentes;
     private javax.swing.JMenuItem item_prioridade;
+    private javax.swing.JMenuItem item_relAtendimento;
     private javax.swing.JMenuItem item_relCliente;
     private javax.swing.JMenuItem item_salario;
     private javax.swing.JMenuItem item_segmento;
@@ -863,18 +895,11 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lb_qtdeConcluidos;
     private javax.swing.JLabel lb_qtdeExecutando;
     private javax.swing.JLabel lb_qtdePendentes;
-    private javax.swing.JMenu menuI_Aplicativo;
-    private javax.swing.JMenu menuI_Atendimento;
     private javax.swing.JMenu menuI_Atendimentos;
-    private javax.swing.JMenu menuI_Cliente;
-    private javax.swing.JMenu menuI_Contato;
     private javax.swing.JMenu menuI_Informacao;
-    private javax.swing.JMenu menuI_Usuario;
     private javax.swing.JMenuItem menuI_Usuarios;
-    private javax.swing.JMenu menuI_atendimento;
     private javax.swing.JMenuItem menuI_clientes;
     private javax.swing.JMenuItem menuI_contatos;
-    private javax.swing.JMenuItem menuI_empresa;
     private javax.swing.JPanel pnl_Rodape;
     private javax.swing.JTextField txt_usuarioLogado;
     // End of variables declaration//GEN-END:variables

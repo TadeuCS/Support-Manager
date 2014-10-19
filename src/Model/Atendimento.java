@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Atendimento.findByPendencia", query = "SELECT a FROM Atendimento a WHERE a.pendencia = :pendencia"),
     @NamedQuery(name = "Atendimento.findByStatus", query = "SELECT a FROM Atendimento a WHERE a.codstatusatendimento = :status order by a.dataAgendamento,a.codprioridade"),
     @NamedQuery(name = "Atendimento.findByStatusAndUsuario", query = "SELECT a FROM Atendimento a WHERE a.codstatusatendimento = :status and a.codusuario = :codUsuario order by a.dataAgendamento,a.codprioridade"),
-    @NamedQuery(name = "Atendimento.findByDataSolucao", query = "SELECT a FROM Atendimento a WHERE a.dataSolucao = :dataSolucao")})
+    })
 public class Atendimento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -88,9 +88,6 @@ public class Atendimento implements Serializable {
     @Basic(optional = false)
     @Column(name = "PENDENCIA")
     private Character pendencia;
-//    @Column(name = "DATA_SOLUCAO")
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date dataSolucao;
     @JoinColumn(name = "CODTIPOATENDIMENTO", referencedColumnName = "CODTIPOATENDIMENTO")
     @ManyToOne(optional = false)
     private TipoAtendimento codtipoatendimento;
@@ -227,14 +224,6 @@ public class Atendimento implements Serializable {
     public void setPendencia(Character pendencia) {
         this.pendencia = pendencia;
     }
-//
-//    public Date getDataSolucao() {
-//        return dataSolucao;
-//    }
-//
-//    public void setDataSolucao(Date dataSolucao) {
-//        this.dataSolucao = dataSolucao;
-//    }
 
     public TipoAtendimento getCodtipoatendimento() {
         return codtipoatendimento;

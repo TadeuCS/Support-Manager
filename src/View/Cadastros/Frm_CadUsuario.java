@@ -260,14 +260,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     public void carregaTipoUsuarios() {
         tipoUsuarioDAO = new TipoUsuarioDAO();
         try {
-            int i = 0;
-            while (i < tipoUsuarioDAO.lista().size()) {
-                String linha = tipoUsuarioDAO.lista().get(i).getDescricao();
-                cbx_tipoUsuario.addItem(linha);
-                i++;
+            for (int i = 0; i < tipoUsuarioDAO.lista().size(); i++) {
+                cbx_tipoUsuario.addItem(tipoUsuarioDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar Tipos de Usuários!");
         }
     }
 

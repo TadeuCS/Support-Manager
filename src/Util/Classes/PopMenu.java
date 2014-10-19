@@ -21,7 +21,7 @@ public class PopMenu {
     static TrayIcon trayIcon = null;
 
     //Referencia � instancia "J" da classe Janelinha, para acesso da bandeja.
-    static Frm_Principal pai =new Frm_Principal();
+    static Frm_Principal pai =Frm_Principal.j;
 
     public PopMenu() {
         super();
@@ -61,9 +61,9 @@ public class PopMenu {
         trayIcon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                pai=new Frm_Principal();
                 pai.setVisible(true);
                 //Esta linha deixa a janela sobre as outras, caso ela apare�a minimizada.
-                pai.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
                 try {
                     //Agora basta remover (ou esconder) o icone da area de Notificao
@@ -91,9 +91,9 @@ public class PopMenu {
         menuAbrir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //Simplesmente deixa-se a janela vis�vel novamente.
+                pai=new Frm_Principal();
                 pai.setVisible(true);
                 //Esta linha deixa a janela sobre as outras, caso ela apare�a minimizada.
-                pai.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
                 try {
                     //Agora basta remover (ou esconder) o �cone da �rea de Notifica��o
