@@ -88,9 +88,9 @@ public class Atendimento implements Serializable {
     @Basic(optional = false)
     @Column(name = "PENDENCIA")
     private Character pendencia;
-    @Column(name = "DATA_SOLUCAO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataSolucao;
+//    @Column(name = "DATA_SOLUCAO")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date dataSolucao;
     @JoinColumn(name = "CODTIPOATENDIMENTO", referencedColumnName = "CODTIPOATENDIMENTO")
     @ManyToOne(optional = false)
     private TipoAtendimento codtipoatendimento;
@@ -227,14 +227,14 @@ public class Atendimento implements Serializable {
     public void setPendencia(Character pendencia) {
         this.pendencia = pendencia;
     }
-
-    public Date getDataSolucao() {
-        return dataSolucao;
-    }
-
-    public void setDataSolucao(Date dataSolucao) {
-        this.dataSolucao = dataSolucao;
-    }
+//
+//    public Date getDataSolucao() {
+//        return dataSolucao;
+//    }
+//
+//    public void setDataSolucao(Date dataSolucao) {
+//        this.dataSolucao = dataSolucao;
+//    }
 
     public TipoAtendimento getCodtipoatendimento() {
         return codtipoatendimento;

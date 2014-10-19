@@ -13,6 +13,7 @@ import java.awt.Event;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -145,6 +146,14 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         txt_pendencia.setText(null);
     }
 
+    public boolean verificaPendencia(JRadioButton pendencia) {
+        if (pendencia.getSelectedObjects() != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void salvar() {
         atendimentoDAO = new AtendimentoDAO();
         setAtendimento(atendimento);
@@ -158,7 +167,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
     }
 
-    public void validaCampos(String operacao,String dataInicio, String dataFim, boolean pendencia, String probInformado, String probDetectado, String probSolucao, String probPendencia) {
+    public void validaCampos(String dataInicio, String dataFim, boolean pendencia, String probInformado, String probDetectado, String probSolucao, String probPendencia) {
         if (dataInicio.equals("  /  /       :  ") == true) {
             JOptionPane.showMessageDialog(null, "Data Início inválida!");
             txt_dataInicio.requestFocus();
@@ -167,8 +176,8 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Data Fim inválida!");
                 txt_dataFim.requestFocus();
             } else {
-                if ((rbt_sim.getSelectedObjects() != null) && (txt_pendencia.getText().isEmpty())) {
-                    JOptionPane.showMessageDialog(null, "o movito da Pendencia informada é inválida!");
+                if ((pendencia==true) && (txt_pendencia.getText().isEmpty())) {
+                    JOptionPane.showMessageDialog(null, "O movito da Pendencia informada é inválida!");
                     txt_pendencia.requestFocus();
                 } else {
                     if (txt_problemaDetectado.getText().isEmpty()) {
@@ -482,7 +491,17 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     }//GEN-LAST:event_rbt_naoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        salvar();
+        if (btn_salvar.getText().equals("Salvar") == true) {
+            salvar();
+        } else {
+            validaCampos(txt_dataInicio.getText(),
+                    txt_dataFim.getText(),
+                    verificaPendencia(rbt_sim),
+                    txt_problemaInformado.getText(),
+                    txt_problemaDetectado.getText(), 
+                    txt_problemaSolucao.getText(),
+                    txt_pendencia.getText());
+        }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void txt_dataInicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataInicioKeyPressed
