@@ -20,6 +20,7 @@ import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConUsuarios;
+import View.Home.Frm_Principal;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import javax.persistence.NoResultException;
@@ -43,6 +44,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     Telefone telefone;
     DefaultTableModel model;
     private static int codigoUsuario;
+    Frm_Principal principal = new Frm_Principal();
 
     public Frm_CadUsuario() {
         initComponents();
@@ -260,8 +262,19 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     public void carregaTipoUsuarios() {
         tipoUsuarioDAO = new TipoUsuarioDAO();
         try {
-            for (int i = 0; i < tipoUsuarioDAO.lista().size(); i++) {
-                cbx_tipoUsuario.addItem(tipoUsuarioDAO.lista().get(i).getDescricao());
+            if (principal.getUsuarioLogado().equals("ADMINISTRADOR") == true) {
+                for (int i = 0; i < tipoUsuarioDAO.lista().size(); i++) {
+                    cbx_tipoUsuario.addItem(tipoUsuarioDAO.lista().get(i).getDescricao());
+                }
+            } else {
+                usuarioDAO= new UsuarioDAO();
+                if (usuarioDAO.consultaByUsuario(principal.getUsuarioLogado()).getCodtipousuario().getDescricao().equals("ATENDENTE") == true) {
+                    cbx_tipoUsuario.addItem("SUPORTE");
+                } else {
+                    for (int i = 0; i < tipoUsuarioDAO.lista().size(); i++) {
+                        cbx_tipoUsuario.addItem(tipoUsuarioDAO.lista().get(i).getDescricao());
+                    }
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar Tipos de Usuários!");
@@ -1276,7 +1289,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadUsuario().setVisible(true);
+//                new Frm_CadUsuario().setVisible(true);
             }
         });
     }

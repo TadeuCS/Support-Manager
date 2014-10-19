@@ -143,15 +143,16 @@ public class Frm_Principal extends javax.swing.JFrame {
             if (usuarioDAO.consultaByUsuario(usuarioLogado).getSexo().equals('F') == true) {
                 lb_boasVindas.setText("Bem Vinda");
             }
+            try {
+                usuarioDAO = new UsuarioDAO();
+                if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
+                    Menu_Relatorios.setVisible(false);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
+            }
         }
-//        try {
-//            usuarioDAO = new UsuarioDAO();
-//            if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
-//                Menu_Relatorios.setVisible(false);
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
-//        }
+
     }
 
     public void setFocusONLabel(JLabel label) {
@@ -650,8 +651,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_trocaUsuarioActionPerformed
 
     private void item_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_usuarioActionPerformed
-        Frm_CadUsuario c = new Frm_CadUsuario();
-        c.setVisible(true);
+        try {
+            Frm_CadUsuario c = new Frm_CadUsuario();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_item_usuarioActionPerformed
 
     private void item_tipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_tipoUsuarioActionPerformed
