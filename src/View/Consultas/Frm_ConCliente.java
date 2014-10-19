@@ -17,13 +17,9 @@ import Controller.SegmentoDAO;
 import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
-import Model.Cliente;
 import Model.Telefone;
 import View.Cadastros.Frm_CadCliente;
-import View.Cadastros.Frm_CadUsuario;
 import java.util.List;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -69,6 +65,7 @@ public class Frm_ConCliente extends javax.swing.JFrame {
         clienteDAO = new ClienteDAO();
         try {
             limpaTabela((DefaultTableModel) tb_clientes.getModel());
+            
             for (int i = 0; i < clienteDAO.lista().size(); i++) {
                 String[] linha = new String[]{
                     clienteDAO.lista().get(i).getCodcliente().toString(),

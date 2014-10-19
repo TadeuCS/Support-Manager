@@ -103,8 +103,9 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         clienteDAO = new ClienteDAO();
         try {
             cbx_cliente.removeAllItems();
-            for (int i = 0; i < clienteDAO.lista().size(); i++) {
-                cbx_cliente.addItem(clienteDAO.lista().get(i).getNomeFantasia());
+            statusPessoaDAO = new StatusPessoaDAO();
+            for (int i = 0; i < clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).size(); i++) {
+                cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro ao carregar usuários");

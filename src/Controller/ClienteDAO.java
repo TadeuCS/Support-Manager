@@ -8,6 +8,7 @@ package Controller;
 import Model.Cliente;
 import Model.Endereco;
 import Model.LinkCliente;
+import Model.StatusPessoa;
 import Model.Telefone;
 import Util.Classes.Manager;
 import java.util.List;
@@ -33,6 +34,12 @@ public class ClienteDAO extends Manager {
     public List<Cliente> lista() {
         em.getTransaction().begin();
         query = em.createNamedQuery("Cliente.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+    public List<Cliente> listaByStatus(StatusPessoa status) {
+        em.getTransaction().begin();
+        query = em.createNamedQuery("Cliente.findByStatusPessoa").setParameter("status", status);
         em.getTransaction().commit();
         return query.getResultList();
     }
