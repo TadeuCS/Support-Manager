@@ -107,7 +107,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
         btn_fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta Usuarios");
+        setTitle("Consulta Contatos");
         setResizable(false);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

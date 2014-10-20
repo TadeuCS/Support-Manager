@@ -20,16 +20,16 @@ public class SalarioDAO extends Manager {
         em.merge(salario);
         em.getTransaction().commit();
     }
-    public List<String> listaAnos(){
+    public List<Salarios> lista(){
         em.getTransaction().begin();
-        query=em.createQuery("select DISTINCT(A.ano) from Salarios A");
+        query=em.createNamedQuery("Salarios.findAll");
         em.getTransaction().commit();
         return query.getResultList();
     }
-    public Double buscaSalario(int ano){
-        em.getTransaction().begin();
-        query=em.createNamedQuery("Salarios.findByAno").setParameter("ano", ano);
-        em.getTransaction().commit();
-        return (Double) query.getSingleResult();
-    }
+//    public Double buscaSalario(int ano){
+//        em.getTransaction().begin();
+//        query=em.createNamedQuery("Salarios.findByAno").setParameter("ano", ano);
+//        em.getTransaction().commit();
+//        return (Double) query.getSingleResult();
+//    }
 }

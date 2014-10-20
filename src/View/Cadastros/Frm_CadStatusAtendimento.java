@@ -67,7 +67,7 @@ public class Frm_CadStatusAtendimento extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Status");
+        setTitle("Cadastro de Status de Atendimento");
         setResizable(false);
 
         pnl_dados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

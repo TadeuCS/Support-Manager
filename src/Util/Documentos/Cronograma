@@ -1,5 +1,6 @@
 ok empresa: erros no cadastro de empresa
 ok usuario: trocar metodos de buscar telefone, e validar campos unicos
+possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
 ---------------------------------------------------------CLIENTE-----------------------------------------------------
 ok validar campos obrigatórios cadastro de cliente
 ok validar email e cpf cliente

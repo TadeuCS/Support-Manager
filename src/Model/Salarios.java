@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "salarios")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Salarios.findAll", query = "SELECT s FROM Salarios s"),
+    @NamedQuery(name = "Salarios.findAll", query = "SELECT s FROM Salarios s ORDER BY s.valor"),
     @NamedQuery(name = "Salarios.findByCodsalario", query = "SELECT s FROM Salarios s WHERE s.codsalario = :codsalario"),
     @NamedQuery(name = "Salarios.findByAno", query = "SELECT MAX(s.valor) FROM Salarios s WHERE s.ano = :ano"),
     @NamedQuery(name = "Salarios.findByValor", query = "SELECT s FROM Salarios s WHERE s.valor = :valor")})

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.AplicativoDAO;
@@ -41,10 +36,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_CadCliente extends javax.swing.JFrame {
 
     ClienteDAO clienteDAO;
@@ -94,7 +85,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         carregaCidades();
         carregaAplicativos();
         carregaParcelas();
-        carregaAno();
+        carregaSalarios();
         trocaMascara();
         setEnabledFields(false);
         cbx_estados.setSelectedItem("MG");
@@ -306,13 +297,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         }
     }
 
-    private void carregaAno() {
+    private void carregaSalarios() {
         salarioDAO = new SalarioDAO();
         try {
             int i = 0;
             cbx_ano.removeAllItems();
-            while (i < salarioDAO.listaAnos().size()) {
-                cbx_ano.addItem(salarioDAO.listaAnos().get(i));
+            while (i < salarioDAO.lista().size()) {
+                cbx_ano.addItem(salarioDAO.lista().get(i).getValor());
                 i++;
             }
         } catch (Exception e) {
@@ -1109,12 +1100,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                     .addComponent(jLabel46))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(pnl_dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel52)
+                    .addGroup(pnl_dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btn_cadSegmento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel51)
                         .addComponent(txt_data)
-                        .addComponent(cbx_segmento))
+                        .addComponent(cbx_segmento, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnl_dadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel52)
+                            .addComponent(jLabel51)))
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chx_bloqueado))
                 .addGap(13, 13, 13))
@@ -1722,7 +1714,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         pnl_CadLinks1.setBorder(javax.swing.BorderFactory.createTitledBorder("Calculo de Mensalidade"));
 
-        jLabel55.setText("Ano *:");
+        jLabel55.setText("Salário: *:");
 
         jLabel56.setText("Mensalidade:");
 
@@ -1770,10 +1762,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_CadLinks1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel55)
-                    .addComponent(cbx_ano, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel55)
+                        .addComponent(cbx_ano, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel56)
@@ -2238,7 +2231,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 cbx_ano.requestFocus();
             } else {
                 calcularMensalidade(Double.parseDouble(cbx_parcela.getSelectedItem().toString()),
-                        salarioDAO.buscaSalario(Integer.parseInt(cbx_ano.getSelectedItem().toString())));
+                        Double.parseDouble(cbx_ano.getSelectedItem().toString()));
             }
         }
 
@@ -2273,7 +2266,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_parcelaFocusGained
 
     private void cbx_anoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_anoFocusGained
-        carregaAno();
+        carregaSalarios();
     }//GEN-LAST:event_cbx_anoFocusGained
 
     private void cbx_tipoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_tipoFocusGained
