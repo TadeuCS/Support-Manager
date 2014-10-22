@@ -24,6 +24,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
 
     DefaultTableModel model;
     TelefoneDAO telefoneDAO;
+
     public Frm_ConContatos() {
         initComponents();
         model = (DefaultTableModel) tb_contatos.getModel();
@@ -32,9 +33,9 @@ public class Frm_ConContatos extends javax.swing.JFrame {
     }
 
     public void listaContatos() {
-        
+
         try {
-            telefoneDAO=new TelefoneDAO();
+            telefoneDAO = new TelefoneDAO();
             int i = 0;
             limpaTabela();
             while (i < telefoneDAO.lista().size()) {
@@ -197,7 +198,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
         );
 
         btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/voltar.png"))); // NOI18N
-        btn_voltar.setText("Voltar");
+        btn_voltar.setText("Selecionar");
         btn_voltar.setToolTipText("Volta para o Cadastro de Contatos");
         btn_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,9 +226,9 @@ public class Frm_ConContatos extends javax.swing.JFrame {
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -274,8 +275,13 @@ public class Frm_ConContatos extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_usuarioKeyPressed
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        Frm_CadTelefone f = new Frm_CadTelefone();
-        dispose();
+        try {
+            telefoneDAO=new TelefoneDAO();
+            Frm_CadTelefone f = new Frm_CadTelefone(telefoneDAO.busca(tb_contatos.getValueAt(tb_contatos.getSelectedRow(), 2).toString()));
+            dispose();
+        } catch (Exception e) {
+        }
+
     }//GEN-LAST:event_btn_voltarActionPerformed
 
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed

@@ -9,6 +9,7 @@ import Controller.PermissoesDAO;
 import Controller.StatusAtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Permissoes;
+import Model.Telefone;
 import Model.Usuario;
 import Util.Classes.Criptografia;
 import Util.Classes.PopMenu;
@@ -816,7 +817,8 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_tipoInformacaoActionPerformed
 
     private void item_contatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_contatoActionPerformed
-        Frm_CadTelefone f = new Frm_CadTelefone();
+        Telefone tel=new Telefone();
+        Frm_CadTelefone f = new Frm_CadTelefone(tel);
     }//GEN-LAST:event_item_contatoActionPerformed
 
     private void item_grupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_grupoActionPerformed

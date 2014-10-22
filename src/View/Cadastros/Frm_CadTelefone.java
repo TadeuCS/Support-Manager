@@ -23,10 +23,27 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     TelefoneDAO telefoneDAO;
     GrupoDAO grupoDAO;
 
-    public Frm_CadTelefone() {
+    public Frm_CadTelefone(Telefone telefone) {
         initComponents();
         setVisible(true);
         carregaGrupos();
+        this.telefone = telefone;
+        if (telefone.getCodtelefone() != null) {
+            getTelefone(telefone);
+        }
+    }
+
+    public void getTelefone(Telefone telefone) {
+        cbx_grupo.setSelectedItem(telefone.getCodgrupo().getDescricao());
+        txt_contato.setText(telefone.getDescricao());
+        txt_telefone.setText(telefone.getTelefone());
+    }
+
+    public void setTelefone(Telefone telefone) {
+        grupoDAO = new GrupoDAO();
+        telefone.setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
+        telefone.setDescricao(txt_contato.getText());
+        telefone.setTelefone(txt_telefone.getText());
     }
 
     public void carregaGrupos() {
@@ -60,25 +77,16 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         }
     }
 
-    public void novo() {
-        telefone = new Telefone();
-        grupo = new Grupo();
-        telefoneDAO = new TelefoneDAO();
-        grupoDAO = new GrupoDAO();
-    }
-
     public void salvar(String grupo, String nome, String numTelefone) {
-        novo();
-        telefone.setCodgrupo(grupoDAO.consulta(grupo));
-        telefone.setDescricao(nome);
-        telefone.setTelefone(numTelefone);
         try {
+            telefoneDAO = new TelefoneDAO();
             telefoneDAO.busca(numTelefone);
             JOptionPane.showMessageDialog(null, "Telefone já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
             txt_telefone.requestFocus();
         } catch (NoResultException ex) {
             try {
-                telefoneDAO.salvar(telefone);
+                telefoneDAO = new TelefoneDAO();
+                telefoneDAO.salvar(this.telefone);
                 JOptionPane.showMessageDialog(null, "Telefone salvo com sucesso!");
                 txt_contato.setText(null);
                 txt_telefone.setText(null);
@@ -89,9 +97,10 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone " + numTelefone);
-                txt_contato.setText(null);
-                txt_telefone.setText(null);
-                txt_contato.requestFocus();
+            System.out.println(e);
+            txt_contato.setText(null);
+            txt_telefone.setText(null);
+            txt_contato.requestFocus();
         }
     }
 
@@ -294,7 +303,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadTelefone().setVisible(true);
+//                new Frm_CadTelefone().setVisible(true);
             }
         });
     }
