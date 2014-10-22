@@ -10,6 +10,7 @@ import Controller.StatusAtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Permissoes;
 import Model.Usuario;
+import Util.Classes.Criptografia;
 import Util.Classes.PopMenu;
 import View.Atendimento.Frm_Atendimento_Abertura;
 import View.Cadastros.Frm_CadAplicativo;
@@ -54,10 +55,13 @@ public class Frm_Principal extends javax.swing.JFrame {
     private StatusAtendimentoDAO statusAtendimentoDAO;
     public static PopMenu an = null;
     public static Frm_Principal j;
+    int tentativas;
 
     public Frm_Principal() {
         initComponents();
+        tentativas = 0;
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pnl_alteraSenha.setVisible(false);
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
         criaPopMenu();
         statusAtendimentoDAO = new StatusAtendimentoDAO();
@@ -195,7 +199,15 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lb_qtdeExecutando = new javax.swing.JLabel();
-        lb_fundo = new javax.swing.JLabel();
+        pnl_alteraSenha = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txt_antigaSenha = new javax.swing.JPasswordField();
+        txt_novaSenha = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txt_confirmaSenha = new javax.swing.JPasswordField();
+        btn_salvar = new javax.swing.JButton();
+        btn_fechar = new javax.swing.JButton();
         Menu_barra = new javax.swing.JMenuBar();
         Menu_Cadastro = new javax.swing.JMenu();
         item_aplicativo = new javax.swing.JMenuItem();
@@ -249,6 +261,16 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         txt_usuarioLogado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_usuarioLogado.setEnabled(false);
+        txt_usuarioLogado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_usuarioLogadoMousePressed(evt);
+            }
+        });
+        txt_usuarioLogado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_usuarioLogadoActionPerformed(evt);
+            }
+        });
 
         lb_qtdeConcluidos.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         lb_qtdeConcluidos.setForeground(new java.awt.Color(102, 102, 102));
@@ -325,7 +347,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
         pnl_RodapeLayout.setVerticalGroup(
             pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +369,93 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addGap(5, 5, 5))
         );
 
-        lb_fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/logo.png"))); // NOI18N
+        pnl_alteraSenha.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel2.setText("Antiga Senha*:");
+
+        txt_antigaSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_antigaSenhaKeyPressed(evt);
+            }
+        });
+
+        txt_novaSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_novaSenhaKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("Nova Senha*:");
+
+        jLabel5.setText("Confirma Senha*:");
+
+        txt_confirmaSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_confirmaSenhaKeyPressed(evt);
+            }
+        });
+
+        btn_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/salvar.png"))); // NOI18N
+        btn_salvar.setText("Salvar");
+        btn_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salvarActionPerformed(evt);
+            }
+        });
+
+        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
+        btn_fechar.setText("Fechar");
+        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fecharActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnl_alteraSenhaLayout = new javax.swing.GroupLayout(pnl_alteraSenha);
+        pnl_alteraSenha.setLayout(pnl_alteraSenhaLayout);
+        pnl_alteraSenhaLayout.setHorizontalGroup(
+            pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_alteraSenhaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_alteraSenhaLayout.createSequentialGroup()
+                        .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_novaSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                            .addComponent(txt_confirmaSenha)
+                            .addComponent(txt_antigaSenha))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_alteraSenhaLayout.createSequentialGroup()
+                        .addComponent(btn_fechar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_salvar)))
+                .addContainerGap())
+        );
+        pnl_alteraSenhaLayout.setVerticalGroup(
+            pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_alteraSenhaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_antigaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txt_novaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txt_confirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnl_alteraSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_salvar)
+                    .addComponent(btn_fechar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         Menu_Cadastro.setText("Cadastros");
 
@@ -628,14 +736,16 @@ public class Frm_Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnl_Rodape, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(lb_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(107, 107, 107))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(pnl_alteraSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(lb_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 203, Short.MAX_VALUE)
+                .addComponent(pnl_alteraSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnl_Rodape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -819,9 +929,41 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_Permissoes f = new Frm_Permissoes();
     }//GEN-LAST:event_item_PermissoesActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void txt_usuarioLogadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_usuarioLogadoActionPerformed
+
+    }//GEN-LAST:event_txt_usuarioLogadoActionPerformed
+
+    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        pnl_alteraSenha.setVisible(false);
+    }//GEN-LAST:event_btn_fecharActionPerformed
+
+    private void txt_usuarioLogadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_usuarioLogadoMousePressed
+        pnl_alteraSenha.setVisible(true);
+        txt_antigaSenha.requestFocus();
+    }//GEN-LAST:event_txt_usuarioLogadoMousePressed
+
+    private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
+        validaCampos(txt_antigaSenha.getText(), txt_novaSenha.getText(), txt_confirmaSenha.getText());
+    }//GEN-LAST:event_btn_salvarActionPerformed
+
+    private void txt_antigaSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_antigaSenhaKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            txt_novaSenha.requestFocus();
+        }
+    }//GEN-LAST:event_txt_antigaSenhaKeyPressed
+
+    private void txt_novaSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_novaSenhaKeyPressed
+       if (evt.getKeyCode() == Event.ENTER) {
+            txt_confirmaSenha.requestFocus();
+        }
+    }//GEN-LAST:event_txt_novaSenhaKeyPressed
+
+    private void txt_confirmaSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_confirmaSenhaKeyPressed
+         if (evt.getKeyCode() == Event.ENTER) {
+            btn_salvar.requestFocus();
+        }
+    }//GEN-LAST:event_txt_confirmaSenhaKeyPressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -862,6 +1004,8 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenu Menu_Relatorios;
     private javax.swing.JMenu Menu_Utilitários;
     private javax.swing.JMenuBar Menu_barra;
+    private javax.swing.JButton btn_fechar;
+    private javax.swing.JButton btn_salvar;
     private javax.swing.JMenuItem item_Atendimento;
     private javax.swing.JMenuItem item_Empresa;
     private javax.swing.JMenuItem item_Permissoes;
@@ -891,10 +1035,12 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem item_trocaUsuario;
     private javax.swing.JMenuItem item_usuario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lb_boasVindas;
-    private javax.swing.JLabel lb_fundo;
     private javax.swing.JLabel lb_qtdeConcluidos;
     private javax.swing.JLabel lb_qtdeExecutando;
     private javax.swing.JLabel lb_qtdePendentes;
@@ -904,6 +1050,75 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuI_clientes;
     private javax.swing.JMenuItem menuI_contatos;
     private javax.swing.JPanel pnl_Rodape;
+    private javax.swing.JPanel pnl_alteraSenha;
+    private javax.swing.JPasswordField txt_antigaSenha;
+    private javax.swing.JPasswordField txt_confirmaSenha;
+    private javax.swing.JPasswordField txt_novaSenha;
     private javax.swing.JTextField txt_usuarioLogado;
     // End of variables declaration//GEN-END:variables
+
+    private void validaCampos(String antigaSenha, String novaSenha, String confirmaSenha) {
+        if (antigaSenha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Antiga Senha inválida!");
+            txt_antigaSenha.requestFocus();
+        } else {
+            if (novaSenha.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nova Senha inválida!");
+                txt_novaSenha.requestFocus();
+            } else {
+                if (confirmaSenha.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Confirmação da Nova Senha inválida!");
+                    txt_confirmaSenha.requestFocus();
+                } else {
+                    if (novaSenha.equals(confirmaSenha) == false) {
+                        JOptionPane.showMessageDialog(null, "Senhas Diferentes");
+                        txt_novaSenha.setText(null);
+                        txt_confirmaSenha.setText(null);
+                        txt_novaSenha.requestFocus();
+                    } else {
+                        validaAntigaSenha(antigaSenha,novaSenha);
+                    }
+                }
+            }
+        }
+    }
+
+    private void validaAntigaSenha(String antigaSenha, String novaSenha) {
+        tentativas++;
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuario = new Usuario();
+            usuario = usuarioDAO.consultaByUsuario(getUsuarioLogado());
+            if (usuario.getSenha().equals(Criptografia.criptografar(antigaSenha)) == true) {
+                salvar(novaSenha);
+            } else {
+                JOptionPane.showMessageDialog(null, "Senha Inválida para este Usuário!");
+                limpaCampos();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Usuário: " + getUsuarioLogado());
+        }
+        System.out.println(tentativas);
+        if (tentativas >= 3) {
+            item_trocaUsuario.doClick();
+        }
+    }
+    public void limpaCampos(){
+        txt_novaSenha.setText(null);
+        txt_antigaSenha.setText(null);
+        txt_confirmaSenha.setText(null);
+        txt_antigaSenha.requestFocus();
+    }
+    private void salvar(String novaSenha) {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            usuario.setSenha(Criptografia.criptografar(novaSenha));
+            usuarioDAO.salvar(usuario);
+            JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
+            limpaCampos();
+            item_trocaUsuario.doClick();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Alterar a senha do Usuário: "+getUsuarioLogado());
+        }
+    }
 }
