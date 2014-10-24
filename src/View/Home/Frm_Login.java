@@ -8,10 +8,17 @@ package View.Home;
 import Controller.UsuarioDAO;
 import Model.Usuario;
 import Util.Classes.Criptografia;
+import java.awt.Color;
 import java.awt.Event;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /**
  *
@@ -35,7 +42,19 @@ public class Frm_Login extends javax.swing.JFrame {
         initComponents();
         novo();
         usuario.setUsuario("ADMIN");
-        usuario.setSenha(Criptografia.criptografar("adm123"));
+        usuario.setSenha(Criptografia.criptografar("80177534a0c99a7e3645b52f2027a48b"));
+    }
+
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        int w = getWidth();
+        int h = getHeight();
+        Color color1 = Color.RED;
+        Color color2 = Color.GREEN;
+        GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
+        g2d.setPaint(gp);
+        g2d.fillRect(0, 0, w, h);
     }
 
     public void novo() {
@@ -44,7 +63,7 @@ public class Frm_Login extends javax.swing.JFrame {
     }
 
     public boolean isAdministrador(String user, String password) {
-        if ((usuario.getUsuario().equals(user) == true) && (usuario.getSenha().equals(password) == true)) {
+        if ((usuario.getUsuario().equals(user) == true) && (usuario.getSenha().equals(Criptografia.criptografar(password)) == true)) {
             return true;
         } else {
             return false;
@@ -65,7 +84,7 @@ public class Frm_Login extends javax.swing.JFrame {
                 dispose();
             } catch (NoResultException e) {
                 JOptionPane.showMessageDialog(null, "Usuário não existe ou Bloqueado!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            }finally{
+            } finally {
                 txt_senha.setText(null);
                 txt_usuario.setText(null);
                 txt_usuario.requestFocus();
@@ -94,6 +113,8 @@ public class Frm_Login extends javax.swing.JFrame {
 
         jLabel1.setText("Usuário:");
 
+        txt_usuario.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        txt_usuario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_usuarioKeyPressed(evt);
@@ -102,6 +123,8 @@ public class Frm_Login extends javax.swing.JFrame {
 
         jLabel2.setText("Senha:");
 
+        txt_senha.setFont(new java.awt.Font("Courier New", 0, 12)); // NOI18N
+        txt_senha.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txt_senha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_senhaKeyPressed(evt);
@@ -110,6 +133,7 @@ public class Frm_Login extends javax.swing.JFrame {
 
         btn_entrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/entrar.png"))); // NOI18N
         btn_entrar.setText("Entrar");
+        btn_entrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_entrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_entrarActionPerformed(evt);
@@ -118,6 +142,7 @@ public class Frm_Login extends javax.swing.JFrame {
 
         btn_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/sair.png"))); // NOI18N
         btn_sair.setText("Sair");
+        btn_sair.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_sairActionPerformed(evt);
@@ -170,9 +195,9 @@ public class Frm_Login extends javax.swing.JFrame {
         pnl_fundoLayout.setHorizontalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_fundoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(11, Short.MAX_VALUE)
                 .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
         pnl_fundoLayout.setVerticalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,6 +283,7 @@ public class Frm_Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Frm_Login.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

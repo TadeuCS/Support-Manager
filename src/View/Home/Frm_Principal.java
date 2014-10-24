@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Home;
 
+import Controller.AtendimentoDAO;
 import Controller.PermissoesDAO;
 import Controller.StatusAtendimentoDAO;
 import Controller.UsuarioDAO;
@@ -57,6 +53,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     public static PopMenu an = null;
     public static Frm_Principal j;
     int tentativas;
+
+    public void getTotalAtendimentos() {
+
+    }
 
     public Frm_Principal() {
         initComponents();
@@ -112,7 +112,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuario: " + getUsuarioLogado());
             Frm_Login f = new Frm_Login();
-            dispose();
+            this.dispose();
         }
     }
 
@@ -152,6 +152,8 @@ public class Frm_Principal extends javax.swing.JFrame {
                 usuarioDAO = new UsuarioDAO();
                 if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
                     Menu_Relatorios.setVisible(false);
+                    lb_qtdeAbertos.setVisible(false);
+                    lb_abertos.setVisible(false);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
@@ -200,6 +202,8 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lb_qtdeExecutando = new javax.swing.JLabel();
+        lb_abertos = new javax.swing.JLabel();
+        lb_qtdeAbertos = new javax.swing.JLabel();
         pnl_alteraSenha = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txt_antigaSenha = new javax.swing.JPasswordField();
@@ -327,6 +331,24 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
 
+        lb_abertos.setText("Abertos:");
+
+        lb_qtdeAbertos.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeAbertos.setForeground(new java.awt.Color(102, 102, 102));
+        lb_qtdeAbertos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_qtdeAbertos.setText("0");
+        lb_qtdeAbertos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lb_qtdeAbertosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lb_qtdeAbertosMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lb_qtdeAbertosMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnl_RodapeLayout = new javax.swing.GroupLayout(pnl_Rodape);
         pnl_Rodape.setLayout(pnl_RodapeLayout);
         pnl_RodapeLayout.setHorizontalGroup(
@@ -336,6 +358,10 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(lb_boasVindas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lb_abertos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lb_qtdeAbertos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -348,7 +374,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         pnl_RodapeLayout.setVerticalGroup(
             pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,6 +387,9 @@ public class Frm_Principal extends javax.swing.JFrame {
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_abertos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lb_qtdeAbertos, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -817,7 +846,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_tipoInformacaoActionPerformed
 
     private void item_contatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_contatoActionPerformed
-        Telefone tel=new Telefone();
+        Telefone tel = new Telefone();
         Frm_CadTelefone f = new Frm_CadTelefone(tel);
     }//GEN-LAST:event_item_contatoActionPerformed
 
@@ -955,16 +984,28 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_antigaSenhaKeyPressed
 
     private void txt_novaSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_novaSenhaKeyPressed
-       if (evt.getKeyCode() == Event.ENTER) {
+        if (evt.getKeyCode() == Event.ENTER) {
             txt_confirmaSenha.requestFocus();
         }
     }//GEN-LAST:event_txt_novaSenhaKeyPressed
 
     private void txt_confirmaSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_confirmaSenhaKeyPressed
-         if (evt.getKeyCode() == Event.ENTER) {
+        if (evt.getKeyCode() == Event.ENTER) {
             btn_salvar.requestFocus();
         }
     }//GEN-LAST:event_txt_confirmaSenhaKeyPressed
+
+    private void lb_qtdeAbertosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeAbertosMouseEntered
+        setFocusONLabel(lb_qtdeAbertos);
+    }//GEN-LAST:event_lb_qtdeAbertosMouseEntered
+
+    private void lb_qtdeAbertosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeAbertosMouseExited
+        setFocusOFFLabel(lb_qtdeAbertos);
+    }//GEN-LAST:event_lb_qtdeAbertosMouseExited
+
+    private void lb_qtdeAbertosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_qtdeAbertosMousePressed
+        listaAtendimentos("ABERTO");
+    }//GEN-LAST:event_lb_qtdeAbertosMousePressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -988,6 +1029,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Frm_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -1042,7 +1084,9 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lb_abertos;
     private javax.swing.JLabel lb_boasVindas;
+    private javax.swing.JLabel lb_qtdeAbertos;
     private javax.swing.JLabel lb_qtdeConcluidos;
     private javax.swing.JLabel lb_qtdeExecutando;
     private javax.swing.JLabel lb_qtdePendentes;
@@ -1078,7 +1122,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                         txt_confirmaSenha.setText(null);
                         txt_novaSenha.requestFocus();
                     } else {
-                        validaAntigaSenha(antigaSenha,novaSenha);
+                        validaAntigaSenha(antigaSenha, novaSenha);
                     }
                 }
             }
@@ -1105,12 +1149,14 @@ public class Frm_Principal extends javax.swing.JFrame {
             item_trocaUsuario.doClick();
         }
     }
-    public void limpaCampos(){
+
+    public void limpaCampos() {
         txt_novaSenha.setText(null);
         txt_antigaSenha.setText(null);
         txt_confirmaSenha.setText(null);
         txt_antigaSenha.requestFocus();
     }
+
     private void salvar(String novaSenha) {
         try {
             usuarioDAO = new UsuarioDAO();
@@ -1120,7 +1166,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             limpaCampos();
             item_trocaUsuario.doClick();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Alterar a senha do Usuário: "+getUsuarioLogado());
+            JOptionPane.showMessageDialog(null, "Erro ao Alterar a senha do Usuário: " + getUsuarioLogado());
         }
     }
 }

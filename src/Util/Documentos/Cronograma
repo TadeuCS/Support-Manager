@@ -1,6 +1,8 @@
 ok empresa: erros no cadastro de empresa
 ok usuario: trocar metodos de buscar telefone, e validar campos unicos
 possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
+ao logar, atualisar totalizadores de atendimentos
+ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data de atualização existente no cadastro do cliente.
 ok ao clicar no usuarioLogado abrir janela de alteração de senha;
 ---------------------------------------------------------CLIENTE-----------------------------------------------------
 ok validar campos obrigatórios cadastro de cliente
@@ -16,6 +18,7 @@ ok cadastro de cidade
 
 ---------------------------------------------------------ATENDIMENTO--------------------------------------------------
 ok ABRIR ATENDIMENTO POR USUARIO LOGADO.
+USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
 ok NO CASO DE ATENDENTE ATT PODE SER ABERTO PRA QUALQUER USUARIO QUE NÃO ESTEJA BLOQUEADO.
 OK AO ALTERAR ATENDIMENTO LISTADO EM EXECUÇÃO, VOLTAR PARA TELA DE FECHAMENTO DE ATT POSSIBILITANDO SOMENTE SALVAR O ATT.
 OK TRATAR PENDENCIA, SE OUVER SALVAR NO BANCO.
