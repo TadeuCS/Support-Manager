@@ -82,7 +82,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             item_origem.setVisible(permissoes.getCadOrigem());
             item_status.setVisible(permissoes.getCadStatusAtendimento());
             item_tipoAtendimento.setVisible(permissoes.getCadTipoAtendimento());
-            item_cliente.setVisible(permissoes.getCadCliente());
+            item_cadCliente.setVisible(permissoes.getCadCliente());
             item_segmento.setVisible(permissoes.getCadSegmento());
             item_parcela.setVisible(permissoes.getCadParcela());
             item_salario.setVisible(permissoes.getCadSalario());
@@ -96,7 +96,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             item_executando.setVisible(permissoes.getConsAtendimentoExecutando());
             item_concluidos.setVisible(permissoes.getConsAtendimentoConcluidos());
             item_pendentes.setVisible(permissoes.getConsAtendimentoPendentes());
-            item_cliente.setVisible(permissoes.getConsClientes());
+            item_Cliente.setVisible(permissoes.getConsClientes());
             item_contato.setVisible(permissoes.getConsContatos());
             item_usuario.setVisible(permissoes.getConsUsuarios());
 
@@ -217,7 +217,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         Menu_Cadastro = new javax.swing.JMenu();
         item_aplicativo = new javax.swing.JMenuItem();
         item_Atendimento = new javax.swing.JMenuItem();
-        item_cliente = new javax.swing.JMenuItem();
+        item_cadCliente = new javax.swing.JMenuItem();
         item_contato = new javax.swing.JMenuItem();
         item_Empresa = new javax.swing.JMenuItem();
         item_grupo = new javax.swing.JMenuItem();
@@ -237,7 +237,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         item_executando = new javax.swing.JMenuItem();
         item_concluidos = new javax.swing.JMenuItem();
         item_pendentes = new javax.swing.JMenuItem();
-        menuI_clientes = new javax.swing.JMenuItem();
+        item_Cliente = new javax.swing.JMenuItem();
         menuI_contatos = new javax.swing.JMenuItem();
         menuI_Usuarios = new javax.swing.JMenuItem();
         Menu_Relatorios = new javax.swing.JMenu();
@@ -505,13 +505,13 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         Menu_Cadastro.add(item_Atendimento);
 
-        item_cliente.setText("Cliente");
-        item_cliente.addActionListener(new java.awt.event.ActionListener() {
+        item_cadCliente.setText("Cliente");
+        item_cadCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_clienteActionPerformed(evt);
+                item_cadClienteActionPerformed(evt);
             }
         });
-        Menu_Cadastro.add(item_cliente);
+        Menu_Cadastro.add(item_cadCliente);
 
         item_contato.setText("Contato");
         item_contato.addActionListener(new java.awt.event.ActionListener() {
@@ -657,13 +657,13 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_Consulta.add(menuI_Atendimentos);
 
-        menuI_clientes.setText("Clientes");
-        menuI_clientes.addActionListener(new java.awt.event.ActionListener() {
+        item_Cliente.setText("Clientes");
+        item_Cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuI_clientesActionPerformed(evt);
+                item_ClienteActionPerformed(evt);
             }
         });
-        Menu_Consulta.add(menuI_clientes);
+        Menu_Consulta.add(item_Cliente);
 
         menuI_contatos.setText("Contatos");
         menuI_contatos.addActionListener(new java.awt.event.ActionListener() {
@@ -833,9 +833,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadSegmento f = new Frm_CadSegmento();
     }//GEN-LAST:event_item_segmentoActionPerformed
 
-    private void item_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_clienteActionPerformed
+    private void item_cadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_cadClienteActionPerformed
         Frm_CadCliente f = new Frm_CadCliente();
-    }//GEN-LAST:event_item_clienteActionPerformed
+    }//GEN-LAST:event_item_cadClienteActionPerformed
 
     private void item_informacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_informacaoActionPerformed
         Frm_CadInformacao f = new Frm_CadInformacao();
@@ -876,9 +876,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadSalario f = new Frm_CadSalario();
     }//GEN-LAST:event_item_salarioActionPerformed
 
-    private void menuI_clientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_clientesActionPerformed
+    private void item_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ClienteActionPerformed
         Frm_ConCliente f = new Frm_ConCliente();
-    }//GEN-LAST:event_menuI_clientesActionPerformed
+    }//GEN-LAST:event_item_ClienteActionPerformed
 
     private void item_relAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoActionPerformed
         Frm_RelAtendimento f = new Frm_RelAtendimento();
@@ -1051,11 +1051,12 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JMenuItem item_Atendimento;
+    private javax.swing.JMenuItem item_Cliente;
     private javax.swing.JMenuItem item_Empresa;
     private javax.swing.JMenuItem item_Permissoes;
     private javax.swing.JMenuItem item_abertos;
     private javax.swing.JMenuItem item_aplicativo;
-    private javax.swing.JMenuItem item_cliente;
+    private javax.swing.JMenuItem item_cadCliente;
     private javax.swing.JMenuItem item_concluidos;
     private javax.swing.JMenuItem item_contato;
     private javax.swing.JMenuItem item_emiteRecibo;
@@ -1093,7 +1094,6 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuI_Atendimentos;
     private javax.swing.JMenu menuI_Informacao;
     private javax.swing.JMenuItem menuI_Usuarios;
-    private javax.swing.JMenuItem menuI_clientes;
     private javax.swing.JMenuItem menuI_contatos;
     private javax.swing.JPanel pnl_Rodape;
     private javax.swing.JPanel pnl_alteraSenha;
