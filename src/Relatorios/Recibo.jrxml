@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Recibo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e2d247c7-fe66-4892-88a7-7d7b8161ae14">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Recibo" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e2d247c7-fe66-4892-88a7-7d7b8161ae14">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -44,61 +44,32 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<parameter name="CODIGO" class="java.lang.Integer"/>
+	<parameter name="salario" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="codigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select * from usuario where codusuario = $P{CODIGO}]]>
+		<![CDATA[select c.`NOME_FANTASIA` nome,a.`DESCRICAO` aplicativo,Sum(p.`PERCENTUAL`/100*$P{salario}) total,$P{data} data from cliente c
+inner join link_cliente lc on c.`CODCLIENTE`=lc.`CODCLIENTE`
+inner join `link` l on lc.`CODLINK`=l.`CODLINK`
+inner join aplicativo a on l.`CODAPLICATIVO`=a.`CODAPLICATIVO`
+inner join parcela p on c.`CODPARCELA`=p.`CODPARCELA`
+where c.`CODCLIENTE`=$P{codigo}]]>
 	</queryString>
-	<field name="CODUSUARIO" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CPF" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="EMAIL" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="NOME" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SENHA" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SEXO" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="USUARIO" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODSTATUSPESSOA" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODTIPOUSUARIO" class="java.lang.Integer">
+	<field name="nome" class="java.lang.String"/>
+	<field name="aplicativo" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="data" class="java.lang.Object">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<detail>
-		<band height="401" splitType="Stretch">
-			<staticText>
-				<reportElement x="4" y="0" width="252" height="16" uuid="91f2f77c-48d0-487c-8513-28efe584a0f6"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[OLIVET SISTEMAS - B2B SISTEMAS LTDA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="4" y="16" width="252" height="14" uuid="e5fcbec7-dfa0-4fd8-88aa-ef06754b6a08"/>
-				<text><![CDATA[Rua Dona Luiza, 521, sala 4 Fone: (34) 3822-2250]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="4" y="30" width="252" height="14" uuid="036a169d-07af-438a-b0a3-8ef3914c4aae"/>
-				<text><![CDATA[Patos de Minas - MG]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="4" y="44" width="252" height="14" forecolor="#00159D" uuid="6a334037-c934-441a-ac71-90c610fdc6f5"/>
-				<textElement>
-					<font isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[www.olivetsistemas.com.br]]></text>
-			</staticText>
+		<band height="359" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="58" backcolor="#FFFFFF" uuid="391274fc-1863-4d2a-8aad-2f11c4d0f83f"/>
+			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="63" width="555" height="24" uuid="11aefa3d-7311-4f48-a375-b7f292532983"/>
 			</rectangle>
@@ -110,7 +81,7 @@
 				<text><![CDATA[Nome:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="87" width="555" height="221" uuid="de68087a-2f36-4a81-89c0-3b581e69bc79"/>
+				<reportElement x="0" y="87" width="555" height="191" uuid="de68087a-2f36-4a81-89c0-3b581e69bc79"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="465" y="87" width="90" height="26" backcolor="#999999" uuid="8277fca6-04ae-4c27-ba53-f6dd591f45a5"/>
@@ -156,48 +127,48 @@
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="122" width="302" height="26" uuid="67c24f56-c37a-483c-b6ba-e2579a5de6ad"/>
+				<reportElement x="6" y="118" width="302" height="26" uuid="67c24f56-c37a-483c-b6ba-e2579a5de6ad"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Adobe Arabic" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pagamento referente a manutenção do sistema:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="149" width="37" height="26" uuid="1467e823-cfff-49bd-9a86-93b8ab555152"/>
+				<reportElement x="6" y="145" width="37" height="26" uuid="1467e823-cfff-49bd-9a86-93b8ab555152"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Adobe Arabic" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="313" width="555" height="70" backcolor="#FFFFFF" uuid="b71a722f-806d-49b9-83ca-43264540ae88"/>
+				<reportElement x="0" y="283" width="555" height="70" backcolor="#FFFFFF" uuid="b71a722f-806d-49b9-83ca-43264540ae88"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="4" y="315" width="549" height="14" uuid="e9027126-c721-4c41-9b7d-bcea6be68fc0"/>
+				<reportElement x="4" y="285" width="549" height="14" uuid="e9027126-c721-4c41-9b7d-bcea6be68fc0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
-				<text><![CDATA[DECLARO TER RECEBIDO A IMPORTANCIA LIQUIDA DISCRIMINADA NESTE RECIBO]]></text>
+				<text><![CDATA[DECLARO TER RECEBIDO A IMPORTÂNCIA LIQUIDA DISCRIMINADA NESTE RECIBO]]></text>
 			</staticText>
 			<line>
-				<reportElement x="147" y="367" width="372" height="1" uuid="3f66ba3e-103b-459e-a971-1c6ed3ebcc7d"/>
+				<reportElement x="147" y="337" width="372" height="1" uuid="3f66ba3e-103b-459e-a971-1c6ed3ebcc7d"/>
 			</line>
 			<staticText>
-				<reportElement x="147" y="367" width="372" height="14" uuid="3db48af0-1944-4228-b4c2-dfc70b2f39da"/>
+				<reportElement x="147" y="337" width="372" height="14" uuid="3db48af0-1944-4228-b4c2-dfc70b2f39da"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ASSINATURA DO FUNCIONARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="" x="18" y="349" width="107" height="18" uuid="89e1db24-2e79-4351-884c-d11b39247ebb"/>
+				<reportElement key="" x="18" y="319" width="107" height="18" uuid="89e1db24-2e79-4351-884c-d11b39247ebb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[__ /__ /_____]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="18" y="368" width="107" height="14" uuid="d9e05f8d-bf59-4c3c-83b1-428d6974a68a"/>
+				<reportElement x="18" y="338" width="107" height="14" uuid="d9e05f8d-bf59-4c3c-83b1-428d6974a68a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isBold="false"/>
 				</textElement>
@@ -209,24 +180,67 @@
 			<rectangle>
 				<reportElement x="465" y="256" width="90" height="22" backcolor="#FFFFFF" uuid="013aee06-7c93-4b2b-8274-000093572318"/>
 			</rectangle>
+			<textField>
+				<reportElement x="49" y="65" width="415" height="20" uuid="571d0f64-95ad-47da-a292-41c4b4ab6d42"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="309" y="124" width="66" height="20" uuid="12550303-f932-4637-9753-dd70463d71f2"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{aplicativo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R$ ###0.00">
+				<reportElement x="467" y="257" width="88" height="20" uuid="fb56055b-2fce-460e-9c84-e4cc96cf8897"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="R$ ###0.00">
+				<reportElement x="378" y="120" width="88" height="20" uuid="6b0278ea-bd2a-4181-b866-5fe7a311d3f5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
 			<image>
-				<reportElement mode="Transparent" x="464" y="1" width="91" height="62" uuid="ae79e1f3-3275-4510-aac5-2485f1675013"/>
-				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\logo.png"]]></imageExpression>
+				<reportElement x="331" y="238" width="43" height="38" uuid="02c33dfc-bd00-4eba-8c9a-91963dd80074"/>
+				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\QRCode.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="467" y="0" width="86" height="58" uuid="11003131-4c3a-4cb4-9859-6ea90ab3efe5"/>
+				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\fundo.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="308" y="123" width="57" height="24" uuid="08680df9-85ac-4518-b8de-a22bca103107"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[Yunes]]></text>
+				<reportElement x="6" y="17" width="252" height="14" uuid="e5fcbec7-dfa0-4fd8-88aa-ef06754b6a08"/>
+				<text><![CDATA[Rua Dona Luiza, 521, sala 4 Fone: (34) 3822-2250]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="43" y="150" width="82" height="24" uuid="63a7bdd0-420d-40b0-9b98-6f5eab42ef5d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[10/09/2014]]></text>
+				<reportElement x="6" y="30" width="252" height="14" uuid="036a169d-07af-438a-b0a3-8ef3914c4aae"/>
+				<text><![CDATA[Patos de Minas - MG]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="6" y="42" width="252" height="14" forecolor="#00159D" uuid="6a334037-c934-441a-ac71-90c610fdc6f5"/>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[www.olivetsistemas.com.br]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="1" width="252" height="27" uuid="222a625e-1b7f-4d22-92a7-27fcda5c6024"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[B2B SISTEMAS LTDA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="49" y="147" width="100" height="20" uuid="4cf9b2f0-7b00-49b7-b163-84c8e873cf9d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

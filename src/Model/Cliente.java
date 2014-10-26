@@ -57,7 +57,7 @@ public class Cliente implements Serializable {
     @Column(name = "REFERENCIA", nullable = true)
     private Integer referencia;
     @Basic(optional = false)
-    @Column(name = "NOME_FANTASIA")
+    @Column(name = "NOME_FANTASIA",unique = true)
     private String nomeFantasia;
     @Basic(optional = false)
     @Column(name = "RAZAO_SOCIAL",unique = true)

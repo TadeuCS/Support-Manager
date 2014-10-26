@@ -11,7 +11,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.Map;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -28,7 +27,7 @@ public class GeraRelatorios {
 
     public String getDiretorio(String nomeArquivo) {
         File arquivo = new File(nomeArquivo);
-        return arquivo.getAbsolutePath();
+        return arquivo.getAbsolutePath().replaceAll(nomeArquivo, "src/Relatorios/"+nomeArquivo);
     }
 
     public void imprimirRelatorioEmCodigo() {
@@ -66,21 +65,21 @@ public class GeraRelatorios {
         }
     }
 
-    public void imprimirRelatorioSQLNoRelatorio() {
+    public void imprimirRelatorioSQLNoRelatorio(Map parametros) {
         Connection conn = null;
         try {
             // Obtém o diretório da aplicação
 
             // Carrega conexão via JDBC
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:1527/banco", "usuario", "senha");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/smdados", "root", "1234");
 
-            Map parameters = new HashMap();
+//            Map parameters = new HashMap();
 //            parameters.put("codigo", jtCodigo.getText());
-            parameters.put("codigo", 1);
+//            parameters.put("codigo", 1);
 
             // Preenche o relatório com os dados
-            JasperPrint print = JasperFillManager.fillReport(getDiretorio("teste") + "/arquivo.jasper", parameters, conn);
+            JasperPrint print = JasperFillManager.fillReport(getDiretorio("Recibo.jasper"), parametros, conn);
 
             // Exibe visualização dos dados
             JasperViewer.viewReport(print, false);

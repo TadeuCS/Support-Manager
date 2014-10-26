@@ -370,13 +370,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }
 
     public void setCliente() {
-        //dados da aba dados pessoais
-        statusPessoaDAO = new StatusPessoaDAO();
-        tipoPessoaDAO = new TipoPessoaDAO();
-        segmentoDAO = new SegmentoDAO();
-        parcelaDAO = new ParcelaDAO();
         try {
-
             if (txt_codigo.getText().equals("") == false) {
                 cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
             }
@@ -407,7 +401,6 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             if (txt_operacao.getText().equals("INCLUSÃO") == true) {
                 cliente.getEnderecoList().add(setEndereco(cliente));
             }
-
             if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
                 cliente.getEnderecoList().get(0).setBairro(txt_bairro.getText());
                 cliente.getEnderecoList().get(0).setCep(txt_cep.getText());

@@ -21,12 +21,10 @@ import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
 import View.Home.Frm_Principal;
 import java.awt.Event;
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
 
 /**
  *
@@ -108,7 +106,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
+            JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
         }
     }
 
