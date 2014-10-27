@@ -12,6 +12,7 @@ import Model.Cliente;
 import Util.Classes.Data;
 import Util.Classes.GeraRelatorios;
 import java.awt.Event;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.NoResultException;
@@ -30,6 +31,7 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
     ClienteDAO clienteDAO;
     StatusPessoaDAO statusPessoaDAO;
     Cliente cliente;
+
     public Frm_RelReciboCliente() {
         initComponents();
         setVisible(true);
@@ -271,10 +273,10 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Selecione um Salario!");
                 cbx_salario.requestFocus();
             } else {
-                if(txt_data.getText().equals("  /  /    ")==true){
+                if (txt_data.getText().equals("  /  /    ") == true) {
                     JOptionPane.showMessageDialog(null, "Data inválida!");
                     txt_data.requestFocus();
-                }else{
+                } else {
                     gerar(cbx_cliente.getSelectedItem().toString(),
                             Double.parseDouble(cbx_salario.getSelectedItem().toString()),
                             txt_data.getText());
@@ -285,18 +287,20 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
 
     private void gerar(String nomeCliente, double salario, String data) {
         Map parameters = new HashMap();
-        GeraRelatorios geraRelatorios=new GeraRelatorios();
-        clienteDAO=new ClienteDAO();
-        cliente=new Cliente();
+        GeraRelatorios geraRelatorios = new GeraRelatorios();
+        clienteDAO = new ClienteDAO();
+        cliente = new Cliente();
         try {
-            cliente=clienteDAO.buscaClienteByNomeFantasia(nomeCliente);
+            cliente = clienteDAO.buscaClienteByNomeFantasia(nomeCliente);
             parameters.put("codigo", Integer.parseInt(cliente.getCodcliente().toString()));
             parameters.put("salario", salario);
             parameters.put("data", data);
-            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters);
+            InputStream is = null;
+
+            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Recibo.jasper");
         } catch (NoResultException e) {
-            JOptionPane.showMessageDialog(null, "Cliente "+nomeCliente+" não encontrado!");
+            JOptionPane.showMessageDialog(null, "Cliente " + nomeCliente + " não encontrado!");
         }
-        
+
     }
 }

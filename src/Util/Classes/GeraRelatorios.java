@@ -6,6 +6,7 @@
 package Util.Classes;
 
 import java.io.File;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,7 +28,7 @@ public class GeraRelatorios {
 
     public String getDiretorio(String nomeArquivo) {
         File arquivo = new File(nomeArquivo);
-        return arquivo.getAbsolutePath().replaceAll(nomeArquivo, "src/Relatorios/"+nomeArquivo);
+        return arquivo.getAbsolutePath();
     }
 
     public void imprimirRelatorioEmCodigo() {
@@ -65,7 +66,7 @@ public class GeraRelatorios {
         }
     }
 
-    public void imprimirRelatorioSQLNoRelatorio(Map parametros) {
+    public void imprimirRelatorioSQLNoRelatorio(Map parametros, String diretorio) {
         Connection conn = null;
         try {
             // Obtém o diretório da aplicação
@@ -79,7 +80,7 @@ public class GeraRelatorios {
 //            parameters.put("codigo", 1);
 
             // Preenche o relatório com os dados
-            JasperPrint print = JasperFillManager.fillReport(getDiretorio("Recibo.jasper"), parametros, conn);
+            JasperPrint print = JasperFillManager.fillReport(diretorio, parametros, conn);
 
             // Exibe visualização dos dados
             JasperViewer.viewReport(print, false);

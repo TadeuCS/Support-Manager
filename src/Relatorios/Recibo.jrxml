@@ -127,16 +127,16 @@ where c.`CODCLIENTE`=$P{codigo}]]>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="118" width="302" height="26" uuid="67c24f56-c37a-483c-b6ba-e2579a5de6ad"/>
+				<reportElement x="6" y="118" width="278" height="26" uuid="67c24f56-c37a-483c-b6ba-e2579a5de6ad"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Adobe Arabic" size="10" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pagamento referente a manutenção do sistema:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="6" y="145" width="37" height="26" uuid="1467e823-cfff-49bd-9a86-93b8ab555152"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Adobe Arabic" size="10" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data:]]></text>
 			</staticText>
@@ -186,8 +186,8 @@ where c.`CODCLIENTE`=$P{codigo}]]>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="309" y="124" width="66" height="20" uuid="12550303-f932-4637-9753-dd70463d71f2"/>
-				<textElement textAlignment="Left"/>
+				<reportElement x="287" y="121" width="66" height="20" uuid="12550303-f932-4637-9753-dd70463d71f2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{aplicativo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="R$ ###0.00">
@@ -206,11 +206,11 @@ where c.`CODCLIENTE`=$P{codigo}]]>
 			</textField>
 			<image>
 				<reportElement x="331" y="238" width="43" height="38" uuid="02c33dfc-bd00-4eba-8c9a-91963dd80074"/>
-				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\QRCode.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../Util/Img/QRCode.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="467" y="0" width="86" height="58" uuid="11003131-4c3a-4cb4-9859-6ea90ab3efe5"/>
-				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\fundo.png"]]></imageExpression>
+				<imageExpression><![CDATA["../Util/Img/fundo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="6" y="17" width="252" height="14" uuid="e5fcbec7-dfa0-4fd8-88aa-ef06754b6a08"/>
@@ -235,7 +235,7 @@ where c.`CODCLIENTE`=$P{codigo}]]>
 				<text><![CDATA[B2B SISTEMAS LTDA]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="49" y="147" width="100" height="20" uuid="4cf9b2f0-7b00-49b7-b163-84c8e873cf9d"/>
+				<reportElement x="46" y="148" width="100" height="20" uuid="4cf9b2f0-7b00-49b7-b163-84c8e873cf9d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>

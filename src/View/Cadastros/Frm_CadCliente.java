@@ -370,6 +370,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }
 
     public void setCliente() {
+        tipoPessoaDAO=new TipoPessoaDAO();
+        parcelaDAO=new ParcelaDAO();
+        segmentoDAO=new SegmentoDAO();
+        statusPessoaDAO=new StatusPessoaDAO();
+        cidadesDAO=new CidadesDAO();
         try {
             if (txt_codigo.getText().equals("") == false) {
                 cliente.setCodcliente(Integer.parseInt(txt_codigo.getText()));
@@ -393,6 +398,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
             cliente.setCodparcela(parcelaDAO.consulta(cbx_parcela.getSelectedItem().toString()));
             cliente.setCodsegmento(segmentoDAO.buscaSegmento(cbx_segmento.getSelectedItem().toString()));
+            statusPessoaDAO=new StatusPessoaDAO();
             if (chx_bloqueado.getSelectedObjects() != null) {
                 cliente.setCodstatuspessoa(statusPessoaDAO.buscaStatusPessoa("BLOQUEADO"));
             } else {

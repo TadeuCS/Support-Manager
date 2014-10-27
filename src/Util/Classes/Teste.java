@@ -8,9 +8,6 @@ package Util.Classes;
 public class Teste {
 
     public static void main(String[] args) {
-//        QRCode.geraQRCode("www.google.com.br");
-        
-        GeraRelatorios g=new GeraRelatorios();
-        System.out.println(g.getDiretorio("Recibo.jasper"));
+        QRCode.geraQRCode("www.olivetsistemas.com.br");
     }
 }
