@@ -1,56 +1,22 @@
-ok empresa: erros no cadastro de empresa
-ok usuario: trocar metodos de buscar telefone, e validar campos unicos
+---------------------------------------------------------ATENDIMENTO--------------------------------------------------
+USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
+AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
+AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
+----------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------RELATÓRIO----------------------------------------------------
+criar interface e relatorio de atendimento sintetico passando data inicial e final.
+crir interface e relatorio de atendimento analitico passando data inciial e final, usuario, cliente, status
+CRIAR INTERFACE E RELATORIO DE CLIENTE COM OS FILTROS: DATA ATUALIZAÇÃO
+----------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------OUTROS------------------------------------------------------
+TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
+IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
+DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
 possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
 ao logar, atualisar totalizadores de atendimentos
 ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data de atualização existente no cadastro do cliente.
 ao abrir um atendimento o mesmo ficará como abertos, ao clicar no botão executar o mesmo deve desaparecer da tela de abertos e cair em execução.
 configurar as telas de consulta para se o TIPO USUARIO for SUPORTE, desabilitar os botões voltar e selecionar.
-ok ao clicar no usuarioLogado abrir janela de alteração de senha;
----------------------------------------------------------CLIENTE-----------------------------------------------------
-ok validar campos obrigatórios cadastro de cliente
-ok validar email e cpf cliente
-ok inserir varios links
-ok inserir varios contatos
-ok salvar cliente
-ok alterar cliente
-ok consultar cliente
-ok excluir cliente se não houver movimentação
-ok cadastro de cidade
-----------------------------------------------------------------------------------------------------------------------
-
----------------------------------------------------------ATENDIMENTO--------------------------------------------------
-ok ABRIR ATENDIMENTO POR USUARIO LOGADO.
-USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
-ok NO CASO DE ATENDENTE ATT PODE SER ABERTO PRA QUALQUER USUARIO QUE NÃO ESTEJA BLOQUEADO.
-OK AO ALTERAR ATENDIMENTO LISTADO EM EXECUÇÃO, VOLTAR PARA TELA DE FECHAMENTO DE ATT POSSIBILITANDO SOMENTE SALVAR O ATT.
-OK TRATAR PENDENCIA, SE OUVER SALVAR NO BANCO.
-ok NA TABELA DE ATENDIMENTOS EM EXECUÇÃO, POSSIBILIDADE DE CANCELAR UM ATENDIMENTO PARA USUARIO ATENDENTE.
-ok NA TABELA DE ATENDIMENTOS EM EXECUÇÃO, POSSIBILIDADE DE FINALIZAR UM ATT OU ALTERAR-LO PARA USUARIO SUPORTE.
-OK NA TABELA DE PENDENTES POSSIBILITAR PARA USUARIOS SUPORTE QUE ABRIU O ATT, FECHAR-LO.
-ok EM TODAS AS TABELAS DEVE SER PERMITIDO FILTRAR POR QUALQUER COLUNA/VALOR.
-AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
-AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
-----------------------------------------------------------------------------------------------------------------------
-
----------------------------------------------------------EMPRESA------------------------------------------------------
-OK TRATAR CAMPOS OBRIGATÓRIOS NO CADASTRO DE EMPRESA/EMAIL
-OK CRIAR INTERFACE DE TESTE ENVIO DE EMAIL.
-CONFIGURAR RELATORIO DE RECIBO POR CLIENTE.
-----------------------------------------------------------------------------------------------------------------------
-
----------------------------------------------------------RELATÓRIO------------------------------------------------------
-CRIAR INTERFACE E RELATORIO DE CLIENTE COM OS FILTROS: DATA ATUALIZAÇÃO, POR CLIENTE, POR SEGMENTO.
-CRIAR INTERFACE E RELATORIO DE ATENDIMENTO COM OS FILTROS: TOTAL ATENDIMENTOS, USUARIO, CLIENTE, PERIODO, STATUS.
-CRIAR INTERFACE E RELATORIO: RECIBO DE CLIENTES PASSANDO COMO PARAMETRO UMA LISTA DE CLIENTES.
-----------------------------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------OUTROS------------------------------------------------------
-OK SISTEMA MINIMIZAR PARA AREA DE NOTIFICAÇÃO.
-INSERIR ICONES NOS BOTOES.
-TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
-IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
-CRIAR WEBSERVICE COM METODO: LOGIN, CONSULTAR ATENDIMENTO POR USUARIO E DATA.
-CRIAR INTERFACE ANDROID PARA EFETUAR ESTA CONSULTA.
-CRIAR INTERFACE DE ABERTURA DE ATENDIMENTO WEB.
-DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
 ----------------------------------------------------------------------------------------------------------------------

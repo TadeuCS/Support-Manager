@@ -241,8 +241,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         menuI_contatos = new javax.swing.JMenuItem();
         menuI_Usuarios = new javax.swing.JMenuItem();
         Menu_Relatorios = new javax.swing.JMenu();
-        item_relAtendimento = new javax.swing.JMenuItem();
         item_relCliente = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        item_relAtendimento = new javax.swing.JMenuItem();
+        item_relAtendimento1 = new javax.swing.JMenuItem();
         Menu_Utilitários = new javax.swing.JMenu();
         item_enviaEmail = new javax.swing.JMenuItem();
         item_emiteRecibo = new javax.swing.JMenuItem();
@@ -685,14 +687,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_Relatorios.setText("Relatorios");
 
-        item_relAtendimento.setText("Atendimento");
-        item_relAtendimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_relAtendimentoActionPerformed(evt);
-            }
-        });
-        Menu_Relatorios.add(item_relAtendimento);
-
         item_relCliente.setText("Cliente");
         item_relCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -700,6 +694,26 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
         Menu_Relatorios.add(item_relCliente);
+
+        jMenu1.setText("Atendimento");
+
+        item_relAtendimento.setText("Analitico");
+        item_relAtendimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relAtendimentoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(item_relAtendimento);
+
+        item_relAtendimento1.setText("Sintetico");
+        item_relAtendimento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relAtendimento1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(item_relAtendimento1);
+
+        Menu_Relatorios.add(jMenu1);
 
         Menu_barra.add(Menu_Relatorios);
 
@@ -881,7 +895,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_ClienteActionPerformed
 
     private void item_relAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoActionPerformed
-        Frm_RelAtendimento f = new Frm_RelAtendimento();
+        Frm_RelAtendimento f = new Frm_RelAtendimento("ANALITICO");
     }//GEN-LAST:event_item_relAtendimentoActionPerformed
 
     private void item_relClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteActionPerformed
@@ -1007,6 +1021,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         listaAtendimentos("ABERTO");
     }//GEN-LAST:event_lb_qtdeAbertosMousePressed
 
+    private void item_relAtendimento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimento1ActionPerformed
+        Frm_RelAtendimento f = new Frm_RelAtendimento("SINTETICO");
+    }//GEN-LAST:event_item_relAtendimento1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1070,6 +1088,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem item_pendentes;
     private javax.swing.JMenuItem item_prioridade;
     private javax.swing.JMenuItem item_relAtendimento;
+    private javax.swing.JMenuItem item_relAtendimento1;
     private javax.swing.JMenuItem item_relCliente;
     private javax.swing.JMenuItem item_salario;
     private javax.swing.JMenuItem item_segmento;
@@ -1085,6 +1104,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel lb_abertos;
     private javax.swing.JLabel lb_boasVindas;
     private javax.swing.JLabel lb_qtdeAbertos;
