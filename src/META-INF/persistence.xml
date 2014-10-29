@@ -15,6 +15,7 @@
     <class>Model.LinkCliente</class>
     <class>Model.Origem</class>
     <class>Model.Parcela</class>
+    <class>Model.Permissoes</class>
     <class>Model.Prioridade</class>
     <class>Model.Salarios</class>
     <class>Model.Segmento</class>
@@ -27,7 +28,6 @@
     <class>Model.TipoUsuario</class>
     <class>Model.Uf</class>
     <class>Model.Usuario</class>
-    <class>Model.Permissoes</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/smdados"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
