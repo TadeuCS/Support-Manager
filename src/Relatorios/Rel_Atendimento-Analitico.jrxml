@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Atendimento-Analitico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="37baed8f-480b-46c6-b2d7-29d86385f375">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="CODATENDIMENTO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA_ABERTURA" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA_AGENDAMENTO" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA_CANCELAMENTO" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA_FECHAMENTO" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA_FIM" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA_INICIO" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PENDENCIA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROBLEMA_DETECTADO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROBLEMA_INFORMADO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROBLEMA_PENDENCIA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PROBLEMA_SOLUCAO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SOLICITANTE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODCLIENTE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODORIGEM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODPRIORIDADE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODSTATUSATENDIMENTO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODTIPOATENDIMENTO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODUSUARIO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="466" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="195" width="555" height="70" uuid="772ba920-8686-4d49-ae80-06ecda4a4e5b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="385" width="555" height="58" uuid="ba70159d-950a-4aea-90b5-8695ae149e94"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="360" width="555" height="25" uuid="008e8e0f-1016-43ca-a0fa-d01034a572b7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="290" width="555" height="70" uuid="753bd3e9-7d95-4f1b-8e91-b7ae9767bf5e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="265" width="555" height="25" uuid="ae0c8cf8-30b3-460a-8edd-8f0c907b0b20"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="265" width="555" height="25" uuid="393bb5f3-89a5-4dd6-8451-b213d5cfb72d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROBLEMA DETECTADO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="170" width="555" height="25" uuid="9f4c7e50-4ebe-4565-a01a-900771e93b83"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="170" width="555" height="25" uuid="cec5494e-a684-4b26-a08c-a1df272b3414"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROBLEMA INFORMADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="360" width="555" height="25" uuid="b2b42633-d493-4d63-b39c-992ebe1ff94e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLUÇÃO DO PROBLEMA]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<textField>
+				<reportElement x="455" y="1" width="60" height="20" uuid="ad6c1c51-f930-4d83-8574-85067f04f346"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="1" width="40" height="20" uuid="e4e9b61b-5914-4c62-87bc-8ce4f08d9189"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="455" height="20" uuid="b467815b-2f63-42f6-a58e-7cd1ea536475"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[www.olivetsistemas.com.br | Rua: Dona Luiza, 521, Sala 04, Centro 38700-229 | Fone: (34) 3822-2250]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
