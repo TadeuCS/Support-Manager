@@ -5,9 +5,17 @@
  */
 package View.Relatorios;
 
+import Controller.ClienteDAO;
+import Controller.StatusPessoaDAO;
 import Util.Classes.Data;
+import Util.Classes.GeraRelatorios;
 import java.awt.Event;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.NoResultException;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,16 +24,31 @@ import java.util.Date;
 public class Frm_RelAtendimento extends javax.swing.JFrame {
 
     Data data;
+    ClienteDAO clienteDAO;
+    StatusPessoaDAO statusPessoaDAO;
 
     public Frm_RelAtendimento(String tipo) {
         initComponents();
         setVisible(true);
         if (tipo.equals("ANALITICO") == false) {
             pnl_dadosRelAnalitico.setVisible(false);
-            setSize(508, 130);
+            setSize(508, 150);
             setTitle("Relatorio de Atendimento Sintético");
-        }else{
+        } else {
             setTitle("Relatorio de Atendimento Analítico");
+        }
+    }
+
+    private void carregaClientes() {
+        clienteDAO = new ClienteDAO();
+        try {
+            cbx_cliente.removeAllItems();
+            statusPessoaDAO = new StatusPessoaDAO();
+            for (int i = 0; i < clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).size(); i++) {
+                cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
         }
     }
 
@@ -36,8 +59,8 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
         pnl_fundo = new javax.swing.JPanel();
         pnl_dadosRelAnalitico = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        cbx_usuario = new javax.swing.JComboBox();
+        cbx_status = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         cbx_cliente = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
@@ -51,8 +74,9 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatorio de Atendimentos");
+        setResizable(false);
 
-        pnl_dadosRelAnalitico.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnl_dadosRelAnalitico.setBorder(javax.swing.BorderFactory.createTitledBorder("Outros Filtros"));
 
         jLabel1.setText("Usuário *:");
 
@@ -75,8 +99,8 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_dadosRelAnaliticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, 0, 405, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbx_status, 0, 405, Short.MAX_VALUE)
+                    .addComponent(cbx_usuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbx_cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -86,11 +110,11 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addGroup(pnl_dadosRelAnaliticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(pnl_dadosRelAnaliticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbx_status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(pnl_dadosRelAnaliticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -100,6 +124,11 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
 
         btn_gerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/carregar.png"))); // NOI18N
         btn_gerar.setText("Gerar");
+        btn_gerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gerarActionPerformed(evt);
+            }
+        });
 
         btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         btn_fechar.setText("Fechar");
@@ -109,7 +138,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
             }
         });
 
-        pnl_dadosRelSintetico.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnl_dadosRelSintetico.setBorder(javax.swing.BorderFactory.createTitledBorder("Data de Agendamento"));
 
         try {
             txt_dataInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/#### ##:##")));
@@ -226,12 +255,16 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_dataInicioKeyPressed
 
     private void txt_dataFimKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dataFimKeyPressed
-        if ((evt.getKeyCode() == Event.ENTER) && (txt_dataInicio.getText().equals("  /  /       :  ") == true)) {
+        if ((evt.getKeyCode() == Event.ENTER) && (txt_dataFim.getText().equals("  /  /       :  ") == true)) {
             data = new Data();
             Date dataAtual = new Date();
-            txt_dataInicio.setText(data.getDataByDate(dataAtual, "dd/MM/yyyy HH:mm"));
+            txt_dataFim.setText(data.getDataByDate(dataAtual, "dd/MM/yyyy HH:mm"));
         }
     }//GEN-LAST:event_txt_dataFimKeyPressed
+
+    private void btn_gerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gerarActionPerformed
+        validaTipo(this.getTitle());
+    }//GEN-LAST:event_btn_gerarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,8 +305,8 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_gerar;
     private javax.swing.JComboBox cbx_cliente;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox cbx_status;
+    private javax.swing.JComboBox cbx_usuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -285,4 +318,63 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txt_dataFim;
     private javax.swing.JFormattedTextField txt_dataInicio;
     // End of variables declaration//GEN-END:variables
+
+    private void validaTipo(String title) {
+        if (title.contains("Sintético") == true) {
+            if (validaDatas() == true) {
+                gerarSintetico(txt_dataInicio.getText(), txt_dataFim.getText());
+            }
+        } else {
+            if (validaDatas() == true) {
+                validaOutrosFiltros();
+            }
+        }
+    }
+
+    private boolean validaDatas() {
+        if (txt_dataInicio.getText().equals("  /  /       :  ") == true) {
+            JOptionPane.showMessageDialog(null, "Data Inicial inválida!");
+            txt_dataInicio.requestFocus();
+            return false;
+        } else {
+            if (txt_dataFim.getText().equals("  /  /       :  ") == true) {
+                JOptionPane.showMessageDialog(null, "Data Final inválida!");
+                txt_dataFim.requestFocus();
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    private void gerarSintetico(String inicio, String fim) {
+        try {
+            Map parameters = new HashMap();
+            GeraRelatorios geraRelatorios = new GeraRelatorios();
+            parameters.put("dataInicial", Data.getDataByTexto(inicio, "dd/MM/yyyy HH:mm"));
+            parameters.put("dataFinal", Data.getDataByTexto(fim, "dd/MM/yyyy HH:mm"));
+            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_Atendimento-Sintetico.jasper");
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Nenhum atendimento encontrado neste período!");
+        }
+    }
+
+    private void validaOutrosFiltros() {
+        if (cbx_cliente.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um Cliente!");
+            cbx_cliente.requestFocus();
+        } else {
+            if (cbx_usuario.getSelectedItem().toString().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Selecione um Usuário!");
+                cbx_usuario.requestFocus();
+            } else {
+                if (cbx_status.getSelectedItem().toString().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Selecione um Status!");
+                    cbx_status.requestFocus();
+                } else {
+//                    gerarAnalitico();
+                }
+            }
+        }
+    }
 }

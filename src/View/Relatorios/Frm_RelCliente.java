@@ -8,8 +8,12 @@ package View.Relatorios;
 import Controller.ClienteDAO;
 import Controller.SegmentoDAO;
 import Controller.StatusPessoaDAO;
+import Util.Classes.AutoComplete;
 import Util.Classes.Data;
+import Util.Classes.GeraRelatorios;
 import java.awt.Event;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,33 +26,22 @@ public class Frm_RelCliente extends javax.swing.JFrame {
     StatusPessoaDAO statusPessoaDAO;
     SegmentoDAO segmentoDAO;
     Data data;
+
     public Frm_RelCliente() {
         initComponents();
-        setVisible(true);
+        carregaSegmentos();
     }
 
     private void carregaSegmentos() {
         try {
             segmentoDAO = new SegmentoDAO();
             cbx_segmento.removeAllItems();
+            cbx_segmento.addItem("Selecione uma Opção");
             for (int i = 0; i < segmentoDAO.lista().size(); i++) {
                 cbx_segmento.addItem(segmentoDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar Segmentos");
-        }
-    }
-
-    private void carregaClientes() {
-        clienteDAO = new ClienteDAO();
-        try {
-            cbx_cliente.removeAllItems();
-            statusPessoaDAO = new StatusPessoaDAO();
-            for (int i = 0; i < clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).size(); i++) {
-                cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
         }
     }
 
@@ -58,10 +51,8 @@ public class Frm_RelCliente extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cbx_segmento = new javax.swing.JComboBox();
-        cbx_cliente = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -70,38 +61,23 @@ public class Frm_RelCliente extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel3.setText("Nome Fantasia *:");
-
         jLabel4.setText("Segmento *:");
-
-        cbx_cliente.setBackground(new java.awt.Color(204, 204, 204));
-        cbx_cliente.setEditable(true);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(cbx_segmento, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 167, Short.MAX_VALUE))
-                    .addComponent(cbx_cliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cbx_segmento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbx_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cbx_segmento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,6 +86,11 @@ public class Frm_RelCliente extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/carregar.png"))); // NOI18N
         jButton1.setText("Gerar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
         jButton2.setText("Fechar");
@@ -128,7 +109,7 @@ public class Frm_RelCliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 225, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -164,6 +145,10 @@ public class Frm_RelCliente extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        validaCampos();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,13 +186,37 @@ public class Frm_RelCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox cbx_cliente;
     private javax.swing.JComboBox cbx_segmento;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
+
+    private void validaCampos() {
+        if (cbx_segmento.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um Segmento antes de GERAR!");
+            cbx_segmento.requestFocus();
+        } else {
+            gerarRelatorioBySegmento(cbx_segmento.getSelectedItem().toString());
+        }
+    }
+
+    private void gerarRelatorioBySegmento(String segmento) {
+        try {
+            GeraRelatorios geraRelatorios = new GeraRelatorios();
+            if (segmento.equals("Selecione uma Opção") == true) {
+                geraRelatorios.imprimirRelatorioSQLNoRelatorio(null, "src/Relatorios/Rel_ClientesCadastrados.jasper");
+            } else {
+                Map parameters = new HashMap();
+                segmentoDAO = new SegmentoDAO();
+                parameters.put("codSegmento", segmentoDAO.buscaSegmento(segmento).getCodsegmento());
+                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_ClienteBySegmento.jasper");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Segmento " + segmento + " não encontrado!");
+            System.out.println(e);
+        }
+    }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_ClienteBySegmento" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a07a0bb-0e4c-4ed3-9655-c0296dfed716">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_ClienteBySegmento" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a07a0bb-0e4c-4ed3-9655-c0296dfed716">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<parameter name="codSegmento" class="java.lang.Integer"/>
+	<queryString>
 		<![CDATA[SELECT
      cliente.`CODCLIENTE` AS codCliente,
      cliente.`CNPJ_CPF` AS cpf,
@@ -12,10 +13,11 @@
      telefone.`TELEFONE` AS telefone,
      telefone.`DESCRICAO` AS contato,
      cliente.`RESPONSAVEL` AS responsavel,
-     segmento.`DESCRICAO` AS segmento
+s.descricao as segmento
 FROM
      `cliente` cliente INNER JOIN `telefone` telefone ON cliente.`CODCLIENTE` = telefone.`CODCLIENTE`
-     INNER JOIN `segmento` segmento ON cliente.`CODSEGMENTO` = segmento.`CODSEGMENTO`]]>
+inner join segmento s on cliente.codsegmento=s.codsegmento
+where s.codSegmento=$P{codSegmento}]]>
 	</queryString>
 	<field name="codCliente" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -46,15 +48,17 @@ FROM
 					<text><![CDATA[Clientes Cadastrados]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="71" width="71" height="20" forecolor="#FFFFFF" uuid="35958e10-9e8b-4e0f-bf6a-7b932fdcc631"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="12" isBold="true"/>
+					<reportElement mode="Opaque" x="20" y="69" width="87" height="20" forecolor="#FFFFFF" backcolor="#007EA7" uuid="33263115-a9ff-455d-b904-70269ea9e1c1"/>
+					<textElement textAlignment="Left">
+						<font size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Segmento:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="93" y="71" width="100" height="20" forecolor="#FFFFFF" uuid="bdc6bb8e-7230-4854-bc4c-5a8b83e900ab"/>
-					<textElement verticalAlignment="Middle"/>
+					<reportElement x="100" y="69" width="100" height="20" forecolor="#FFFFFF" uuid="cf60b789-7fbb-496f-b61b-031450cee459"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{segmento}]]></textFieldExpression>
 				</textField>
 			</frame>

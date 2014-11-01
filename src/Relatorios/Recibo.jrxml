@@ -210,7 +210,7 @@ where c.`CODCLIENTE`=$P{codigo}]]>
 			</image>
 			<image>
 				<reportElement x="467" y="0" width="86" height="58" uuid="11003131-4c3a-4cb4-9859-6ea90ab3efe5"/>
-				<imageExpression><![CDATA["../Util/Img/fundo.png"]]></imageExpression>
+				<imageExpression><![CDATA["../Util/Img/logo.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="6" y="17" width="252" height="14" uuid="e5fcbec7-dfa0-4fd8-88aa-ef06754b6a08"/>
