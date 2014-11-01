@@ -1,134 +1,334 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Atendimento-Analitico" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="37baed8f-480b-46c6-b2d7-29d86385f375">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Recibo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e2d247c7-fe66-4892-88a7-7d7b8161ae14">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="CodStatus" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT
+     atendimento.`CODATENDIMENTO` AS atendimento_CODATENDIMENTO,
+     atendimento.`DATA_ABERTURA` AS atendimento_DATA_ABERTURA,
+     atendimento.`DATA_AGENDAMENTO` AS atendimento_DATA_AGENDAMENTO,
+     atendimento.`DATA_FECHAMENTO` AS atendimento_DATA_FECHAMENTO,
+     atendimento.`DATA_FIM` AS atendimento_DATA_FIM,
+     atendimento.`DATA_INICIO` AS atendimento_DATA_INICIO,
+     atendimento.`PROBLEMA_DETECTADO` AS atendimento_PROBLEMA_DETECTADO,
+     atendimento.`PROBLEMA_INFORMADO` AS atendimento_PROBLEMA_INFORMADO,
+     atendimento.`PROBLEMA_SOLUCAO` AS atendimento_PROBLEMA_SOLUCAO,
+     atendimento.`SOLICITANTE` AS atendimento_SOLICITANTE,
+     tipo_atendimento.`DESCRICAO` AS tipoAtendimento,
+     cliente.`NOME_FANTASIA` AS nomeCliente,
+     usuario.`USUARIO` AS nomeUsuario,
+     prioridade.`DESCRICAO` AS prioridade,
+     origem.`DESCRICAO` AS origem,
+     status_atendimento.`DESCRICAO` AS status
+
+FROM
+     `tipo_atendimento` tipo_atendimento INNER JOIN `atendimento` atendimento ON tipo_atendimento.`CODTIPOATENDIMENTO` = atendimento.`CODTIPOATENDIMENTO`
+     INNER JOIN `cliente` cliente ON atendimento.`CODCLIENTE` = cliente.`CODCLIENTE`
+     INNER JOIN `usuario` usuario ON atendimento.`CODUSUARIO` = usuario.`CODUSUARIO`
+     INNER JOIN `prioridade` prioridade ON atendimento.`CODPRIORIDADE` = prioridade.`CODPRIORIDADE`
+     INNER JOIN `origem` origem ON atendimento.`CODORIGEM` = origem.`CODORIGEM`
+     INNER JOIN `status_atendimento` status_atendimento ON atendimento.`CODSTATUSATENDIMENTO` = status_atendimento.`CODSTATUSATENDIMENTO`
+where status_atendimento.CODSTATUSATENDIMENTO=$P{CodStatus}]]>
 	</queryString>
-	<field name="CODATENDIMENTO" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="DATA_ABERTURA" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="DATA_AGENDAMENTO" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="DATA_CANCELAMENTO" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="DATA_FECHAMENTO" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="DATA_FIM" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="DATA_INICIO" class="java.sql.Timestamp">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PENDENCIA" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PROBLEMA_DETECTADO" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PROBLEMA_INFORMADO" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PROBLEMA_PENDENCIA" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="PROBLEMA_SOLUCAO" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="SOLICITANTE" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODCLIENTE" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODORIGEM" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODPRIORIDADE" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODSTATUSATENDIMENTO" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODTIPOATENDIMENTO" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CODUSUARIO" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="atendimento_CODATENDIMENTO" class="java.lang.Integer"/>
+	<field name="atendimento_DATA_ABERTURA" class="java.sql.Timestamp"/>
+	<field name="atendimento_DATA_AGENDAMENTO" class="java.sql.Timestamp"/>
+	<field name="atendimento_DATA_FECHAMENTO" class="java.sql.Timestamp"/>
+	<field name="atendimento_DATA_FIM" class="java.sql.Timestamp"/>
+	<field name="atendimento_DATA_INICIO" class="java.sql.Timestamp"/>
+	<field name="atendimento_PROBLEMA_DETECTADO" class="java.lang.String"/>
+	<field name="atendimento_PROBLEMA_INFORMADO" class="java.lang.String"/>
+	<field name="atendimento_PROBLEMA_SOLUCAO" class="java.lang.String"/>
+	<field name="atendimento_SOLICITANTE" class="java.lang.String"/>
+	<field name="tipoAtendimento" class="java.lang.String"/>
+	<field name="nomeCliente" class="java.lang.String"/>
+	<field name="nomeUsuario" class="java.lang.String"/>
+	<field name="prioridade" class="java.lang.String"/>
+	<field name="origem" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
 	<detail>
-		<band height="466" splitType="Stretch">
+		<band height="458" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="195" width="555" height="70" uuid="772ba920-8686-4d49-ae80-06ecda4a4e5b"/>
+				<reportElement x="0" y="359" width="555" height="19" uuid="11aefa3d-7311-4f48-a375-b7f292532983"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="385" width="555" height="58" uuid="ba70159d-950a-4aea-90b5-8695ae149e94"/>
+				<reportElement x="0" y="378" width="555" height="70" backcolor="#FFFFFF" uuid="b71a722f-806d-49b9-83ca-43264540ae88"/>
+			</rectangle>
+			<textField>
+				<reportElement x="3" y="379" width="550" height="69" uuid="606f6167-56e4-427b-9bbd-5012d6d7f41a"/>
+				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_SOLUCAO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="360" width="552" height="20" uuid="4575154c-9289-4f73-ab5d-82dee9cf3603"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLUÇÃO DO PROBLEMA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="165" width="555" height="19" uuid="06f6d79c-aa40-40f9-ab96-f529efba41c9"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="360" width="555" height="25" uuid="008e8e0f-1016-43ca-a0fa-d01034a572b7"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="0" y="290" width="555" height="70" uuid="753bd3e9-7d95-4f1b-8e91-b7ae9767bf5e"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="0" y="265" width="555" height="25" uuid="ae0c8cf8-30b3-460a-8edd-8f0c907b0b20"/>
+				<reportElement x="0" y="184" width="555" height="70" backcolor="#FFFFFF" uuid="75ffa4f5-f8eb-4c80-bbe7-23ec871f6795"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="265" width="555" height="25" uuid="393bb5f3-89a5-4dd6-8451-b213d5cfb72d"/>
+				<reportElement x="1" y="164" width="552" height="20" uuid="a714f50c-3843-4208-9beb-f8defdc74f72"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROBLEMA INFORMADO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="263" width="555" height="19" uuid="23273a23-e099-4fdf-a886-9660b9e3fc61"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="282" width="555" height="70" backcolor="#FFFFFF" uuid="a0d4654b-f555-4f09-bee0-1ac0837a260e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="4" y="262" width="552" height="20" uuid="e5a694c2-fdea-4ef3-ae62-761f118888c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PROBLEMA DETECTADO]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="170" width="555" height="25" uuid="9f4c7e50-4ebe-4565-a01a-900771e93b83"/>
+				<reportElement x="0" y="0" width="555" height="157" backcolor="#FFFFFF" uuid="46540df6-b77e-4ea4-b56f-40fc73183bfb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="75" height="54" backcolor="#FFFFFF" uuid="bdfd54f8-2c6e-4dea-9a67-72c479f2554d"/>
+			</rectangle>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="0" width="75" height="54" uuid="94f3f566-be0b-463e-9907-6c9017d67e8a"/>
+				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\logo.png"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="75" y="0" width="396" height="19" uuid="1a0b7c44-8004-42ae-abb1-779a8b24b733"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="75" y="19" width="396" height="35" backcolor="#FFFFFF" uuid="fa497e75-5e48-4e3c-bb50-ecfa2074e8cb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="471" y="19" width="84" height="35" backcolor="#FFFFFF" uuid="eba9d478-0dca-4998-ac2d-e938e337a85d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="170" width="555" height="25" uuid="cec5494e-a684-4b26-a08c-a1df272b3414"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+				<reportElement x="473" y="0" width="44" height="20" uuid="a5e7ee83-703e-4a39-8d5d-baa5b373a992"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[PROBLEMA INFORMADO]]></text>
+				<text><![CDATA[Número.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="517" y="0" width="38" height="20" uuid="194fef3f-2c1e-4bed-b76e-00dd8bb93688"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{atendimento_CODATENDIMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="345" y="126" width="110" height="20" uuid="95b27053-3295-4405-8c2a-01ac41c86207"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Fim..:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="76" y="20" width="395" height="34" uuid="2782c262-71b9-4a09-89aa-70cd42c5167d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoAtendimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="66" width="50" height="20" uuid="5678e37a-2759-4be6-82ad-43c5d5957893"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente..:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="360" width="555" height="25" uuid="b2b42633-d493-4d63-b39c-992ebe1ff94e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="14" isBold="true"/>
+				<reportElement x="391" y="66" width="62" height="20" uuid="4c823214-320b-41aa-9a1d-07a35ad3d69b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[SOLUÇÃO DO PROBLEMA]]></text>
+				<text><![CDATA[Solicitante..:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="455" y="66" width="98" height="20" uuid="f61eb98b-8ca5-4291-8951-0995e5874945"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{atendimento_SOLICITANTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="86" width="50" height="20" uuid="a2f46d91-874f-49e9-8f1a-eebdfce42604"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Analista..:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="20" width="80" height="14" uuid="cca88aa3-bfef-4049-9f1e-595851ca6a50"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prioridade]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="473" y="34" width="80" height="20" uuid="6266d09d-0c9b-4e98-aa5e-7b824855000b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{prioridade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="395" y="86" width="60" height="20" uuid="398b98f9-ed99-4c82-a3c7-20e108851ac8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Origem..:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="106" width="78" height="20" uuid="500642d6-5026-4b3d-b012-5920a4aa3045"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Abertura..:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="106" width="110" height="20" uuid="99fdeeba-9075-4ee9-9c67-ac695958d1b4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Agendamento..:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="126" width="60" height="20" uuid="06b48049-b5b5-4bbc-85e5-b7414ae059ca"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Início..:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="456" y="86" width="100" height="20" uuid="749453d0-56b3-4ac0-8063-0707702858a6"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{origem}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="455" y="126" width="100" height="20" uuid="4e6b6274-3ed0-45bb-ab8b-fe88b8173eb0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{atendimento_DATA_FIM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="66" y="126" width="100" height="20" uuid="eef279f2-4885-4277-8c56-a571012c185b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{atendimento_DATA_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="83" y="106" width="100" height="20" uuid="8429c399-0b86-4486-84d3-af701d32d083"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{atendimento_DATA_ABERTURA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm">
+				<reportElement x="455" y="106" width="100" height="20" uuid="2e96ecbe-f4fd-4651-bb0b-21e6ccbf4316"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{atendimento_DATA_AGENDAMENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="66" width="334" height="20" uuid="9d3cbd7e-0601-42f7-84e9-d959f7883c3d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="86" width="100" height="20" uuid="5db2d931-64ed-4c2d-887f-681473b71d94"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nomeUsuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="76" y="-1" width="181" height="20" uuid="88fba28e-9efe-45a9-834d-41dfce594ff0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ATENDIMENTO ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="258" y="-1" width="213" height="20" uuid="b24c8242-2bfd-4e3f-a859-b2b6782a8a5b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="284" width="549" height="68" uuid="8185d208-e671-47c4-837d-7693917cdf10"/>
+				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_DETECTADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="185" width="549" height="69" uuid="14c6df81-275e-4f44-9bb4-83c91a1f8476"/>
+				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_INFORMADO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="21">
+		<band height="26">
+			<staticText>
+				<reportElement x="0" y="3" width="455" height="20" uuid="1e422cd8-d429-4b81-94fd-32ff1efb242f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[www.olivetsistemas.com.br | Rua: Dona Luiza, 521, Sala 04, Centro 38700-229 | Fone: (34) 3822-2250]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="455" y="1" width="60" height="20" uuid="ad6c1c51-f930-4d83-8574-85067f04f346"/>
+				<reportElement x="455" y="3" width="60" height="20" uuid="fcd29ddd-4d7a-4498-8128-3261713d6329"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="515" y="1" width="40" height="20" uuid="e4e9b61b-5914-4c62-87bc-8ce4f08d9189"/>
+				<reportElement x="515" y="3" width="40" height="20" uuid="dda14b1f-20f1-445e-b7bd-737c354be31b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="1" width="455" height="20" uuid="b467815b-2f63-42f6-a58e-7cd1ea536475"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[www.olivetsistemas.com.br | Rua: Dona Luiza, 521, Sala 04, Centro 38700-229 | Fone: (34) 3822-2250]]></text>
-			</staticText>
 		</band>
 	</pageFooter>
 </jasperReport>
