@@ -44,7 +44,9 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<parameter name="CodStatus" class="java.lang.Integer"/>
+	<parameter name="codStatus" class="java.lang.Integer"/>
+	<parameter name="codUsuario" class="java.lang.Integer"/>
+	<parameter name="codCliente" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      atendimento.`CODATENDIMENTO` AS atendimento_CODATENDIMENTO,
@@ -71,7 +73,9 @@ FROM
      INNER JOIN `prioridade` prioridade ON atendimento.`CODPRIORIDADE` = prioridade.`CODPRIORIDADE`
      INNER JOIN `origem` origem ON atendimento.`CODORIGEM` = origem.`CODORIGEM`
      INNER JOIN `status_atendimento` status_atendimento ON atendimento.`CODSTATUSATENDIMENTO` = status_atendimento.`CODSTATUSATENDIMENTO`
-where status_atendimento.CODSTATUSATENDIMENTO=$P{CodStatus}]]>
+where status_atendimento.CODSTATUSATENDIMENTO=$P{codStatus}
+and atendimento.codcliente=$P{codCliente}
+and atendimento.codusuario=$P{codUsuario}]]>
 	</queryString>
 	<field name="atendimento_CODATENDIMENTO" class="java.lang.Integer"/>
 	<field name="atendimento_DATA_ABERTURA" class="java.sql.Timestamp"/>

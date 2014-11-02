@@ -6,7 +6,12 @@
 package View.Relatorios;
 
 import Controller.ClienteDAO;
+import Controller.StatusAtendimentoDAO;
 import Controller.StatusPessoaDAO;
+import Controller.UsuarioDAO;
+import Model.StatusAtendimento;
+import Model.StatusPessoa;
+import Util.Classes.AutoComplete;
 import Util.Classes.Data;
 import Util.Classes.GeraRelatorios;
 import java.awt.Event;
@@ -14,7 +19,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.NoResultException;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,7 +29,10 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
 
     Data data;
     ClienteDAO clienteDAO;
+    UsuarioDAO usuarioDAO;
     StatusPessoaDAO statusPessoaDAO;
+    StatusPessoa statusPessoa;
+    StatusAtendimentoDAO statusAtendimentoDAO;
 
     public Frm_RelAtendimento(String tipo) {
         initComponents();
@@ -36,6 +43,24 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
             setTitle("Relatorio de Atendimento Sintético");
         } else {
             setTitle("Relatorio de Atendimento Analítico");
+        }
+        AutoComplete.decorate(cbx_cliente);
+        carregaClientes();
+        carregaStatus();
+        carregaUsuarios();
+    }
+
+    private void carregaUsuarios() {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            cbx_usuario.removeAllItems();
+            statusPessoaDAO = new StatusPessoaDAO();
+            statusPessoa = statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO");
+            for (int i = 0; i < usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).size(); i++) {
+                cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).get(i).getUsuario());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
         }
     }
 
@@ -49,6 +74,18 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
+        }
+    }
+
+    private void carregaStatus() {
+        statusAtendimentoDAO = new StatusAtendimentoDAO();
+        try {
+            cbx_status.removeAllItems();
+            for (int i = 0; i < statusAtendimentoDAO.lista().size(); i++) {
+                cbx_status.addItem(statusAtendimentoDAO.lista().get(i).getDescricao());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "erro ao carregar Status");
         }
     }
 
@@ -372,9 +409,27 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Selecione um Status!");
                     cbx_status.requestFocus();
                 } else {
-//                    gerarAnalitico();
+                    gerarAnalitico(cbx_cliente.getSelectedItem().toString(),
+                            cbx_status.getSelectedItem().toString(),
+                            cbx_usuario.getSelectedItem().toString());
                 }
             }
+        }
+    }
+
+    private void gerarAnalitico(String cliente, String status, String usuario) {
+        try {
+            Map parameters = new HashMap();
+            usuarioDAO= new UsuarioDAO();
+            statusAtendimentoDAO= new StatusAtendimentoDAO();
+            clienteDAO=new ClienteDAO();
+            GeraRelatorios geraRelatorios = new GeraRelatorios();
+            parameters.put("codUsuario", usuarioDAO.consultaByUsuario(usuario).getCodusuario());
+            parameters.put("codCliente", clienteDAO.buscaClienteByNomeFantasia(cliente).getCodcliente());
+            parameters.put("codStatus", statusAtendimentoDAO.buscaStatusAtendimento(status).getCodstatusatendimento());
+            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_Atendimento-Analitico.jasper");
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Nenhum atendimento encontrado!");
         }
     }
 }
