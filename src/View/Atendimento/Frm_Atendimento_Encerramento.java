@@ -159,7 +159,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         setAtendimento(atendimento);
         try {
             atendimentoDAO.salvar(atendimento);
-            JOptionPane.showMessageDialog(null, "Atendimento " + btn_salvar.getText() + " com sucesso!");
+            JOptionPane.showMessageDialog(null, "Sucesso ao " + btn_salvar.getText()+" Atendimento!");
             limpaCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao " + btn_salvar.getText() + " Atendimento!");
@@ -177,7 +177,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 txt_dataFim.requestFocus();
             } else {
                 if ((pendencia==true) && (txt_pendencia.getText().isEmpty())) {
-                    JOptionPane.showMessageDialog(null, "O movito da Pendencia informada é inválida!");
+                    JOptionPane.showMessageDialog(null, "O motivo da Pendência informada é inválida!");
                     txt_pendencia.requestFocus();
                 } else {
                     if (txt_problemaDetectado.getText().isEmpty()) {

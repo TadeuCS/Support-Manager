@@ -200,7 +200,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         }
     }
 
-    public void istanciaControladores() {
+    public void instanciaControladores() {
         atendimento = new Atendimento();
         clienteDAO = new ClienteDAO();
         tipoAtendimentoDAO = new TipoAtendimentoDAO();
@@ -217,7 +217,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
     public void setAtendimento() {
         try {
-            istanciaControladores();
+            instanciaControladores();
             statusAtendimentoDAO = new StatusAtendimentoDAO();
             atendimento.setDataAgendamento(validaDataAgendamento());
             atendimento.setCodusuario(usuarioDAO.consultaByUsuario(cbx_usuario.getSelectedItem().toString()));

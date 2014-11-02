@@ -11,10 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-/**
- *
- * @author Tadeu
- */
+
 public class Manager {
     protected Query query;
     protected EntityManagerFactory emf= Persistence.createEntityManagerFactory("Support_ManagerPU");

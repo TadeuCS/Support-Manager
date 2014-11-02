@@ -11,10 +11,6 @@ import Model.Usuario;
 import Util.Classes.Manager;
 import java.util.List;
 
-/**
- *
- * @author Tadeu
- */
 public class AtendimentoDAO extends Manager {
 
     public void salvar(Atendimento att) {
