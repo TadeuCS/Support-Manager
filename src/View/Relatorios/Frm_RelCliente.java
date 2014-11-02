@@ -30,6 +30,7 @@ public class Frm_RelCliente extends javax.swing.JFrame {
     public Frm_RelCliente() {
         initComponents();
         carregaSegmentos();
+        setVisible(true);
     }
 
     private void carregaSegmentos() {
@@ -180,7 +181,7 @@ public class Frm_RelCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_RelCliente().setVisible(true);
+//                new Frm_RelCliente().setVisible(true);
             }
         });
     }

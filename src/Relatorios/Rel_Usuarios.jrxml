@@ -26,7 +26,7 @@ on u.codstatuspessoa=s.codstatuspessoa]]>
 					<textElement textAlignment="Center">
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[USUARIOS CADASTRADOS]]></text>
+					<text><![CDATA[USUÁRIOS CADASTRADOS]]></text>
 				</staticText>
 			</frame>
 		</band>

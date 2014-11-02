@@ -8,6 +8,7 @@ import Model.Permissoes;
 import Model.Telefone;
 import Model.Usuario;
 import Util.Classes.Criptografia;
+import Util.Classes.GeraRelatorios;
 import Util.Classes.PopMenu;
 import View.Atendimento.Frm_Atendimento_Abertura;
 import View.Cadastros.Frm_CadAplicativo;
@@ -33,11 +34,14 @@ import View.Consultas.Frm_ConCliente;
 import View.Consultas.Frm_ConContatos;
 import View.Relatorios.Frm_RelAtendimento;
 import View.Relatorios.Frm_RelCliente;
+import View.Relatorios.Frm_RelInformacao;
 import View.Relatorios.Frm_RelReciboCliente;
 import java.awt.Color;
 import java.awt.Event;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -241,10 +245,12 @@ public class Frm_Principal extends javax.swing.JFrame {
         menuI_contatos = new javax.swing.JMenuItem();
         menuI_Usuarios = new javax.swing.JMenuItem();
         Menu_Relatorios = new javax.swing.JMenu();
-        item_relCliente = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         item_relAtendimento = new javax.swing.JMenuItem();
         item_relAtendimento1 = new javax.swing.JMenuItem();
+        item_relCliente = new javax.swing.JMenuItem();
+        item_relUsuario = new javax.swing.JMenuItem();
+        item_relInformacao = new javax.swing.JMenuItem();
         Menu_Utilitários = new javax.swing.JMenu();
         item_enviaEmail = new javax.swing.JMenuItem();
         item_emiteRecibo = new javax.swing.JMenuItem();
@@ -687,14 +693,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_Relatorios.setText("Relatorios");
 
-        item_relCliente.setText("Cliente");
-        item_relCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_relClienteActionPerformed(evt);
-            }
-        });
-        Menu_Relatorios.add(item_relCliente);
-
         jMenu1.setText("Atendimento");
 
         item_relAtendimento.setText("Analitico");
@@ -714,6 +712,30 @@ public class Frm_Principal extends javax.swing.JFrame {
         jMenu1.add(item_relAtendimento1);
 
         Menu_Relatorios.add(jMenu1);
+
+        item_relCliente.setText("Cliente");
+        item_relCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relClienteActionPerformed(evt);
+            }
+        });
+        Menu_Relatorios.add(item_relCliente);
+
+        item_relUsuario.setText("Usuários");
+        item_relUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relUsuarioActionPerformed(evt);
+            }
+        });
+        Menu_Relatorios.add(item_relUsuario);
+
+        item_relInformacao.setText("Informação");
+        item_relInformacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relInformacaoActionPerformed(evt);
+            }
+        });
+        Menu_Relatorios.add(item_relInformacao);
 
         Menu_barra.add(Menu_Relatorios);
 
@@ -898,10 +920,6 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_RelAtendimento f = new Frm_RelAtendimento("ANALITICO");
     }//GEN-LAST:event_item_relAtendimentoActionPerformed
 
-    private void item_relClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteActionPerformed
-        Frm_RelCliente f = new Frm_RelCliente();
-    }//GEN-LAST:event_item_relClienteActionPerformed
-
     private void item_emiteReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_emiteReciboActionPerformed
         Frm_RelReciboCliente f = new Frm_RelReciboCliente();
     }//GEN-LAST:event_item_emiteReciboActionPerformed
@@ -1025,6 +1043,18 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_RelAtendimento f = new Frm_RelAtendimento("SINTETICO");
     }//GEN-LAST:event_item_relAtendimento1ActionPerformed
 
+    private void item_relUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relUsuarioActionPerformed
+        gerarRelatorioUsuarios("Usuários", "src/Relatorios/Rel_Usuarios.jasper");
+    }//GEN-LAST:event_item_relUsuarioActionPerformed
+
+    private void item_relClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteActionPerformed
+        Frm_RelCliente f = new Frm_RelCliente();
+    }//GEN-LAST:event_item_relClienteActionPerformed
+
+    private void item_relInformacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relInformacaoActionPerformed
+        Frm_RelInformacao f = new Frm_RelInformacao();
+    }//GEN-LAST:event_item_relInformacaoActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1090,6 +1120,8 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem item_relAtendimento;
     private javax.swing.JMenuItem item_relAtendimento1;
     private javax.swing.JMenuItem item_relCliente;
+    private javax.swing.JMenuItem item_relInformacao;
+    private javax.swing.JMenuItem item_relUsuario;
     private javax.swing.JMenuItem item_salario;
     private javax.swing.JMenuItem item_segmento;
     private javax.swing.JMenuItem item_status;
@@ -1189,4 +1221,15 @@ public class Frm_Principal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Alterar a senha do Usuário: " + getUsuarioLogado());
         }
     }
+
+    private void gerarRelatorioUsuarios(String tipo, String diretorio) {
+        try {
+            Map parameters = new HashMap();
+            GeraRelatorios geraRelatorios = new GeraRelatorios();
+            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, diretorio);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, tipo + " não encontrado!");
+        }
+    }
+
 }

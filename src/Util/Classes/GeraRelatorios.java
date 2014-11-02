@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
+import javax.persistence.NoResultException;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
@@ -52,32 +54,28 @@ public class GeraRelatorios {
             JasperViewer.viewReport(print, false);
 
         } catch (ClassNotFoundException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Localizar a classe responsavel pela geração do relatorio!\n" + ex.getMessage());
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "Erro ao executar consulta no Banco de dados!\n" + ex.getMessage());
         } catch (JRException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "Erro ao gerar Relatório!\n" + ex.getMessage());
         } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                System.out.println(ex);
+                JOptionPane.showMessageDialog(null, "Erro ao Fechar conexão com BD.");
             }
         }
     }
 
+    
+
     public void imprimirRelatorioSQLNoRelatorio(Map parametros, String diretorio) {
         Connection conn = null;
         try {
-            // Obtém o diretório da aplicação
-
             // Carrega conexão via JDBC
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/smdados", "root", "1234");
-
-//            Map parameters = new HashMap();
-//            parameters.put("codigo", jtCodigo.getText());
-//            parameters.put("codigo", 1);
 
             // Preenche o relatório com os dados
             JasperPrint print = JasperFillManager.fillReport(diretorio, parametros, conn);
@@ -86,18 +84,19 @@ public class GeraRelatorios {
             JasperViewer.viewReport(print, false);
 
         } catch (ClassNotFoundException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "Erro ao Localizar a classe responsavel pela geração do relatorio!\n" + ex.getMessage());
         } catch (SQLException ex) {
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(null, "Erro ao executar consulta no Banco de dados!\n" + ex.getMessage());
         } catch (JRException ex) {
-            System.out.println(ex);
-        } finally {
+            JOptionPane.showMessageDialog(null, "Erro ao gerar Relatório!\n" + ex.getMessage());
+        }catch(NoResultException e){
+            System.out.println("vazio");
+        }finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                System.out.println(ex);
+                JOptionPane.showMessageDialog(null, "Erro ao Fechar conexão com BD.");
             }
         }
-
     }
 }

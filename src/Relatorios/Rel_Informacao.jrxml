@@ -3,7 +3,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="TIPO_LANCAMENTO" class="java.lang.Integer"/>
+	<parameter name="DataInicial" class="java.util.Date"/>
+	<parameter name="DataFinal" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[SELECT
      informacao.`CODINFORMACAO` AS codigo,
@@ -14,7 +15,7 @@ usuario.USUARIO
 FROM
      `tipo_informacao` tipo_informacao INNER JOIN `informacao` informacao ON tipo_informacao.`CODTIPOINFORMACAO` = informacao.`CODTIPOINFORMACAO`
      INNER JOIN `usuario` usuario ON informacao.`CODUSUARIO` = usuario.`CODUSUARIO`
-WHERE INFORMACAO.CODTIPOINFORMACAO=$P{TIPO_LANCAMENTO}]]>
+WHERE informacao.data between $P{DataInicial} and $P{DataFinal}]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
 	<field name="data" class="java.sql.Date">
@@ -42,18 +43,32 @@ WHERE INFORMACAO.CODTIPOINFORMACAO=$P{TIPO_LANCAMENTO}]]>
 					<text><![CDATA[Relatório de Informações]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="20" y="62" width="37" height="20" forecolor="#FFFFFF" uuid="1b681740-c1d1-4ada-9de8-6468c0185838"/>
-					<textElement textAlignment="Left">
-						<font size="14" isBold="false"/>
+					<reportElement x="144" y="63" width="71" height="20" forecolor="#FFFFFF" uuid="31bb69d7-61a7-4fdd-9644-f6aa3857e3ab"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Tipo:]]></text>
+					<text><![CDATA[Data Inicial:]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="59" y="62" width="100" height="20" forecolor="#FFFFFF" uuid="f16e2c0b-9443-478d-af67-7566c140abd4"/>
-					<textElement>
-						<font size="14"/>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="215" y="63" width="100" height="20" forecolor="#FFFFFF" uuid="c285c29c-aa72-4f1e-bae9-146db5eea9ec"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{DataInicial}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="335" y="63" width="71" height="20" forecolor="#FFFFFF" uuid="79f48b64-0ede-4825-b31d-732ba9338cdf"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Data Final:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="406" y="63" width="100" height="20" forecolor="#FFFFFF" uuid="34a2716f-a093-4f22-88e5-3c44292683c0"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{DataFinal}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -81,14 +96,14 @@ WHERE INFORMACAO.CODTIPOINFORMACAO=$P{TIPO_LANCAMENTO}]]>
 				<text><![CDATA[DATA LANÇAMENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="139" y="0" width="333" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6be229fe-827a-4530-b134-0783b13a168f"/>
+				<reportElement mode="Opaque" x="139" y="0" width="347" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6be229fe-827a-4530-b134-0783b13a168f"/>
 				<textElement textAlignment="Left">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBSERVAÇÃO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="472" y="0" width="83" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="af266a38-8de4-4435-aa72-dd4a123fd7cb"/>
+				<reportElement mode="Opaque" x="486" y="0" width="69" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="af266a38-8de4-4435-aa72-dd4a123fd7cb"/>
 				<textElement textAlignment="Left">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -109,22 +124,22 @@ WHERE INFORMACAO.CODTIPOINFORMACAO=$P{TIPO_LANCAMENTO}]]>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="139" y="0" width="333" height="20" uuid="038765b9-1228-43da-a7e8-594b55f02716"/>
+				<reportElement x="139" y="0" width="347" height="20" uuid="038765b9-1228-43da-a7e8-594b55f02716"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
 				<reportElement x="60" y="0" width="79" height="20" uuid="8a14d1a2-2f6f-4cea-b4d4-662a549f021e"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="472" y="0" width="83" height="20" uuid="d3fb95d0-1fcf-4476-8e89-058781ec4031"/>
-				<textElement>
+				<reportElement x="486" y="0" width="69" height="20" uuid="d3fb95d0-1fcf-4476-8e89-058781ec4031"/>
+				<textElement textAlignment="Center">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{USUARIO}]]></textFieldExpression>
