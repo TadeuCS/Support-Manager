@@ -21,6 +21,7 @@ import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
 import View.Home.Frm_Principal;
 import java.awt.Event;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
@@ -146,7 +147,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         }
     }
 
-    public void validaCampos(JComboBox usuario, String dataAgendamento, String cliente, String solicitante, JComboBox tipoAtendimento, JComboBox origem, JComboBox prioridade, String problemaInformado) {
+    public void validaCampos(JComboBox usuario, String dataAgendamento, String cliente, String solicitante, JComboBox tipoAtendimento,
+            JComboBox origem, JComboBox prioridade, String problemaInformado) {
         if (usuario.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Usuário inválido!");
             cbx_usuario.requestFocus();
@@ -190,20 +192,34 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         }
     }
 
+    public Date validaDataAgendamento() {
+        if (txt_data.getText().equals("  /  /       :  ") == true) {
+            return null;
+        } else {
+            return Data.getDataByTexto(txt_data.getText(), "dd/MM/yyyy HH:mm");
+        }
+    }
+
+    public void istanciaControladores() {
+        atendimento = new Atendimento();
+        clienteDAO = new ClienteDAO();
+        tipoAtendimentoDAO = new TipoAtendimentoDAO();
+        origemDAO = new OrigemDAO();
+        prioridadeDAO = new PrioridadeDAO();
+    }
+
+    public Date capturaDataAtual() throws ParseException {
+        Date data = new Date();
+        String formato = "dd/MM/yyyy HH:mm";
+        Date date = new SimpleDateFormat(formato).parse(Data.getDataByDate(data, formato));
+        return date;
+    }
+
     public void setAtendimento() {
         try {
-            atendimento = new Atendimento();
-            clienteDAO = new ClienteDAO();
-            tipoAtendimentoDAO = new TipoAtendimentoDAO();
-            origemDAO = new OrigemDAO();
-            prioridadeDAO = new PrioridadeDAO();
+            istanciaControladores();
             statusAtendimentoDAO = new StatusAtendimentoDAO();
-
-            if (txt_data.getText().equals("  /  /       :  ") == true) {
-                atendimento.setDataAgendamento(null);
-            } else {
-                atendimento.setDataAgendamento(Data.getDataByTexto(txt_data.getText(), "dd/MM/yyyy HH:mm"));
-            }
+            atendimento.setDataAgendamento(validaDataAgendamento());
             atendimento.setCodusuario(usuarioDAO.consultaByUsuario(cbx_usuario.getSelectedItem().toString()));
             atendimento.setProblemaInformado(txt_problemaInformado.getText());
             atendimento.setCodcliente(clienteDAO.buscaClienteByNomeFantasia(cbx_cliente.getSelectedItem().toString()));
@@ -214,15 +230,10 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             atendimento.setProblemaInformado(txt_problemaInformado.getText());
             atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("EXECUCAO"));
             atendimento.setPendencia('N');
-            Date data = new Date();
-            String formato = "dd/MM/yyyy HH:mm";
-            Date date = new SimpleDateFormat(formato).parse(Data.getDataByDate(data, formato));
-            atendimento.setDataAbertura(date);
+            atendimento.setDataAbertura(capturaDataAtual());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao capturar informações do Atendimento!");
-            System.out.println(e);
         }
-
     }
 
     public void salvar() {

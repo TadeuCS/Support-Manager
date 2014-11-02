@@ -4,12 +4,6 @@ AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM
 AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
 ----------------------------------------------------------------------------------------------------------------------
 
----------------------------------------------------------RELATÓRIO----------------------------------------------------
-criar interface e relatorio de atendimento sintetico passando data inicial e final.
-crir interface e relatorio de atendimento analitico passando data inciial e final, usuario, cliente, status
-CRIAR INTERFACE E RELATORIO DE CLIENTE COM OS FILTROS: DATA ATUALIZAÇÃO
-----------------------------------------------------------------------------------------------------------------------
-
 ----------------------------------------------------------OUTROS------------------------------------------------------
 TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
 IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.

@@ -22,7 +22,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Tadeu
  */
-public class Frm_ConAtendimento extends javax.swing.JFrame {
+public final class Frm_ConAtendimento extends javax.swing.JFrame {
 
     DefaultTableModel model;
     AtendimentoDAO atendimentoDAO;
@@ -33,6 +33,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         initComponents();
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
+        btn_executar.setEnabled(false);
         actionByStatus(status);
         usuarioDAO = new UsuarioDAO();
         if (principal.getTipoUsuarioLogado().equals("SUPORTE") == true) {
@@ -43,7 +44,7 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
         }
     }
 
-    public void actionByStatus(StatusAtendimento status) {
+    private void actionByStatus(StatusAtendimento status) {
         if (status.getDescricao().equals("ABERTO") == true) {
             setTitle("Consulta de Atendimentos Abertos");
             btn_alterar.setEnabled(true);
@@ -354,10 +355,10 @@ public class Frm_ConAtendimento extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(11, 11, 11)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
