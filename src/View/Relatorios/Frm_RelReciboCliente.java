@@ -9,6 +9,7 @@ import Controller.ClienteDAO;
 import Controller.SalarioDAO;
 import Controller.StatusPessoaDAO;
 import Model.Cliente;
+import Util.Classes.AutoComplete;
 import Util.Classes.Data;
 import Util.Classes.GeraRelatorios;
 import java.awt.Event;
@@ -37,6 +38,7 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
         setVisible(true);
         carregaClientes();
         carregaSalarios();
+        AutoComplete.decorate(cbx_cliente);
     }
 
     private void carregaSalarios() {

@@ -37,7 +37,7 @@ public class Frm_RelCliente extends javax.swing.JFrame {
         try {
             segmentoDAO = new SegmentoDAO();
             cbx_segmento.removeAllItems();
-            cbx_segmento.addItem("Selecione uma Opção");
+            cbx_segmento.addItem("Todos os Segmentos");
             for (int i = 0; i < segmentoDAO.lista().size(); i++) {
                 cbx_segmento.addItem(segmentoDAO.lista().get(i).getDescricao());
             }
