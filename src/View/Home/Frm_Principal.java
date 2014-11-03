@@ -58,8 +58,23 @@ public class Frm_Principal extends javax.swing.JFrame {
     public static Frm_Principal j;
     int tentativas;
 
-    public void getTotalAtendimentos() {
-
+    public void getTotalAtendimentosByStatus() {
+        Thread acao = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int i = 0;
+                while (isVisible()==true) {
+                    try {
+                        Thread.sleep(30000);
+                        
+                    } catch (InterruptedException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Contar a quantidade de atendimentos");
+                    }
+                    i++;
+                }
+            }
+        });
+        acao.start();
     }
 
     public Frm_Principal() {

@@ -1,3 +1,9 @@
+auto complete de abertura de atendimento não funcinando
+filtro na tela de consulta atendimento não esta funcionando.
+erro de ortografia ralatórios.
+se atendimento alterar um atendimento e informar uma pendencia então ele deve ser encaminhado para tela de pendentes.
+ao excluir atendimento, não apagar o mesmo, apenas coloca-lo com status cancelado, e capturar a data de cancelamento.
+
 ---------------------------------------------------------ATENDIMENTO--------------------------------------------------
 USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
 AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
@@ -10,6 +16,8 @@ IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
 DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
 possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
 ao logar, atualisar totalizadores de atendimentos
+possibiliar o usuario startar um atendimento ao clicar em executar
+colocar algo no fundo da tela principal.
 ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data de atualização existente no cadastro do cliente.
 ao abrir um atendimento o mesmo ficará como abertos, ao clicar no botão executar o mesmo deve desaparecer da tela de abertos e cair em execução.
 configurar as telas de consulta para se o TIPO USUARIO for SUPORTE, desabilitar os botões voltar e selecionar.
