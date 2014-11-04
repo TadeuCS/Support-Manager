@@ -58,6 +58,7 @@
      atendimento.`PROBLEMA_DETECTADO` AS atendimento_PROBLEMA_DETECTADO,
      atendimento.`PROBLEMA_INFORMADO` AS atendimento_PROBLEMA_INFORMADO,
      atendimento.`PROBLEMA_SOLUCAO` AS atendimento_PROBLEMA_SOLUCAO,
+     atendimento.`PROBLEMA_PENDENCIA` AS atendimento_PROBLEMA_PENDENCIA,
      atendimento.`SOLICITANTE` AS atendimento_SOLICITANTE,
      tipo_atendimento.`DESCRICAO` AS tipoAtendimento,
      cliente.`NOME_FANTASIA` AS nomeCliente,
@@ -86,6 +87,7 @@ and atendimento.codusuario=$P{codUsuario}]]>
 	<field name="atendimento_PROBLEMA_DETECTADO" class="java.lang.String"/>
 	<field name="atendimento_PROBLEMA_INFORMADO" class="java.lang.String"/>
 	<field name="atendimento_PROBLEMA_SOLUCAO" class="java.lang.String"/>
+	<field name="atendimento_PROBLEMA_PENDENCIA" class="java.lang.String"/>
 	<field name="atendimento_SOLICITANTE" class="java.lang.String"/>
 	<field name="tipoAtendimento" class="java.lang.String"/>
 	<field name="nomeCliente" class="java.lang.String"/>
@@ -94,23 +96,25 @@ and atendimento.codusuario=$P{codUsuario}]]>
 	<field name="origem" class="java.lang.String"/>
 	<field name="status" class="java.lang.String"/>
 	<detail>
-		<band height="458" splitType="Stretch">
+		<band height="566" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="482" width="555" height="70" backcolor="#FFFFFF" uuid="a269396d-0209-4684-b7a8-aaecc7a79411"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="463" width="555" height="19" uuid="323f3f50-d4dc-4bc4-b67e-68cc621fd13c"/>
+			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="359" width="555" height="19" uuid="11aefa3d-7311-4f48-a375-b7f292532983"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="378" width="555" height="70" backcolor="#FFFFFF" uuid="b71a722f-806d-49b9-83ca-43264540ae88"/>
 			</rectangle>
-			<textField>
-				<reportElement x="3" y="379" width="550" height="69" uuid="606f6167-56e4-427b-9bbd-5012d6d7f41a"/>
-				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_SOLUCAO}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="3" y="360" width="552" height="20" uuid="4575154c-9289-4f73-ab5d-82dee9cf3603"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SOLUÇÃO DO PROBLEMA]]></text>
+				<text><![CDATA[PROBLEMA PENDÊNCIA]]></text>
 			</staticText>
 			<rectangle>
 				<reportElement x="0" y="165" width="555" height="19" uuid="06f6d79c-aa40-40f9-ab96-f529efba41c9"/>
@@ -144,9 +148,9 @@ and atendimento.codusuario=$P{codUsuario}]]>
 			<rectangle>
 				<reportElement x="0" y="0" width="75" height="54" backcolor="#FFFFFF" uuid="bdfd54f8-2c6e-4dea-9a67-72c479f2554d"/>
 			</rectangle>
-			<image onErrorType="Blank">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
 				<reportElement x="0" y="0" width="75" height="54" uuid="94f3f566-be0b-463e-9907-6c9017d67e8a"/>
-				<imageExpression><![CDATA["C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\Support-Manager\\src\\Util\\Img\\logo.png"]]></imageExpression>
+				<imageExpression><![CDATA["../Util/Img/logo.png"]]></imageExpression>
 			</image>
 			<rectangle>
 				<reportElement x="75" y="0" width="396" height="19" uuid="1a0b7c44-8004-42ae-abb1-779a8b24b733"/>
@@ -164,7 +168,7 @@ and atendimento.codusuario=$P{codUsuario}]]>
 				</textElement>
 				<text><![CDATA[Número.:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="517" y="0" width="38" height="20" uuid="194fef3f-2c1e-4bed-b76e-00dd8bb93688"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -178,7 +182,7 @@ and atendimento.codusuario=$P{codUsuario}]]>
 				</textElement>
 				<text><![CDATA[Data Fim..:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="76" y="20" width="395" height="34" uuid="2782c262-71b9-4a09-89aa-70cd42c5167d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14"/>
@@ -199,7 +203,7 @@ and atendimento.codusuario=$P{codUsuario}]]>
 				</textElement>
 				<text><![CDATA[Solicitante..:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="455" y="66" width="98" height="20" uuid="f61eb98b-8ca5-4291-8951-0995e5874945"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{atendimento_SOLICITANTE}]]></textFieldExpression>
@@ -218,7 +222,7 @@ and atendimento.codusuario=$P{codUsuario}]]>
 				</textElement>
 				<text><![CDATA[Prioridade]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="473" y="34" width="80" height="20" uuid="6266d09d-0c9b-4e98-aa5e-7b824855000b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{prioridade}]]></textFieldExpression>
@@ -251,62 +255,77 @@ and atendimento.codusuario=$P{codUsuario}]]>
 				</textElement>
 				<text><![CDATA[Data Início..:]]></text>
 			</staticText>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="456" y="86" width="100" height="20" uuid="749453d0-56b3-4ac0-8063-0707702858a6"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{origem}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy HH:mm">
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
 				<reportElement x="455" y="126" width="100" height="20" uuid="4e6b6274-3ed0-45bb-ab8b-fe88b8173eb0"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{atendimento_DATA_FIM}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy HH:mm">
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
 				<reportElement x="66" y="126" width="100" height="20" uuid="eef279f2-4885-4277-8c56-a571012c185b"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{atendimento_DATA_INICIO}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy HH:mm">
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
 				<reportElement x="83" y="106" width="100" height="20" uuid="8429c399-0b86-4486-84d3-af701d32d083"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{atendimento_DATA_ABERTURA}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy HH:mm">
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="true">
 				<reportElement x="455" y="106" width="100" height="20" uuid="2e96ecbe-f4fd-4651-bb0b-21e6ccbf4316"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{atendimento_DATA_AGENDAMENTO}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="57" y="66" width="334" height="20" uuid="9d3cbd7e-0601-42f7-84e9-d959f7883c3d"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="57" y="86" width="100" height="20" uuid="5db2d931-64ed-4c2d-887f-681473b71d94"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{nomeUsuario}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="76" y="-1" width="181" height="20" uuid="88fba28e-9efe-45a9-834d-41dfce594ff0"/>
+				<reportElement x="76" y="-1" width="269" height="20" uuid="88fba28e-9efe-45a9-834d-41dfce594ff0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ATENDIMENTO ]]></text>
+				<text><![CDATA[RELATÓRIO DE ATENDIMENTOS - ]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="258" y="-1" width="213" height="20" uuid="b24c8242-2bfd-4e3f-a859-b2b6782a8a5b"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="345" y="-1" width="126" height="20" uuid="b24c8242-2bfd-4e3f-a859-b2b6782a8a5b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="4" y="284" width="549" height="68" uuid="8185d208-e671-47c4-837d-7693917cdf10"/>
 				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_DETECTADO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="4" y="185" width="549" height="69" uuid="14c6df81-275e-4f44-9bb4-83c91a1f8476"/>
 				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_INFORMADO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="483" width="550" height="69" uuid="1af6217a-4551-402b-b37a-d45f10ab37b4"/>
+				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_SOLUCAO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="462" width="552" height="20" uuid="50ecad2b-d079-475c-acef-a194ac0c1b1c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLUÇÃO DO PROBLEMA]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="380" width="548" height="68" uuid="bea822f7-9ab9-44e0-bbb6-46138e39c9e2"/>
+				<textFieldExpression><![CDATA[$F{atendimento_PROBLEMA_PENDENCIA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

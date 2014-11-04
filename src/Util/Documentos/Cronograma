@@ -1,6 +1,6 @@
 auto complete de abertura de atendimento não funcinando
-filtro na tela de consulta atendimento não esta funcionando.
-erro de ortografia ralatórios.
+ok filtro na tela de consulta atendimento não esta funcionando.
+ok erro de ortografia ralatórios.
 se atendimento alterar um atendimento e informar uma pendencia então ele deve ser encaminhado para tela de pendentes.
 ao excluir atendimento, não apagar o mesmo, apenas coloca-lo com status cancelado, e capturar a data de cancelamento.
 
@@ -15,7 +15,6 @@ TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
 IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
 DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
 possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
-ao logar, atualisar totalizadores de atendimentos
 possibiliar o usuario startar um atendimento ao clicar em executar
 colocar algo no fundo da tela principal.
 ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data de atualização existente no cadastro do cliente.

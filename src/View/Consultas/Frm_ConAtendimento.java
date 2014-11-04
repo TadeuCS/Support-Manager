@@ -204,7 +204,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         btn_consultar = new javax.swing.JButton();
         btn_sair = new javax.swing.JButton();
         btn_executar = new javax.swing.JButton();
-        btn_sair1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -263,6 +262,15 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
 
         jLabel1.setText("Filtro:");
 
+        txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_filtroKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_filtroKeyReleased(evt);
+            }
+        });
+
         btn_apagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/excluir.png"))); // NOI18N
         btn_apagar.setText("Apagar");
         btn_apagar.addActionListener(new java.awt.event.ActionListener() {
@@ -311,13 +319,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
             }
         });
 
-        btn_sair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/buscar.png"))); // NOI18N
-        btn_sair1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_sair1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -332,8 +333,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btn_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -356,7 +355,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(11, 11, 11)
@@ -439,16 +437,17 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_executarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_executarActionPerformed
-        
+
     }//GEN-LAST:event_btn_executarActionPerformed
 
-    private void btn_sair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sair1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sair1ActionPerformed
+    private void txt_filtroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyPressed
 
-    /**
-     * @param args the command line arguments
-     */
+    }//GEN-LAST:event_txt_filtroKeyPressed
+
+    private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
+        filtrar(evt);
+    }//GEN-LAST:event_txt_filtroKeyReleased
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -488,7 +487,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
     private javax.swing.JButton btn_executar;
     private javax.swing.JButton btn_finalizar;
     private javax.swing.JButton btn_sair;
-    private javax.swing.JButton btn_sair1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

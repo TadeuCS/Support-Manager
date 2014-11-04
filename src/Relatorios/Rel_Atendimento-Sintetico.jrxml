@@ -32,7 +32,7 @@ group by c.`CODCLIENTE`]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="30" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Atendimentos Sintético]]></text>
+					<text><![CDATA[Relatório de Atendimentos - Sintético]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="208" y="60" width="74" height="20" forecolor="#FFFFFF" uuid="adfc9593-48e5-478d-b336-5bf990ffa9d9"/>
