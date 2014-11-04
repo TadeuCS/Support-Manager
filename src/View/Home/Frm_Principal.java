@@ -53,29 +53,11 @@ public class Frm_Principal extends javax.swing.JFrame {
     Usuario usuario;
     Permissoes permissoes;
     PermissoesDAO permissoesDAO;
+    AtendimentoDAO atendimentoDAO;
     private StatusAtendimentoDAO statusAtendimentoDAO;
     public static PopMenu an = null;
     public static Frm_Principal j;
     int tentativas;
-
-    public void getTotalAtendimentosByStatus() {
-        Thread acao = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int i = 0;
-                while (isVisible()==true) {
-                    try {
-                        Thread.sleep(30000);
-                        
-                    } catch (InterruptedException ex) {
-                        JOptionPane.showMessageDialog(null, "Erro ao Contar a quantidade de atendimentos");
-                    }
-                    i++;
-                }
-            }
-        });
-        acao.start();
-    }
 
     public Frm_Principal() {
         initComponents();
@@ -85,6 +67,43 @@ public class Frm_Principal extends javax.swing.JFrame {
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
         criaPopMenu();
         statusAtendimentoDAO = new StatusAtendimentoDAO();
+        getTotalAtendimentosByStatus();
+    }
+
+    public void getTotalAtendimentosByStatus() {
+        Thread acao;
+        acao = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (getTitle() != "") {
+                    try {
+                        atendimentoDAO = new AtendimentoDAO();
+                        for (int i = 0; i < atendimentoDAO.getCountAtendimentos().size(); i++) {
+                            insereQuantidades((Object[]) atendimentoDAO.getCountAtendimentos().get(i));
+                        }
+                        Thread.sleep(3000);
+                    } catch (InterruptedException ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Contar a quantidade de atendimentos");
+                    }
+                }
+            }
+
+            private void insereQuantidades(Object[] lista) {
+                if (lista[0].equals("ABERTO") == true) {
+                    lb_qtdeAbertos.setText(lista[1].toString());
+                }
+                if (lista[0].equals("EXECUCAO") == true) {
+                    lb_qtdeExecutando.setText(lista[1].toString());
+                }
+                if (lista[0].equals("CONCLUIDO") == true) {
+                    lb_qtdeConcluidos.setText(lista[1].toString());
+                }
+                if (lista[0].equals("PENDENTE") == true) {
+                    lb_qtdePendentes.setText(lista[1].toString());
+                }
+            }
+        });
+        acao.start();
     }
 
     public void setPermissoes() {

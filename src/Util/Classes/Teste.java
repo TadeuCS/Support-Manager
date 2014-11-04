@@ -8,7 +8,7 @@ public class Teste {
     public static void main(String[] args) {
         AtendimentoDAO atendimentoDAO;
         atendimentoDAO = new AtendimentoDAO();
-        Object[] lista=(Object[]) atendimentoDAO.getCountAtendimentoByStatus().get(0);
+        Object[] lista=(Object[]) atendimentoDAO.getCountAtendimentos().get(0);
         System.out.println(lista[0]);
     }
 }

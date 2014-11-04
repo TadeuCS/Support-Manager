@@ -25,7 +25,7 @@ public class AtendimentoDAO extends Manager {
         em.getTransaction().commit();
     }
 
-    public List getCountAtendimentoByStatus() {
+    public List getCountAtendimentos() {
         em.getTransaction().begin();
         query = em.createNativeQuery("select s.`DESCRICAO`,count(a.`CODATENDIMENTO`) QTDE from atendimento a \n"
                 + "inner join status_atendimento s on a.`CODSTATUSATENDIMENTO`=s.`CODSTATUSATENDIMENTO`\n"
