@@ -17,6 +17,7 @@ public class AtendimentoDAO extends Manager {
         em.getTransaction().begin();
         em.merge(att);
         em.getTransaction().commit();
+        
     }
 
     public void remove(Atendimento att) {
