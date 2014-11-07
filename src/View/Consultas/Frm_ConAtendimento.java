@@ -128,6 +128,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
                     Frm_Atendimento_Encerramento f = new Frm_Atendimento_Encerramento(btn_alterar, atendimentoDAO.getByCodigo(
                             Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString())
                     ));
+                    dispose();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Erro ao Selecionar Atendimento");
                 }
@@ -415,7 +416,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
 
     private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
         alterar();
-        dispose();
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_executarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_executarActionPerformed

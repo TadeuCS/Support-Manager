@@ -91,13 +91,16 @@ public class Frm_Principal extends javax.swing.JFrame {
             @Override
             public void run() {
                 while (getTitle() != "") {
-
+                    lb_qtdeAbertos.setText("0");
+                    lb_qtdeExecutando.setText("0");
+                    lb_qtdeConcluidos.setText("0");
+                    lb_qtdePendentes.setText("0");
                     try {
                         atendimentoDAO = new AtendimentoDAO();
                         for (int i = 0; i < atendimentoDAO.getCountAtendimentos(setUsuarioDaLista()).size(); i++) {
                             insereQuantidades((Object[]) atendimentoDAO.getCountAtendimentos(setUsuarioDaLista()).get(i));
                         }
-                        Thread.sleep(3000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException ex) {
                         JOptionPane.showMessageDialog(null, "Erro ao Contar a quantidade de atendimentos");
                     }
@@ -107,15 +110,18 @@ public class Frm_Principal extends javax.swing.JFrame {
             private void insereQuantidades(Object[] lista) {
                 if (lista[0].equals("ABERTO") == true) {
                     lb_qtdeAbertos.setText(lista[1].toString());
-                }
-                if (lista[0].equals("EXECUCAO") == true) {
-                    lb_qtdeExecutando.setText(lista[1].toString());
-                }
-                if (lista[0].equals("CONCLUIDO") == true) {
-                    lb_qtdeConcluidos.setText(lista[1].toString());
-                }
-                if (lista[0].equals("PENDENTE") == true) {
-                    lb_qtdePendentes.setText(lista[1].toString());
+                } else {
+                    if (lista[0].equals("EXECUCAO") == true) {
+                        lb_qtdeExecutando.setText(lista[1].toString());
+                    } else {
+                        if (lista[0].equals("CONCLUIDO") == true) {
+                            lb_qtdeConcluidos.setText(lista[1].toString());
+                        } else {
+                            if (lista[0].equals("PENDENTE") == true) {
+                                lb_qtdePendentes.setText(lista[1].toString());
+                            }
+                        }
+                    }
                 }
             }
         });

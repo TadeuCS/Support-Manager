@@ -1,7 +1,3 @@
-auto complete de abertura de atendimento não funcinando
-ok filtro na tela de consulta atendimento não esta funcionando.
-ok erro de ortografia ralatórios.
-se atendimento alterar um atendimento e informar uma pendencia então ele deve ser encaminhado para tela de pendentes.
 ao excluir atendimento, não apagar o mesmo, apenas coloca-lo com status cancelado, e capturar a data de cancelamento.
 
 ---------------------------------------------------------ATENDIMENTO--------------------------------------------------

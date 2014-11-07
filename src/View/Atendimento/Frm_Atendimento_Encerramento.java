@@ -31,7 +31,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         setVisible(true);
         pendenciaGroup.add(rbt_nao);
         pendenciaGroup.add(rbt_sim);
-        getPendencia();
+        actionPendencia();
         this.atendimento = atendimento;
         getAtendimento(atendimento);
         if (botao.getText().equals("Finalizar") == true) {
@@ -56,7 +56,6 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             if (atendimento.getCodusuario() != null) {
                 txt_usuario.setText(atendimento.getCodusuario().getUsuario());
             }
-            Frm_Atendimento_Encerramento.this.getPendencia(atendimento);
             if (atendimento.getProblemaPendencia() != null) {
                 txt_pendencia.setText(atendimento.getProblemaPendencia());
             }
@@ -69,22 +68,25 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             if (atendimento.getProblemaSolucao() != null) {
                 txt_problemaSolucao.setText(atendimento.getProblemaSolucao());
             }
+            getPendencia(atendimento);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar informações do atendimento: " + atendimento.getCodatendimento());
         }
     }
 
     public void getPendencia(Atendimento atendimento) {
-        if (atendimento.getPendencia().equals("S") == true) {
+        if (atendimento.getPendencia().equals('S') == true) {
             rbt_sim.setSelected(true);
+            pnl_pendencia.setVisible(true);
             rbt_nao.setSelected(false);
         } else {
             rbt_nao.setSelected(true);
+            pnl_pendencia.setVisible(false);
             rbt_sim.setSelected(false);
         }
     }
 
-    public void getPendencia() {
+    public void actionPendencia() {
         if (rbt_sim.getSelectedObjects() != null) {
             pnl_pendencia.setVisible(true);
             txt_pendencia.requestFocus();
@@ -105,6 +107,10 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         try {
             atendimento.setDataInicio(Data.getDataByTexto(txt_dataInicio.getText(), "dd/MM/yyyy HH:mm"));
             atendimento.setDataFim(Data.getDataByTexto(txt_dataFim.getText(), "dd/MM/yyyy HH:mm"));
+            if((btn_salvar.getText().equals("Salvar")==true)&&(txt_pendencia.getText().equals("")==false)){
+                statusAtendimentoDAO = new StatusAtendimentoDAO();
+                atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("PENDENTE"));
+            }
             if (btn_salvar.getText().equals("Finalizar") == true) {
                 atendimento.setDataFechamento(Data.getDataByTexto(Data.getData("dd/MM/yyyy HH:mm"), "dd/MM/yyyy HH:mm"));
                 statusAtendimentoDAO = new StatusAtendimentoDAO();
@@ -483,11 +489,11 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void rbt_simActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_simActionPerformed
-        getPendencia();
+        actionPendencia();
     }//GEN-LAST:event_rbt_simActionPerformed
 
     private void rbt_naoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_naoActionPerformed
-        getPendencia();
+        actionPendencia();
     }//GEN-LAST:event_rbt_naoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
