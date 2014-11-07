@@ -100,7 +100,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                         for (int i = 0; i < atendimentoDAO.getCountAtendimentos(setUsuarioDaLista()).size(); i++) {
                             insereQuantidades((Object[]) atendimentoDAO.getCountAtendimentos(setUsuarioDaLista()).get(i));
                         }
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException ex) {
                         JOptionPane.showMessageDialog(null, "Erro ao Contar a quantidade de atendimentos");
                     }
