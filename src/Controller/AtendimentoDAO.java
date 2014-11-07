@@ -25,10 +25,12 @@ public class AtendimentoDAO extends Manager {
         em.getTransaction().commit();
     }
 
-    public List getCountAtendimentos() {
+    public List getCountAtendimentos(String usuarioLogado) {
         em.getTransaction().begin();
-        query = em.createNativeQuery("select s.`DESCRICAO`,count(a.`CODATENDIMENTO`) QTDE from atendimento a \n"
+        query = em.createNativeQuery("select s.`DESCRICAO`,count(a.`CODATENDIMENTO`) QTDE from atendimento a\n"
                 + "inner join status_atendimento s on a.`CODSTATUSATENDIMENTO`=s.`CODSTATUSATENDIMENTO`\n"
+                + "inner join usuario u on a.`CODUSUARIO`=u.`CODUSUARIO`\n"
+                + "where u.`USUARIO` like '" + usuarioLogado + "'\n"
                 + "group by a.`CODSTATUSATENDIMENTO`;");
         em.getTransaction().commit();
         return query.getResultList();
@@ -41,16 +43,9 @@ public class AtendimentoDAO extends Manager {
         return (Atendimento) query.getSingleResult();
     }
 
-    public List<Atendimento> listaByStatusAndUsuario(StatusAtendimento status, Usuario usuario) {
+    public List<Atendimento> listaByStatusAndUsuario(StatusAtendimento status, String usuario) {
         em.getTransaction().begin();
-        query = em.createNamedQuery("Atendimento.findByStatusAndUsuario").setParameter("status", status).setParameter("codUsuario", usuario);
-        em.getTransaction().commit();
-        return query.getResultList();
-    }
-
-    public List<Atendimento> listaByStatus(StatusAtendimento status) {
-        em.getTransaction().begin();
-        query = em.createNamedQuery("Atendimento.findByStatus").setParameter("status", status);
+        query = em.createNamedQuery("Atendimento.findByStatusAndUsuario").setParameter("status", status).setParameter("usuario", usuario);
         em.getTransaction().commit();
         return query.getResultList();
     }

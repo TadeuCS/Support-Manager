@@ -7,12 +7,14 @@ package View.Consultas;
 
 import Controller.AtendimentoDAO;
 import Controller.UsuarioDAO;
+import Model.Atendimento;
 import Model.StatusAtendimento;
 import Model.Usuario;
 import Util.Classes.Data;
 import View.Atendimento.Frm_Atendimento_Detalhe;
 import View.Atendimento.Frm_Atendimento_Encerramento;
 import View.Home.Frm_Principal;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -29,19 +31,15 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
     Frm_Principal principal = new Frm_Principal();
     UsuarioDAO usuarioDAO;
 
-    public Frm_ConAtendimento(StatusAtendimento status, String usuario) {
+    public Frm_ConAtendimento(StatusAtendimento status, String usuarioLogado) {
         initComponents();
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
         btn_executar.setEnabled(false);
+        btn_apagar.setEnabled(false);
         actionByStatus(status);
         usuarioDAO = new UsuarioDAO();
-        if (principal.getTipoUsuarioLogado().equals("SUPORTE") == true) {
-            btn_apagar.setEnabled(false);
-            listaAtendimentoByStatusAndUsuario(status, usuarioDAO.consultaByUsuario(usuario));
-        } else {
-            listaAtendimentoByStatus(status);
-        }
+        listaAtendimentoByStatusAndUsuario(status, usuarioLogado);
     }
 
     private void actionByStatus(StatusAtendimento status) {
@@ -79,35 +77,19 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         }
     }
 
-    public void listaAtendimentoByStatus(StatusAtendimento statusAtendimento) {
+    public void listaAtendimentoByStatusAndUsuario(StatusAtendimento statusAtendimento, String usuario) {
         atendimentoDAO = new AtendimentoDAO();
         try {
             limpaTabela();
-            for (int i = 0; i < atendimentoDAO.listaByStatus(statusAtendimento).size(); i++) {
+            Frm_Principal f = new Frm_Principal();
+            List<Atendimento> lista=atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, f.setUsuarioDaLista());
+            for (int i = 0; i < lista.size(); i++) {
                 String[] linha = new String[]{
-                    atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodatendimento().toString(),
-                    Data.getDataByDate(atendimentoDAO.listaByStatus(statusAtendimento).get(i).getDataAgendamento(), "dd/MM/yyyy HH:mm"),
-                    atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodcliente().getNomeFantasia(),
-                    atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodtipoatendimento().getDescricao(),
-                    atendimentoDAO.listaByStatus(statusAtendimento).get(i).getCodprioridade().getDescricao()};
-                model.addRow(linha);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void listaAtendimentoByStatusAndUsuario(StatusAtendimento statusAtendimento, Usuario usuario) {
-        atendimentoDAO = new AtendimentoDAO();
-        try {
-            limpaTabela();
-            for (int i = 0; i < atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).size(); i++) {
-                String[] linha = new String[]{
-                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodatendimento().toString(),
-                    Data.getDataByDate(atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getDataAgendamento(), "dd/MM/yyyy HH:mm"),
-                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodcliente().getNomeFantasia(),
-                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodtipoatendimento().getDescricao(),
-                    atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, usuario).get(i).getCodprioridade().getDescricao()};
+                    lista.get(i).getCodatendimento().toString(),
+                    Data.getDataByDate(lista.get(i).getDataAgendamento(), "dd/MM/yyyy HH:mm"),
+                    lista.get(i).getCodcliente().getNomeFantasia(),
+                    lista.get(i).getCodtipoatendimento().getDescricao(),
+                    lista.get(i).getCodprioridade().getDescricao()};
                 model.addRow(linha);
             }
         } catch (Exception e) {

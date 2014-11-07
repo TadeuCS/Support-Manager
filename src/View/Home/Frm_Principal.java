@@ -70,16 +70,32 @@ public class Frm_Principal extends javax.swing.JFrame {
         getTotalAtendimentosByStatus();
     }
 
+    public String setUsuarioDaLista() {
+        String usuarioDaLista = null;
+        usuarioDAO = new UsuarioDAO();
+        if (getUsuarioLogado().equals("ADMINISTRADOR") == true) {
+            usuarioDaLista = "%%";
+        } else {
+            if (usuarioDAO.consultaByUsuario(getUsuarioLogado()).getCodtipousuario().getDescricao().equals("SUPORTE") == false) {
+                usuarioDaLista = "%%";
+            } else {
+                usuarioDaLista = getUsuarioLogado();
+            }
+        }
+        return usuarioDaLista;
+    }
+
     public void getTotalAtendimentosByStatus() {
         Thread acao;
         acao = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (getTitle() != "") {
+
                     try {
                         atendimentoDAO = new AtendimentoDAO();
-                        for (int i = 0; i < atendimentoDAO.getCountAtendimentos().size(); i++) {
-                            insereQuantidades((Object[]) atendimentoDAO.getCountAtendimentos().get(i));
+                        for (int i = 0; i < atendimentoDAO.getCountAtendimentos(setUsuarioDaLista()).size(); i++) {
+                            insereQuantidades((Object[]) atendimentoDAO.getCountAtendimentos(setUsuarioDaLista()).get(i));
                         }
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
