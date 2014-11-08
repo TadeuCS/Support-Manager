@@ -152,7 +152,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         txt_contato.setText(null);
         txt_telefone.setText(null);
         txt_email.setText(null);
-        txt_usuario.setText(null);
         txt_senha.setText(null);
         txt_smtp.setText(null);
         txt_porta.setText(null);
@@ -270,15 +269,11 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         }
     }
 
-    public void validaCamposEmail(String email, String usuario, String porta, String smtp, String senha) {
+    public void validaCamposEmail(String email, String porta, String smtp, String senha) {
         if (ValidaEmail.validarEmail(email) == false) {
             JOptionPane.showMessageDialog(null, "Email Inválido!");
             txt_email.requestFocus();
         } else {
-            if (usuario.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Usuário Inválido!");
-                txt_usuario.requestFocus();
-            } else {
                 if (senha.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Senha Inválida!");
                     txt_senha.requestFocus();
@@ -296,7 +291,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     }
                 }
             }
-        }
     }
 
     public void validaCamposTelefone(String grupo, String telefone, String contato) {
@@ -366,7 +360,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
     public void getDadosEmail(Empresa empresa) {
         txt_email.setText(empresa.getCodemail().getEmail());
-        txt_usuario.setText(empresa.getCodemail().getNome());
         txt_senha.setText(empresa.getCodemail().getSenha());
         txt_smtp.setText(empresa.getCodemail().getSmtp());
         txt_porta.setText(empresa.getCodemail().getPorta() + "");
@@ -437,7 +430,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             if (txt_operacao.getText().equals("INCLUSÃO") == true) {
                 email = new Email();
                 email.setEmail(txt_email.getText());
-                email.setNome(txt_usuario.getText());
+                email.setNome(txt_email.getText());
                 email.setSenha(txt_senha.getText());
                 email.setSmtp(txt_smtp.getText());
                 email.setPorta(Integer.parseInt(txt_porta.getText()));
@@ -449,7 +442,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 empresa.setCodemail(email);
             } else {
                 empresa.getCodemail().setEmail(txt_email.getText());
-                empresa.getCodemail().setNome(txt_usuario.getText());
+                empresa.getCodemail().setNome(txt_email.getText());
                 empresa.getCodemail().setPorta(Integer.parseInt(txt_porta.getText()));
                 empresa.getCodemail().setSenha(txt_senha.getText());
                 empresa.getCodemail().setSmtp(txt_smtp.getText());
@@ -590,8 +583,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         pnl_dadosEmail = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txt_email = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txt_usuario = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txt_smtp = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -992,8 +983,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
         jLabel4.setText("Email *:");
 
-        jLabel5.setText("Usuario *:");
-
         jLabel6.setText("SMTP *:");
 
         jLabel7.setText("Porta *:");
@@ -1036,15 +1025,14 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_salvar))
                     .addGroup(pnl_dadosEmailLayout.createSequentialGroup()
-                        .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                        .addGap(10, 10, 10)
+                        .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_email)
                             .addGroup(pnl_dadosEmailLayout.createSequentialGroup()
-                                .addComponent(txt_smtp, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                .addComponent(txt_smtp)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1052,7 +1040,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(chx_ssl))
                             .addGroup(pnl_dadosEmailLayout.createSequentialGroup()
-                                .addComponent(txt_usuario)
+                                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1062,16 +1050,12 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         pnl_dadosEmailLayout.setVerticalGroup(
             pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_dadosEmailLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(42, 42, 42)
                 .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(pnl_dadosEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_smtp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1177,7 +1161,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_portaActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        validaCamposEmail(txt_email.getText(), txt_usuario.getText(), txt_porta.getText(), txt_smtp.getText(), txt_senha.getText());
+        validaCamposEmail(txt_email.getText(), txt_porta.getText(), txt_smtp.getText(), txt_senha.getText());
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -1374,7 +1358,6 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1399,6 +1382,5 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_smtp;
     private javax.swing.JFormattedTextField txt_telefone;
-    private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
 }

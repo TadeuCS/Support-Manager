@@ -7,6 +7,7 @@ package View.Atendimento;
 
 import Controller.AtendimentoDAO;
 import Controller.ClienteDAO;
+import Controller.EmpresaDAO;
 import Controller.OrigemDAO;
 import Controller.PrioridadeDAO;
 import Controller.StatusAtendimentoDAO;
@@ -14,16 +15,23 @@ import Controller.StatusPessoaDAO;
 import Controller.TipoAtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Atendimento;
+import Model.Empresa;
 import Model.StatusPessoa;
 import Model.Usuario;
 import Util.Classes.AutoComplete;
 import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
+import Util.Email.EnviaEmail;
 import View.Home.Frm_Principal;
 import java.awt.Event;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -242,10 +250,77 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             atendimentoDAO = new AtendimentoDAO();
             atendimentoDAO.salvar(atendimento);
             JOptionPane.showMessageDialog(null, "Atendimento Aberto com Sucesso!");
+            enviarAtendimentoByEmail();
             limpaCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao Salvar Atendimento!");
         }
+    }
+
+    public String criaMsgHTML(int numero, String cliente, String dataAbertura, String dataAgendamento,
+            String solicitante, String origem, String tipo, String prioridade, String problemaInformado,
+            String empresa, String telefone) {
+        return "<html>\n"
+                + "    <head>\n"
+                + "        <title>TODO supply a title</title>\n"
+                + "        <meta charset=\"UTF-8\">\n"
+                + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+                + "    </head>\n"
+                + "    <body>\n"
+                + "        <p>Foi registrado em nosso sistema o atendimento Numero: " + numero + " com os respectivos dados:</p>\n"
+                + "        <div align=\"center\">\n"
+                + "            <table width=\"644\" height=\"357\" border=\"15\" bordercolor=\"#0000FF\">\n"
+                + "                <tr>\n"
+                + "                    <td width=\"311\"><pre>Cliente: " + cliente + "</pre>\n"
+                + "                        <pre>Data Abertura: " + dataAbertura + "</pre>\n"
+                + "                        <pre>Data Agendamento: " + dataAgendamento + "</pre>\n"
+                + "                        <pre>Solicitante: " + solicitante + "</pre>\n"
+                + "                        <pre>Origem: " + origem + "</pre>\n"
+                + "                        <pre>Tipo Atendimento: " + tipo + "</pre>\n"
+                + "                        <pre>Prioridade: " + prioridade + "</pre>\n"
+                + "                        <pre>Problema Informado: " + problemaInformado + "</pre></td>\n"
+                + "                </tr>\n"
+                + "            </table>\n"
+                + "        </div>\n"
+                + "        <p>Suporte "+empresa+" "+telefone+". E-mail automatico, por favor nao responda essa mensagem.</p>\n"
+                + "        <p>&nbsp;</p>\n"
+                + "    </body>\n"
+                + "\n"
+                + "\n"
+                + "</html>";
+    }
+
+    public void enviarAtendimentoByEmail() {
+        EnviaEmail send = new EnviaEmail();
+        EmpresaDAO empresaDAO = new EmpresaDAO();
+        Empresa empresa = new Empresa();
+        List<String> destinatario = new ArrayList<String>();
+        try {
+            destinatario.add(atendimento.getCodcliente().getEmail());
+            empresa = empresaDAO.findByNomeFantasia("Olivet Sistemas");
+            send.enviaEmail(empresa.getCodemail().getSmtp(),
+                    empresa.getCodemail().getPorta(),
+                    empresa.getCodemail().getEmail(),
+                    empresa.getCodemail().getSenha(),
+                    destinatario,
+                    "Abertura de Atendimento", criaMsgHTML(atendimentoDAO.getMaxAtendimento(),
+                            atendimento.getCodcliente().getNomeFantasia(),
+                            Data.getDataByDate(atendimento.getDataAbertura(), "dd/MM/yyyy HH:mm"),
+                            Data.getDataByDate(atendimento.getDataAgendamento(), "dd/MM/yyyy HH:mm"),
+                            atendimento.getSolicitante(),
+                            atendimento.getCodorigem().getDescricao(),
+                            atendimento.getCodtipoatendimento().getDescricao(),
+                            atendimento.getCodprioridade().getDescricao(),
+                            atendimento.getProblemaInformado(),
+                            empresa.getNomeFantasia(),
+                            empresa.getTelefoneList().get(0).getTelefone()),
+                    null);
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Empresa de Nome: Olivet Sistemas não cadastrada!");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
     }
 
     public void limpaCampos() {
@@ -418,18 +493,20 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbx_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_sair, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(28, 28, 28)
+                        .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

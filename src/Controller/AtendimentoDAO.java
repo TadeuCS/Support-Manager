@@ -17,7 +17,7 @@ public class AtendimentoDAO extends Manager {
         em.getTransaction().begin();
         em.merge(att);
         em.getTransaction().commit();
-        
+
     }
 
     public void remove(Atendimento att) {
@@ -42,6 +42,13 @@ public class AtendimentoDAO extends Manager {
         query = em.createNamedQuery("Atendimento.findByCodatendimento").setParameter("codatendimento", codigo);
         em.getTransaction().commit();
         return (Atendimento) query.getSingleResult();
+    }
+
+    public int getMaxAtendimento() {
+        em.getTransaction().begin();
+        query = em.createQuery("SELECT MAX(a.codatendimento) FROM Atendimento a");
+        em.getTransaction().commit();
+        return (int) query.getSingleResult();
     }
 
     public List<Atendimento> listaByStatusAndUsuario(StatusAtendimento status, String usuario) {

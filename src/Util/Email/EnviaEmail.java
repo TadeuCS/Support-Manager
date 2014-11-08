@@ -14,12 +14,51 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.swing.JOptionPane;
 
 public class EnviaEmail {
 
     //cria as propriedades necessárias para o envio de email
+    public void enviaEmail(String smtp, int porta, String usuario, String senha, List<String> destinatarios, String assunto, String mensagem, List<String> anexos) {
+        ConfigEmail mj = new ConfigEmail();
+        //configuracoes de envio
+        mj.setSmtpHostMail(smtp);
+        mj.setSmtpPortMail(porta + "");
+        mj.setSmtpAuth("true");
+        mj.setSmtpStarttls("true");
+        mj.setUserMail(usuario);
+        mj.setFromNameMail("Olivet Sistemas");
+        mj.setPassMail(senha);
+        mj.setCharsetMail("ISO-8859-1");
+        mj.setSubjectMail(assunto);
+        mj.setBodyMail(mensagem);//aqui vc passa o texto do email, ou o texto em html usando o metodo "htmlMessage()".
+        mj.setTypeTextMail(ConfigEmail.TYPE_TEXT_HTML);
+
+        //sete quantos destinatarios desejar
+        Map<String, String> map = new HashMap<String, String>();
+        for (int i = 0; i < destinatarios.size(); i++) {
+            map.put(destinatarios.get(i), "");
+        }
+        mj.setToMailsUsers(map);
+
+        //seta quantos anexos for nescessário
+        if (anexos != null) {
+            mj.setFileMails(anexos);
+        }
+        EnviaEmail sender = new EnviaEmail();
+        try {
+            sender.senderMail(mj);
+        } catch (UnsupportedEncodingException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        } catch (MessagingException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
     public void senderMail(ConfigEmail mail) throws
             UnsupportedEncodingException, MessagingException {
         Properties properties = new Properties();
@@ -29,7 +68,7 @@ public class EnviaEmail {
         properties.setProperty("mail.smtp.starttls.enable", mail.getSmtpStarttls());
         properties.setProperty("mail.smtp.port", mail.getSmtpPortMail());
         properties.setProperty("mail.mime.charset", mail.getCharsetMail());
-        
+
         properties.getProperty("mail.host");
         properties.getProperty("mail.smtp.port");
         //classe anonima que realiza a autenticação
