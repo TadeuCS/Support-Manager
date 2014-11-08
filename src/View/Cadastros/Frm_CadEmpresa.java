@@ -197,12 +197,11 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nome Fantasia inválido!");
             txt_nomeFantasia.requestFocus();
         } else {
-            ValidarCGCCPF v = new ValidarCGCCPF();
-            if ((cbx_tipo.getSelectedItem().toString().equals("FISICA") == true) && (v.validarCpf(cpf) == false)) {
+            if ((cbx_tipo.getSelectedItem().toString().equals("FISICA") == true) && (ValidarCGCCPF.validaCPF(cpf) == false)) {
                 JOptionPane.showMessageDialog(null, "CPF Inválido!");
                 txt_cpf.requestFocus();
             } else {
-                if ((cbx_tipo.getSelectedItem().toString().equals("JURIDICA") == true) && (v.validaCNPJ(cpf) == false)) {
+                if ((cbx_tipo.getSelectedItem().toString().equals("JURIDICA") == true) && (ValidarCGCCPF.validaCNPJ(cpf) == false)) {
                     JOptionPane.showMessageDialog(null, "CNPJ Inválido!");
                     txt_cpf.requestFocus();
                 } else {
@@ -974,12 +973,13 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel19)))
                 .addGap(11, 11, 11)
-                .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_cadCidade)
-                    .addComponent(cbx_cidades, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel17)
+                        .addComponent(jLabel18)
+                        .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbx_cidades, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 33, Short.MAX_VALUE)
                 .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_anteriorEndereco)

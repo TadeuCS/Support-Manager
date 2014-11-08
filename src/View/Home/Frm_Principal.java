@@ -128,7 +128,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         acao.start();
     }
 
-    public void setPermissoes() {
+    public void trataPermissoes() {
         try {
             permissoesDAO = new PermissoesDAO();
             usuarioDAO = new UsuarioDAO();
@@ -204,20 +204,17 @@ public class Frm_Principal extends javax.swing.JFrame {
         if (usuarioLogado.equals("ADMIN") == true) {
             txt_usuarioLogado.setText("ADMINISTRADOR");
         } else {
-            setPermissoes();
+            trataPermissoes();
             if (usuarioDAO.consultaByUsuario(usuarioLogado).getSexo().equals('F') == true) {
                 lb_boasVindas.setText("Bem Vinda");
             }
-            try {
-                usuarioDAO = new UsuarioDAO();
-                if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
-                    Menu_Relatorios.setVisible(false);
-                    lb_qtdeAbertos.setVisible(false);
-                    lb_abertos.setVisible(false);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
-            }
+//            try {
+//                usuarioDAO = new UsuarioDAO();
+//                if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
+//                }
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
+//            }
         }
 
     }
@@ -308,6 +305,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         item_relUsuario = new javax.swing.JMenuItem();
         item_relInformacao = new javax.swing.JMenuItem();
         Menu_Utilitários = new javax.swing.JMenu();
+        item_AlterarSenha = new javax.swing.JMenuItem();
         item_enviaEmail = new javax.swing.JMenuItem();
         item_emiteRecibo = new javax.swing.JMenuItem();
         menuI_Informacao = new javax.swing.JMenu();
@@ -341,7 +339,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
 
-        lb_qtdeConcluidos.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeConcluidos.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         lb_qtdeConcluidos.setForeground(new java.awt.Color(102, 102, 102));
         lb_qtdeConcluidos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_qtdeConcluidos.setText("0");
@@ -357,7 +355,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
 
-        lb_qtdePendentes.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdePendentes.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         lb_qtdePendentes.setForeground(new java.awt.Color(102, 102, 102));
         lb_qtdePendentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_qtdePendentes.setText("0");
@@ -379,7 +377,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         jLabel4.setText("Executando:");
 
-        lb_qtdeExecutando.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeExecutando.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         lb_qtdeExecutando.setForeground(new java.awt.Color(102, 102, 102));
         lb_qtdeExecutando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_qtdeExecutando.setText("0");
@@ -397,7 +395,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         lb_abertos.setText("Abertos:");
 
-        lb_qtdeAbertos.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        lb_qtdeAbertos.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
         lb_qtdeAbertos.setForeground(new java.awt.Color(102, 102, 102));
         lb_qtdeAbertos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb_qtdeAbertos.setText("0");
@@ -447,16 +445,16 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lb_abertos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_qtdeAbertos, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lb_qtdeAbertos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lb_boasVindas)
                         .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -797,6 +795,14 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_Utilitários.setText("Utilitarios");
 
+        item_AlterarSenha.setText("Alterar Senha");
+        item_AlterarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_AlterarSenhaActionPerformed(evt);
+            }
+        });
+        Menu_Utilitários.add(item_AlterarSenha);
+
         item_enviaEmail.setText("Enviar Email");
         item_enviaEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -866,7 +872,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 203, Short.MAX_VALUE)
+                .addGap(0, 202, Short.MAX_VALUE)
                 .addComponent(pnl_alteraSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnl_Rodape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1111,6 +1117,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_RelInformacao f = new Frm_RelInformacao();
     }//GEN-LAST:event_item_relInformacaoActionPerformed
 
+    private void item_AlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_AlterarSenhaActionPerformed
+        pnl_alteraSenha.setVisible(true);
+    }//GEN-LAST:event_item_AlterarSenhaActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1154,6 +1164,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar Menu_barra;
     private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_salvar;
+    private javax.swing.JMenuItem item_AlterarSenha;
     private javax.swing.JMenuItem item_Atendimento;
     private javax.swing.JMenuItem item_Cliente;
     private javax.swing.JMenuItem item_Empresa;

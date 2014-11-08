@@ -526,12 +526,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }
 
     public void validaDadosPessoais(String cpf, String inscEstadual, String razaoSocial, String nomeFantasia, String responsavel, String email, String segmento) {
-        ValidarCGCCPF v = new ValidarCGCCPF();
-        if ((cbx_tipo.getSelectedItem().toString().equals("FISICA") == true) && (v.validarCpf(cpf) == false)) {
+        if ((cbx_tipo.getSelectedItem().toString().equals("FISICA") == true) && (ValidarCGCCPF.validaCPF(cpf) == false)) {
             JOptionPane.showMessageDialog(null, "CPF Inválido!");
             txt_cpf.requestFocus();
         } else {
-            if ((cbx_tipo.getSelectedItem().toString().equals("JURIDICA") == true) && (v.validaCNPJ(cpf) == false)) {
+            if ((cbx_tipo.getSelectedItem().toString().equals("JURIDICA") == true) && (ValidarCGCCPF.validaCNPJ(cpf) == false)) {
                 JOptionPane.showMessageDialog(null, "CNPJ Inválido!");
                 txt_cpf.requestFocus();
             } else {

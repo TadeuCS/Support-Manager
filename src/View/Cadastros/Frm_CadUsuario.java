@@ -267,7 +267,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     cbx_tipoUsuario.addItem(tipoUsuarioDAO.lista().get(i).getDescricao());
                 }
             } else {
-                usuarioDAO= new UsuarioDAO();
+                usuarioDAO = new UsuarioDAO();
                 if (usuarioDAO.consultaByUsuario(principal.getUsuarioLogado()).getCodtipousuario().getDescricao().equals("ATENDENTE") == true) {
                     cbx_tipoUsuario.addItem("SUPORTE");
                 } else {
@@ -290,8 +290,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "CPF Inválido");
                 txt_cpf.requestFocus();
             } else {
-                ValidarCGCCPF v = new ValidarCGCCPF();
-                if (v.validarCpf(txt_cpf.getText()) == false) {
+                if (ValidarCGCCPF.validaCPF(cpf) == false) {
                     JOptionPane.showMessageDialog(null, "CPF Inválido");
                     txt_cpf.requestFocus();
                 } else {
@@ -385,12 +384,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
             txt_nome.requestFocus();
         } else {
-            if (cpf.equals("   .   .   -  ") == true) {
-                JOptionPane.showMessageDialog(null, "CPF Inválido");
-                txt_cpf.requestFocus();
-            } else {
-                ValidarCGCCPF v = new ValidarCGCCPF();
-                if (v.validarCpf(txt_cpf.getText()) == false) {
+                if (ValidarCGCCPF.validaCPF(cpf)== false) {
                     JOptionPane.showMessageDialog(null, "CPF Inválido");
                     txt_cpf.requestFocus();
                 } else {
@@ -437,7 +431,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                                     }
                                 }
                             }
-                        }
                     }
                 }
             }
@@ -481,29 +474,37 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Telefone já cadastrado!");
             txt_telefone.requestFocus();
         } catch (NoResultException e) {
-            insereTelefoneNalista(grupo, contato, numTelefone);
+            boolean existe = false;
+            for (int i = 0; i < tb_telefones.getRowCount(); i++) {
+                if (tb_telefones.getValueAt(i, 1).equals(numTelefone) == true) {
+                    JOptionPane.showMessageDialog(null, numTelefone + " já está na lista");
+                    txt_telefone.requestFocus();
+                    existe = true;
+                }
+            }
+            if (existe == false) {
+                insereTelefoneNalista(telefone);
+                txt_telefone.setText(null);
+                txt_contato.setText(null);
+                txt_contato.requestFocus();
+            }
         }
     }
 
-    public void insereTelefoneNalista(String grupo, String contato, String numTelefone) {
+    public void insereTelefoneNalista(Telefone telefone) {
         try {
-            grupoDAO = new GrupoDAO();
-            telefone = new Telefone();
             telefone.setCodusuario(usuario);
-            telefone.setTelefone(numTelefone);
-            telefone.setDescricao(contato);
-            telefone.setCodgrupo(grupoDAO.consulta(grupo));
             usuario.getTelefoneList().add(telefone);
+            model = (DefaultTableModel) tb_telefones.getModel();
             String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};
             model.addRow(linha);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir Telefone na Lista");
+            JOptionPane.showMessageDialog(null, "Erro ao inserir Telefone na Lista\n" + e);
         } finally {
             txt_contato.setText(null);
             txt_telefone.setText(null);
             txt_contato.requestFocus();
         }
-
     }
 
     public void carregaGrupos() {
