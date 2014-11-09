@@ -266,7 +266,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
         );
 
         btn_testar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/email.png"))); // NOI18N
-        btn_testar.setText("Testar Envio");
+        btn_testar.setText("Enviar");
         btn_testar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_testarActionPerformed(evt);

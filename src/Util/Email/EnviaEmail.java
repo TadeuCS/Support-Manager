@@ -34,9 +34,10 @@ public class EnviaEmail {
         mj.setFromNameMail("Olivet Sistemas");
         mj.setPassMail(senha);
         mj.setCharsetMail("ISO-8859-1");
+//        mj.setCharsetMail("UTF-8");
         mj.setSubjectMail(assunto);
         mj.setBodyMail(mensagem);//aqui vc passa o texto do email, ou o texto em html usando o metodo "htmlMessage()".
-        mj.setTypeTextMail(ConfigEmail.TYPE_TEXT_HTML);
+        mj.setTypeTextMail("text/html; charset=iso-8859-1");
 
         //sete quantos destinatarios desejar
         Map<String, String> map = new HashMap<String, String>();
@@ -113,7 +114,9 @@ public class EnviaEmail {
 
         // Cria o objeto que recebe o texto do corpo do email
         MimeBodyPart textPart = new MimeBodyPart();
+        textPart.setHeader("Content-Type", "text/html; charset=\"iso-8859-1\"");
         textPart.setContent(mail.getBodyMail(), mail.getTypeTextMail());
+        textPart.setHeader("Content-Transfer-Encoding", "quoted-printable");
 
         // Monta a mensagem SMTP  inserindo o conteudo, texto e anexos
         Multipart mps = new MimeMultipart();

@@ -6,11 +6,16 @@
 package View.Atendimento;
 
 import Controller.AtendimentoDAO;
+import Controller.EmpresaDAO;
 import Controller.StatusAtendimentoDAO;
 import Model.Atendimento;
+import Model.Empresa;
 import Util.Classes.Data;
+import Util.Email.EnviaEmail;
 import java.awt.Event;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -107,7 +112,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         try {
             atendimento.setDataInicio(Data.getDataByTexto(txt_dataInicio.getText(), "dd/MM/yyyy HH:mm"));
             atendimento.setDataFim(Data.getDataByTexto(txt_dataFim.getText(), "dd/MM/yyyy HH:mm"));
-            if((btn_salvar.getText().equals("Salvar")==true)&&(txt_pendencia.getText().equals("")==false)){
+            if ((btn_salvar.getText().equals("Salvar") == true) && (txt_pendencia.getText().equals("") == false)) {
                 statusAtendimentoDAO = new StatusAtendimentoDAO();
                 atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("PENDENTE"));
             }
@@ -165,12 +170,99 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         setAtendimento(atendimento);
         try {
             atendimentoDAO.salvar(atendimento);
-            JOptionPane.showMessageDialog(null, "Sucesso ao " + btn_salvar.getText()+" Atendimento!");
+            JOptionPane.showMessageDialog(null, "Sucesso ao " + btn_salvar.getText() + " Atendimento!");
             limpaCampos();
+            enviarAtendimentoByEmail();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao " + btn_salvar.getText() + " Atendimento!");
         }
 
+    }
+
+    public void enviarAtendimentoByEmail() {
+        Thread acao = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EnviaEmail send = new EnviaEmail();
+                EmpresaDAO empresaDAO = new EmpresaDAO();
+                Empresa empresa = new Empresa();
+                List<String> destinatario = new ArrayList<String>();
+                lb_status.setText("Enviando Email...");
+                try {
+                    destinatario.add(atendimento.getCodcliente().getEmail());
+                    empresa = empresaDAO.findByNomeFantasia("Olivet Sistemas");
+                    send.enviaEmail(empresa.getCodemail().getSmtp(),
+                            empresa.getCodemail().getPorta(),
+                            empresa.getCodemail().getEmail(),
+                            empresa.getCodemail().getSenha(),
+                            destinatario,
+                            "Fechamento de Atendimento", criaMsgHTML(atendimentoDAO.getMaxAtendimento(),
+                                    atendimento.getCodcliente().getNomeFantasia(),
+                                    atendimento.getCodusuario().getUsuario(),
+                                    Data.getDataByDate(atendimento.getDataAbertura(), "dd/MM/yyyy HH:mm"),
+                                    Data.getDataByDate(atendimento.getDataAgendamento(), "dd/MM/yyyy HH:mm"),
+                                    Data.getDataByDate(atendimento.getDataInicio(), "dd/MM/yyyy HH:mm"),
+                                    Data.getDataByDate(atendimento.getDataFim(), "dd/MM/yyyy HH:mm"),
+                                    atendimento.getSolicitante(),
+                                    atendimento.getCodorigem().getDescricao(),
+                                    atendimento.getCodtipoatendimento().getDescricao(),
+                                    atendimento.getCodprioridade().getDescricao(),
+                                    atendimento.getProblemaInformado(),
+                                    atendimento.getProblemaDetectado(),
+                                    atendimento.getProblemaSolucao(),
+                                    empresa.getNomeFantasia(),
+                                    empresa.getTelefoneList().get(0).getTelefone()),
+                            null);
+                    lb_status.setText("Email enviado com sucesso!");
+                    limpaCampos();
+                    Thread.sleep(1000);
+                    lb_status.setText(null);
+                    dispose();
+                } catch (Exception e) {
+                    lb_status.setText("Erro ao enviar Email.");
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    lb_status.setText(null);
+                }
+            }
+        });
+        acao.start();
+    }
+
+    public String criaMsgHTML(int numero, String cliente, String analista, String dataAbertura, String dataAgendamento,
+            String dataInicio, String dataFim, String solicitante, String origem, String tipo, String prioridade,
+            String problemaInformado, String problemaDetectado, String solucao, String empresa, String telefone) {
+        return "<html>\n"
+                + "    <head>\n"
+                + "        <title>TODO supply a title</title>\n"
+                + "        <meta charset=\"\"iso-8859-1\">\n"
+                + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+                + "    </head>\n"
+                + "    <body>\n"
+                + "        <p>Foi registrado em nosso sistema o atendimento Nº: " + numero + " com os respectivos dados:</p>\n"
+                + "<div align=\"center\"></div>\n"
+                + "<div align=\"center\">\n"
+                + "  <table width=\"694\" border=\"15\" bordercolor=\"#0000FF\">\n"
+                + "    <tr>\n"
+                + "      <td width=\"466\"><pre>Cliente: " + cliente + "</pre>\n"
+                + "        <pre>Data Abertura: " + dataAbertura + "</pre>\n"
+                + "        <pre>Data Agendamento: " + dataAgendamento + "</pre>\n"
+                + "        <pre>Data Início: 03/10/2014 17:10:00</pre>\n"
+                + "        <pre>Data Fim: 03/10/2014 17:10:00</pre>\n"
+                + "        <pre>Solicitante: " + solicitante + "</pre>\n"
+                + "        <pre>Analista: " + analista + "</pre>\n"
+                + "        <pre>Origem: " + origem + "</pre>\n"
+                + "        <pre>Tipo Atendimento: " + tipo + "</pre>\n"
+                + "        <pre>Prioridade: " + prioridade + "</pre>\n"
+                + "        <pre>Problema Informado: " + problemaInformado + "</pre>\n"
+                + "        <pre>Problema Detectado: " + problemaDetectado + "</pre>\n"
+                + "      <pre>Solução: " + solucao + "</pre></td>\n"
+                + "    </tr>\n"
+                + "  </table>\n"
+                + "</div>\n"
+                + "        <p>Suporte " + empresa + " " + telefone + ". E-mail automático, por favor não responda essa mensagem.</p>\n"
+                + "<p>&nbsp;</p>\n"
+                + "    </body>\n"
+                + "</html>";
     }
 
     public void validaCampos(String dataInicio, String dataFim, boolean pendencia, String probInformado, String probDetectado, String probSolucao, String probPendencia) {
@@ -182,7 +274,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Data Fim inválida!");
                 txt_dataFim.requestFocus();
             } else {
-                if ((pendencia==true) && (txt_pendencia.getText().isEmpty())) {
+                if ((pendencia == true) && (txt_pendencia.getText().isEmpty())) {
                     JOptionPane.showMessageDialog(null, "O motivo da Pendência informada é inválida!");
                     txt_pendencia.requestFocus();
                 } else {
@@ -235,6 +327,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
         txt_usuario = new javax.swing.JTextField();
         btn_salvar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+        lb_status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Fechamento de Atendimento");
@@ -442,6 +535,10 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             }
         });
 
+        lb_status.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lb_status.setForeground(new java.awt.Color(153, 0, 0));
+        lb_status.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
         pnl_fundo.setLayout(pnl_fundoLayout);
         pnl_fundoLayout.setHorizontalGroup(
@@ -450,8 +547,9 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fundoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addComponent(lb_status, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -462,10 +560,14 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             .addGroup(pnl_fundoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_salvar)
-                    .addComponent(btn_cancelar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_fundoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_salvar)
+                            .addComponent(btn_cancelar)))
+                    .addComponent(lb_status, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -504,7 +606,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                     txt_dataFim.getText(),
                     verificaPendencia(rbt_sim),
                     txt_problemaInformado.getText(),
-                    txt_problemaDetectado.getText(), 
+                    txt_problemaDetectado.getText(),
                     txt_problemaSolucao.getText(),
                     txt_pendencia.getText());
         }
@@ -577,6 +679,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel lb_status;
     private javax.swing.ButtonGroup pendenciaGroup;
     private javax.swing.JPanel pnl_dados;
     private javax.swing.JPanel pnl_fundo;
