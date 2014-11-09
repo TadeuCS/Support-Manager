@@ -3,21 +3,13 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="codSegmento" class="java.lang.Integer"/>
+	<parameter name="segmento" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-     cliente.`CODCLIENTE` AS codCliente,
-     cliente.`CNPJ_CPF` AS cpf,
-     cliente.`DATA_ATUALIZACAO` AS dataAtualizacao,
-     cliente.`NOME_FANTASIA` AS nomeFantasia,
-     telefone.`TELEFONE` AS telefone,
-     telefone.`DESCRICAO` AS contato,
-     cliente.`RESPONSAVEL` AS responsavel,
-s.descricao as segmento
-FROM
-     `cliente` cliente INNER JOIN `telefone` telefone ON cliente.`CODCLIENTE` = telefone.`CODCLIENTE`
-inner join segmento s on cliente.codsegmento=s.codsegmento
-where s.codSegmento=$P{codSegmento}]]>
+		<![CDATA[select c.`CODCLIENTE` codCliente,c.`CNPJ_CPF` cpf,c.`DATA_ATUALIZACAO` dataAtualizacao,c.`NOME_FANTASIA` nomeFantasia,
+t.`TELEFONE` telefone,t.`DESCRICAO` contato,c.`RESPONSAVEL` responsavel from cliente c
+inner join segmento s on c.`CODSEGMENTO`=s.`CODSEGMENTO`
+inner join telefone t on c.`CODCLIENTE`=t.`CODCLIENTE`
+where s.`DESCRICAO` like $P{segmento}]]>
 	</queryString>
 	<field name="codCliente" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -32,7 +24,6 @@ where s.codSegmento=$P{codSegmento}]]>
 	<field name="responsavel" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="segmento" class="java.lang.String"/>
 	<background>
 		<band/>
 	</background>
@@ -55,11 +46,11 @@ where s.codSegmento=$P{codSegmento}]]>
 					<text><![CDATA[Segmento:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="100" y="69" width="100" height="20" forecolor="#FFFFFF" uuid="cf60b789-7fbb-496f-b61b-031450cee459"/>
+					<reportElement x="98" y="69" width="100" height="20" forecolor="#FFFFFF" uuid="00ab62c5-50d6-4417-a956-847d0000f0ea"/>
 					<textElement verticalAlignment="Middle">
-						<font size="12"/>
+						<font size="14" isStrikeThrough="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{segmento}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{segmento}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

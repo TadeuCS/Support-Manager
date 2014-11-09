@@ -14,20 +14,21 @@ import Util.Classes.GeraRelatorios;
 import java.awt.Event;
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Tadeu
  */
-public class Frm_RelCliente extends javax.swing.JFrame {
+public class Frm_RelClienteBySegmento extends javax.swing.JFrame {
 
     ClienteDAO clienteDAO;
     StatusPessoaDAO statusPessoaDAO;
     SegmentoDAO segmentoDAO;
     Data data;
 
-    public Frm_RelCliente() {
+    public Frm_RelClienteBySegmento() {
         initComponents();
         carregaSegmentos();
         setVisible(true);
@@ -168,20 +169,21 @@ public class Frm_RelCliente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_RelCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_RelClienteBySegmento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_RelCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_RelClienteBySegmento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_RelCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_RelClienteBySegmento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_RelCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_RelClienteBySegmento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new Frm_RelCliente().setVisible(true);
+//                new Frm_RelClienteBySegmento().setVisible(true);
             }
         });
     }
@@ -207,14 +209,14 @@ public class Frm_RelCliente extends javax.swing.JFrame {
     private void gerarRelatorioBySegmento(String segmento) {
         try {
             GeraRelatorios geraRelatorios = new GeraRelatorios();
-            if (segmento.equals("Selecione uma Opção") == true) {
-                geraRelatorios.imprimirRelatorioSQLNoRelatorio(null, "src/Relatorios/Rel_ClientesCadastrados.jasper");
-            } else {
-                Map parameters = new HashMap();
+            Map parameters = new HashMap();
+            try {
                 segmentoDAO = new SegmentoDAO();
-                parameters.put("codSegmento", segmentoDAO.buscaSegmento(segmento).getCodsegmento());
-                geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_ClienteBySegmento.jasper");
+                parameters.put("segmento", segmentoDAO.buscaSegmento(segmento).getDescricao());
+            } catch (NoResultException e) {
+                parameters.put("segmento", "%%");
             }
+            geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_ClientesBySegmento.jasper");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Segmento " + segmento + " não encontrado!");
             System.out.println(e);

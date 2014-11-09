@@ -43,12 +43,12 @@ where l.`DESCRICAO` like $P{link}]]>
 					</textElement>
 					<text><![CDATA[Link:]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true">
-					<reportElement x="63" y="62" width="138" height="20" forecolor="#FFFFFF" uuid="93f20b3e-c0de-41fe-87db-c43ee7d4ed1d"/>
-					<textElement>
+				<textField>
+					<reportElement x="63" y="62" width="100" height="20" forecolor="#FFFFFF" uuid="3c1eed22-8080-4d04-92b9-0c3a9c653efe"/>
+					<textElement verticalAlignment="Middle">
 						<font size="14"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{link}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -70,7 +70,7 @@ where l.`DESCRICAO` like $P{link}]]>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="63" y="0" width="354" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7299e74b-5d11-4ff2-a662-1e1111dd6cc4"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOME FANTASIA]]></text>

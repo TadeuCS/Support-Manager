@@ -33,7 +33,8 @@ import View.Consultas.Frm_ConAtendimento;
 import View.Consultas.Frm_ConCliente;
 import View.Consultas.Frm_ConContatos;
 import View.Relatorios.Frm_RelAtendimento;
-import View.Relatorios.Frm_RelCliente;
+import View.Relatorios.Frm_RelClienteByLink;
+import View.Relatorios.Frm_RelClienteBySegmento;
 import View.Relatorios.Frm_RelInformacao;
 import View.Relatorios.Frm_RelReciboCliente;
 import java.awt.Color;
@@ -161,7 +162,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             item_usuario.setVisible(permissoes.getConsUsuarios());
 
             item_relAtendimento.setVisible(permissoes.getRelAtendimento());
-            item_relCliente.setVisible(permissoes.getRelClientes());
+            item_relClienteByLink.setVisible(permissoes.getRelClientes());
 
             item_enviaEmail.setVisible(permissoes.getUtiEnviarEmail());
             item_emiteRecibo.setVisible(permissoes.getUtiEmitirRecibo());
@@ -298,10 +299,12 @@ public class Frm_Principal extends javax.swing.JFrame {
         menuI_contatos = new javax.swing.JMenuItem();
         menuI_Usuarios = new javax.swing.JMenuItem();
         Menu_Relatorios = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
+        menuI_Cliente = new javax.swing.JMenu();
+        item_relClienteByLink = new javax.swing.JMenuItem();
+        item_relClienteBySegmento = new javax.swing.JMenuItem();
+        menuI_Atendimento = new javax.swing.JMenu();
         item_relAtendimento = new javax.swing.JMenuItem();
         item_relAtendimento1 = new javax.swing.JMenuItem();
-        item_relCliente = new javax.swing.JMenuItem();
         item_relUsuario = new javax.swing.JMenuItem();
         item_relInformacao = new javax.swing.JMenuItem();
         Menu_Utilitários = new javax.swing.JMenu();
@@ -327,6 +330,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         lb_boasVindas.setText("Bem Vindo ");
 
         txt_usuarioLogado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_usuarioLogado.setToolTipText("Clique aqui para alterar a senha deste Usuário");
         txt_usuarioLogado.setEnabled(false);
         txt_usuarioLogado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -747,7 +751,27 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_Relatorios.setText("Relatorios");
 
-        jMenu1.setText("Atendimento");
+        menuI_Cliente.setText("Cliente");
+
+        item_relClienteByLink.setText("Por Link");
+        item_relClienteByLink.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relClienteByLinkActionPerformed(evt);
+            }
+        });
+        menuI_Cliente.add(item_relClienteByLink);
+
+        item_relClienteBySegmento.setText("Por Segmento");
+        item_relClienteBySegmento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relClienteBySegmentoActionPerformed(evt);
+            }
+        });
+        menuI_Cliente.add(item_relClienteBySegmento);
+
+        Menu_Relatorios.add(menuI_Cliente);
+
+        menuI_Atendimento.setText("Atendimento");
 
         item_relAtendimento.setText("Analitico");
         item_relAtendimento.addActionListener(new java.awt.event.ActionListener() {
@@ -755,7 +779,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_relAtendimentoActionPerformed(evt);
             }
         });
-        jMenu1.add(item_relAtendimento);
+        menuI_Atendimento.add(item_relAtendimento);
 
         item_relAtendimento1.setText("Sintetico");
         item_relAtendimento1.addActionListener(new java.awt.event.ActionListener() {
@@ -763,17 +787,9 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_relAtendimento1ActionPerformed(evt);
             }
         });
-        jMenu1.add(item_relAtendimento1);
+        menuI_Atendimento.add(item_relAtendimento1);
 
-        Menu_Relatorios.add(jMenu1);
-
-        item_relCliente.setText("Cliente");
-        item_relCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_relClienteActionPerformed(evt);
-            }
-        });
-        Menu_Relatorios.add(item_relCliente);
+        Menu_Relatorios.add(menuI_Atendimento);
 
         item_relUsuario.setText("Usuários");
         item_relUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -1109,9 +1125,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         gerarRelatorioUsuarios("Usuários", "src/Relatorios/Rel_Usuarios.jasper");
     }//GEN-LAST:event_item_relUsuarioActionPerformed
 
-    private void item_relClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteActionPerformed
-        Frm_RelCliente f = new Frm_RelCliente();
-    }//GEN-LAST:event_item_relClienteActionPerformed
+    private void item_relClienteByLinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteByLinkActionPerformed
+        Frm_RelClienteByLink f = new Frm_RelClienteByLink();
+    }//GEN-LAST:event_item_relClienteByLinkActionPerformed
 
     private void item_relInformacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relInformacaoActionPerformed
         Frm_RelInformacao f = new Frm_RelInformacao();
@@ -1120,6 +1136,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void item_AlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_AlterarSenhaActionPerformed
         pnl_alteraSenha.setVisible(true);
     }//GEN-LAST:event_item_AlterarSenhaActionPerformed
+
+    private void item_relClienteBySegmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteBySegmentoActionPerformed
+        Frm_RelClienteBySegmento f = new Frm_RelClienteBySegmento();
+    }//GEN-LAST:event_item_relClienteBySegmentoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1186,7 +1206,8 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem item_prioridade;
     private javax.swing.JMenuItem item_relAtendimento;
     private javax.swing.JMenuItem item_relAtendimento1;
-    private javax.swing.JMenuItem item_relCliente;
+    private javax.swing.JMenuItem item_relClienteByLink;
+    private javax.swing.JMenuItem item_relClienteBySegmento;
     private javax.swing.JMenuItem item_relInformacao;
     private javax.swing.JMenuItem item_relUsuario;
     private javax.swing.JMenuItem item_salario;
@@ -1203,14 +1224,15 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JLabel lb_abertos;
     private javax.swing.JLabel lb_boasVindas;
     private javax.swing.JLabel lb_qtdeAbertos;
     private javax.swing.JLabel lb_qtdeConcluidos;
     private javax.swing.JLabel lb_qtdeExecutando;
     private javax.swing.JLabel lb_qtdePendentes;
+    private javax.swing.JMenu menuI_Atendimento;
     private javax.swing.JMenu menuI_Atendimentos;
+    private javax.swing.JMenu menuI_Cliente;
     private javax.swing.JMenu menuI_Informacao;
     private javax.swing.JMenuItem menuI_Usuarios;
     private javax.swing.JMenuItem menuI_contatos;

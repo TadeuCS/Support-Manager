@@ -5,10 +5,7 @@
  */
 package View.Relatorios;
 
-import Controller.ClienteDAO;
 import Controller.LinksDAO;
-import Controller.SegmentoDAO;
-import Controller.StatusPessoaDAO;
 import Util.Classes.Data;
 import Util.Classes.GeraRelatorios;
 import java.util.HashMap;
@@ -180,7 +177,7 @@ public class Frm_RelClienteByLink extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_RelClienteByLink().setVisible(true);
+//                new Frm_RelClienteByLink().setVisible(true);
             }
         });
     }
@@ -209,11 +206,9 @@ public class Frm_RelClienteByLink extends javax.swing.JFrame {
             Map parameters = new HashMap();
             try {
                 linksDAO = new LinksDAO();
-                parameters.put("descricao", linksDAO.buscaLink(link).getDescricao());
-                System.out.println(link);
+                parameters.put("link", linksDAO.buscaLink(link).getDescricao());
             } catch (NoResultException e) {
-                parameters.put("descricao", "%%");
-                System.out.println("%%");
+                parameters.put("link", "%%");
             }
             geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_ClientesByLink.jasper");
         } catch (Exception e) {
