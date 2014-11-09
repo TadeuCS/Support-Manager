@@ -1612,6 +1612,12 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         jLabel8.setText("Aplicativo *:");
 
+        cbx_aplicativo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cbx_aplicativoFocusGained(evt);
+            }
+        });
+
         cbx_links.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cbx_linksFocusGained(evt);
@@ -2337,6 +2343,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btn_exclusaoActionPerformed
+
+    private void cbx_aplicativoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_aplicativoFocusGained
+        carregaAplicativos();
+    }//GEN-LAST:event_cbx_aplicativoFocusGained
 
     /**
      * @param args the command line arguments

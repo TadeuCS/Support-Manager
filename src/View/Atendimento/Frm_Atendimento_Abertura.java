@@ -236,7 +236,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
             atendimento.setCodprioridade(prioridadeDAO.buscaPrioridade(cbx_prioridade.getSelectedItem().toString()));
             atendimento.setSolicitante(txt_solicitante.getText());
             atendimento.setProblemaInformado(txt_problemaInformado.getText());
-            atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("EXECUCAO"));
+            atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("ABERTO"));
             atendimento.setPendencia('N');
             atendimento.setDataAbertura(capturaDataAtual());
         } catch (Exception e) {

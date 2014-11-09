@@ -1181,6 +1181,9 @@
                           <StringArray count="0"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cbx_aplicativoFocusGained"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cbx_links">
                       <Properties>

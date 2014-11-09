@@ -6,6 +6,7 @@
 package View.Consultas;
 
 import Controller.AtendimentoDAO;
+import Controller.StatusAtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Atendimento;
 import Model.StatusAtendimento;
@@ -30,13 +31,13 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
     AtendimentoDAO atendimentoDAO;
     Frm_Principal principal = new Frm_Principal();
     UsuarioDAO usuarioDAO;
+    StatusAtendimentoDAO statusAtendimentoDAO;
+    Atendimento atendimento;
 
     public Frm_ConAtendimento(StatusAtendimento status, String usuarioLogado) {
         initComponents();
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
-        btn_executar.setEnabled(false);
-        btn_apagar.setEnabled(false);
         actionByStatus(status);
         usuarioDAO = new UsuarioDAO();
         listaAtendimentoByStatusAndUsuario(status, usuarioLogado);
@@ -82,7 +83,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         try {
             limpaTabela();
             Frm_Principal f = new Frm_Principal();
-            List<Atendimento> lista=atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, f.setUsuarioDaLista());
+            List<Atendimento> lista = atendimentoDAO.listaByStatusAndUsuario(statusAtendimento, f.setUsuarioDaLista());
             for (int i = 0; i < lista.size(); i++) {
                 String[] linha = new String[]{
                     lista.get(i).getCodatendimento().toString(),
@@ -246,9 +247,6 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         jLabel1.setText("Filtro:");
 
         txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_filtroKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_filtroKeyReleased(evt);
             }
@@ -419,12 +417,12 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_executarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_executarActionPerformed
-
+        if (tb_atendimentos.getSelectedRowCount() != 1) {
+            JOptionPane.showMessageDialog(null, "Selecione apenas um atendimento de cada vêz!");
+        } else {
+            executar(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
+        }
     }//GEN-LAST:event_btn_executarActionPerformed
-
-    private void txt_filtroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyPressed
-
-    }//GEN-LAST:event_txt_filtroKeyPressed
 
     private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
         filtrar(evt);
@@ -477,4 +475,19 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
     private javax.swing.JTable tb_atendimentos;
     private javax.swing.JTextField txt_filtro;
     // End of variables declaration//GEN-END:variables
+
+    private void executar(int codigo) {
+        try {
+            atendimentoDAO = new AtendimentoDAO();
+            statusAtendimentoDAO = new StatusAtendimentoDAO();
+            atendimento = new Atendimento();
+            atendimento = atendimentoDAO.getByCodigo(codigo);
+            atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("EXECUCAO"));
+            atendimentoDAO.salvar(atendimento);
+            model.removeRow(tb_atendimentos.getSelectedRow());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Executar atendimento!");
+            System.out.println(e);
+        }
+    }
 }
