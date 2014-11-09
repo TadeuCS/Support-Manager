@@ -1,20 +1,26 @@
+------------------------------------------------------CORREÇÕES------------------------------------------------------
 pesquisar sobre acentuação em documento html.
 criar tread enquanto o email é enviado ao abrir e fechar att.
----------------------------------------------------------ATENDIMENTO--------------------------------------------------
-USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
-AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
-AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
+alterar tela de permissões para se adequar aos novos menus criados.
+relatório de clientes by status não funcionando.
+Criar atalhos na tela principal para as opções mais acessadas.
+possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
+colocar algo no fundo da tela principal.
 ----------------------------------------------------------------------------------------------------------------------
 
-----------------------------------------------------------OUTROS------------------------------------------------------
+---------------------------------------------------------ATENDIMENTO--------------------------------------------------
+USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
 Ao excluir atendimento, não apagar o mesmo, apenas coloca-lo com status cancelado, e capturar a data de cancelamento.
-TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
-IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
-DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
-possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
+AO ABRIR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
+AO FINALIZAR ATENDIMENTO DEVE SER ENVIADO UM EMAIL COM O RELATORIO DO ATENDIMENTO EM ANEXO.
 possibiliar o usuario startar um atendimento ao clicar em executar
-colocar algo no fundo da tela principal.
 ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data de atualização existente no cadastro do cliente.
 ao abrir um atendimento o mesmo ficará como abertos, ao clicar no botão executar o mesmo deve desaparecer da tela de abertos e cair em execução.
 configurar as telas de consulta para se o TIPO USUARIO for SUPORTE, desabilitar os botões voltar e selecionar.
+----------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------OUTROS------------------------------------------------------
+TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
+IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
+DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
 ----------------------------------------------------------------------------------------------------------------------
