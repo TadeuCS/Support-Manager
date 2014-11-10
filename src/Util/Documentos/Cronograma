@@ -1,7 +1,8 @@
 ------------------------------------------------------CORREÇÕES------------------------------------------------------
+corrigir problemas com caminhos dos relatorios ao gerar um executavel.
 alterar tela de permissões para se adequar aos novos menus criados.
 Criar atalhos na tela principal para as opções mais acessadas.
-possibilitar alterar grupos, telefone, links, parcelas, salarios,segmentos
+possibilitar telefone, links, parcelas, salarios,segmentos
 colocar algo no fundo da tela principal.
 configurar as telas de consulta para se o TIPO USUARIO for SUPORTE, desabilitar os botões voltar e selecionar.
 ----------------------------------------------------------------------------------------------------------------------
@@ -16,4 +17,5 @@ ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data d
 TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
 IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.
 DESENVOLVER E TREINAR APRESENTAÇÃO DO TCC.
+criar tela de ranking de atendimentos por usuario.
 ----------------------------------------------------------------------------------------------------------------------
