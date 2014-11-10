@@ -63,13 +63,17 @@ public class Frm_Principal extends javax.swing.JFrame {
     public Frm_Principal() {
         initComponents();
         tentativas = 0;
-        pnl_atalhos.setVisible(false);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pnl_alteraSenha.setVisible(false);
         setUsuarioLogado(Frm_Login.getUsuario().getUsuario());
         criaPopMenu();
         statusAtendimentoDAO = new StatusAtendimentoDAO();
         getTotalAtendimentosByStatus();
+    }
+    public void solucoesTemporarias(){
+        pnl_atalhos.setVisible(false);
+        Menu_Relatorios.setVisible(false);
+        item_tipoInformacao.setVisible(false);
     }
 
     public String setUsuarioDaLista() {

@@ -58,7 +58,6 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
     }
 
     public void filtrar(java.awt.event.KeyEvent evt) {
