@@ -47,20 +47,15 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }
 
     public void carregaGrupos() {
-        int i = 0;
-
         try {
-            cbx_grupo.removeAllItems();
             grupoDAO = new GrupoDAO();
-            while (i < grupoDAO.lista().size()) {
-                String linha = grupoDAO.lista().get(i).getDescricao();
-                cbx_grupo.addItem(linha);
-                i++;
+            cbx_grupo.removeAllItems();
+            for (int i = 0; i < grupoDAO.lista().size(); i++) {
+                cbx_grupo.addItem(grupoDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar Grupos");
         }
-
     }
 
     public void validaCampos(String grupo, String nome, String numTelefone) {
