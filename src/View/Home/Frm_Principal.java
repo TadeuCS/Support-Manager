@@ -70,6 +70,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         statusAtendimentoDAO = new StatusAtendimentoDAO();
         getTotalAtendimentosByStatus();
     }
+    public void solucoesTemporarias(){
+        pnl_atalhos.setVisible(false);
+        Menu_Relatorios.setVisible(false);
+        item_tipoInformacao.setVisible(false);
+    }
 
     public String setUsuarioDaLista() {
         String usuarioDaLista = null;

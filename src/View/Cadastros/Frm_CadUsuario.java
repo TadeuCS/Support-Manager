@@ -384,53 +384,53 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nome Inválido");
             txt_nome.requestFocus();
         } else {
-                if (ValidarCGCCPF.validaCPF(cpf)== false) {
-                    JOptionPane.showMessageDialog(null, "CPF Inválido");
-                    txt_cpf.requestFocus();
+            if (ValidarCGCCPF.validaCPF(cpf) == false) {
+                JOptionPane.showMessageDialog(null, "CPF Inválido");
+                txt_cpf.requestFocus();
+            } else {
+                if (email.equals("") == true) {
+                    JOptionPane.showMessageDialog(null, "Email Inválido");
+                    txt_email.requestFocus();
                 } else {
-                    if (email.equals("") == true) {
+                    if (ValidaEmail.validarEmail(email) == false) {
                         JOptionPane.showMessageDialog(null, "Email Inválido");
                         txt_email.requestFocus();
                     } else {
-                        if (ValidaEmail.validarEmail(email) == false) {
-                            JOptionPane.showMessageDialog(null, "Email Inválido");
-                            txt_email.requestFocus();
+                        if (usuario.equals("") == true) {
+                            JOptionPane.showMessageDialog(null, "Usuário Inválido");
+                            txt_usuario.requestFocus();
                         } else {
-                            if (usuario.equals("") == true) {
-                                JOptionPane.showMessageDialog(null, "Usuário Inválido");
-                                txt_usuario.requestFocus();
+                            if (senha.equals("") == true) {
+                                JOptionPane.showMessageDialog(null, "Senha Inválida");
+                                txt_senha.requestFocus();
                             } else {
-                                if (senha.equals("") == true) {
-                                    JOptionPane.showMessageDialog(null, "Senha Inválida");
-                                    txt_senha.requestFocus();
+                                if (confirmaSenha.equals("") == true) {
+                                    JOptionPane.showMessageDialog(null, "Confirma Senha Inválida");
+                                    txt_confirmaSenha.requestFocus();
                                 } else {
-                                    if (confirmaSenha.equals("") == true) {
-                                        JOptionPane.showMessageDialog(null, "Confirma Senha Inválida");
-                                        txt_confirmaSenha.requestFocus();
+                                    if (senha.equals(confirmaSenha) == false) {
+                                        JOptionPane.showMessageDialog(null, "Senhas Diferentes");
+                                        txt_confirmaSenha.setText(null);
+                                        txt_senha.setText(null);
+                                        txt_senha.requestFocus();
                                     } else {
-                                        if (senha.equals(confirmaSenha) == false) {
-                                            JOptionPane.showMessageDialog(null, "Senhas Diferentes");
-                                            txt_confirmaSenha.setText(null);
-                                            txt_senha.setText(null);
-                                            txt_senha.requestFocus();
+                                        if ((rbt_feminino.getSelectedObjects() == null) && (rbt_masculino.getSelectedObjects() == null)) {
+                                            JOptionPane.showMessageDialog(null, "Sexo Inválido");
+                                            rbt_masculino.requestFocus();
                                         } else {
-                                            if ((rbt_feminino.getSelectedObjects() == null) && (rbt_masculino.getSelectedObjects() == null)) {
-                                                JOptionPane.showMessageDialog(null, "Sexo Inválido");
-                                                rbt_masculino.requestFocus();
+                                            tipoUsuarioDAO = new TipoUsuarioDAO();
+                                            if (txt_operacao.getText().equals("INCLUSÃO") == true) {
+                                                salva();
                                             } else {
-                                                tipoUsuarioDAO = new TipoUsuarioDAO();
-                                                if (txt_operacao.getText().equals("INCLUSÃO") == true) {
-                                                    salva();
-                                                } else {
-                                                    if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
-                                                        alterar();
-                                                    }
+                                                if (txt_operacao.getText().equals("ALTERAÇÃO") == true) {
+                                                    alterar();
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                        }
                     }
                 }
             }
@@ -483,6 +483,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 }
             }
             if (existe == false) {
+                telefone = new Telefone();
+                telefone.setCodusuario(usuario);
+                telefone.setTelefone(numTelefone);
+                telefone.setDescricao(contato);
                 insereTelefoneNalista(telefone);
                 txt_telefone.setText(null);
                 txt_contato.setText(null);
@@ -493,7 +497,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 
     public void insereTelefoneNalista(Telefone telefone) {
         try {
-            telefone.setCodusuario(usuario);
             usuario.getTelefoneList().add(telefone);
             model = (DefaultTableModel) tb_telefones.getModel();
             String[] linha = new String[]{telefone.getDescricao(), telefone.getTelefone()};

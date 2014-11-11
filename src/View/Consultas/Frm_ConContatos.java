@@ -33,12 +33,10 @@ public class Frm_ConContatos extends javax.swing.JFrame {
     }
 
     public void listaContatos() {
-
         try {
             telefoneDAO = new TelefoneDAO();
-            int i = 0;
-            limpaTabela();
-            while (i < telefoneDAO.lista().size()) {
+            limpaTabela(model);
+            for (int i=0;i < telefoneDAO.lista().size();i++) {
                 String[] linha = new String[]{
                     telefoneDAO.lista().get(i).getCodtelefone().toString(),
                     telefoneDAO.lista().get(i).getDescricao(),
@@ -46,7 +44,6 @@ public class Frm_ConContatos extends javax.swing.JFrame {
                     telefoneDAO.lista().get(i).getCodgrupo().getDescricao()
                 };
                 model.addRow(linha);
-                i++;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -79,18 +76,14 @@ public class Frm_ConContatos extends javax.swing.JFrame {
         }
     }
 
-    public void limpaTabela() {
+    public void limpaTabela(DefaultTableModel model) {
         try {
-            DefaultTableModel tblRemove = (DefaultTableModel) tb_contatos.getModel();
-            while (tblRemove.getRowCount() > 0) {
-                for (int i = 1; i <= tblRemove.getRowCount(); i++) {
-                    tblRemove.removeRow(0);
-                }
+            while (0 < model.getRowCount()) {
+                model.removeRow(0);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
     }
 
     @SuppressWarnings("unchecked")
