@@ -50,6 +50,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         abas.setEnabled(false);
+        grupoSexo.add(rbt_masculino);
+        grupoSexo.add(rbt_feminino);
         btn_bloqueado.setToolTipText("Clique aqui para mudar para SIM");
         txt_codigo.setDocument(new IntegerDocument(3));
         txt_nome.setDocument(new FixedLengthDocument(100));
@@ -163,16 +165,16 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         txt_cpf.requestFocus();
     }
 
-    public void trocaSexo(int selecionado) {
-        if (selecionado == 1) {
-            rbt_feminino.setSelected(false);
-            rbt_masculino.setSelected(true);
-        }
-        if (selecionado == 2) {
-            rbt_feminino.setSelected(true);
-            rbt_masculino.setSelected(false);
-        }
-    }
+//    public void trocaSexo(int selecionado) {
+//        if (selecionado == 1) {
+//            rbt_feminino.setSelected(false);
+//            rbt_masculino.setSelected(true);
+//        }
+//        if (selecionado == 2) {
+//            rbt_feminino.setSelected(true);
+//            rbt_masculino.setSelected(false);
+//        }
+//    }
     //Fim das validações da interface
 
     public void getUsuario(Usuario usuario) {
@@ -617,6 +619,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grupoSexo = new javax.swing.ButtonGroup();
         pnl_fundo = new javax.swing.JPanel();
         pnl_botoes = new javax.swing.JPanel();
         btn_alteracao = new javax.swing.JButton();
@@ -1139,7 +1142,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbt_femininoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_femininoActionPerformed
-        trocaSexo(2);
     }//GEN-LAST:event_rbt_femininoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
@@ -1152,7 +1154,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_bloqueadoActionPerformed
 
     private void rbt_masculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbt_masculinoActionPerformed
-        trocaSexo(1);
     }//GEN-LAST:event_rbt_masculinoActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
@@ -1313,6 +1314,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
     private javax.swing.JButton btn_salvar;
     private javax.swing.JComboBox cbx_grupo;
     private javax.swing.JComboBox cbx_tipoUsuario;
+    private javax.swing.ButtonGroup grupoSexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

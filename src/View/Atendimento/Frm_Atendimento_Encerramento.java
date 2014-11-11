@@ -187,7 +187,9 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
             atendimentoDAO.salvar(atendimento);
             JOptionPane.showMessageDialog(null, "Sucesso ao " + btn_salvar.getText() + " Atendimento!");
             limpaCampos();
-            enviarAtendimentoByEmail();
+            if(btn_salvar.getText().equals("Finalizar")==true){
+                enviarAtendimentoByEmail();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao " + btn_salvar.getText() + " Atendimento!");
         }

@@ -28,7 +28,7 @@ import Util.Classes.FixedLengthDocument;
 import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
-import View.Consultas.Frm_ConCliente;
+import View.Consultas.Frm_ConClientes;
 import java.awt.Event;
 import java.util.Date;
 import javax.persistence.NoResultException;
@@ -979,6 +979,12 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         jLabel3.setText("CPF/CNPJ *:");
 
         txt_cpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        txt_inscEstadual.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_inscEstadualFocusGained(evt);
+            }
+        });
 
         jLabel4.setText("Insc Estadual :");
 
@@ -2312,7 +2318,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salvar1ActionPerformed
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
-        Frm_ConCliente f = new Frm_ConCliente();
+        Frm_ConClientes f = new Frm_ConClientes();
         dispose();
     }//GEN-LAST:event_btn_consultaActionPerformed
 
@@ -2347,6 +2353,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     private void cbx_aplicativoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_aplicativoFocusGained
         carregaAplicativos();
     }//GEN-LAST:event_cbx_aplicativoFocusGained
+
+    private void txt_inscEstadualFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_inscEstadualFocusGained
+        if(cbx_tipo.getSelectedItem().equals("FISICA")==true){
+            txt_inscEstadual.setEnabled(false);
+            txt_razaoSocial.requestFocus();
+        }
+    }//GEN-LAST:event_txt_inscEstadualFocusGained
 
     /**
      * @param args the command line arguments

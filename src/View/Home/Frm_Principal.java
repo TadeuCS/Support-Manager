@@ -30,8 +30,9 @@ import View.Cadastros.Frm_CadUsuario;
 import View.Consultas.Frm_ConUsuarios;
 import View.Cadastros.Frm_CadTipoUsuario;
 import View.Consultas.Frm_ConAtendimento;
-import View.Consultas.Frm_ConCliente;
+import View.Consultas.Frm_ConClientes;
 import View.Consultas.Frm_ConContatos;
+import View.Consultas.Frm_ConRankUsuarios;
 import View.Relatorios.Frm_RelAtendimento;
 import View.Relatorios.Frm_RelClienteByLink;
 import View.Relatorios.Frm_RelClienteBySegmento;
@@ -70,7 +71,8 @@ public class Frm_Principal extends javax.swing.JFrame {
         statusAtendimentoDAO = new StatusAtendimentoDAO();
         getTotalAtendimentosByStatus();
     }
-    public void solucoesTemporarias(){
+
+    public void solucoesTemporarias() {
         pnl_atalhos.setVisible(false);
         Menu_Relatorios.setVisible(false);
         item_tipoInformacao.setVisible(false);
@@ -582,6 +584,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         atalhoCadastroCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atalhoCadastroCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cadCliente.png"))); // NOI18N
         atalhoCadastroCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        atalhoCadastroCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                atalhoCadastroClienteMousePressed(evt);
+            }
+        });
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Cadastro de Cliente");
@@ -612,6 +619,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         atalhoAbrirAtendimento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atalhoAbrirAtendimento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/abrirAtendimento.png"))); // NOI18N
         atalhoAbrirAtendimento.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        atalhoAbrirAtendimento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                atalhoAbrirAtendimentoMousePressed(evt);
+            }
+        });
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Abrir Atendimento");
@@ -642,6 +654,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         atalhoConsultarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atalhoConsultarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/consClientes.png"))); // NOI18N
         atalhoConsultarClientes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        atalhoConsultarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                atalhoConsultarClientesMousePressed(evt);
+            }
+        });
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Consultar Clientes");
@@ -672,6 +689,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         atalhoConsultarContatos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atalhoConsultarContatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/consContatos.png"))); // NOI18N
         atalhoConsultarContatos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        atalhoConsultarContatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                atalhoConsultarContatosMousePressed(evt);
+            }
+        });
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Consultar Contatos");
@@ -702,6 +724,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         atalhoRankUsuários.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atalhoRankUsuários.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/rankUsuarios.png"))); // NOI18N
         atalhoRankUsuários.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        atalhoRankUsuários.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                atalhoRankUsuáriosMousePressed(evt);
+            }
+        });
 
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Rank de Usuários");
@@ -732,6 +759,11 @@ public class Frm_Principal extends javax.swing.JFrame {
         atalhoLancarInformacao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         atalhoLancarInformacao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/lancarInformacao.png"))); // NOI18N
         atalhoLancarInformacao.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        atalhoLancarInformacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                atalhoLancarInformacaoMousePressed(evt);
+            }
+        });
 
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Lançar Informação");
@@ -1231,7 +1263,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_salarioActionPerformed
 
     private void item_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ClienteActionPerformed
-        Frm_ConCliente f = new Frm_ConCliente();
+        Frm_ConClientes f = new Frm_ConClientes();
     }//GEN-LAST:event_item_ClienteActionPerformed
 
     private void item_relAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoActionPerformed
@@ -1380,6 +1412,30 @@ public class Frm_Principal extends javax.swing.JFrame {
     private void item_relClienteBySegmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relClienteBySegmentoActionPerformed
         Frm_RelClienteBySegmento f = new Frm_RelClienteBySegmento();
     }//GEN-LAST:event_item_relClienteBySegmentoActionPerformed
+
+    private void atalhoCadastroClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoCadastroClienteMousePressed
+        Frm_CadCliente f = new Frm_CadCliente();
+    }//GEN-LAST:event_atalhoCadastroClienteMousePressed
+
+    private void atalhoAbrirAtendimentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoAbrirAtendimentoMousePressed
+        Frm_Atendimento_Abertura f = new Frm_Atendimento_Abertura();
+    }//GEN-LAST:event_atalhoAbrirAtendimentoMousePressed
+
+    private void atalhoConsultarClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoConsultarClientesMousePressed
+        Frm_ConClientes f = new Frm_ConClientes();
+    }//GEN-LAST:event_atalhoConsultarClientesMousePressed
+
+    private void atalhoConsultarContatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoConsultarContatosMousePressed
+        Frm_ConContatos f = new Frm_ConContatos();
+    }//GEN-LAST:event_atalhoConsultarContatosMousePressed
+
+    private void atalhoRankUsuáriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoRankUsuáriosMousePressed
+        Frm_ConRankUsuarios f = new Frm_ConRankUsuarios();
+    }//GEN-LAST:event_atalhoRankUsuáriosMousePressed
+
+    private void atalhoLancarInformacaoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoLancarInformacaoMousePressed
+        Frm_CadInformacao f = new Frm_CadInformacao();
+    }//GEN-LAST:event_atalhoLancarInformacaoMousePressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

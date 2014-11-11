@@ -37,6 +37,20 @@ public class AtendimentoDAO extends Manager {
         return query.getResultList();
     }
 
+    public List listRankAtendimentosByUsuarios() {
+        em.getTransaction().begin();
+        query = em.createNativeQuery("select u.`USUARIO`, \n"
+                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=1 and a.`CODUSUARIO`=u.`codusuario`) abertos,\n"
+                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=2 and a.`CODUSUARIO`=u.`codusuario`) executando,\n"
+                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=3 and a.`CODUSUARIO`=u.`codusuario`) pendentes\n"
+                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=4 and a.`CODUSUARIO`=u.`codusuario`) concluidos,\n"
+                + "from atendimento a\n"
+                + "inner join usuario u on a.`CODUSUARIO`=u.`CODUSUARIO`\n"
+                + "group by u.`USUARIO`");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
+
     public Atendimento getByCodigo(int codigo) {
         em.getTransaction().begin();
         query = em.createNamedQuery("Atendimento.findByCodatendimento").setParameter("codatendimento", codigo);

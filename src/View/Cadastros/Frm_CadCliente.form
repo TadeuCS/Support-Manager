@@ -280,6 +280,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_inscEstadual">
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_inscEstadualFocusGained"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>

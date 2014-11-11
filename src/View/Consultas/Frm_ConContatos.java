@@ -35,8 +35,9 @@ public class Frm_ConContatos extends javax.swing.JFrame {
     public void listaContatos() {
         try {
             telefoneDAO = new TelefoneDAO();
+            model = (DefaultTableModel) tb_contatos.getModel();
             limpaTabela(model);
-            for (int i=0;i < telefoneDAO.lista().size();i++) {
+            for (int i = 0; i < telefoneDAO.lista().size(); i++) {
                 String[] linha = new String[]{
                     telefoneDAO.lista().get(i).getCodtelefone().toString(),
                     telefoneDAO.lista().get(i).getDescricao(),
@@ -280,7 +281,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
         try {
-            telefoneDAO=new TelefoneDAO();
+            telefoneDAO = new TelefoneDAO();
             Frm_CadTelefone f = new Frm_CadTelefone(telefoneDAO.busca(tb_contatos.getValueAt(tb_contatos.getSelectedRow(), 2).toString()));
             dispose();
         } catch (Exception e) {
