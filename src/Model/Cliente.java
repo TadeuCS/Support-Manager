@@ -77,7 +77,7 @@ public class Cliente implements Serializable {
     @Column(name = "DATA_ATUALIZACAO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAtualizacao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
+    @OneToMany(mappedBy = "codcliente")
     private List<Atendimento> atendimentoList;
     @JoinColumn(name = "CODTIPOPESSOA", referencedColumnName = "CODTIPOPESSOA")
     @ManyToOne(optional = false)

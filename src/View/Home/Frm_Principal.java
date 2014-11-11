@@ -44,6 +44,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.NoResultException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -57,8 +58,8 @@ public class Frm_Principal extends javax.swing.JFrame {
     PermissoesDAO permissoesDAO;
     AtendimentoDAO atendimentoDAO;
     private StatusAtendimentoDAO statusAtendimentoDAO;
-    public static PopMenu an = null;
-    public static Frm_Principal j;
+    public static PopMenu an;
+    public static Frm_Principal j=null;
     int tentativas;
 
     public Frm_Principal() {
@@ -189,11 +190,8 @@ public class Frm_Principal extends javax.swing.JFrame {
             addWindowListener(
                     new WindowAdapter() {
                         public void windowIconified(WindowEvent evnt) {
-                            //Deixa a janela atual (Janelinha) invisevel!
                             setVisible(false);
-                            //Instancia a classe responsavel pelo �cone na �rea de notifica��o.
                             an = new PopMenu();
-                            dispose();
                         }
                     }
             );
@@ -213,20 +211,24 @@ public class Frm_Principal extends javax.swing.JFrame {
             txt_usuarioLogado.setText("ADMINISTRADOR");
         } else {
             trataPermissoes();
+            setTipoUsuarioLogado(usuarioLogado);
             if (usuarioDAO.consultaByUsuario(usuarioLogado).getSexo().equals('F') == true) {
                 lb_boasVindas.setText("Bem Vinda");
             }
-//            try {
-//                usuarioDAO = new UsuarioDAO();
-//                if (usuarioDAO.consultaByUsuario(usuarioLogado).getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
-//                }
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Erro ao Buscar Tipo de usuario");
-//            }
         }
-
     }
-
+    
+    public void setTipoUsuarioLogado(String nomeUsuario){
+        try {
+            usuarioDAO=new UsuarioDAO();
+            usuario=new Usuario();
+            usuario=usuarioDAO.consultaByUsuario(nomeUsuario);
+            txt_Tipo.setText(usuario.getCodtipousuario().getDescricao());
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao localizar tipo do usuário: "+nomeUsuario);
+        }
+    }
+    
     public void setFocusONLabel(JLabel label) {
         label.setForeground(Color.blue);
     }
@@ -269,6 +271,8 @@ public class Frm_Principal extends javax.swing.JFrame {
         lb_qtdeExecutando = new javax.swing.JLabel();
         lb_abertos = new javax.swing.JLabel();
         lb_qtdeAbertos = new javax.swing.JLabel();
+        txt_Tipo = new javax.swing.JTextField();
+        lb_boasVindas1 = new javax.swing.JLabel();
         pnl_alteraSenha = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txt_antigaSenha = new javax.swing.JPasswordField();
@@ -441,11 +445,27 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         });
 
+        txt_Tipo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_Tipo.setToolTipText("Clique aqui para alterar a senha deste Usuário");
+        txt_Tipo.setEnabled(false);
+        txt_Tipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txt_TipoMousePressed(evt);
+            }
+        });
+        txt_Tipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_TipoActionPerformed(evt);
+            }
+        });
+
+        lb_boasVindas1.setText("Tipo:");
+
         javax.swing.GroupLayout pnl_RodapeLayout = new javax.swing.GroupLayout(pnl_Rodape);
         pnl_Rodape.setLayout(pnl_RodapeLayout);
         pnl_RodapeLayout.setHorizontalGroup(
             pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_RodapeLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_RodapeLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lb_boasVindas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -466,28 +486,35 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lb_boasVindas1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         pnl_RodapeLayout.setVerticalGroup(
             pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_RodapeLayout.createSequentialGroup()
+            .addGroup(pnl_RodapeLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_qtdeConcluidos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_boasVindas1)
+                        .addComponent(txt_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_qtdePendentes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_boasVindas)
+                        .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lb_abertos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lb_qtdeAbertos, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnl_RodapeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lb_boasVindas)
-                        .addComponent(txt_usuarioLogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lb_qtdeExecutando, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(5, 5, 5))
         );
 
@@ -808,7 +835,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_atalhosLayout.setVerticalGroup(
             pnl_atalhosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1160,7 +1187,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(pnl_atalhos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(pnl_alteraSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnl_Rodape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1437,6 +1464,14 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadInformacao f = new Frm_CadInformacao();
     }//GEN-LAST:event_atalhoLancarInformacaoMousePressed
 
+    private void txt_TipoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_TipoMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_TipoMousePressed
+
+    private void txt_TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_TipoActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1540,6 +1575,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel lb_abertos;
     private javax.swing.JLabel lb_boasVindas;
+    private javax.swing.JLabel lb_boasVindas1;
     private javax.swing.JLabel lb_qtdeAbertos;
     private javax.swing.JLabel lb_qtdeConcluidos;
     private javax.swing.JLabel lb_qtdeExecutando;
@@ -1553,6 +1589,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_Rodape;
     private javax.swing.JPanel pnl_alteraSenha;
     private javax.swing.JPanel pnl_atalhos;
+    private javax.swing.JTextField txt_Tipo;
     private javax.swing.JPasswordField txt_antigaSenha;
     private javax.swing.JPasswordField txt_confirmaSenha;
     private javax.swing.JPasswordField txt_novaSenha;

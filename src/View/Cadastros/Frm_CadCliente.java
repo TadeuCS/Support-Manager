@@ -649,6 +649,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "CEP não Encontrado, Preencha os campos obrigatórios!");
+            txt_rua.requestFocus();
         }
     }
 

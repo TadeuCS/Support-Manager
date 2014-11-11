@@ -310,6 +310,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 Empresa empresa = new Empresa();
                 List<String> destinatario = new ArrayList<String>();
                 lb_status.setText("Enviando Email...");
+                btn_salvar.setEnabled(false);
                 try {
                     destinatario.add(atendimento.getCodcliente().getEmail());
                     empresa = empresaDAO.findByNomeFantasia("Olivet Sistemas");
@@ -332,13 +333,14 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                                     empresa.getTelefoneList().get(0).getTelefone()),
                             null);
                     lb_status.setText("Email enviado com sucesso!");
-                    limpaCampos();
                     Thread.sleep(1000);
                     lb_status.setText(null);
                 } catch (Exception e) {
                     lb_status.setText("Erro ao enviar Email.");
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, "Emitente não cadastrado!");
                     lb_status.setText(null);
+                }finally{
+                    btn_salvar.setEnabled(true);
                 }
             }
         });

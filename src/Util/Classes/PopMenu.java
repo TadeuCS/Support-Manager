@@ -21,10 +21,11 @@ public class PopMenu {
     static TrayIcon trayIcon = null;
 
     //Referencia � instancia "J" da classe Janelinha, para acesso da bandeja.
-    static Frm_Principal pai =Frm_Principal.j;
+    static Frm_Principal pai;
 
     public PopMenu() {
         super();
+        pai=new Frm_Principal();
         criaAreaNotificacao();
         trayIcon.displayMessage("Support Manager", "Dê um Clique duplo para abrir!", TrayIcon.MessageType.INFO);
     }
@@ -61,8 +62,8 @@ public class PopMenu {
         trayIcon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pai=new Frm_Principal();
                 pai.setVisible(true);
+                pai.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 //Esta linha deixa a janela sobre as outras, caso ela apare�a minimizada.
 
                 try {
@@ -72,7 +73,7 @@ public class PopMenu {
                     trayIcon = null;
                     
                     //Limpando a referencia ao Systemtray da classe Janelinha
-                    finalize();
+                    pai.an.finalize();
                 } catch (Throwable e1) {
                     e1.printStackTrace();
                 }
@@ -91,16 +92,15 @@ public class PopMenu {
         menuAbrir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //Simplesmente deixa-se a janela vis�vel novamente.
-                pai=new Frm_Principal();
                 pai.setVisible(true);
                 //Esta linha deixa a janela sobre as outras, caso ela apare�a minimizada.
-
+                pai.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 try {
                     //Agora basta remover (ou esconder) o �cone da �rea de Notifica��o
                     tray.remove(trayIcon);
                     trayIcon=null;
                     //Limpando a refer�ncia ao Systemtray da classe Janelinha
-                    finalize();
+                    pai.an.finalize();
                 } catch (Throwable e1) {
                     e1.printStackTrace();
                 }
