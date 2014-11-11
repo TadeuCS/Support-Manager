@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
  */
 public class Frm_CadTelefone extends javax.swing.JFrame {
 
-    private Grupo grupo;
-    private Telefone telefone;
+    Grupo grupo;
+    Telefone telefone;
     TelefoneDAO telefoneDAO;
     GrupoDAO grupoDAO;
 
@@ -28,8 +28,10 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         setVisible(true);
         carregaGrupos();
         this.telefone = telefone;
-        if (telefone.getCodtelefone() != null) {
+        if (this.telefone.getCodtelefone() != null) {
             getTelefone(telefone);
+        } else {
+            this.telefone = new Telefone();
         }
     }
 
@@ -37,13 +39,18 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         cbx_grupo.setSelectedItem(telefone.getCodgrupo().getDescricao());
         txt_contato.setText(telefone.getDescricao());
         txt_telefone.setText(telefone.getTelefone());
+        txt_contato.requestFocus();
     }
 
     public void setTelefone(Telefone telefone) {
+        try{
         grupoDAO = new GrupoDAO();
         telefone.setCodgrupo(grupoDAO.consulta(cbx_grupo.getSelectedItem().toString()));
         telefone.setDescricao(txt_contato.getText());
         telefone.setTelefone(txt_telefone.getText());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao Capturar informações do Contato!");
+        }
     }
 
     public void carregaGrupos() {
@@ -73,42 +80,52 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
     }
 
     public void salvar(String grupo, String nome, String numTelefone) {
-        try {
-            telefoneDAO = new TelefoneDAO();
-            telefoneDAO.busca(numTelefone);
-            JOptionPane.showMessageDialog(null, "Telefone já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
-            txt_telefone.requestFocus();
-        } catch (NoResultException ex) {
+        telefoneDAO = new TelefoneDAO();
+        setTelefone(telefone);
+        if (this.telefone.getCodtelefone() == null) {
             try {
-                telefoneDAO = new TelefoneDAO();
-                telefoneDAO.salvar(this.telefone);
-                JOptionPane.showMessageDialog(null, "Telefone salvo com sucesso!");
-                txt_contato.setText(null);
-                txt_telefone.setText(null);
-                txt_contato.requestFocus();
+                telefoneDAO.busca(numTelefone);
+                JOptionPane.showMessageDialog(null, "Telefone já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                txt_telefone.requestFocus();
+            } catch (NoResultException ex) {
+                try {
+                    telefoneDAO.salvar(telefone);
+                    JOptionPane.showMessageDialog(null, "Telefone salvo com sucesso!");
+                    limpaCampos();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao Salvar Telefone\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                    txt_contato.requestFocus();
+                }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao Salvar Telefone\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone " + numTelefone);
+                limpaCampos();
+            }
+        } else {
+            try {
+                telefoneDAO.salvar(telefone);
+                JOptionPane.showMessageDialog(null, "Contato Alterado com sucesso!");
+                limpaCampos();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Telefone já Cadastrado\n", "Alerta", JOptionPane.ERROR_MESSAGE);
                 txt_contato.requestFocus();
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Buscar Telefone " + numTelefone);
-            System.out.println(e);
-            txt_contato.setText(null);
-            txt_telefone.setText(null);
-            txt_contato.requestFocus();
         }
     }
 
     public void limpaCampos() {
         txt_contato.setText(null);
         txt_telefone.setText(null);
+        txt_contato.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        entityManager1 = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("Support_ManagerPU").createEntityManager();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         pnl_fundo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cbx_grupo = new javax.swing.JComboBox();
@@ -118,12 +135,54 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txt_telefone = new javax.swing.JFormattedTextField();
         btn_salvar = new javax.swing.JButton();
-        btn_fechar = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
         btn_cadGrupo = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Contato", "Telefone"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(80);
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(80);
+        }
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Contatos");
         setResizable(false);
+
+        pnl_fundo.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do Contato"));
 
         jLabel1.setText("Grupo:");
 
@@ -158,7 +217,7 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_dadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_contato)
-                    .addComponent(txt_telefone, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE))
+                    .addComponent(txt_telefone))
                 .addContainerGap())
         );
         pnl_dadosLayout.setVerticalGroup(
@@ -183,11 +242,11 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
             }
         });
 
-        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
-        btn_fechar.setText("Fechar");
-        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cancelar.png"))); // NOI18N
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_fecharActionPerformed(evt);
+                btn_cancelarActionPerformed(evt);
             }
         });
 
@@ -205,18 +264,20 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
             .addGroup(pnl_fundoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnl_fundoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnl_dados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnl_fundoLayout.createSequentialGroup()
-                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnl_fundoLayout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cbx_grupo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(pnl_fundoLayout.createSequentialGroup()
+                            .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         pnl_fundoLayout.setVerticalGroup(
             pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,7 +292,24 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
-                    .addComponent(btn_fechar))
+                    .addComponent(btn_cancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnl_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnl_fundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -239,11 +317,11 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_fundo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnl_fundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -254,9 +332,9 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
         validaCampos(cbx_grupo.getSelectedItem().toString(), txt_contato.getText().toUpperCase(), txt_telefone.getText());
     }//GEN-LAST:event_btn_salvarActionPerformed
 
-    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         dispose();
-    }//GEN-LAST:event_btn_fecharActionPerformed
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
         Frm_CadGrupo f = new Frm_CadGrupo();
@@ -305,13 +383,16 @@ public class Frm_CadTelefone extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cadGrupo;
-    private javax.swing.JButton btn_fechar;
+    private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JComboBox cbx_grupo;
-    private javax.persistence.EntityManager entityManager1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnl_dados;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JTextField txt_contato;

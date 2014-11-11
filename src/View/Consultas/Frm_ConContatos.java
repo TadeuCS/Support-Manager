@@ -5,9 +5,8 @@
  */
 package View.Consultas;
 
+import Controller.GrupoDAO;
 import Controller.TelefoneDAO;
-import Controller.UsuarioDAO;
-import Model.Telefone;
 import View.Cadastros.Frm_CadTelefone;
 import View.Cadastros.Frm_CadUsuario;
 import java.awt.event.KeyEvent;
@@ -20,26 +19,24 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Tadeu
  */
-public class Frm_ConContatos extends javax.swing.JFrame {
+public final class Frm_ConContatos extends javax.swing.JFrame {
 
     DefaultTableModel model;
     TelefoneDAO telefoneDAO;
 
     public Frm_ConContatos() {
         initComponents();
-        model = (DefaultTableModel) tb_contatos.getModel();
         setVisible(true);
+        model = (DefaultTableModel) tb_contatos.getModel();
         listaContatos();
     }
 
     public void listaContatos() {
         try {
-            telefoneDAO = new TelefoneDAO();
-            model = (DefaultTableModel) tb_contatos.getModel();
             limpaTabela(model);
+            telefoneDAO = new TelefoneDAO();
             for (int i = 0; i < telefoneDAO.lista().size(); i++) {
-                String[] linha = new String[]{
-                    telefoneDAO.lista().get(i).getCodtelefone().toString(),
+                String[] linha = new String[]{telefoneDAO.lista().get(i).getCodtelefone().toString(),
                     telefoneDAO.lista().get(i).getDescricao(),
                     telefoneDAO.lista().get(i).getTelefone(),
                     telefoneDAO.lista().get(i).getCodgrupo().getDescricao()
@@ -83,7 +80,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
                 model.removeRow(0);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao Limpar tabela de Contatos");
         }
     }
 
@@ -285,6 +282,7 @@ public class Frm_ConContatos extends javax.swing.JFrame {
             Frm_CadTelefone f = new Frm_CadTelefone(telefoneDAO.busca(tb_contatos.getValueAt(tb_contatos.getSelectedRow(), 2).toString()));
             dispose();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
 
     }//GEN-LAST:event_btn_voltarActionPerformed
