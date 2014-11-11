@@ -16,6 +16,7 @@ import View.Atendimento.Frm_Atendimento_Detalhe;
 import View.Atendimento.Frm_Atendimento_Encerramento;
 import View.Home.Frm_Principal;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -39,21 +40,38 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         model = (DefaultTableModel) tb_atendimentos.getModel();
         setVisible(true);
         actionByStatus(status);
-        usuarioDAO = new UsuarioDAO();
+        caseSuporte(usuarioLogado);
         listaAtendimentoByStatusAndUsuario(status, usuarioLogado);
+    }
+
+    private void caseSuporte(String nome) {
+        try {
+            if (nome.equals("ADMINISTRADOR") == false) {
+                usuarioDAO = new UsuarioDAO();
+                Usuario user = new Usuario();
+                user = usuarioDAO.consultaByUsuario(nome);
+                if (user.getCodtipousuario().getDescricao().equals("SUPORTE") == true) {
+                    btn_apagar.setEnabled(false);
+                }
+            }
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Usuário não existe!");
+        }
     }
 
     private void actionByStatus(StatusAtendimento status) {
         if (status.getDescricao().equals("ABERTO") == true) {
             setTitle("Consulta de Atendimentos Abertos");
-            btn_alterar.setEnabled(true);
+            btn_alterar.setEnabled(false);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(true);
             btn_sair.setEnabled(true);
             btn_finalizar.setEnabled(false);
+            btn_executar.setEnabled(true);
         }
         if (status.getDescricao().equals("CONCLUIDO") == true) {
             setTitle("Consulta de Atendimentos Concluídos");
+            btn_executar.setEnabled(false);
             btn_alterar.setEnabled(false);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(false);
@@ -62,6 +80,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         }
         if (status.getDescricao().equals("EXECUCAO") == true) {
             setTitle("Consulta de Atendimentos em Execução");
+            btn_executar.setEnabled(false);
             btn_alterar.setEnabled(true);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(true);
@@ -70,6 +89,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         }
         if (status.getDescricao().equals("PENDENTE") == true) {
             setTitle("Consulta de Atendimentos Pendentes");
+            btn_executar.setEnabled(false);
             btn_alterar.setEnabled(true);
             btn_consultar.setEnabled(true);
             btn_apagar.setEnabled(false);

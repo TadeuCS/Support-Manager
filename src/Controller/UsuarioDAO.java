@@ -6,6 +6,8 @@
 package Controller;
 
 import Model.StatusPessoa;
+import Model.TipoPessoa;
+import Model.TipoUsuario;
 import Model.Usuario;
 import Util.Classes.Manager;
 import java.util.List;
@@ -73,9 +75,9 @@ public class UsuarioDAO extends Manager {
         return query.getResultList();
     }
 
-    public List<Usuario> listaUsuariosDesbloqueados(StatusPessoa status) {
+    public List<Usuario> listaUsuariosDesbloqueados(StatusPessoa status,TipoUsuario tipo) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT u FROM Usuario u WHERE u.codstatuspessoa = :status").setParameter("status", status);
+        query = em.createQuery("SELECT u FROM Usuario u WHERE u.codstatuspessoa = :status and u.codtipousuario = :tipo").setParameter("status", status).setParameter("tipo", tipo);
         em.getTransaction().commit();
         return query.getResultList();
     }

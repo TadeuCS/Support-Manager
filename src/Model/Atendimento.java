@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Atendimento.findByDataAbertura", query = "SELECT a FROM Atendimento a WHERE a.dataAbertura = :dataAbertura"),
     @NamedQuery(name = "Atendimento.findByDataAgendamento", query = "SELECT a FROM Atendimento a WHERE a.dataAgendamento = :dataAgendamento"),
     @NamedQuery(name = "Atendimento.findByDataFechamento", query = "SELECT a FROM Atendimento a WHERE a.dataFechamento = :dataFechamento"),
-    @NamedQuery(name = "Atendimento.findByDataCancelamento", query = "SELECT a FROM Atendimento a WHERE a.dataCancelamento = :dataCancelamento"),
     @NamedQuery(name = "Atendimento.findByDataInicio", query = "SELECT a FROM Atendimento a WHERE a.dataInicio = :dataInicio"),
     @NamedQuery(name = "Atendimento.findByDataFim", query = "SELECT a FROM Atendimento a WHERE a.dataFim = :dataFim"),
     @NamedQuery(name = "Atendimento.findBySolicitante", query = "SELECT a FROM Atendimento a WHERE a.solicitante = :solicitante"),
@@ -65,9 +64,6 @@ public class Atendimento implements Serializable {
     @Column(name = "DATA_FECHAMENTO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFechamento;
-    @Column(name = "DATA_CANCELAMENTO")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataCancelamento;
     @Column(name = "DATA_INICIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInicio;
@@ -151,14 +147,6 @@ public class Atendimento implements Serializable {
 
     public void setDataFechamento(Date dataFechamento) {
         this.dataFechamento = dataFechamento;
-    }
-
-    public Date getDataCancelamento() {
-        return dataCancelamento;
-    }
-
-    public void setDataCancelamento(Date dataCancelamento) {
-        this.dataCancelamento = dataCancelamento;
     }
 
     public Date getDataInicio() {

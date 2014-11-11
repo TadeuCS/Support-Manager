@@ -6,12 +6,6 @@ colocar algo no fundo da tela principal.
 configurar as telas de consulta para se o TIPO USUARIO for SUPORTE, desabilitar os botões voltar e selecionar.
 ----------------------------------------------------------------------------------------------------------------------
 
----------------------------------------------------------ATENDIMENTO--------------------------------------------------
-USUARIO ATENDENTE DEVE PODER PEGAR OS ATENDIMENTOS NA TABELA ABERTOS, E DIRECIONAR A ALGUM SUPORTE.
-Ao excluir atendimento, não apagar o mesmo, apenas coloca-lo com status cancelado, e capturar a data de cancelamento.
-ao fechar um atendimento com tipo: ATUALIZAÇÃO, deve ser subistituido a data de atualização existente no cadastro do cliente.
-----------------------------------------------------------------------------------------------------------------------
-
 ----------------------------------------------------------OUTROS------------------------------------------------------
 TRATAR ABRIR SOMENTE UM FRAME DE CADAS TELA.
 IMPLANTAR SOFTWARE NA EMPRESA, PARA EFEITO DE TESTES.

@@ -8,9 +8,13 @@ package View.Relatorios;
 import Controller.ClienteDAO;
 import Controller.StatusAtendimentoDAO;
 import Controller.StatusPessoaDAO;
+import Controller.TipoPessoaDAO;
+import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
 import Model.StatusAtendimento;
 import Model.StatusPessoa;
+import Model.TipoPessoa;
+import Model.TipoUsuario;
 import Util.Classes.AutoComplete;
 import Util.Classes.Data;
 import Util.Classes.GeraRelatorios;
@@ -33,6 +37,8 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     StatusPessoaDAO statusPessoaDAO;
     StatusPessoa statusPessoa;
     StatusAtendimentoDAO statusAtendimentoDAO;
+    TipoUsuarioDAO tipoUsuarioDAO;
+    TipoUsuario tipoUsuario;
 
     public Frm_RelAtendimento(String tipo) {
         initComponents();
@@ -53,11 +59,15 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     private void carregaUsuarios() {
         try {
             usuarioDAO = new UsuarioDAO();
-            cbx_usuario.removeAllItems();
+            tipoUsuarioDAO = new TipoUsuarioDAO();
             statusPessoaDAO = new StatusPessoaDAO();
+            tipoUsuario = new TipoUsuario();
+            statusPessoa = new StatusPessoa();
+            cbx_usuario.removeAllItems();
             statusPessoa = statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO");
-            for (int i = 0; i < usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).size(); i++) {
-                cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).get(i).getUsuario());
+            tipoUsuario = tipoUsuarioDAO.buscaTipoUsuario("SUPORTE");
+            for (int i = 0; i < usuarioDAO.listaUsuariosDesbloqueados(statusPessoa, tipoUsuario).size(); i++) {
+                cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa, tipoUsuario).get(i).getUsuario());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
@@ -420,9 +430,9 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     private void gerarAnalitico(String cliente, String status, String usuario) {
         try {
             Map parameters = new HashMap();
-            usuarioDAO= new UsuarioDAO();
-            statusAtendimentoDAO= new StatusAtendimentoDAO();
-            clienteDAO=new ClienteDAO();
+            usuarioDAO = new UsuarioDAO();
+            statusAtendimentoDAO = new StatusAtendimentoDAO();
+            clienteDAO = new ClienteDAO();
             GeraRelatorios geraRelatorios = new GeraRelatorios();
             parameters.put("codUsuario", usuarioDAO.consultaByUsuario(usuario).getCodusuario());
             parameters.put("codCliente", clienteDAO.buscaClienteByNomeFantasia(cliente).getCodcliente());

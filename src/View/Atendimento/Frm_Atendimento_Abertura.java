@@ -13,10 +13,14 @@ import Controller.PrioridadeDAO;
 import Controller.StatusAtendimentoDAO;
 import Controller.StatusPessoaDAO;
 import Controller.TipoAtendimentoDAO;
+import Controller.TipoPessoaDAO;
+import Controller.TipoUsuarioDAO;
 import Controller.UsuarioDAO;
 import Model.Atendimento;
 import Model.Empresa;
 import Model.StatusPessoa;
+import Model.TipoPessoa;
+import Model.TipoUsuario;
 import Model.Usuario;
 import Util.Classes.AutoComplete;
 import Util.Classes.Data;
@@ -54,6 +58,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     Frm_Principal principal;
     StatusPessoaDAO statusPessoaDAO;
     StatusPessoa statusPessoa;
+    TipoUsuarioDAO tipoUsuarioDAO;
+    TipoUsuario tipoUsuario;
 
     public Frm_Atendimento_Abertura() {
         initComponents();
@@ -95,11 +101,15 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
     private void carregaUsuarios() {
         try {
             usuarioDAO = new UsuarioDAO();
-            cbx_usuario.removeAllItems();
+            tipoUsuarioDAO = new TipoUsuarioDAO();
             statusPessoaDAO = new StatusPessoaDAO();
+            tipoUsuario = new TipoUsuario();
+            statusPessoa = new StatusPessoa();
+            cbx_usuario.removeAllItems();
             statusPessoa = statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO");
-            for (int i = 0; i < usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).size(); i++) {
-                cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa).get(i).getUsuario());
+            tipoUsuario = tipoUsuarioDAO.buscaTipoUsuario("SUPORTE");
+            for (int i = 0; i < usuarioDAO.listaUsuariosDesbloqueados(statusPessoa, tipoUsuario).size(); i++) {
+                cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa, tipoUsuario).get(i).getUsuario());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
@@ -257,7 +267,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         }
     }
 
-    public String criaMsgHTML(int numero, String cliente,String analista, String dataAbertura, String dataAgendamento,
+    public String criaMsgHTML(int numero, String cliente, String analista, String dataAbertura, String dataAgendamento,
             String solicitante, String origem, String tipo, String prioridade, String problemaInformado,
             String empresa, String telefone) {
         return "<html>\n"

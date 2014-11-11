@@ -6,9 +6,11 @@
 package View.Atendimento;
 
 import Controller.AtendimentoDAO;
+import Controller.ClienteDAO;
 import Controller.EmpresaDAO;
 import Controller.StatusAtendimentoDAO;
 import Model.Atendimento;
+import Model.Cliente;
 import Model.Empresa;
 import Util.Classes.Data;
 import Util.Email.EnviaEmail;
@@ -121,6 +123,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 statusAtendimentoDAO = new StatusAtendimentoDAO();
                 atendimento.setCodstatusatendimento(statusAtendimentoDAO.buscaStatusAtendimento("CONCLUIDO"));
                 atendimento.setProblemaSolucao(txt_problemaSolucao.getText());
+                setDataAtualizacao(atendimento);
             }
             setPendencia(atendimento);
             if (!txt_problemaInformado.getText().isEmpty()) {
@@ -132,6 +135,18 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar informações do Atendimento");
+        }
+    }
+
+    public void setDataAtualizacao(Atendimento atendimento) {
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = new Cliente();
+            cliente=clienteDAO.buscaClienteByCodigo(atendimento.getCodcliente().getCodcliente());
+            cliente.setDataAtualizacao(atendimento.getDataFechamento());
+            clienteDAO.salvar(cliente);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
