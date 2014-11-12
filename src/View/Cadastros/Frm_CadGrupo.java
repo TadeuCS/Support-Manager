@@ -28,7 +28,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         model = (DefaultTableModel) tb_grupos.getModel();
-        carregaGrupos();
+        listarGrupos();
         txt_descricao.setDocument(new FixedLengthDocument(20));
     }
 
@@ -37,7 +37,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
         grupo = new Grupo();
     }
 
-    public void carregaGrupos() {
+    public void listarGrupos() {
         try {
             grupoDAO = new GrupoDAO();
             limpaTabela(model);
@@ -385,7 +385,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
             grupo.setDescricao(descricao);
             grupoDAO.salvar(grupo);
             JOptionPane.showMessageDialog(null, "Grupo " + descricao + " alterado com sucesso!");
-            carregaGrupos();
+            listarGrupos();
             btn_cancelar.doClick();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao alterar o grupo: " + descricao);
@@ -401,7 +401,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Grupo salvo com sucesso!");
                 txt_descricao.setText(null);
                 txt_descricao.requestFocus();
-                carregaGrupos();
+                listarGrupos();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao Salvar Grupo\n", "Alerta", JOptionPane.ERROR_MESSAGE);
                 txt_descricao.requestFocus();

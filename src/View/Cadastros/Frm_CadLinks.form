@@ -281,7 +281,7 @@
         <Component class="javax.swing.JButton" name="btn_cancelar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Util/Img/fechar.png"/>
+              <Image iconType="3" name="/Util/Img/cancelar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>

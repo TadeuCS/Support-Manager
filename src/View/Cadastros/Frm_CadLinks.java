@@ -271,7 +271,7 @@ public final class Frm_CadLinks extends javax.swing.JFrame {
             }
         });
 
-        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cancelar.png"))); // NOI18N
         btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,10 +332,10 @@ public final class Frm_CadLinks extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        if(txt_descricao.getText().isEmpty()){
+        if (txt_descricao.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Link inválido!");
             txt_descricao.requestFocus();
-        }else{
+        } else {
             if (btn_alterar.isEnabled() == true) {
                 salvar(txt_descricao.getText());
             } else {
@@ -439,10 +439,14 @@ public final class Frm_CadLinks extends javax.swing.JFrame {
             setLink(this.link);
             linksDAO.salvar(link);
             JOptionPane.showMessageDialog(null, "Link alterado com sucesso!");
-            listarLinks();
+
             txt_descricao.setText(null);
+            btn_alterar.setEnabled(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao alterar Link: "+link.getDescricao());
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Link: " + link.getDescricao());
+            txt_descricao.requestFocus();
+        } finally {
+            listarLinks();
         }
     }
 }
