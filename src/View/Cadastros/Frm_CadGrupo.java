@@ -136,7 +136,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Descrição *:");
+        jLabel2.setText("Filtro:");
 
         txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

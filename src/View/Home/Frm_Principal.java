@@ -59,7 +59,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     AtendimentoDAO atendimentoDAO;
     private StatusAtendimentoDAO statusAtendimentoDAO;
     public static PopMenu an;
-    public static Frm_Principal j=null;
+    public static Frm_Principal j = null;
     int tentativas;
 
     public Frm_Principal() {
@@ -217,18 +217,18 @@ public class Frm_Principal extends javax.swing.JFrame {
             }
         }
     }
-    
-    public void setTipoUsuarioLogado(String nomeUsuario){
+
+    public void setTipoUsuarioLogado(String nomeUsuario) {
         try {
-            usuarioDAO=new UsuarioDAO();
-            usuario=new Usuario();
-            usuario=usuarioDAO.consultaByUsuario(nomeUsuario);
+            usuarioDAO = new UsuarioDAO();
+            usuario = new Usuario();
+            usuario = usuarioDAO.consultaByUsuario(nomeUsuario);
             txt_Tipo.setText(usuario.getCodtipousuario().getDescricao());
         } catch (NoResultException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao localizar tipo do usuário: "+nomeUsuario);
+            JOptionPane.showMessageDialog(null, "Erro ao localizar tipo do usuário: " + nomeUsuario);
         }
     }
-    
+
     public void setFocusONLabel(JLabel label) {
         label.setForeground(Color.blue);
     }

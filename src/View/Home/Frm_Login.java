@@ -238,7 +238,7 @@ public class Frm_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_entrarActionPerformed
 
     private void btn_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sairActionPerformed
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_btn_sairActionPerformed
 
     private void txt_senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_senhaKeyPressed
