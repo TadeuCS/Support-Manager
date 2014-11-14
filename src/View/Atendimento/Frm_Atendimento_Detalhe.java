@@ -250,7 +250,7 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(txt_probPendencia);
 
-        jLabel15.setText("Pendencia *:");
+        jLabel15.setText("Pendência *:");
 
         txt_probInformado.setColumns(5);
         txt_probInformado.setLineWrap(true);

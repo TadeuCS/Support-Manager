@@ -291,7 +291,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadTipoUsuario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/USUARIO/TIPO USUARIO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/USU&#xc1;RIO/TIPO USU&#xc1;RIO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadTipoUsuarioActionPerformed"/>
@@ -299,7 +299,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadUsuario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/USUARIO/USUARIO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/USU&#xc1;RIO/USU&#xc1;RIO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadUsuarioActionPerformed"/>
@@ -413,7 +413,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_consAtendimentosConcluidos">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CONSULTA/ATENDIMENTO/CONCLUIDOS"/>
+                    <Property name="text" type="java.lang.String" value="CONSULTA/ATENDIMENTO/CONCLU&#xcd;DOS"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_consAtendimentosPendentes">
@@ -441,7 +441,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_consUsuarios">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CONSULTA/USUARIOS"/>
+                    <Property name="text" type="java.lang.String" value="CONSULTA/USU&#xc1;RIOS"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -449,8 +449,8 @@
             <Container class="javax.swing.JPanel" name="jPanel5">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Relatorios">
-                    <Property name="tabTitle" type="java.lang.String" value="Relatorios"/>
+                  <JTabbedPaneConstraints tabName="Relat&#xf3;rios">
+                    <Property name="tabTitle" type="java.lang.String" value="Relat&#xf3;rios"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -494,14 +494,14 @@
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="chx_relAtendimento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/ATENDIMENTO"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/ATENDIMENTO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator10">
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_relCliente">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/CLIENTES"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/CLIENTES"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator11">
@@ -511,8 +511,8 @@
             <Container class="javax.swing.JPanel" name="jPanel6">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Ultilitarios">
-                    <Property name="tabTitle" type="java.lang.String" value="Ultilitarios"/>
+                  <JTabbedPaneConstraints tabName="Utilit&#xe1;rios">
+                    <Property name="tabTitle" type="java.lang.String" value="Utilit&#xe1;rios"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -592,7 +592,7 @@
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="chx_utiEnviarEmail">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/ENVIAR EMAIL"/>
+                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/ENVIAR E-MAIL"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator12">
@@ -615,7 +615,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_utiTrocaUsuario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/TROCA DE USUARIO"/>
+                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/TROCA DE USU&#xc1;RIO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_utiInformacao">
@@ -661,7 +661,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tipo Usuario:"/>
+            <Property name="text" type="java.lang.String" value="Tipo Usu&#xe1;rio:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbx_tipoUsuario">

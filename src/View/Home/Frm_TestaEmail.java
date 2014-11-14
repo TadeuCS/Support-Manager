@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Home;
 
 import Controller.EmpresaDAO;
@@ -17,10 +12,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_TestaEmail extends javax.swing.JFrame {
 
     EmpresaDAO empresaDAO;
@@ -57,7 +48,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
             cbx_empresas.requestFocus();
         } else {
             if (ValidaEmail.validarEmail(emailDestinatario) == false) {
-                JOptionPane.showMessageDialog(null, "Email do destinatário inválido!");
+                JOptionPane.showMessageDialog(null, "E-mail do destinatário inválido!");
                 txt_email.requestFocus();
             } else {
                 if (assunto.isEmpty()) {
@@ -82,7 +73,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                                     empresa.getCodemail().getSenha(),
                                     destinatarios, assunto, messagem, null);
                         } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Erro ao Testar envio de Email");
+                            JOptionPane.showMessageDialog(null, "Erro ao Testar envio de E-mail");
                         }
 
                     }
@@ -120,16 +111,16 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
         Thread acao = new Thread(new Runnable() {
             @Override
             public void run() {
-                lb_status.setText("Enviando Email...");
+                lb_status.setText("Enviando E-mail...");
                 try {
                     EnviaEmail sender = new EnviaEmail();
                     sender.senderMail(mj);
-                    lb_status.setText("Email enviado com sucesso!");
+                    lb_status.setText("E-mail enviado com sucesso!");
                     limpaCampos();
                     Thread.sleep(1000);
                     lb_status.setText(null);
                 } catch (Exception e) {
-                    lb_status.setText("Erro ao enviar Email.");
+                    lb_status.setText("Erro ao enviar E-mail.");
                     JOptionPane.showMessageDialog(null, e.getMessage());
                     lb_status.setText(null);
                 }

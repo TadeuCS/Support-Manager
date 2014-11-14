@@ -179,7 +179,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             item_trocaUsuario.setVisible(permissoes.getUtiTrocaUsuario());
             item_Permissoes.setVisible(permissoes.getUtiPermissoes());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuario: " + getUsuarioLogado());
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuário: " + getUsuarioLogado());
             Frm_Login f = new Frm_Login();
             this.dispose();
         }
@@ -1046,7 +1046,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(Menu_Consulta);
 
-        Menu_Relatorios.setText("Relatorios");
+        Menu_Relatorios.setText("Relatórios");
 
         menuI_Cliente.setText("Cliente");
 
@@ -1070,7 +1070,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         menuI_Atendimento.setText("Atendimento");
 
-        item_relAtendimento.setText("Analitico");
+        item_relAtendimento.setText("Analítico");
         item_relAtendimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_relAtendimentoActionPerformed(evt);
@@ -1078,7 +1078,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         menuI_Atendimento.add(item_relAtendimento);
 
-        item_relAtendimento1.setText("Sintetico");
+        item_relAtendimento1.setText("Sintético");
         item_relAtendimento1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_relAtendimento1ActionPerformed(evt);
@@ -1106,7 +1106,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(Menu_Relatorios);
 
-        Menu_Utilitários.setText("Utilitarios");
+        Menu_Utilitários.setText("Utilitários");
 
         item_AlterarSenha.setText("Alterar Senha");
         item_AlterarSenha.addActionListener(new java.awt.event.ActionListener() {
@@ -1116,7 +1116,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         Menu_Utilitários.add(item_AlterarSenha);
 
-        item_enviaEmail.setText("Enviar Email");
+        item_enviaEmail.setText("Enviar E-mail");
         item_enviaEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_enviaEmailActionPerformed(evt);

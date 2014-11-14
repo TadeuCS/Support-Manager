@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Home;
 
 import Controller.UsuarioDAO;
@@ -20,10 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_Login extends javax.swing.JFrame {
 
     Frm_Principal p;
