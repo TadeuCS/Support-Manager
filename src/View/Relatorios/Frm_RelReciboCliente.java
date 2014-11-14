@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Relatorios;
 
 import Controller.ClienteDAO;
@@ -21,10 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_RelReciboCliente extends javax.swing.JFrame {
 
     Data data;
@@ -51,7 +42,7 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Anos");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Anos");
         }
     }
 
@@ -64,7 +55,7 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
                 cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Clientes");
         }
     }
 
