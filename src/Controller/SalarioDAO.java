@@ -1,26 +1,26 @@
 package Controller;
 
-import Model.Salarios;
+import Model.Salario;
 import Util.Classes.Manager;
 import java.util.List;
 
 public class SalarioDAO extends Manager {
 
-    public void salva(Salarios salario){
+    public void salva(Salario salario){
         em.getTransaction().begin();
         em.merge(salario);
         em.getTransaction().commit();
     }
-    public List<Salarios> lista(){
+    public List<Salario> lista(){
         em.getTransaction().begin();
-        query=em.createNamedQuery("Salarios.findAll");
+        query=em.createNamedQuery("Salario.findAll");
         em.getTransaction().commit();
         return query.getResultList();
     }
-//    public Double buscaSalario(int ano){
-//        em.getTransaction().begin();
-//        query=em.createNamedQuery("Salarios.findByAno").setParameter("ano", ano);
-//        em.getTransaction().commit();
-//        return (Double) query.getSingleResult();
-//    }
+    public Salario findSalarioByCodigo(int codigo){
+        em.getTransaction().begin();
+        query=em.createNamedQuery("Salario.findByCodsalario").setParameter("codsalario", codigo);
+        em.getTransaction().commit();
+        return (Salario) query.getSingleResult();
+    }
 }

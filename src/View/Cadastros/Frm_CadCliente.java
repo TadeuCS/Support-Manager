@@ -26,6 +26,7 @@ import Model.Usuario;
 import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
 import Util.Classes.IntegerDocument;
+import Util.Classes.Mascaras;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConClientes;
@@ -88,7 +89,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         carregaAplicativos();
         carregaParcelas();
         carregaSalarios();
-        trocaMascara();
+        Mascaras.setMascaraCPF(txt_cpf, cbx_tipo);
         setEnabledFields(false);
         cbx_estados.setSelectedItem("MG");
     }
@@ -168,24 +169,6 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     public void anterior() {
         abas.setSelectedIndex(abas.getSelectedIndex() - 1);
-    }
-
-    private void trocaMascara() {
-        try {
-            if (cbx_tipo.getSelectedIndex() == 0) {
-                txt_cpf.setValue(null);
-                MaskFormatter cpf = new MaskFormatter("###.###.###-##");
-                txt_cpf.setFormatterFactory(
-                        new DefaultFormatterFactory(cpf));
-            } else {
-                txt_cpf.setValue(null);
-                MaskFormatter cnpj = new MaskFormatter("##.###.###/####-##");
-                txt_cpf.setFormatterFactory(
-                        new DefaultFormatterFactory(cnpj));
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Selecione um Tipo para o Cliente");
-        }
     }
 
     public void limpaTabela(DefaultTableModel model) {
@@ -2077,7 +2060,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_anteriorActionPerformed
 
     private void cbx_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tipoActionPerformed
-        trocaMascara();
+        Mascaras.setMascaraCPF(txt_cpf, cbx_tipo);
     }//GEN-LAST:event_cbx_tipoActionPerformed
 
     private void cbx_estadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_estadosActionPerformed

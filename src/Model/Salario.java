@@ -13,14 +13,14 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "salarios")
+@Table(name = "salario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Salarios.findAll", query = "SELECT s FROM Salarios s ORDER BY s.valor"),
-    @NamedQuery(name = "Salarios.findByCodsalario", query = "SELECT s FROM Salarios s WHERE s.codsalario = :codsalario"),
-    @NamedQuery(name = "Salarios.findByAno", query = "SELECT MAX(s.valor) FROM Salarios s WHERE s.ano = :ano"),
-    @NamedQuery(name = "Salarios.findByValor", query = "SELECT s FROM Salarios s WHERE s.valor = :valor")})
-public class Salarios implements Serializable {
+    @NamedQuery(name = "Salario.findAll", query = "SELECT s FROM Salario s"),
+    @NamedQuery(name = "Salario.findByCodsalario", query = "SELECT s FROM Salario s WHERE s.codsalario = :codsalario"),
+    @NamedQuery(name = "Salario.findByAno", query = "SELECT MAX(s.valor) FROM Salario s WHERE s.ano = :ano"),
+    @NamedQuery(name = "Salario.findByValor", query = "SELECT s FROM Salario s WHERE s.valor = :valor")})
+public class Salario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,14 +34,14 @@ public class Salarios implements Serializable {
     @Column(name = "VALOR")
     private double valor;
 
-    public Salarios() {
+    public Salario() {
     }
 
-    public Salarios(Integer codsalario) {
+    public Salario(Integer codsalario) {
         this.codsalario = codsalario;
     }
 
-    public Salarios(Integer codsalario, int ano, double valor) {
+    public Salario(Integer codsalario, int ano, double valor) {
         this.codsalario = codsalario;
         this.ano = ano;
         this.valor = valor;
@@ -81,10 +81,10 @@ public class Salarios implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Salarios)) {
+        if (!(object instanceof Salario)) {
             return false;
         }
-        Salarios other = (Salarios) object;
+        Salario other = (Salario) object;
         if ((this.codsalario == null && other.codsalario != null) || (this.codsalario != null && !this.codsalario.equals(other.codsalario))) {
             return false;
         }
@@ -93,7 +93,7 @@ public class Salarios implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Salarios[ codsalario=" + codsalario + " ]";
+        return "Model.Salario[ codsalario=" + codsalario + " ]";
     }
     
 }

@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Util.Classes;
+
+import java.text.DecimalFormat;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
+
+/**
+ *
+ * @author Tadeu
+ */
+public class Mascaras {
+    
+    public static void setMascaraMoeda(JFormattedTextField field){
+        DecimalFormat dFormat = new DecimalFormat("#,###,###.00");
+        NumberFormatter formatter = new NumberFormatter(dFormat);
+        formatter.setFormat(dFormat);
+        formatter.setAllowsInvalid(false);
+        field.setFormatterFactory(new DefaultFormatterFactory(formatter));
+    }
+    public static void setMascaraCPF(JFormattedTextField field,JComboBox tipo) {
+        try {
+            if (tipo.getSelectedIndex() == 0) {
+                field.setValue(null);
+                MaskFormatter cpf = new MaskFormatter("###.###.###-##");
+                field.setFormatterFactory(
+                        new DefaultFormatterFactory(cpf));
+            } else {
+                field.setValue(null);
+                MaskFormatter cnpj = new MaskFormatter("##.###.###/####-##");
+                field.setFormatterFactory(
+                        new DefaultFormatterFactory(cnpj));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Trocar a mascara do campo CPF");
+        }
+    }
+}

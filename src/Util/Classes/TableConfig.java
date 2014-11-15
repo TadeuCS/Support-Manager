@@ -1,0 +1,45 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Util.Classes;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+/**
+ *
+ * @author Tadeu
+ */
+public class TableConfig extends DefaultTableModel {
+
+    public static DefaultTableModel getModel(JTable tabela) {
+        return (DefaultTableModel) tabela.getModel();
+    }
+
+    public static void limpaTabela(DefaultTableModel model) {
+        try {
+            while (0 < model.getRowCount()) {
+                model.removeRow(0);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public static void filtrar(java.awt.event.KeyEvent evt,JTable table,JTextField filtro) {
+        TableRowSorter sorter = new TableRowSorter(table.getModel());
+        table.setRowSorter(sorter);
+        String texto = filtro.getText();
+        try {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Valor Não Encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
