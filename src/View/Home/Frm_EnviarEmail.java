@@ -21,12 +21,12 @@ import javax.swing.JOptionPane;
  *
  * @author Tadeu
  */
-public class Frm_TestaEmail extends javax.swing.JFrame {
+public class Frm_EnviarEmail extends javax.swing.JFrame {
 
     EmpresaDAO empresaDAO;
     Empresa empresa;
 
-    public Frm_TestaEmail() {
+    public Frm_EnviarEmail() {
         initComponents();
         setVisible(true);
         carregaEmpresas();
@@ -51,40 +51,34 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
         txt_menssagem.setText(null);
     }
 
-    public void validaCampos(String nomeEmpresa, String emailDestinatario, String assunto, String messagem) {
-        if (nomeEmpresa.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione uma Empresa Remetente");
-            cbx_empresas.requestFocus();
+    public void validaCampos(String nomeEmpresa,String emailDestinatario, String assunto, String messagem) {
+        if (ValidaEmail.validarEmail(emailDestinatario) == false) {
+            JOptionPane.showMessageDialog(null, "Email do destinatário inválido!");
+            txt_email.requestFocus();
         } else {
-            if (ValidaEmail.validarEmail(emailDestinatario) == false) {
-                JOptionPane.showMessageDialog(null, "Email do destinatário inválido!");
-                txt_email.requestFocus();
+            if (assunto.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Assunto inválido!");
+                txt_assunto.requestFocus();
             } else {
-                if (assunto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Assunto inválido!");
-                    txt_assunto.requestFocus();
+                if (messagem.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Menssagem inválida!");
+                    txt_menssagem.requestFocus();
                 } else {
-                    if (messagem.isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Menssagem inválida!");
-                        txt_menssagem.requestFocus();
-                    } else {
 
-                        boolean ssl = false;
-                        try {
-                            empresaDAO = new EmpresaDAO();
-                            empresa = new Empresa();
-                            empresa = empresaDAO.findByNomeFantasia(nomeEmpresa);
-                            List<String> destinatarios = new ArrayList<>();
-                            destinatarios.add(emailDestinatario);
-                            enviaEmail(empresa.getCodemail().getSmtp(),
-                                    empresa.getCodemail().getPorta(),
-                                    empresa.getCodemail().getNome(),
-                                    empresa.getCodemail().getSenha(),
-                                    destinatarios, assunto, messagem, null);
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Erro ao Testar envio de Email");
-                        }
-
+                    boolean ssl = false;
+                    try {
+                        empresaDAO = new EmpresaDAO();
+                        empresa = new Empresa();
+                        empresa = empresaDAO.findByNomeFantasia(nomeEmpresa);
+                        List<String> destinatarios = new ArrayList<>();
+                        destinatarios.add(emailDestinatario);
+                        enviaEmail(empresa.getCodemail().getSmtp(),
+                                empresa.getCodemail().getPorta(),
+                                empresa.getCodemail().getNome(),
+                                empresa.getCodemail().getSenha(),
+                                destinatarios, assunto, messagem, null);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Erro ao Testar envio de Email");
                     }
                 }
             }
@@ -112,7 +106,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
             map.put(destinatarios.get(i), "");
         }
         mj.setToMailsUsers(map);
-        
+
         //seta quantos anexos for nescessário
         if (anexos != null) {
             mj.setFileMails(anexos);
@@ -136,7 +130,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
             }
         });
         acao.start();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -161,7 +155,7 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
         lb_status = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Teste de envio de Email");
+        setTitle("Envio de Email");
         setResizable(false);
 
         pnl_destinatario.setBorder(javax.swing.BorderFactory.createTitledBorder("Destinatário"));
@@ -344,7 +338,12 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_empresasFocusGained
 
     private void btn_testarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_testarActionPerformed
-        validaCampos(cbx_empresas.getSelectedItem().toString(), txt_email.getText(), txt_assunto.getText(), txt_menssagem.getText());
+        if (cbx_empresas.getSelectedItem() != null) {
+            validaCampos(cbx_empresas.getSelectedItem().toString(), txt_email.getText(), txt_assunto.getText(), txt_menssagem.getText());
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma Empresa Remetente");
+            cbx_empresas.requestFocus();
+        }
     }//GEN-LAST:event_btn_testarActionPerformed
 
     private void btn_cadEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadEmpresaActionPerformed
@@ -368,21 +367,23 @@ public class Frm_TestaEmail extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frm_TestaEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_EnviarEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frm_TestaEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_EnviarEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frm_TestaEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_EnviarEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frm_TestaEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frm_EnviarEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_TestaEmail().setVisible(true);
+                new Frm_EnviarEmail().setVisible(true);
             }
         });
     }

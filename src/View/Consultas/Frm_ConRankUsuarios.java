@@ -40,7 +40,7 @@ public class Frm_ConRankUsuarios extends javax.swing.JFrame {
                 model.addRow(lista);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar dados! \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Lista Vazia! \n");
         }
     }
 

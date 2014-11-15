@@ -331,42 +331,51 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="chx_consCliente" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                                          <Component id="jSeparator7" min="-2" pref="278" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="chx_consAtendimentosExecutando" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="chx_consAtendimentosConcluidos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="chx_consAtendimentosPendentes" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="chx_consAtendimentosAbertos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                                          <Component id="jSeparator6" min="-2" pref="278" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Component id="chx_consContato" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                                          <Component id="jSeparator8" min="-2" pref="278" max="-2" attributes="0"/>
-                                      </Group>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="chx_consRankUsuarios" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                      <Component id="jSeparator17" min="-2" pref="278" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="chx_consUsuarios" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
-                                  <Component id="jSeparator9" min="-2" pref="278" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="chx_consCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                              <Component id="jSeparator7" min="-2" pref="278" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="chx_consAtendimentosExecutando" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chx_consAtendimentosConcluidos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chx_consAtendimentosPendentes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="chx_consAtendimentosAbertos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                              <Component id="jSeparator6" min="-2" pref="278" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Component id="chx_consContato" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                              <Component id="jSeparator8" min="-2" pref="278" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <Component id="chx_consUsuarios" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                                      <Component id="jSeparator9" min="-2" pref="278" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="76" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -395,7 +404,11 @@
                           <Component id="chx_consUsuarios" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSeparator9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="255" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chx_consRankUsuarios" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jSeparator17" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="216" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -444,6 +457,13 @@
                     <Property name="text" type="java.lang.String" value="CONSULTA/USUARIOS"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator17">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chx_consRankUsuarios">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="CONSULTA/RANK DE USU&#xc1;RIOS"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="jPanel5">
@@ -461,13 +481,21 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="chx_relAtendimento" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="chx_relCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="chx_relAtendimentoAnalitico" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="chx_relAtendimentoSintetico" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="chx_relClienteByLink" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="chx_relClienteBySegmento" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="chx_relUsuarios" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="chx_relInformacoes" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jSeparator10" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
                                       <Component id="jSeparator11" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
+                                      <Component id="jSeparator18" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
+                                      <Component id="jSeparator19" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
+                                      <Component id="jSeparator20" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
+                                      <Component id="jSeparator21" alignment="0" min="-2" pref="278" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -479,32 +507,76 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="chx_relAtendimento" min="-2" max="-2" attributes="0"/>
+                          <Component id="chx_relAtendimentoAnalitico" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSeparator10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="chx_relCliente" min="-2" max="-2" attributes="0"/>
+                          <Component id="chx_relAtendimentoSintetico" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSeparator11" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="405" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chx_relClienteByLink" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jSeparator18" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chx_relClienteBySegmento" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jSeparator19" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chx_relUsuarios" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jSeparator20" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="chx_relInformacoes" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jSeparator21" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="249" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JCheckBox" name="chx_relAtendimento">
+                <Component class="javax.swing.JCheckBox" name="chx_relAtendimentoAnalitico">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/ATENDIMENTO"/>
+                    <Property name="text" type="java.lang.String" value="RELATORIO/ATENDIMENTO ANAL&#xcd;TICO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator10">
                 </Component>
-                <Component class="javax.swing.JCheckBox" name="chx_relCliente">
+                <Component class="javax.swing.JCheckBox" name="chx_relAtendimentoSintetico">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/CLIENTES"/>
+                    <Property name="text" type="java.lang.String" value="RELATORIO/ATENDIMENTO SINT&#xc9;TICO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator11">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chx_relClienteByLink">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="RELATORIO/CLIENTE POR LINK"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator18">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chx_relClienteBySegmento">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="RELATORIO/CLIENTE POR SEGMENTO"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator19">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chx_relUsuarios">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="RELATORIO/USU&#xc1;RIOS"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator20">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="chx_relInformacoes">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="RELATORIO/INFORMA&#xc7;&#xd5;ES"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator21">
                 </Component>
               </SubComponents>
             </Container>
@@ -529,6 +601,7 @@
                                       <Component id="chx_utiInformacao" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="chx_utiTrocaUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="chx_utiPermissoes" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="chx_utiTipoInformacao" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -552,7 +625,7 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="chx_utiTipoInformacao" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jSeparator22" min="-2" pref="278" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="76" max="32767" attributes="0"/>
@@ -572,6 +645,8 @@
                           <Component id="jSeparator13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="chx_utiInformacao" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jSeparator22" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="chx_utiTipoInformacao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -584,7 +659,7 @@
                           <Component id="chx_utiPermissoes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSeparator15" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="262" max="32767" attributes="0"/>
+                          <EmptySpace pref="254" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -620,7 +695,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_utiInformacao">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/INFORMA&#xc7;&#xc3;O/INFORMA&#xc7;&#xc3;O"/>
+                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/INFORMA&#xc7;&#xc3;O"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_utiInformacaoActionPerformed"/>
@@ -630,8 +705,10 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_utiTipoInformacao">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/INFORMA&#xc7;&#xc3;O/TIPO INFORMA&#xc7;&#xc3;O"/>
+                    <Property name="text" type="java.lang.String" value="UTILIT&#xc1;RIOS/TIPO INFORMA&#xc7;&#xc3;O"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JSeparator" name="jSeparator22">
                 </Component>
               </SubComponents>
             </Container>

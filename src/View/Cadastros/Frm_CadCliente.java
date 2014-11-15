@@ -29,6 +29,7 @@ import Util.Classes.IntegerDocument;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConClientes;
+import View.Home.Frm_Login;
 import java.awt.Event;
 import java.util.Date;
 import javax.persistence.NoResultException;
@@ -2235,11 +2236,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cadGrupoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        if (cbx_parcela.getSelectedObjects() == null) {
+        if (cbx_parcela.getSelectedItem() != null) {
+            salvar();
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um percentual da parcela do Cliente");
             cbx_parcela.requestFocus();
-        } else {
-            salvar();
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
@@ -2339,11 +2340,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         } else {
             txt_operacao.setText("EXCLUSÃO");
             try {
-                clienteDAO.remover(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente " + cliente.getNomeFantasia() + " removido com sucesso!");
-                setEnabledButtons(true);
-                setEnabledFields(false);
-                limpaCampos();
+                if (JOptionPane.showConfirmDialog(null, "Deseja realmente apagar o cliente: " + cliente.getNomeFantasia(), "Alerta", 0) == 0) {
+                    clienteDAO.remover(cliente);
+                    JOptionPane.showMessageDialog(null, "Cliente " + cliente.getNomeFantasia() + " removido com sucesso!");
+                    setEnabledButtons(true);
+                    setEnabledFields(false);
+                    limpaCampos();
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Impossivel remover este Cliente pois o mesmo ja teve movimentações!");
             }
@@ -2356,7 +2359,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_aplicativoFocusGained
 
     private void txt_inscEstadualFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_inscEstadualFocusGained
-        if(cbx_tipo.getSelectedItem().equals("FISICA")==true){
+        if (cbx_tipo.getSelectedItem().equals("FISICA") == true) {
             txt_inscEstadual.setEnabled(false);
             txt_razaoSocial.requestFocus();
         }

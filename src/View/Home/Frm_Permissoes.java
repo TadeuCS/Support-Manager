@@ -47,7 +47,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         }
         try {
             permissoesDAO = new PermissoesDAO();
-            permissoes.setcodTipoUsuario(tipoUsuarioDAO.buscaTipoUsuario(cbx_tipoUsuario.getSelectedItem().toString()));
+            permissoes.setCodTipoUsuario(tipoUsuarioDAO.buscaTipoUsuario(cbx_tipoUsuario.getSelectedItem().toString()));
             permissoesDAO.salvar(permissoes);
             JOptionPane.showMessageDialog(null, "Permissões salvas com sucesso para usuários do Tipo: " + cbx_tipoUsuario.getSelectedItem().toString());
         } catch (Exception e) {
@@ -74,8 +74,12 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
     public void getPermissoesRelatorios(Permissoes permissoes) {
         try {
-            chx_relAtendimento.setSelected(permissoes.getRelAtendimento());
-            chx_relCliente.setSelected(permissoes.getRelClientes());
+            chx_relAtendimentoAnalitico.setSelected(permissoes.getRelAtendimentoAnalitico());
+            chx_relAtendimentoSintetico.setSelected(permissoes.getRelAtendimentoSintetico());
+            chx_relClienteByLink.setSelected(permissoes.getRelClientesByLink());
+            chx_relClienteBySegmento.setSelected(permissoes.getRelClientesBySegmento());
+            chx_relInformacoes.setSelected(permissoes.getRelInformacoes());
+            chx_relUsuarios.setSelected(permissoes.getRelUsuarios());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar Informações Permissões de Relatorios");
         }
@@ -103,6 +107,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             chx_consCliente.setSelected(permissoes.getConsClientes());
             chx_consContato.setSelected(permissoes.getConsContatos());
             chx_consUsuarios.setSelected(permissoes.getConsUsuarios());
+            chx_consRankUsuarios.setSelected(permissoes.getConsRankUsuarios());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar Informações Permissões de Consulta");
         }
@@ -163,6 +168,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             permissoes.setConsClientes(chx_consCliente.isSelected());
             permissoes.setConsContatos(chx_consContato.isSelected());
             permissoes.setConsUsuarios(chx_consUsuarios.isSelected());
+            permissoes.setConsRankUsuarios(chx_consRankUsuarios.isSelected());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar Permissões de Consulta");
         }
@@ -170,8 +176,12 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
     public void setPermissoesRelatorios(Permissoes permissoes) {
         try {
-            permissoes.setRelAtendimento(chx_relAtendimento.isSelected());
-            permissoes.setRelClientes(chx_relCliente.isSelected());
+            permissoes.setRelAtendimentoAnalitico(chx_relAtendimentoAnalitico.isSelected());
+            permissoes.setRelAtendimentoSintetico(chx_relAtendimentoSintetico.isSelected());
+            permissoes.setRelClientesByLink(chx_relClienteByLink.isSelected());
+            permissoes.setRelClientesBySegmento(chx_relClienteBySegmento.isSelected());
+            permissoes.setRelInformacoes(chx_relInformacoes.isSelected());
+            permissoes.setRelUsuarios(chx_relUsuarios.isSelected());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar Permissões de Relatorios");
         }
@@ -185,7 +195,6 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             permissoes.setUtiTipoInformacao(chx_utiTipoInformacao.isSelected());
             permissoes.setUtiTrocaUsuario(chx_utiTrocaUsuario.isSelected());
             permissoes.setUtiPermissoes(chx_utiPermissoes.isSelected());
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao capturar Permissões de Utilitários");
         }
@@ -231,11 +240,21 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         chx_consContato = new javax.swing.JCheckBox();
         jSeparator9 = new javax.swing.JSeparator();
         chx_consUsuarios = new javax.swing.JCheckBox();
+        jSeparator17 = new javax.swing.JSeparator();
+        chx_consRankUsuarios = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
-        chx_relAtendimento = new javax.swing.JCheckBox();
+        chx_relAtendimentoAnalitico = new javax.swing.JCheckBox();
         jSeparator10 = new javax.swing.JSeparator();
-        chx_relCliente = new javax.swing.JCheckBox();
+        chx_relAtendimentoSintetico = new javax.swing.JCheckBox();
         jSeparator11 = new javax.swing.JSeparator();
+        chx_relClienteByLink = new javax.swing.JCheckBox();
+        jSeparator18 = new javax.swing.JSeparator();
+        chx_relClienteBySegmento = new javax.swing.JCheckBox();
+        jSeparator19 = new javax.swing.JSeparator();
+        chx_relUsuarios = new javax.swing.JCheckBox();
+        jSeparator20 = new javax.swing.JSeparator();
+        chx_relInformacoes = new javax.swing.JCheckBox();
+        jSeparator21 = new javax.swing.JSeparator();
         jPanel6 = new javax.swing.JPanel();
         chx_utiEnviarEmail = new javax.swing.JCheckBox();
         jSeparator12 = new javax.swing.JSeparator();
@@ -248,6 +267,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         chx_utiInformacao = new javax.swing.JCheckBox();
         jSeparator16 = new javax.swing.JSeparator();
         chx_utiTipoInformacao = new javax.swing.JCheckBox();
+        jSeparator22 = new javax.swing.JSeparator();
         btn_salvar = new javax.swing.JButton();
         btn_fechar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -447,37 +467,45 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
         chx_consUsuarios.setText("CONSULTA/USUARIOS");
 
+        chx_consRankUsuarios.setText("CONSULTA/RANK DE USUÁRIOS");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chx_consCliente)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chx_consAtendimentosExecutando)
-                            .addComponent(chx_consAtendimentosConcluidos)
-                            .addComponent(chx_consAtendimentosPendentes)
-                            .addComponent(chx_consAtendimentosAbertos)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chx_consContato)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(chx_consUsuarios)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(chx_consRankUsuarios)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(chx_consCliente)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGap(5, 5, 5)
+                                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(chx_consAtendimentosExecutando)
+                                .addComponent(chx_consAtendimentosConcluidos)
+                                .addComponent(chx_consAtendimentosPendentes)
+                                .addComponent(chx_consAtendimentosAbertos)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGap(5, 5, 5)
+                                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(chx_consContato)
+                                .addGroup(jPanel4Layout.createSequentialGroup()
+                                    .addGap(5, 5, 5)
+                                    .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(chx_consUsuarios)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -504,14 +532,26 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                 .addComponent(chx_consUsuarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(255, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chx_consRankUsuarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         abas.addTab("Consulta", jPanel4);
 
-        chx_relAtendimento.setText("RELATORIO/ATENDIMENTO");
+        chx_relAtendimentoAnalitico.setText("RELATORIO/ATENDIMENTO ANALÍTICO");
 
-        chx_relCliente.setText("RELATORIO/CLIENTES");
+        chx_relAtendimentoSintetico.setText("RELATORIO/ATENDIMENTO SINTÉTICO");
+
+        chx_relClienteByLink.setText("RELATORIO/CLIENTE POR LINK");
+
+        chx_relClienteBySegmento.setText("RELATORIO/CLIENTE POR SEGMENTO");
+
+        chx_relUsuarios.setText("RELATORIO/USUÁRIOS");
+
+        chx_relInformacoes.setText("RELATORIO/INFORMAÇÕES");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -520,27 +560,51 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chx_relAtendimento)
-                    .addComponent(chx_relCliente)
+                    .addComponent(chx_relAtendimentoAnalitico)
+                    .addComponent(chx_relAtendimentoSintetico)
+                    .addComponent(chx_relClienteByLink)
+                    .addComponent(chx_relClienteBySegmento)
+                    .addComponent(chx_relUsuarios)
+                    .addComponent(chx_relInformacoes)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator18, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator20, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator21, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(chx_relAtendimento)
+                .addComponent(chx_relAtendimentoAnalitico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(chx_relCliente)
+                .addComponent(chx_relAtendimentoSintetico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(405, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chx_relClienteByLink)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chx_relClienteBySegmento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chx_relUsuarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chx_relInformacoes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         abas.addTab("Relatorios", jPanel5);
@@ -553,14 +617,14 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
         chx_utiTrocaUsuario.setText("UTILITÁRIOS/TROCA DE USUARIO");
 
-        chx_utiInformacao.setText("UTILITÁRIOS/INFORMAÇÃO/INFORMAÇÃO");
+        chx_utiInformacao.setText("UTILITÁRIOS/INFORMAÇÃO");
         chx_utiInformacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_utiInformacaoActionPerformed(evt);
             }
         });
 
-        chx_utiTipoInformacao.setText("UTILITÁRIOS/INFORMAÇÃO/TIPO INFORMAÇÃO");
+        chx_utiTipoInformacao.setText("UTILITÁRIOS/TIPO INFORMAÇÃO");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -575,6 +639,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                             .addComponent(chx_utiInformacao)
                             .addComponent(chx_utiTrocaUsuario)
                             .addComponent(chx_utiPermissoes)
+                            .addComponent(chx_utiTipoInformacao)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,7 +656,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                                 .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(chx_utiTipoInformacao)))
+                        .addComponent(jSeparator22, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -607,6 +672,8 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                 .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chx_utiInformacao)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chx_utiTipoInformacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -619,7 +686,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                 .addComponent(chx_utiPermissoes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addContainerGap(254, Short.MAX_VALUE))
         );
 
         abas.addTab("Ultilitarios", jPanel6);
@@ -832,9 +899,14 @@ public class Frm_Permissoes extends javax.swing.JFrame {
     private javax.swing.JCheckBox chx_consAtendimentosPendentes;
     private javax.swing.JCheckBox chx_consCliente;
     private javax.swing.JCheckBox chx_consContato;
+    private javax.swing.JCheckBox chx_consRankUsuarios;
     private javax.swing.JCheckBox chx_consUsuarios;
-    private javax.swing.JCheckBox chx_relAtendimento;
-    private javax.swing.JCheckBox chx_relCliente;
+    private javax.swing.JCheckBox chx_relAtendimentoAnalitico;
+    private javax.swing.JCheckBox chx_relAtendimentoSintetico;
+    private javax.swing.JCheckBox chx_relClienteByLink;
+    private javax.swing.JCheckBox chx_relClienteBySegmento;
+    private javax.swing.JCheckBox chx_relInformacoes;
+    private javax.swing.JCheckBox chx_relUsuarios;
     private javax.swing.JCheckBox chx_utiEmitirRecibo;
     private javax.swing.JCheckBox chx_utiEnviarEmail;
     private javax.swing.JCheckBox chx_utiInformacao;
@@ -853,7 +925,13 @@ public class Frm_Permissoes extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator16;
+    private javax.swing.JSeparator jSeparator17;
+    private javax.swing.JSeparator jSeparator18;
+    private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator20;
+    private javax.swing.JSeparator jSeparator21;
+    private javax.swing.JSeparator jSeparator22;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;

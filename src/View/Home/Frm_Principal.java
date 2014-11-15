@@ -143,45 +143,72 @@ public class Frm_Principal extends javax.swing.JFrame {
             usuarioDAO = new UsuarioDAO();
             permissoes = new Permissoes();
             permissoes = permissoesDAO.findByTipoUsuario(usuarioDAO.consultaByUsuario(getUsuarioLogado()).getCodtipousuario());
-
-            item_aplicativo.setVisible(permissoes.getCadAplicativo());
-            item_links.setVisible(permissoes.getCadLinks());
-            item_Atendimento.setVisible(permissoes.getCadAtendimento());
-            item_prioridade.setVisible(permissoes.getCadPrioridade());
-            item_origem.setVisible(permissoes.getCadOrigem());
-            item_status.setVisible(permissoes.getCadStatusAtendimento());
-            item_tipoAtendimento.setVisible(permissoes.getCadTipoAtendimento());
-            item_cadCliente.setVisible(permissoes.getCadCliente());
-            item_segmento.setVisible(permissoes.getCadSegmento());
-            item_parcela.setVisible(permissoes.getCadParcela());
-            item_salario.setVisible(permissoes.getCadSalario());
-            item_contato.setVisible(permissoes.getCadContato());
-            item_grupo.setVisible(permissoes.getCadGrupo());
-            item_usuario.setVisible(permissoes.getCadUsuario());
-            item_tipoUsuario.setVisible(permissoes.getCadTipoUsuario());
-            item_Empresa.setVisible(permissoes.getCadEmpresa());
-
-            item_abertos.setVisible(permissoes.getConsAtendimentoAbertos());
-            item_executando.setVisible(permissoes.getConsAtendimentoExecutando());
-            item_concluidos.setVisible(permissoes.getConsAtendimentoConcluidos());
-            item_pendentes.setVisible(permissoes.getConsAtendimentoPendentes());
-            item_Cliente.setVisible(permissoes.getConsClientes());
-            item_contato.setVisible(permissoes.getConsContatos());
-            item_usuario.setVisible(permissoes.getConsUsuarios());
-
-            item_relAtendimento.setVisible(permissoes.getRelAtendimento());
-            item_relClienteByLink.setVisible(permissoes.getRelClientes());
-
-            item_enviaEmail.setVisible(permissoes.getUtiEnviarEmail());
-            item_emiteRecibo.setVisible(permissoes.getUtiEmitirRecibo());
-            item_informacao.setVisible(permissoes.getUtiInformacao());
-            item_tipoInformacao.setVisible(permissoes.getUtiInformacao());
-            item_trocaUsuario.setVisible(permissoes.getUtiTrocaUsuario());
-            item_Permissoes.setVisible(permissoes.getUtiPermissoes());
+            getPermissoesCadastro();
+            getPermissoesConsulta();
+            getPermissoesRelatorios();
+            getPermissoesUtilitarios();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuario: " + getUsuarioLogado());
             Frm_Login f = new Frm_Login();
             this.dispose();
+        }
+    }
+
+    public void getPermissoesCadastro() {
+        item_aplicativo.setVisible(permissoes.getCadAplicativo());
+        item_links.setVisible(permissoes.getCadLinks());
+        item_Atendimento.setVisible(permissoes.getCadAtendimento());
+        pnl_aberturaAtendimento.setVisible(permissoes.getCadAtendimento());
+        item_prioridade.setVisible(permissoes.getCadPrioridade());
+        item_origem.setVisible(permissoes.getCadOrigem());
+        item_status.setVisible(permissoes.getCadStatusAtendimento());
+        item_tipoAtendimento.setVisible(permissoes.getCadTipoAtendimento());
+        item_cadCliente.setVisible(permissoes.getCadCliente());
+        item_segmento.setVisible(permissoes.getCadSegmento());
+        item_parcela.setVisible(permissoes.getCadParcela());
+        item_salario.setVisible(permissoes.getCadSalario());
+        item_contato.setVisible(permissoes.getCadContato());
+        item_grupo.setVisible(permissoes.getCadGrupo());
+        item_usuario.setVisible(permissoes.getCadUsuario());
+        item_tipoUsuario.setVisible(permissoes.getCadTipoUsuario());
+        item_Empresa.setVisible(permissoes.getCadEmpresa());
+    }
+
+    public void getPermissoesConsulta() {
+        item_abertos.setVisible(permissoes.getConsAtendimentoAbertos());
+        item_executando.setVisible(permissoes.getConsAtendimentoExecutando());
+        item_concluidos.setVisible(permissoes.getConsAtendimentoConcluidos());
+        item_pendentes.setVisible(permissoes.getConsAtendimentoPendentes());
+        item_ConsCliente.setVisible(permissoes.getConsClientes());
+        pnl_consClientes.setVisible(permissoes.getConsClientes());
+        item_ConsContatos.setVisible(permissoes.getConsContatos());
+        pnl_consContatos.setVisible(permissoes.getConsContatos());
+        item_ConUsuarios.setVisible(permissoes.getConsUsuarios());
+        item_ConsRankUsuarios.setVisible(permissoes.getConsRankUsuarios());
+        pnl_rankUsuarios.setVisible(permissoes.getConsRankUsuarios());
+    }
+
+    public void getPermissoesUtilitarios() {
+        item_enviaEmail.setVisible(permissoes.getUtiEnviarEmail());
+        item_emiteRecibo.setVisible(permissoes.getUtiEmitirRecibo());
+        item_informacao.setVisible(permissoes.getUtiInformacao());
+        pnl_lancaInformacao.setVisible(permissoes.getUtiInformacao());
+        item_tipoInformacao.setVisible(permissoes.getUtiTipoInformacao());
+        item_trocaUsuario.setVisible(permissoes.getUtiTrocaUsuario());
+        item_Permissoes.setVisible(permissoes.getUtiPermissoes());
+    }
+
+    public void getPermissoesRelatorios() {
+        item_relAtendimentoAnalitico.setVisible(permissoes.getRelAtendimentoAnalitico());
+        item_relAtendimentoSintetico.setVisible(permissoes.getRelAtendimentoSintetico());
+        item_relClienteByLink.setVisible(permissoes.getRelClientesByLink());
+        item_relClienteBySegmento.setVisible(permissoes.getRelClientesBySegmento());
+        item_relInformacoes.setVisible(permissoes.getRelInformacoes());
+        item_relUsuario.setVisible(permissoes.getRelUsuarios());
+        if ((permissoes.getRelAtendimentoAnalitico() == false) && (permissoes.getRelAtendimentoSintetico() == false)
+                && (permissoes.getRelClientesByLink() == false) && (permissoes.getRelClientesBySegmento() == false)
+                && (permissoes.getRelInformacoes() == false) && (permissoes.getRelUsuarios() == false)) {
+            Menu_Relatorios.setVisible(false);
         }
     }
 
@@ -283,22 +310,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         btn_salvar = new javax.swing.JButton();
         btn_fechar = new javax.swing.JButton();
         pnl_atalhos = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        pnl_cadCliente = new javax.swing.JPanel();
         atalhoCadastroCliente = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        pnl_aberturaAtendimento = new javax.swing.JPanel();
         atalhoAbrirAtendimento = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        pnl_consClientes = new javax.swing.JPanel();
         atalhoConsultarClientes = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        pnl_consContatos = new javax.swing.JPanel();
         atalhoConsultarContatos = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        pnl_rankUsuarios = new javax.swing.JPanel();
         atalhoRankUsuários = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        pnl_lancaInformacao = new javax.swing.JPanel();
         atalhoLancarInformacao = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         Menu_barra = new javax.swing.JMenuBar();
@@ -319,29 +346,28 @@ public class Frm_Principal extends javax.swing.JFrame {
         item_tipoAtendimento = new javax.swing.JMenuItem();
         item_tipoUsuario = new javax.swing.JMenuItem();
         item_usuario = new javax.swing.JMenuItem();
-        Menu_Consulta = new javax.swing.JMenu();
+        item_rankUsuarios = new javax.swing.JMenu();
         menuI_Atendimentos = new javax.swing.JMenu();
         item_abertos = new javax.swing.JMenuItem();
         item_executando = new javax.swing.JMenuItem();
         item_concluidos = new javax.swing.JMenuItem();
         item_pendentes = new javax.swing.JMenuItem();
-        item_Cliente = new javax.swing.JMenuItem();
-        menuI_contatos = new javax.swing.JMenuItem();
-        menuI_Usuarios = new javax.swing.JMenuItem();
+        item_ConsCliente = new javax.swing.JMenuItem();
+        item_ConsContatos = new javax.swing.JMenuItem();
+        item_ConUsuarios = new javax.swing.JMenuItem();
+        item_ConsRankUsuarios = new javax.swing.JMenuItem();
         Menu_Relatorios = new javax.swing.JMenu();
-        menuI_Cliente = new javax.swing.JMenu();
+        item_relAtendimentoAnalitico = new javax.swing.JMenuItem();
+        item_relAtendimentoSintetico = new javax.swing.JMenuItem();
         item_relClienteByLink = new javax.swing.JMenuItem();
         item_relClienteBySegmento = new javax.swing.JMenuItem();
-        menuI_Atendimento = new javax.swing.JMenu();
-        item_relAtendimento = new javax.swing.JMenuItem();
-        item_relAtendimento1 = new javax.swing.JMenuItem();
         item_relUsuario = new javax.swing.JMenuItem();
-        item_relInformacao = new javax.swing.JMenuItem();
+        item_relInformacoes = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JPopupMenu.Separator();
         Menu_Utilitários = new javax.swing.JMenu();
         item_AlterarSenha = new javax.swing.JMenuItem();
         item_enviaEmail = new javax.swing.JMenuItem();
         item_emiteRecibo = new javax.swing.JMenuItem();
-        menuI_Informacao = new javax.swing.JMenu();
         item_informacao = new javax.swing.JMenuItem();
         item_tipoInformacao = new javax.swing.JMenuItem();
         item_trocaUsuario = new javax.swing.JMenuItem();
@@ -620,22 +646,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Cadastro de Cliente");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_cadClienteLayout = new javax.swing.GroupLayout(pnl_cadCliente);
+        pnl_cadCliente.setLayout(pnl_cadClienteLayout);
+        pnl_cadClienteLayout.setHorizontalGroup(
+            pnl_cadClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_cadClienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(pnl_cadClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_cadClienteLayout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jLabel8))
                     .addComponent(atalhoCadastroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnl_cadClienteLayout.setVerticalGroup(
+            pnl_cadClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_cadClienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atalhoCadastroCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -655,22 +681,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Abrir Atendimento");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_aberturaAtendimentoLayout = new javax.swing.GroupLayout(pnl_aberturaAtendimento);
+        pnl_aberturaAtendimento.setLayout(pnl_aberturaAtendimentoLayout);
+        pnl_aberturaAtendimentoLayout.setHorizontalGroup(
+            pnl_aberturaAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_aberturaAtendimentoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(pnl_aberturaAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_aberturaAtendimentoLayout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jLabel9))
                     .addComponent(atalhoAbrirAtendimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        pnl_aberturaAtendimentoLayout.setVerticalGroup(
+            pnl_aberturaAtendimentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_aberturaAtendimentoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atalhoAbrirAtendimento, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -690,22 +716,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Consultar Clientes");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_consClientesLayout = new javax.swing.GroupLayout(pnl_consClientes);
+        pnl_consClientes.setLayout(pnl_consClientesLayout);
+        pnl_consClientesLayout.setHorizontalGroup(
+            pnl_consClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_consClientesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(pnl_consClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_consClientesLayout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jLabel11))
                     .addComponent(atalhoConsultarClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        pnl_consClientesLayout.setVerticalGroup(
+            pnl_consClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_consClientesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atalhoConsultarClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -725,22 +751,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Consultar Contatos");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_consContatosLayout = new javax.swing.GroupLayout(pnl_consContatos);
+        pnl_consContatos.setLayout(pnl_consContatosLayout);
+        pnl_consContatosLayout.setHorizontalGroup(
+            pnl_consContatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_consContatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(pnl_consContatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_consContatosLayout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jLabel14))
                     .addComponent(atalhoConsultarContatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        pnl_consContatosLayout.setVerticalGroup(
+            pnl_consContatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_consContatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atalhoConsultarContatos, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -760,22 +786,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Rank de Usuários");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_rankUsuariosLayout = new javax.swing.GroupLayout(pnl_rankUsuarios);
+        pnl_rankUsuarios.setLayout(pnl_rankUsuariosLayout);
+        pnl_rankUsuariosLayout.setHorizontalGroup(
+            pnl_rankUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_rankUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(pnl_rankUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_rankUsuariosLayout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jLabel16))
                     .addComponent(atalhoRankUsuários, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        pnl_rankUsuariosLayout.setVerticalGroup(
+            pnl_rankUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_rankUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atalhoRankUsuários, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -795,22 +821,22 @@ public class Frm_Principal extends javax.swing.JFrame {
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Lançar Informação");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_lancaInformacaoLayout = new javax.swing.GroupLayout(pnl_lancaInformacao);
+        pnl_lancaInformacao.setLayout(pnl_lancaInformacaoLayout);
+        pnl_lancaInformacaoLayout.setHorizontalGroup(
+            pnl_lancaInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_lancaInformacaoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(pnl_lancaInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnl_lancaInformacaoLayout.createSequentialGroup()
                         .addGap(0, 1, Short.MAX_VALUE)
                         .addComponent(jLabel17))
                     .addComponent(atalhoLancarInformacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
+        pnl_lancaInformacaoLayout.setVerticalGroup(
+            pnl_lancaInformacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_lancaInformacaoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(atalhoLancarInformacao, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -824,17 +850,17 @@ public class Frm_Principal extends javax.swing.JFrame {
             pnl_atalhosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_atalhosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_cadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_aberturaAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_consClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_consContatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_rankUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnl_lancaInformacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnl_atalhosLayout.setVerticalGroup(
@@ -842,12 +868,12 @@ public class Frm_Principal extends javax.swing.JFrame {
             .addGroup(pnl_atalhosLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(pnl_atalhosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnl_cadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_aberturaAtendimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_consClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_consContatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_rankUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnl_lancaInformacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         Menu_Cadastro.setText("Cadastros");
@@ -982,7 +1008,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(Menu_Cadastro);
 
-        Menu_Consulta.setText("Consultas");
+        item_rankUsuarios.setText("Consultas");
 
         menuI_Atendimentos.setText("Atendimentos");
 
@@ -1018,75 +1044,75 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         menuI_Atendimentos.add(item_pendentes);
 
-        Menu_Consulta.add(menuI_Atendimentos);
+        item_rankUsuarios.add(menuI_Atendimentos);
 
-        item_Cliente.setText("Clientes");
-        item_Cliente.addActionListener(new java.awt.event.ActionListener() {
+        item_ConsCliente.setText("Clientes");
+        item_ConsCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_ClienteActionPerformed(evt);
+                item_ConsClienteActionPerformed(evt);
             }
         });
-        Menu_Consulta.add(item_Cliente);
+        item_rankUsuarios.add(item_ConsCliente);
 
-        menuI_contatos.setText("Contatos");
-        menuI_contatos.addActionListener(new java.awt.event.ActionListener() {
+        item_ConsContatos.setText("Contatos");
+        item_ConsContatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuI_contatosActionPerformed(evt);
+                item_ConsContatosActionPerformed(evt);
             }
         });
-        Menu_Consulta.add(menuI_contatos);
+        item_rankUsuarios.add(item_ConsContatos);
 
-        menuI_Usuarios.setText("Usuários");
-        menuI_Usuarios.addActionListener(new java.awt.event.ActionListener() {
+        item_ConUsuarios.setText("Usuários");
+        item_ConUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuI_UsuariosActionPerformed(evt);
+                item_ConUsuariosActionPerformed(evt);
             }
         });
-        Menu_Consulta.add(menuI_Usuarios);
+        item_rankUsuarios.add(item_ConUsuarios);
 
-        Menu_barra.add(Menu_Consulta);
+        item_ConsRankUsuarios.setText("Rank de Usuarios");
+        item_ConsRankUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_ConsRankUsuariosActionPerformed(evt);
+            }
+        });
+        item_rankUsuarios.add(item_ConsRankUsuarios);
+
+        Menu_barra.add(item_rankUsuarios);
 
         Menu_Relatorios.setText("Relatorios");
 
-        menuI_Cliente.setText("Cliente");
+        item_relAtendimentoAnalitico.setText("Atendimento Analítico");
+        item_relAtendimentoAnalitico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relAtendimentoAnaliticoActionPerformed(evt);
+            }
+        });
+        Menu_Relatorios.add(item_relAtendimentoAnalitico);
 
-        item_relClienteByLink.setText("Por Link");
+        item_relAtendimentoSintetico.setText("Atendimento Sintético");
+        item_relAtendimentoSintetico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                item_relAtendimentoSinteticoActionPerformed(evt);
+            }
+        });
+        Menu_Relatorios.add(item_relAtendimentoSintetico);
+
+        item_relClienteByLink.setText("Cliente por Link");
         item_relClienteByLink.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_relClienteByLinkActionPerformed(evt);
             }
         });
-        menuI_Cliente.add(item_relClienteByLink);
+        Menu_Relatorios.add(item_relClienteByLink);
 
-        item_relClienteBySegmento.setText("Por Segmento");
+        item_relClienteBySegmento.setText("Cliente por Segmento");
         item_relClienteBySegmento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_relClienteBySegmentoActionPerformed(evt);
             }
         });
-        menuI_Cliente.add(item_relClienteBySegmento);
-
-        Menu_Relatorios.add(menuI_Cliente);
-
-        menuI_Atendimento.setText("Atendimento");
-
-        item_relAtendimento.setText("Analitico");
-        item_relAtendimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_relAtendimentoActionPerformed(evt);
-            }
-        });
-        menuI_Atendimento.add(item_relAtendimento);
-
-        item_relAtendimento1.setText("Sintetico");
-        item_relAtendimento1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_relAtendimento1ActionPerformed(evt);
-            }
-        });
-        menuI_Atendimento.add(item_relAtendimento1);
-
-        Menu_Relatorios.add(menuI_Atendimento);
+        Menu_Relatorios.add(item_relClienteBySegmento);
 
         item_relUsuario.setText("Usuários");
         item_relUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -1096,13 +1122,14 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         Menu_Relatorios.add(item_relUsuario);
 
-        item_relInformacao.setText("Informação");
-        item_relInformacao.addActionListener(new java.awt.event.ActionListener() {
+        item_relInformacoes.setText("Informações");
+        item_relInformacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                item_relInformacaoActionPerformed(evt);
+                item_relInformacoesActionPerformed(evt);
             }
         });
-        Menu_Relatorios.add(item_relInformacao);
+        Menu_Relatorios.add(item_relInformacoes);
+        Menu_Relatorios.add(jSeparator17);
 
         Menu_barra.add(Menu_Relatorios);
 
@@ -1132,15 +1159,13 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         Menu_Utilitários.add(item_emiteRecibo);
 
-        menuI_Informacao.setText("Informação");
-
-        item_informacao.setText("Informação");
+        item_informacao.setText("Lançar Informação");
         item_informacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_informacaoActionPerformed(evt);
             }
         });
-        menuI_Informacao.add(item_informacao);
+        Menu_Utilitários.add(item_informacao);
 
         item_tipoInformacao.setText("Tipo Informação");
         item_tipoInformacao.addActionListener(new java.awt.event.ActionListener() {
@@ -1148,9 +1173,7 @@ public class Frm_Principal extends javax.swing.JFrame {
                 item_tipoInformacaoActionPerformed(evt);
             }
         });
-        menuI_Informacao.add(item_tipoInformacao);
-
-        Menu_Utilitários.add(menuI_Informacao);
+        Menu_Utilitários.add(item_tipoInformacao);
 
         item_trocaUsuario.setText("Trocar de Usuário");
         item_trocaUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -1214,9 +1237,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadTipoUsuario c = new Frm_CadTipoUsuario();
     }//GEN-LAST:event_item_tipoUsuarioActionPerformed
 
-    private void menuI_UsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_UsuariosActionPerformed
+    private void item_ConUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConUsuariosActionPerformed
         Frm_ConUsuarios f = new Frm_ConUsuarios();
-    }//GEN-LAST:event_menuI_UsuariosActionPerformed
+    }//GEN-LAST:event_item_ConUsuariosActionPerformed
 
     private void item_aplicativoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_aplicativoActionPerformed
         Frm_CadAplicativo f = new Frm_CadAplicativo();
@@ -1267,9 +1290,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadGrupo f = new Frm_CadGrupo();
     }//GEN-LAST:event_item_grupoActionPerformed
 
-    private void menuI_contatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuI_contatosActionPerformed
+    private void item_ConsContatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConsContatosActionPerformed
         Frm_ConContatos f = new Frm_ConContatos();
-    }//GEN-LAST:event_menuI_contatosActionPerformed
+    }//GEN-LAST:event_item_ConsContatosActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == Event.ESCAPE) {
@@ -1289,20 +1312,20 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_CadSalario f = new Frm_CadSalario();
     }//GEN-LAST:event_item_salarioActionPerformed
 
-    private void item_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ClienteActionPerformed
+    private void item_ConsClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConsClienteActionPerformed
         Frm_ConClientes f = new Frm_ConClientes();
-    }//GEN-LAST:event_item_ClienteActionPerformed
+    }//GEN-LAST:event_item_ConsClienteActionPerformed
 
-    private void item_relAtendimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoActionPerformed
+    private void item_relAtendimentoAnaliticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoAnaliticoActionPerformed
         Frm_RelAtendimento f = new Frm_RelAtendimento("ANALITICO");
-    }//GEN-LAST:event_item_relAtendimentoActionPerformed
+    }//GEN-LAST:event_item_relAtendimentoAnaliticoActionPerformed
 
     private void item_emiteReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_emiteReciboActionPerformed
         Frm_RelReciboCliente f = new Frm_RelReciboCliente();
     }//GEN-LAST:event_item_emiteReciboActionPerformed
 
     private void item_enviaEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_enviaEmailActionPerformed
-        Frm_TestaEmail f = new Frm_TestaEmail();
+        Frm_EnviarEmail f = new Frm_EnviarEmail();
     }//GEN-LAST:event_item_enviaEmailActionPerformed
 
     private void item_abertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_abertosActionPerformed
@@ -1416,9 +1439,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         listaAtendimentos("ABERTO");
     }//GEN-LAST:event_lb_qtdeAbertosMousePressed
 
-    private void item_relAtendimento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimento1ActionPerformed
+    private void item_relAtendimentoSinteticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoSinteticoActionPerformed
         Frm_RelAtendimento f = new Frm_RelAtendimento("SINTETICO");
-    }//GEN-LAST:event_item_relAtendimento1ActionPerformed
+    }//GEN-LAST:event_item_relAtendimentoSinteticoActionPerformed
 
     private void item_relUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relUsuarioActionPerformed
         gerarRelatorioUsuarios("Usuários", "src/Relatorios/Rel_Usuarios.jasper");
@@ -1428,9 +1451,9 @@ public class Frm_Principal extends javax.swing.JFrame {
         Frm_RelClienteByLink f = new Frm_RelClienteByLink();
     }//GEN-LAST:event_item_relClienteByLinkActionPerformed
 
-    private void item_relInformacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relInformacaoActionPerformed
+    private void item_relInformacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relInformacoesActionPerformed
         Frm_RelInformacao f = new Frm_RelInformacao();
-    }//GEN-LAST:event_item_relInformacaoActionPerformed
+    }//GEN-LAST:event_item_relInformacoesActionPerformed
 
     private void item_AlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_AlterarSenhaActionPerformed
         pnl_alteraSenha.setVisible(true);
@@ -1472,6 +1495,10 @@ public class Frm_Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_TipoActionPerformed
 
+    private void item_ConsRankUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConsRankUsuariosActionPerformed
+        Frm_ConRankUsuarios f = new Frm_ConRankUsuarios();
+    }//GEN-LAST:event_item_ConsRankUsuariosActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1509,7 +1536,6 @@ public class Frm_Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Menu_Cadastro;
-    private javax.swing.JMenu Menu_Consulta;
     private javax.swing.JMenu Menu_Relatorios;
     private javax.swing.JMenu Menu_Utilitários;
     private javax.swing.JMenuBar Menu_barra;
@@ -1523,7 +1549,10 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JButton btn_salvar;
     private javax.swing.JMenuItem item_AlterarSenha;
     private javax.swing.JMenuItem item_Atendimento;
-    private javax.swing.JMenuItem item_Cliente;
+    private javax.swing.JMenuItem item_ConUsuarios;
+    private javax.swing.JMenuItem item_ConsCliente;
+    private javax.swing.JMenuItem item_ConsContatos;
+    private javax.swing.JMenuItem item_ConsRankUsuarios;
     private javax.swing.JMenuItem item_Empresa;
     private javax.swing.JMenuItem item_Permissoes;
     private javax.swing.JMenuItem item_abertos;
@@ -1541,11 +1570,12 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem item_parcela;
     private javax.swing.JMenuItem item_pendentes;
     private javax.swing.JMenuItem item_prioridade;
-    private javax.swing.JMenuItem item_relAtendimento;
-    private javax.swing.JMenuItem item_relAtendimento1;
+    private javax.swing.JMenu item_rankUsuarios;
+    private javax.swing.JMenuItem item_relAtendimentoAnalitico;
+    private javax.swing.JMenuItem item_relAtendimentoSintetico;
     private javax.swing.JMenuItem item_relClienteByLink;
     private javax.swing.JMenuItem item_relClienteBySegmento;
-    private javax.swing.JMenuItem item_relInformacao;
+    private javax.swing.JMenuItem item_relInformacoes;
     private javax.swing.JMenuItem item_relUsuario;
     private javax.swing.JMenuItem item_salario;
     private javax.swing.JMenuItem item_segmento;
@@ -1567,12 +1597,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPopupMenu.Separator jSeparator17;
     private javax.swing.JLabel lb_abertos;
     private javax.swing.JLabel lb_boasVindas;
     private javax.swing.JLabel lb_boasVindas1;
@@ -1580,15 +1605,16 @@ public class Frm_Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lb_qtdeConcluidos;
     private javax.swing.JLabel lb_qtdeExecutando;
     private javax.swing.JLabel lb_qtdePendentes;
-    private javax.swing.JMenu menuI_Atendimento;
     private javax.swing.JMenu menuI_Atendimentos;
-    private javax.swing.JMenu menuI_Cliente;
-    private javax.swing.JMenu menuI_Informacao;
-    private javax.swing.JMenuItem menuI_Usuarios;
-    private javax.swing.JMenuItem menuI_contatos;
     private javax.swing.JPanel pnl_Rodape;
+    private javax.swing.JPanel pnl_aberturaAtendimento;
     private javax.swing.JPanel pnl_alteraSenha;
     private javax.swing.JPanel pnl_atalhos;
+    private javax.swing.JPanel pnl_cadCliente;
+    private javax.swing.JPanel pnl_consClientes;
+    private javax.swing.JPanel pnl_consContatos;
+    private javax.swing.JPanel pnl_lancaInformacao;
+    private javax.swing.JPanel pnl_rankUsuarios;
     private javax.swing.JTextField txt_Tipo;
     private javax.swing.JPasswordField txt_antigaSenha;
     private javax.swing.JPasswordField txt_confirmaSenha;

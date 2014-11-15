@@ -38,11 +38,16 @@ public class Permissoes implements Serializable {
     private boolean consAtendimentoExecutando;
     private boolean consAtendimentoConcluidos;
     private boolean consAtendimentoPendentes;
-    private boolean consClientes;
     private boolean consContatos;
     private boolean consUsuarios;
-    private boolean RelAtendimento;
-    private boolean RelClientes;
+    private boolean consClientes;
+    private boolean consRankUsuarios;
+    private boolean RelAtendimentoAnalitico;
+    private boolean RelAtendimentoSintetico;
+    private boolean RelClientesBySegmento;
+    private boolean RelClientesByLink;
+    private boolean RelUsuarios;
+    private boolean RelInformacoes;
     private boolean UtiEnviarEmail;
     private boolean UtiEmitirRecibo;
     private boolean UtiInformacao;
@@ -52,20 +57,20 @@ public class Permissoes implements Serializable {
     @ManyToOne
     private TipoUsuario codTipoUsuario;
 
-    public TipoUsuario getcodTipoUsuario() {
-        return codTipoUsuario;
-    }
-
-    public void setcodTipoUsuario(TipoUsuario tipoUsuario) {
-        this.codTipoUsuario = tipoUsuario;
-    }
-    
     public int getCodPermissao() {
         return codPermissao;
     }
 
     public void setCodPermissao(int codPermissao) {
         this.codPermissao = codPermissao;
+    }
+
+    public boolean getConsClientes() {
+        return consClientes;
+    }
+
+    public void setConsClientes(boolean consClientes) {
+        this.consClientes = consClientes;
     }
 
     public boolean getCadAplicativo() {
@@ -228,14 +233,6 @@ public class Permissoes implements Serializable {
         this.consAtendimentoPendentes = consAtendimentoPendentes;
     }
 
-    public boolean getConsClientes() {
-        return consClientes;
-    }
-
-    public void setConsClientes(boolean consClientes) {
-        this.consClientes = consClientes;
-    }
-
     public boolean getConsContatos() {
         return consContatos;
     }
@@ -252,20 +249,60 @@ public class Permissoes implements Serializable {
         this.consUsuarios = consUsuarios;
     }
 
-    public boolean getRelAtendimento() {
-        return RelAtendimento;
+    public boolean getConsRankUsuarios() {
+        return consRankUsuarios;
     }
 
-    public void setRelAtendimento(boolean RelAtendimento) {
-        this.RelAtendimento = RelAtendimento;
+    public void setConsRankUsuarios(boolean consRankUsuarios) {
+        this.consRankUsuarios = consRankUsuarios;
     }
 
-    public boolean getRelClientes() {
-        return RelClientes;
+    public boolean getRelAtendimentoAnalitico() {
+        return RelAtendimentoAnalitico;
     }
 
-    public void setRelClientes(boolean RelClientes) {
-        this.RelClientes = RelClientes;
+    public void setRelAtendimentoAnalitico(boolean RelAtendimentoAnalitico) {
+        this.RelAtendimentoAnalitico = RelAtendimentoAnalitico;
+    }
+
+    public boolean getRelAtendimentoSintetico() {
+        return RelAtendimentoSintetico;
+    }
+
+    public void setRelAtendimentoSintetico(boolean RelAtendimentoSintetico) {
+        this.RelAtendimentoSintetico = RelAtendimentoSintetico;
+    }
+
+    public boolean getRelClientesBySegmento() {
+        return RelClientesBySegmento;
+    }
+
+    public void setRelClientesBySegmento(boolean RelClientesBySegmento) {
+        this.RelClientesBySegmento = RelClientesBySegmento;
+    }
+
+    public boolean getRelClientesByLink() {
+        return RelClientesByLink;
+    }
+
+    public void setRelClientesByLink(boolean RelClientesByLink) {
+        this.RelClientesByLink = RelClientesByLink;
+    }
+
+    public boolean getRelUsuarios() {
+        return RelUsuarios;
+    }
+
+    public void setRelUsuarios(boolean RelUsuarios) {
+        this.RelUsuarios = RelUsuarios;
+    }
+
+    public boolean getRelInformacoes() {
+        return RelInformacoes;
+    }
+
+    public void setRelInformacoes(boolean RelInformacoes) {
+        this.RelInformacoes = RelInformacoes;
     }
 
     public boolean getUtiEnviarEmail() {
@@ -315,7 +352,14 @@ public class Permissoes implements Serializable {
     public void setUtiPermissoes(boolean UtiPermissoes) {
         this.UtiPermissoes = UtiPermissoes;
     }
-    
+
+    public TipoUsuario getCodTipoUsuario() {
+        return codTipoUsuario;
+    }
+
+    public void setCodTipoUsuario(TipoUsuario codTipoUsuario) {
+        this.codTipoUsuario = codTipoUsuario;
+    }
 
     @Override
     public int hashCode() {
