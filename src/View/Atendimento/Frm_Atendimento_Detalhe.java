@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Atendimento;
 
 import Model.Atendimento;
@@ -10,10 +5,6 @@ import Util.Classes.Data;
 import View.Consultas.Frm_ConAtendimento;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
 
     public Frm_Atendimento_Detalhe(Atendimento atendimento) {
@@ -259,7 +250,7 @@ public class Frm_Atendimento_Detalhe extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(txt_probPendencia);
 
-        jLabel15.setText("Pendencia *:");
+        jLabel15.setText("Pendência *:");
 
         txt_probInformado.setColumns(5);
         txt_probInformado.setLineWrap(true);

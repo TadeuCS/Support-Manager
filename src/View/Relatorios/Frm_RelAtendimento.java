@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Relatorios;
 
 import Controller.ClienteDAO;
@@ -25,10 +20,6 @@ import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_RelAtendimento extends javax.swing.JFrame {
 
     Data data;
@@ -46,9 +37,9 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
         if (tipo.equals("ANALITICO") == false) {
             pnl_dadosRelAnalitico.setVisible(false);
             setSize(508, 150);
-            setTitle("Relatorio de Atendimento Sintético");
+            setTitle("Relatório de Atendimento Sintético");
         } else {
-            setTitle("Relatorio de Atendimento Analítico");
+            setTitle("Relatório de Atendimento Analítico");
         }
         AutoComplete.decorate(cbx_cliente);
         carregaClientes();
@@ -70,7 +61,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                 cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa, tipoUsuario).get(i).getUsuario());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar usuários");
         }
     }
 
@@ -83,7 +74,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                 cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Clientes");
         }
     }
 
@@ -95,7 +86,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                 cbx_status.addItem(statusAtendimentoDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Status");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Status");
         }
     }
 

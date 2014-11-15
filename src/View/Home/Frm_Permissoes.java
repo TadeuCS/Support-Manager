@@ -344,14 +344,14 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             }
         });
 
-        chx_cadTipoUsuario.setText("CADASTRO/USUARIO/TIPO USUARIO");
+        chx_cadTipoUsuario.setText("CADASTRO/USUÁRIO/TIPO USUÁRIO");
         chx_cadTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadTipoUsuarioActionPerformed(evt);
             }
         });
 
-        chx_cadUsuario.setText("CADASTRO/USUARIO/USUARIO");
+        chx_cadUsuario.setText("CADASTRO/USUÁRIO/USUÁRIO");
         chx_cadUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadUsuarioActionPerformed(evt);
@@ -457,7 +457,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
         chx_consAtendimentosExecutando.setText("CONSULTA/ATENDIMENTO/EXECUTANDO");
 
-        chx_consAtendimentosConcluidos.setText("CONSULTA/ATENDIMENTO/CONCLUIDOS");
+        chx_consAtendimentosConcluidos.setText("CONSULTA/ATENDIMENTO/CONCLUÍDOS");
 
         chx_consAtendimentosPendentes.setText("CONSULTA/ATENDIMENTO/PENDENTES");
 
@@ -465,7 +465,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
         chx_consContato.setText("CONSULTA/CONTATO");
 
-        chx_consUsuarios.setText("CONSULTA/USUARIOS");
+        chx_consUsuarios.setText("CONSULTA/USUÁRIOS");
 
         chx_consRankUsuarios.setText("CONSULTA/RANK DE USUÁRIOS");
 
@@ -607,15 +607,15 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                 .addContainerGap(249, Short.MAX_VALUE))
         );
 
-        abas.addTab("Relatorios", jPanel5);
+        abas.addTab("Relatórios", jPanel5);
 
-        chx_utiEnviarEmail.setText("UTILITÁRIOS/ENVIAR EMAIL");
+        chx_utiEnviarEmail.setText("UTILITÁRIOS/ENVIAR E-MAIL");
 
         chx_utiEmitirRecibo.setText("UTILITÁRIOS/EMITIR RECIBO");
 
         chx_utiPermissoes.setText("UTILIÁRIOS/PARAMETRIZAÇÃO");
 
-        chx_utiTrocaUsuario.setText("UTILITÁRIOS/TROCA DE USUARIO");
+        chx_utiTrocaUsuario.setText("UTILITÁRIOS/TROCA DE USUÁRIO");
 
         chx_utiInformacao.setText("UTILITÁRIOS/INFORMAÇÃO");
         chx_utiInformacao.addActionListener(new java.awt.event.ActionListener() {
@@ -689,7 +689,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
                 .addContainerGap(254, Short.MAX_VALUE))
         );
 
-        abas.addTab("Ultilitarios", jPanel6);
+        abas.addTab("Utilitários", jPanel6);
 
         btn_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/salvar.png"))); // NOI18N
         btn_salvar.setText("Salvar");
@@ -707,7 +707,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Tipo Usuario:");
+        jLabel1.setText("Tipo Usuário:");
 
         btn_carregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/carregar.png"))); // NOI18N
         btn_carregar.setText("Carregar");

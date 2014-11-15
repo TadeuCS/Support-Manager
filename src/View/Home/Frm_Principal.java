@@ -148,7 +148,7 @@ public class Frm_Principal extends javax.swing.JFrame {
             getPermissoesRelatorios();
             getPermissoesUtilitarios();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuario: " + getUsuarioLogado());
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar Permissões do usuário: " + getUsuarioLogado());
             Frm_Login f = new Frm_Login();
             this.dispose();
         }
@@ -1080,7 +1080,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(item_rankUsuarios);
 
-        Menu_Relatorios.setText("Relatorios");
+        Menu_Relatorios.setText("Relatórios");
 
         item_relAtendimentoAnalitico.setText("Atendimento Analítico");
         item_relAtendimentoAnalitico.addActionListener(new java.awt.event.ActionListener() {
@@ -1133,7 +1133,7 @@ public class Frm_Principal extends javax.swing.JFrame {
 
         Menu_barra.add(Menu_Relatorios);
 
-        Menu_Utilitários.setText("Utilitarios");
+        Menu_Utilitários.setText("Utilitários");
 
         item_AlterarSenha.setText("Alterar Senha");
         item_AlterarSenha.addActionListener(new java.awt.event.ActionListener() {
@@ -1143,7 +1143,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         Menu_Utilitários.add(item_AlterarSenha);
 
-        item_enviaEmail.setText("Enviar Email");
+        item_enviaEmail.setText("Enviar E-mail");
         item_enviaEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_enviaEmailActionPerformed(evt);

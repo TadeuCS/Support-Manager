@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Atendimento;
 
 import Controller.AtendimentoDAO;
@@ -22,10 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
 
     private static int codigoAtendimento;
@@ -204,7 +195,7 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                 EmpresaDAO empresaDAO = new EmpresaDAO();
                 Empresa empresa = new Empresa();
                 List<String> destinatario = new ArrayList<String>();
-                lb_status.setText("Enviando Email...");
+                lb_status.setText("Enviando E-mail...");
                 try {
                     destinatario.add(atendimento.getCodcliente().getEmail());
                     empresa = empresaDAO.findByNomeFantasia("Olivet Sistemas");
@@ -230,13 +221,13 @@ public class Frm_Atendimento_Encerramento extends javax.swing.JFrame {
                                     empresa.getNomeFantasia(),
                                     empresa.getTelefoneList().get(0).getTelefone()),
                             null);
-                    lb_status.setText("Email enviado com sucesso!");
+                    lb_status.setText("E-mail enviado com sucesso!");
                     limpaCampos();
                     Thread.sleep(1000);
                     lb_status.setText(null);
                     dispose();
                 } catch (Exception e) {
-                    lb_status.setText("Erro ao enviar Email.");
+                    lb_status.setText("Erro ao enviar E-mail.");
                     JOptionPane.showMessageDialog(null, e.getMessage());
                     lb_status.setText(null);
                 }

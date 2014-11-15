@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Atendimento;
 
 import Controller.AtendimentoDAO;
@@ -39,10 +34,6 @@ import javax.persistence.NoResultException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
     Atendimento atendimento;
@@ -112,7 +103,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 cbx_usuario.addItem(usuarioDAO.listaUsuariosDesbloqueados(statusPessoa, tipoUsuario).get(i).getUsuario());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar usuários");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Usuários");
         }
     }
 
@@ -125,7 +116,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 cbx_cliente.addItem(clienteDAO.listaByStatus(statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO")).get(i).getNomeFantasia());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Clientes");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Clientes");
         }
     }
 
@@ -137,7 +128,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 cbx_tipoAtendimento.addItem(tipoAtendimentoDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Tipos de Usuários");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Tipos de Usuários");
         }
     }
 
@@ -149,7 +140,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 cbx_origem.addItem(origemDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Origens");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Origens");
         }
     }
 
@@ -161,7 +152,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 cbx_prioridade.addItem(prioridadeDAO.lista().get(i).getDescricao());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Prioridades");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Prioridades");
         }
     }
 
@@ -309,7 +300,7 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                 EmpresaDAO empresaDAO = new EmpresaDAO();
                 Empresa empresa = new Empresa();
                 List<String> destinatario = new ArrayList<String>();
-                lb_status.setText("Enviando Email...");
+                lb_status.setText("Enviando E-mail...");
                 btn_salvar.setEnabled(false);
                 try {
                     destinatario.add(atendimento.getCodcliente().getEmail());
@@ -332,11 +323,11 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
                                     empresa.getNomeFantasia(),
                                     empresa.getTelefoneList().get(0).getTelefone()),
                             null);
-                    lb_status.setText("Email enviado com sucesso!");
+                    lb_status.setText("E-mail enviado com sucesso!");
                     Thread.sleep(1000);
                     lb_status.setText(null);
                 } catch (Exception e) {
-                    lb_status.setText("Erro ao enviar Email.");
+                    lb_status.setText("Erro ao enviar E-mail.");
                     JOptionPane.showMessageDialog(null, "Emitente não cadastrado!");
                     lb_status.setText(null);
                 }finally{

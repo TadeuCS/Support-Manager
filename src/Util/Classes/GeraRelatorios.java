@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Util.Classes;
 
 import java.io.File;
@@ -22,10 +17,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 
-/**
- *
- * @author Tadeu
- */
 public class GeraRelatorios {
 
     public String getDiretorio(String nomeArquivo) {
@@ -54,16 +45,16 @@ public class GeraRelatorios {
             JasperViewer.viewReport(print, false);
 
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Localizar a classe responsavel pela geração do relatorio!\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao localizar a classe responsável pela geração do relatório!\n" + ex.getMessage());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao executar consulta no Banco de dados!\n" + ex.getMessage());
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar Relatório!\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + ex.getMessage());
         } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao Fechar conexão com BD.");
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão com o Banco de Dados.");
             }
         }
     }
@@ -84,18 +75,18 @@ public class GeraRelatorios {
             JasperViewer.viewReport(print, false);
 
         } catch (ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Localizar a classe responsavel pela geração do relatorio!\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao localizar a classe responsável pela geração do relatório!\n" + ex.getMessage());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao executar consulta no Banco de dados!\n" + ex.getMessage());
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao gerar Relatório!\n" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao gerar relatório!\n" + ex.getMessage());
         }catch(NoResultException e){
             System.out.println("vazio");
         }finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao Fechar conexão com BD.");
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão com o Banco de Dados.");
             }
         }
     }

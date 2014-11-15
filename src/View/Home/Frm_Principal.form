@@ -219,7 +219,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="Menu_Relatorios">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Relatorios"/>
+            <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="item_relAtendimentoAnalitico">
@@ -276,7 +276,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="Menu_Utilit&#xe1;rios">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Utilitarios"/>
+            <Property name="text" type="java.lang.String" value="Utilit&#xe1;rios"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="item_AlterarSenha">
@@ -289,7 +289,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="item_enviaEmail">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enviar Email"/>
+                <Property name="text" type="java.lang.String" value="Enviar E-mail"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="item_enviaEmailActionPerformed"/>

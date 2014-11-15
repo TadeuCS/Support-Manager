@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Relatorios;
 
 import Controller.ClienteDAO;
@@ -21,10 +16,6 @@ import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_RelInformacao extends javax.swing.JFrame {
 
     Data data;
@@ -272,7 +263,7 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
             parameters.put("DataFinal", Data.getDataByTexto(fim, "dd/MM/yyyy"));
             geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_Informacao.jasper");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Nenhuma informacao encontrada neste período!");
+            JOptionPane.showMessageDialog(null, "Nenhuma informação encontrada neste período!");
         }
     }
 }
