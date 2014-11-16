@@ -72,6 +72,7 @@ public class Frm_Login extends javax.swing.JFrame {
                 if (usuarioDAO.findByUsuarioAndSenha(nome, senha).getCodstatuspessoa().getDescricao().equals("BLOQUEADO") == true) {
                     JOptionPane.showMessageDialog(null, "Usuário " + nome + " Bloquado", "Aviso", JOptionPane.ERROR_MESSAGE);
                 } else {
+                    usuario=usuarioDAO.findByUsuarioAndSenha(nome, senha);
                     p = new Frm_Principal();
                     p.setVisible(true);
                     dispose();

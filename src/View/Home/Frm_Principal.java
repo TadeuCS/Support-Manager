@@ -1291,7 +1291,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_grupoActionPerformed
 
     private void item_ConsContatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConsContatosActionPerformed
-        Frm_ConContatos f = new Frm_ConContatos();
+        Frm_ConContatos f = new Frm_ConContatos(txt_Tipo.getText());
     }//GEN-LAST:event_item_ConsContatosActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -1476,7 +1476,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_atalhoConsultarClientesMousePressed
 
     private void atalhoConsultarContatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoConsultarContatosMousePressed
-        Frm_ConContatos f = new Frm_ConContatos();
+        Frm_ConContatos f = new Frm_ConContatos(txt_Tipo.getText());
     }//GEN-LAST:event_atalhoConsultarContatosMousePressed
 
     private void atalhoRankUsuáriosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoRankUsuáriosMousePressed

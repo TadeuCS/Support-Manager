@@ -24,13 +24,20 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
     DefaultTableModel model;
     TelefoneDAO telefoneDAO;
 
-    public Frm_ConContatos() {
+    public Frm_ConContatos(String tipoUsuario) {
         initComponents();
         setVisible(true);
         model = (DefaultTableModel) tb_contatos.getModel();
+        validaTipoUsuarioLogado(tipoUsuario);
         listaContatos();
     }
 
+    public void validaTipoUsuarioLogado(String tipo){
+        if(tipo.equals("SUPORTE")==true){
+            btn_selecionar.setEnabled(false);
+        }
+    }
+    
     public void listaContatos() {
         try {
             limpaTabela(model);
@@ -95,8 +102,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txt_usuario = new javax.swing.JTextField();
-        btn_sair3 = new javax.swing.JButton();
-        btn_voltar = new javax.swing.JButton();
+        btn_selecionar = new javax.swing.JButton();
         btn_fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -148,7 +154,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,13 +174,6 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
             }
         });
 
-        btn_sair3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/buscar.png"))); // NOI18N
-        btn_sair3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_sair3ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -183,9 +182,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_sair3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_usuario)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -194,17 +191,16 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_sair3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_usuario))
+                    .addComponent(txt_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_voltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/voltar.png"))); // NOI18N
-        btn_voltar.setText("Selecionar");
-        btn_voltar.setToolTipText("Volta para o Cadastro de Contatos");
-        btn_voltar.addActionListener(new java.awt.event.ActionListener() {
+        btn_selecionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/voltar.png"))); // NOI18N
+        btn_selecionar.setText("Selecionar");
+        btn_selecionar.setToolTipText("Volta para o Cadastro de Contatos");
+        btn_selecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_voltarActionPerformed(evt);
+                btn_selecionarActionPerformed(evt);
             }
         });
 
@@ -230,7 +226,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btn_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_selecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -242,7 +238,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_voltar)
+                    .addComponent(btn_selecionar)
                     .addComponent(btn_fechar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -276,7 +272,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txt_usuarioKeyPressed
 
-    private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
+    private void btn_selecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarActionPerformed
         try {
             telefoneDAO = new TelefoneDAO();
             Frm_CadTelefone f = new Frm_CadTelefone(telefoneDAO.busca(tb_contatos.getValueAt(tb_contatos.getSelectedRow(), 2).toString()));
@@ -285,15 +281,11 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
 
-    }//GEN-LAST:event_btn_voltarActionPerformed
+    }//GEN-LAST:event_btn_selecionarActionPerformed
 
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
         dispose();
     }//GEN-LAST:event_btn_fecharActionPerformed
-
-    private void btn_sair3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sair3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sair3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,17 +317,14 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_ConContatos().setVisible(true);
+//                new Frm_ConContatos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_fechar;
-    private javax.swing.JButton btn_sair1;
-    private javax.swing.JButton btn_sair2;
-    private javax.swing.JButton btn_sair3;
-    private javax.swing.JButton btn_voltar;
+    private javax.swing.JButton btn_selecionar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
