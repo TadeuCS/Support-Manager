@@ -1070,7 +1070,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         item_rankUsuarios.add(item_ConUsuarios);
 
-        item_ConsRankUsuarios.setText("Rank de Usuarios");
+        item_ConsRankUsuarios.setText("Rank de Usuários");
         item_ConsRankUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_ConsRankUsuariosActionPerformed(evt);

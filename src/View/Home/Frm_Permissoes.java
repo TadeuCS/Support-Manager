@@ -51,7 +51,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             permissoesDAO.salvar(permissoes);
             JOptionPane.showMessageDialog(null, "Permissões salvas com sucesso para usuários do Tipo: " + cbx_tipoUsuario.getSelectedItem().toString());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Salvar Permissoes para usuários do Tipo: " + cbx_tipoUsuario.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(null, "Erro ao Salvar Permisões para usuários do Tipo: " + cbx_tipoUsuario.getSelectedItem().toString());
         }finally{
             dispose();
         }
@@ -64,7 +64,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         try {
             permissoes = permissoesDAO.findByTipoUsuario(tipoUsuarioDAO.buscaTipoUsuario(tipo));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Listar permissões por Tipo de Usuario");
+            JOptionPane.showMessageDialog(null, "Erro ao Listar permissões por Tipo de Usuário");
         }
         getPermissoesCadastro(permissoes);
         getPermissoesConsulta(permissoes);
@@ -81,7 +81,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             chx_relInformacoes.setSelected(permissoes.getRelInformacoes());
             chx_relUsuarios.setSelected(permissoes.getRelUsuarios());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar Informações Permissões de Relatorios");
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar Informações Permissões de Relatórios");
         }
     }
 
@@ -183,7 +183,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             permissoes.setRelInformacoes(chx_relInformacoes.isSelected());
             permissoes.setRelUsuarios(chx_relUsuarios.isSelected());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao capturar Permissões de Relatorios");
+            JOptionPane.showMessageDialog(null, "Erro ao capturar Permissões de Relatórios");
         }
     }
 
@@ -323,7 +323,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             }
         });
 
-        chx_cadSalario.setText("CADASTRO/CLIENTE/SALARIO");
+        chx_cadSalario.setText("CADASTRO/CLIENTE/SALÁRIO");
         chx_cadSalario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadSalarioActionPerformed(evt);
@@ -541,17 +541,17 @@ public class Frm_Permissoes extends javax.swing.JFrame {
 
         abas.addTab("Consulta", jPanel4);
 
-        chx_relAtendimentoAnalitico.setText("RELATORIO/ATENDIMENTO ANALÍTICO");
+        chx_relAtendimentoAnalitico.setText("RELATÓRIO/ATENDIMENTO ANALÍTICO");
 
-        chx_relAtendimentoSintetico.setText("RELATORIO/ATENDIMENTO SINTÉTICO");
+        chx_relAtendimentoSintetico.setText("RELATÓRIO/ATENDIMENTO SINTÉTICO");
 
-        chx_relClienteByLink.setText("RELATORIO/CLIENTE POR LINK");
+        chx_relClienteByLink.setText("RELATÓRIO/CLIENTE POR LINK");
 
-        chx_relClienteBySegmento.setText("RELATORIO/CLIENTE POR SEGMENTO");
+        chx_relClienteBySegmento.setText("RELATÓRIO/CLIENTE POR SEGMENTO");
 
-        chx_relUsuarios.setText("RELATORIO/USUÁRIOS");
+        chx_relUsuarios.setText("RELATÓRIO/USUÁRIOS");
 
-        chx_relInformacoes.setText("RELATORIO/INFORMAÇÕES");
+        chx_relInformacoes.setText("RELATÓRIO/INFORMAÇÕES");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);

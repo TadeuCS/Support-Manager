@@ -78,7 +78,7 @@ public class Frm_Login extends javax.swing.JFrame {
                     dispose();
                 }
             } catch (NoResultException e) {
-                JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!", "Aviso", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Usuário ou Senha inválidos!", "Aviso", JOptionPane.ERROR_MESSAGE);
             } finally {
                 limpaCampos();
             }

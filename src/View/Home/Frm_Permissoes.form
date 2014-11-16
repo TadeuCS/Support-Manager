@@ -261,7 +261,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadSalario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE/SALARIO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE/SAL&#xc1;RIO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadSalarioActionPerformed"/>
@@ -538,42 +538,42 @@
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="chx_relAtendimentoAnalitico">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/ATENDIMENTO ANAL&#xcd;TICO"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/ATENDIMENTO ANAL&#xcd;TICO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator10">
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_relAtendimentoSintetico">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/ATENDIMENTO SINT&#xc9;TICO"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/ATENDIMENTO SINT&#xc9;TICO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator11">
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_relClienteByLink">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/CLIENTE POR LINK"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/CLIENTE POR LINK"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator18">
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_relClienteBySegmento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/CLIENTE POR SEGMENTO"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/CLIENTE POR SEGMENTO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator19">
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_relUsuarios">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/USU&#xc1;RIOS"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/USU&#xc1;RIOS"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator20">
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_relInformacoes">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="RELATORIO/INFORMA&#xc7;&#xd5;ES"/>
+                    <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIO/INFORMA&#xc7;&#xd5;ES"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator21">
