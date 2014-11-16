@@ -13,7 +13,6 @@ import Controller.SegmentoDAO;
 import Controller.StatusPessoaDAO;
 import Controller.TelefoneDAO;
 import Controller.TipoPessoaDAO;
-import Controller.UsuarioDAO;
 import Model.Aplicativo;
 import Model.Cliente;
 import Model.Endereco;
@@ -22,7 +21,6 @@ import Model.LinkCliente;
 import Model.StatusPessoa;
 import Model.Telefone;
 import Model.TipoPessoa;
-import Model.Usuario;
 import Util.Classes.Data;
 import Util.Classes.FixedLengthDocument;
 import Util.Classes.IntegerDocument;
@@ -30,14 +28,11 @@ import Util.Classes.Mascaras;
 import Util.Classes.ValidaEmail;
 import Util.Classes.ValidarCGCCPF;
 import View.Consultas.Frm_ConClientes;
-import View.Home.Frm_Login;
 import java.awt.Event;
 import java.util.Date;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 
 public class Frm_CadCliente extends javax.swing.JFrame {
 
@@ -95,7 +90,6 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         cbx_estados.setSelectedItem("MG");
     }
 
-    //Início das validações de interface.
     public static int getCodigoCliente() {
         return codigoCliente;
     }
@@ -117,9 +111,40 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         cbx_tipo.setEnabled(valor);
         cbx_segmento.setEnabled(valor);
         chx_bloqueado.setEnabled(valor);
-        btn_proximoDados.setEnabled(valor);
         btn_cancelar.setEnabled(valor);
         btn_cadSegmento.setEnabled(valor);
+        
+        txt_cep.setEnabled(valor);
+        txt_rua.setEnabled(valor);
+        txt_numero.setEnabled(valor);
+        txt_bairro.setEnabled(valor);
+        txt_complemento.setEnabled(valor);
+        cbx_cidades.setEnabled(valor);
+        btn_cadCidade.setEnabled(valor);
+        cbx_estados.setEnabled(valor);
+        
+        cbx_grupo.setEnabled(valor);
+        txt_contato.setEnabled(valor);
+        txt_telefone.setEnabled(valor);
+        btn_cadGrupo.setEnabled(valor);
+        btn_inserirTelefone.setEnabled(valor);
+        btn_removerTelefone.setEnabled(valor);
+        tb_telefones.setEnabled(valor);
+        
+        cbx_aplicativo.setEnabled(valor);
+        cbx_links.setEnabled(valor);
+        txt_quantidade.setEnabled(valor);
+        btn_inserirLinks.setEnabled(valor);
+        btn_removerLinks.setEnabled(valor);
+        tb_links.setEnabled(valor);
+        
+        cbx_parcela.setEnabled(valor);
+        cbx_salario.setEnabled(valor);
+        btn_cadParcela.setEnabled(valor);
+        btn_cadSalario.setEnabled(valor);
+        btn_calcularMensalidade.setEnabled(valor);
+        btn_salvar.setEnabled(valor);
+        
     }
 
     private void setEnabledButtons(boolean valor) {
@@ -287,9 +312,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         salarioDAO = new SalarioDAO();
         try {
             int i = 0;
-            cbx_ano.removeAllItems();
+            cbx_salario.removeAllItems();
             while (i < salarioDAO.lista().size()) {
-                cbx_ano.addItem(salarioDAO.lista().get(i).getValor());
+                cbx_salario.addItem(salarioDAO.lista().get(i).getValor());
                 i++;
             }
         } catch (Exception e) {
@@ -895,7 +920,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         btn_cadGrupo = new javax.swing.JButton();
         pnl_links = new javax.swing.JPanel();
-        btn_anterior = new javax.swing.JButton();
+        btn_anteriorLinks = new javax.swing.JButton();
         pnl_dadosLinks = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tb_links = new javax.swing.JTable();
@@ -909,20 +934,20 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         btn_inserirLinks = new javax.swing.JButton();
         btn_removerLinks = new javax.swing.JButton();
         btn_proximoLinks = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        pnl_parcela = new javax.swing.JPanel();
         pnl_dadosLinks1 = new javax.swing.JPanel();
         pnl_CadLinks1 = new javax.swing.JPanel();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         txt_mensalidade = new javax.swing.JTextField();
-        cbx_ano = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        cbx_salario = new javax.swing.JComboBox();
+        btn_cadSalario = new javax.swing.JButton();
         cbx_parcela = new javax.swing.JComboBox();
         jLabel54 = new javax.swing.JLabel();
         btn_calcularMensalidade = new javax.swing.JButton();
         btn_cadParcela = new javax.swing.JButton();
         btn_salvar = new javax.swing.JButton();
-        btn_salvar1 = new javax.swing.JButton();
+        btn_anteriorParcela = new javax.swing.JButton();
         pnl_botoes = new javax.swing.JPanel();
         btn_inclusao = new javax.swing.JButton();
         btn_alteracao = new javax.swing.JButton();
@@ -936,7 +961,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         setResizable(false);
 
         btn_proximoDados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoDados.setText("Proximo");
+        btn_proximoDados.setText("Próximo");
         btn_proximoDados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoDadosActionPerformed(evt);
@@ -978,11 +1003,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         jLabel6.setText("Nome Fantasia *:");
 
-        jLabel46.setText("Email *:");
+        jLabel46.setText("E-mail *:");
 
         jLabel49.setText("Referência :");
 
-        jLabel50.setText("Responsavel *:");
+        jLabel50.setText("Responsável *:");
 
         jLabel51.setText("Segmento *:");
 
@@ -1144,15 +1169,15 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosClienteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_dadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_proximoDados)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         abas.addTab("Dados Pessoais", pnl_dadosCliente);
 
         btn_proximoEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoEndereco.setText("Proximo");
+        btn_proximoEndereco.setText("Próximo");
         btn_proximoEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoEnderecoActionPerformed(evt);
@@ -1305,7 +1330,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_cadCidade)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jLabel23.setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
@@ -1345,7 +1370,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         abas.addTab("Endereço", pnl_endereco);
 
         btn_proximoTelefones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoTelefones.setText("Proximo");
+        btn_proximoTelefones.setText("Próximo");
         btn_proximoTelefones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoTelefonesActionPerformed(evt);
@@ -1385,6 +1410,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_telefones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tb_telefones);
 
         btn_inserirTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
@@ -1532,7 +1558,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                         .addComponent(btn_inserirTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_removerTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnl_telefonesLayout = new javax.swing.GroupLayout(pnl_telefones);
@@ -1563,11 +1589,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
         abas.addTab("Telefones", pnl_telefones);
 
-        btn_anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
-        btn_anterior.setText("Anterior");
-        btn_anterior.addActionListener(new java.awt.event.ActionListener() {
+        btn_anteriorLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
+        btn_anteriorLinks.setText("Anterior");
+        btn_anteriorLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_anteriorActionPerformed(evt);
+                btn_anteriorLinksActionPerformed(evt);
             }
         });
 
@@ -1596,6 +1622,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_links.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tb_links);
 
         pnl_CadLinks.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1703,7 +1730,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         );
 
         btn_proximoLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoLinks.setText("Proximo");
+        btn_proximoLinks.setText("Próximo");
         btn_proximoLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoLinksActionPerformed(evt);
@@ -1719,7 +1746,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 .addGroup(pnl_linksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnl_dadosLinks, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnl_linksLayout.createSequentialGroup()
-                        .addComponent(btn_anterior)
+                        .addComponent(btn_anteriorLinks)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_proximoLinks)))
                 .addContainerGap())
@@ -1731,7 +1758,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 .addComponent(pnl_dadosLinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_linksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_anterior)
+                    .addComponent(btn_anteriorLinks)
                     .addComponent(btn_proximoLinks))
                 .addContainerGap())
         );
@@ -1751,21 +1778,21 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         txt_mensalidade.setForeground(new java.awt.Color(102, 0, 0));
         txt_mensalidade.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
 
-        cbx_ano.addFocusListener(new java.awt.event.FocusAdapter() {
+        cbx_salario.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                cbx_anoFocusGained(evt);
+                cbx_salarioFocusGained(evt);
             }
         });
-        cbx_ano.addActionListener(new java.awt.event.ActionListener() {
+        cbx_salario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbx_anoActionPerformed(evt);
+                cbx_salarioActionPerformed(evt);
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cadastro.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_cadSalario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cadastro.png"))); // NOI18N
+        btn_cadSalario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_cadSalarioActionPerformed(evt);
             }
         });
 
@@ -1780,10 +1807,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                     .addComponent(jLabel55))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbx_ano, 0, 82, Short.MAX_VALUE)
+                    .addComponent(cbx_salario, 0, 82, Short.MAX_VALUE)
                     .addComponent(txt_mensalidade))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_cadSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnl_CadLinks1Layout.setVerticalGroup(
@@ -1791,10 +1818,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             .addGroup(pnl_CadLinks1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_cadSalario, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel55)
-                        .addComponent(cbx_ano, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbx_salario, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(pnl_CadLinks1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel56)
@@ -1873,41 +1900,41 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             }
         });
 
-        btn_salvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
-        btn_salvar1.setText("Anterior");
-        btn_salvar1.addActionListener(new java.awt.event.ActionListener() {
+        btn_anteriorParcela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/anterior.png"))); // NOI18N
+        btn_anteriorParcela.setText("Anterior");
+        btn_anteriorParcela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_salvar1ActionPerformed(evt);
+                btn_anteriorParcelaActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnl_parcelaLayout = new javax.swing.GroupLayout(pnl_parcela);
+        pnl_parcela.setLayout(pnl_parcelaLayout);
+        pnl_parcelaLayout.setHorizontalGroup(
+            pnl_parcelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_parcelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnl_parcelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnl_dadosLinks1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btn_salvar1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_parcelaLayout.createSequentialGroup()
+                        .addComponent(btn_anteriorParcela)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_salvar)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnl_parcelaLayout.setVerticalGroup(
+            pnl_parcelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl_parcelaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnl_dadosLinks1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnl_parcelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
-                    .addComponent(btn_salvar1))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(btn_anteriorParcela))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        abas.addTab("Parcela", jPanel2);
+        abas.addTab("Parcela", pnl_parcela);
 
         pnl_botoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -2056,9 +2083,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         anterior();
     }//GEN-LAST:event_btn_anteriorEnderecoActionPerformed
 
-    private void btn_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anteriorActionPerformed
+    private void btn_anteriorLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anteriorLinksActionPerformed
         anterior();
-    }//GEN-LAST:event_btn_anteriorActionPerformed
+    }//GEN-LAST:event_btn_anteriorLinksActionPerformed
 
     private void cbx_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_tipoActionPerformed
         Mascaras.setMascaraCPF(txt_cpf, cbx_tipo);
@@ -2237,8 +2264,8 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     private void cbx_parcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_parcelaActionPerformed
     }//GEN-LAST:event_cbx_parcelaActionPerformed
 
-    private void cbx_anoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_anoActionPerformed
-    }//GEN-LAST:event_cbx_anoActionPerformed
+    private void cbx_salarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_salarioActionPerformed
+    }//GEN-LAST:event_cbx_salarioActionPerformed
 
     private void btn_proximoLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_proximoLinksActionPerformed
         validaLinks(tb_links.getRowCount());
@@ -2249,12 +2276,12 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um percentual da parcela do Cliente");
             cbx_parcela.requestFocus();
         } else {
-            if (cbx_ano.getSelectedObjects() == null) {
+            if (cbx_salario.getSelectedObjects() == null) {
                 JOptionPane.showMessageDialog(null, "Selecione um ano para calculo do salario do Cliente");
-                cbx_ano.requestFocus();
+                cbx_salario.requestFocus();
             } else {
                 calcularMensalidade(Double.parseDouble(cbx_parcela.getSelectedItem().toString()),
-                        Double.parseDouble(cbx_ano.getSelectedItem().toString()));
+                        Double.parseDouble(cbx_salario.getSelectedItem().toString()));
             }
         }
 
@@ -2264,9 +2291,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         btn_inserirTelefone.requestFocus();
     }//GEN-LAST:event_txt_telefoneFocusLost
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_cadSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadSalarioActionPerformed
         Frm_CadSalario f = new Frm_CadSalario();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_cadSalarioActionPerformed
 
     private void btn_cadSegmentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadSegmentoActionPerformed
         Frm_CadSegmento f = new Frm_CadSegmento();
@@ -2288,9 +2315,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         carregaParcelas();
     }//GEN-LAST:event_cbx_parcelaFocusGained
 
-    private void cbx_anoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_anoFocusGained
+    private void cbx_salarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_salarioFocusGained
         carregaSalarios();
-    }//GEN-LAST:event_cbx_anoFocusGained
+    }//GEN-LAST:event_cbx_salarioFocusGained
 
     private void cbx_tipoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_tipoFocusGained
         carregaTipos();
@@ -2299,9 +2326,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     private void cbx_estadosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_estadosFocusGained
     }//GEN-LAST:event_cbx_estadosFocusGained
 
-    private void btn_salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvar1ActionPerformed
+    private void btn_anteriorParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anteriorParcelaActionPerformed
         anterior();
-    }//GEN-LAST:event_btn_salvar1ActionPerformed
+    }//GEN-LAST:event_btn_anteriorParcelaActionPerformed
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
         Frm_ConClientes f = new Frm_ConClientes(tipoUsuarioLogado);
@@ -2393,12 +2420,14 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abas;
     private javax.swing.JButton btn_alteracao;
-    private javax.swing.JButton btn_anterior;
     private javax.swing.JButton btn_anteriorEndereco;
+    private javax.swing.JButton btn_anteriorLinks;
+    private javax.swing.JButton btn_anteriorParcela;
     private javax.swing.JButton btn_anteriorTelefones;
     private javax.swing.JButton btn_cadCidade;
     private javax.swing.JButton btn_cadGrupo;
     private javax.swing.JButton btn_cadParcela;
+    private javax.swing.JButton btn_cadSalario;
     private javax.swing.JButton btn_cadSegmento;
     private javax.swing.JButton btn_calcularMensalidade;
     private javax.swing.JButton btn_cancelar;
@@ -2414,18 +2443,16 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     private javax.swing.JButton btn_removerLinks;
     private javax.swing.JButton btn_removerTelefone;
     private javax.swing.JButton btn_salvar;
-    private javax.swing.JButton btn_salvar1;
-    private javax.swing.JComboBox cbx_ano;
     private javax.swing.JComboBox cbx_aplicativo;
     private javax.swing.JComboBox cbx_cidades;
     private javax.swing.JComboBox cbx_estados;
     private javax.swing.JComboBox cbx_grupo;
     private javax.swing.JComboBox cbx_links;
     private javax.swing.JComboBox cbx_parcela;
+    private javax.swing.JComboBox cbx_salario;
     private javax.swing.JComboBox cbx_segmento;
     private javax.swing.JComboBox cbx_tipo;
     private javax.swing.JCheckBox chx_bloqueado;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -2456,7 +2483,6 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnl_CadLinks;
@@ -2471,6 +2497,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_dados_telefones;
     private javax.swing.JPanel pnl_endereco;
     private javax.swing.JPanel pnl_links;
+    private javax.swing.JPanel pnl_parcela;
     private javax.swing.JPanel pnl_telefones;
     private javax.swing.JTable tb_links;
     private javax.swing.JTable tb_telefones;
