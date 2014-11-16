@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Util.Classes;
 
 import java.text.DecimalFormat;
@@ -14,10 +9,6 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
-/**
- *
- * @author Tadeu
- */
 public class Mascaras {
     
     public static void setMascaraMoeda(JFormattedTextField field){
@@ -41,7 +32,7 @@ public class Mascaras {
                         new DefaultFormatterFactory(cnpj));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Trocar a mascara do campo CPF");
+            JOptionPane.showMessageDialog(null, "Erro ao trocar a máscara do campo CPF");
         }
     }
 }
