@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.SalarioDAO;
@@ -37,9 +32,9 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
             novo();
             setSalario(salario);
             salarioDAO.salva(salario);
-            JOptionPane.showMessageDialog(null, "Salarios salvo com sucesso!");
+            JOptionPane.showMessageDialog(null, "Salário salvo com sucesso!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Salarios já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Salário já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
             txt_ano.requestFocus();
         } finally {
             listar();
@@ -275,7 +270,7 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         if (txt_ano.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Salarios inválida");
+            JOptionPane.showMessageDialog(null, "Salário inválido");
             txt_ano.requestFocus();
         } else {
             if (txt_valor.getText().isEmpty()) {
@@ -389,7 +384,7 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
         try {
             setSalario(salario);
             salarioDAO.salva(salario);
-            JOptionPane.showMessageDialog(null, "Salario alterado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Salário alterado com sucesso!");
             limpaCampos();
             btn_alterar.setEnabled(true);
         } catch (Exception e) {

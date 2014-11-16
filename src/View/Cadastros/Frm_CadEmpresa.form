@@ -116,7 +116,7 @@
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_nomeFantasia" pref="596" max="32767" attributes="0"/>
+                                      <Component id="txt_nomeFantasia" pref="598" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Component id="cbx_tipo" min="-2" pref="94" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
@@ -196,7 +196,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Util/Img/proximo.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Proximo"/>
+                    <Property name="text" type="java.lang.String" value="Pr&#xf3;ximo"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_proximoEmpresaActionPerformed"/>
@@ -240,7 +240,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cbx_grupo" pref="320" max="32767" attributes="0"/>
+                                      <Component id="cbx_grupo" pref="322" max="32767" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btn_cadGrupo" min="-2" pref="40" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -377,7 +377,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/Util/Img/proximo.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Proximo"/>
+                        <Property name="text" type="java.lang.String" value="Pr&#xf3;ximo"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_proximoTelefoneActionPerformed"/>
@@ -421,11 +421,11 @@
                                           <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="6" max="32767" attributes="0"/>
+                                  <EmptySpace pref="7" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="19" max="32767" attributes="0"/>
+                                          <EmptySpace pref="20" max="32767" attributes="0"/>
                                           <Component id="btn_proximoEndereco" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
@@ -629,7 +629,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Util/Img/proximo.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Proximo"/>
+                    <Property name="text" type="java.lang.String" value="Pr&#xf3;ximo"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_proximoEnderecoActionPerformed"/>
@@ -652,8 +652,8 @@
             <Container class="javax.swing.JPanel" name="pnl_dadosEmail">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Email">
-                    <Property name="tabTitle" type="java.lang.String" value="Email"/>
+                  <JTabbedPaneConstraints tabName="E-mail">
+                    <Property name="tabTitle" type="java.lang.String" value="E-mail"/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -731,7 +731,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Email *:"/>
+                    <Property name="text" type="java.lang.String" value="E-mail *:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_email">

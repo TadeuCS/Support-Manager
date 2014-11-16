@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.OrigemDAO;
@@ -11,10 +6,6 @@ import Util.Classes.FixedLengthDocument;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_CadOrigem extends javax.swing.JFrame {
 
     OrigemDAO origemDAO;
@@ -41,7 +32,7 @@ public class Frm_CadOrigem extends javax.swing.JFrame {
         } catch (NoResultException ex) {
             try {
                 origemDAO.salvar(origem);
-                JOptionPane.showMessageDialog(null, "Origem salvo com sucesso!");
+                JOptionPane.showMessageDialog(null, "Origem salva com sucesso!");
                 txt_descricao.setText(null);
                 txt_descricao.requestFocus();
             } catch (Exception e) {

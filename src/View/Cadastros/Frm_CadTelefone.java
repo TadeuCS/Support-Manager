@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.GrupoDAO;
@@ -12,10 +7,6 @@ import Model.Telefone;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_CadTelefone extends javax.swing.JFrame {
 
     Grupo grupo;

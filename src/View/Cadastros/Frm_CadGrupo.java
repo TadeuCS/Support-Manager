@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.GrupoDAO;
@@ -14,10 +9,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_CadGrupo extends javax.swing.JFrame {
 
     GrupoDAO grupoDAO;
@@ -296,7 +287,7 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
             } else {
                 try {
                     grupoDAO.consulta(txt_descricao.getText());
-                    JOptionPane.showMessageDialog(null, "Grupo ja cadastrado!");
+                    JOptionPane.showMessageDialog(null, "Grupo já cadastrado!");
                     txt_descricao.requestFocus();
                 } catch (NoResultException e) {
                     alterar();

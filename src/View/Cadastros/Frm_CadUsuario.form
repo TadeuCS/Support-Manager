@@ -404,7 +404,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Email *:"/>
+                    <Property name="text" type="java.lang.String" value="E-mail *:"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_codigo">
@@ -422,7 +422,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/Util/Img/proximo.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Proximo"/>
+                    <Property name="text" type="java.lang.String" value="Pr&#xf3;ximo"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                   <Events>

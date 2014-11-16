@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.GrupoDAO;
@@ -29,10 +24,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_CadUsuario extends javax.swing.JFrame {
 
     UsuarioDAO usuarioDAO;
@@ -297,11 +288,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     txt_cpf.requestFocus();
                 } else {
                     if (email.equals("") == true) {
-                        JOptionPane.showMessageDialog(null, "Email Inválido");
+                        JOptionPane.showMessageDialog(null, "E-mail Inválido");
                         txt_email.requestFocus();
                     } else {
                         if (ValidaEmail.validarEmail(email) == false) {
-                            JOptionPane.showMessageDialog(null, "Email Inválido");
+                            JOptionPane.showMessageDialog(null, "E-mail Inválido");
                             txt_email.requestFocus();
                         } else {
                             if (usuario.equals("") == true) {
@@ -361,7 +352,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         try {
             usuarioDAO = new UsuarioDAO();
             usuarioDAO.consultaByEmail(email);
-            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este email!");
+            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este e-mail!");
             txt_email.requestFocus();
             return true;
         } catch (NoResultException e) {
@@ -373,7 +364,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         try {
             usuarioDAO = new UsuarioDAO();
             usuarioDAO.consultaByUsuario(usuario);
-            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este Usuario!");
+            JOptionPane.showMessageDialog(this, "Já existe um usuário cadastrado com este Usuário!");
             txt_usuario.requestFocus();
             return true;
         } catch (NoResultException e) {
@@ -391,11 +382,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 txt_cpf.requestFocus();
             } else {
                 if (email.equals("") == true) {
-                    JOptionPane.showMessageDialog(null, "Email Inválido");
+                    JOptionPane.showMessageDialog(null, "E-mail Inválido");
                     txt_email.requestFocus();
                 } else {
                     if (ValidaEmail.validarEmail(email) == false) {
-                        JOptionPane.showMessageDialog(null, "Email Inválido");
+                        JOptionPane.showMessageDialog(null, "E-mail Inválido");
                         txt_email.requestFocus();
                     } else {
                         if (usuario.equals("") == true) {
@@ -533,11 +524,11 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         try {
             setUsuario();
             usuarioDAO.salvar(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario Salvo com Sucesso!");
+            JOptionPane.showMessageDialog(null, "Usuário Salvo com Sucesso!");
             cancelar();
         } catch (Exception e) {
             System.out.println(e);
-            JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuario\n" + "Usuário já cadastrado!", "Alerta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Salvar Usuário\n" + "Usuário já cadastrado!", "Alerta", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -546,10 +537,10 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         try {
             setUsuario();
             usuarioDAO.salvar(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario Alterado com Sucesso!");
+            JOptionPane.showMessageDialog(null, "Usuário Alterado com Sucesso!");
             cancelar();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Alterar Usuario\n", "Alerta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Alterar Usuário\n", "Alerta", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -566,7 +557,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             btn_consulta.setEnabled(false);
             btn_cancelar.setEnabled(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Usuário: " + codigoUsuario);
         }
     }
 
@@ -786,7 +777,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         }
         txt_cpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jLabel5.setText("Email *:");
+        jLabel5.setText("E-mail *:");
 
         txt_codigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -797,7 +788,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         jLabel10.setText("Código *:");
 
         btn_proximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximo.setText("Proximo");
+        btn_proximo.setText("Próximo");
         btn_proximo.setToolTipText("");
         btn_proximo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1168,8 +1159,8 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             txt_codigo.setEnabled(false);
             txt_nome.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Codigo do usuário Inválido!\n"
-                    + "Consulte primeiro o usuario para poder altera-lo!");
+            JOptionPane.showMessageDialog(rootPane, "Código do usuário Inválido!\n"
+                    + "Consulte primeiro o usuário para poder alterá-lo!");
         }
 
     }//GEN-LAST:event_btn_alteracaoActionPerformed
@@ -1199,7 +1190,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                     btn_alteracao.setEnabled(true);
                     btn_consulta.setEnabled(false);
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "erro ao Buscar Usuario: " + codigoUsuario);
+                    JOptionPane.showMessageDialog(null, "Erro ao Buscar Usuário: " + codigoUsuario);
                 }
 
             }

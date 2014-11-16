@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Cadastros;
 
 import Controller.CidadesDAO;
@@ -29,10 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_CadEmpresa extends javax.swing.JFrame {
 
     TipoPessoaDAO tipoPessoaDAO;
@@ -114,7 +105,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Estados");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Estados");
         }
 
     }
@@ -172,7 +163,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
             btn_consulta.setEnabled(false);
             btn_cancelar.setEnabled(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao Buscar Empresa: " + codigoEmpresa);
+            JOptionPane.showMessageDialog(null, "Erro ao buscar Empresa: " + codigoEmpresa);
         }
     }
 
@@ -271,7 +262,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
     public void validaCamposEmail(String email, String porta, String smtp, String senha) {
         if (ValidaEmail.validarEmail(email) == false) {
-            JOptionPane.showMessageDialog(null, "Email Inválido!");
+            JOptionPane.showMessageDialog(null, "E-mail Inválido!");
             txt_email.requestFocus();
         } else {
                 if (senha.isEmpty()) {
@@ -453,7 +444,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao capturar dados do Email");
+            JOptionPane.showMessageDialog(null, "Erro ao capturar dados do E-mail");
             System.out.println(e);
         }
     }
@@ -624,7 +615,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         txt_cpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         btn_proximoEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoEmpresa.setText("Proximo");
+        btn_proximoEmpresa.setText("Próximo");
         btn_proximoEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoEmpresaActionPerformed(evt);
@@ -644,7 +635,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_dadosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_nomeFantasia, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                            .addComponent(txt_nomeFantasia, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                             .addGroup(pnl_dadosEmpresaLayout.createSequentialGroup()
                                 .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11)
@@ -735,7 +726,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         });
 
         btn_proximoTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoTelefone.setText("Proximo");
+        btn_proximoTelefone.setText("Próximo");
         btn_proximoTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoTelefoneActionPerformed(evt);
@@ -760,7 +751,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_grupo, 0, 320, Short.MAX_VALUE)
+                        .addComponent(cbx_grupo, 0, 322, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -879,7 +870,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         });
 
         btn_proximoEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/proximo.png"))); // NOI18N
-        btn_proximoEndereco.setText("Proximo");
+        btn_proximoEndereco.setText("Próximo");
         btn_proximoEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_proximoEnderecoActionPerformed(evt);
@@ -904,11 +895,11 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                             .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel17)
                                 .addComponent(jLabel19)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnl_dadosEnderecoLayout.createSequentialGroup()
                                 .addComponent(jLabel23)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                                 .addComponent(btn_proximoEndereco))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosEnderecoLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -982,7 +973,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
         abas.addTab("Endereço", pnl_dadosEndereco);
 
-        jLabel4.setText("Email *:");
+        jLabel4.setText("E-mail *:");
 
         jLabel6.setText("SMTP *:");
 
@@ -1071,7 +1062,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        abas.addTab("Email", pnl_dadosEmail);
+        abas.addTab("E-mail", pnl_dadosEmail);
 
         btn_inclusao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/adicionar.png"))); // NOI18N
         btn_inclusao.setText("Inclusão");
