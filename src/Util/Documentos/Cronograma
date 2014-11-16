@@ -1,6 +1,7 @@
 ------------------------------------------------------CORREÇÕES------------------------------------------------------
 corrigir problemas com caminhos dos relatorios ao gerar um executavel.
 colocar algo no fundo da tela principal.
+tratar proximo em cadastro de empresa.
 criar metodo que troca a mascara do telefone em classe separada.
 ----------------------------------------------------------------------------------------------------------------------
 

@@ -56,15 +56,8 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         abas.setEnabled(false);
         btn_cancelar.doClick();
         codigoEmpresa = 0;
-        validaOperacao(txt_operacao.getText());
     }
     
-    public void validaOperacao(String operacao){
-        if(operacao.equals("CONSULTA")==true){
-            btn_proximoTelefone.setEnabled(true);
-        }
-    }
-
     public int getCodigoEmpresa() {
         return codigoEmpresa;
     }
@@ -129,7 +122,6 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         txt_nomeFantasia.setEnabled(valor);
         cbx_tipo.setEnabled(valor);
         txt_cpf.setEnabled(valor);
-        btn_proximoEmpresa.setEnabled(valor);
         btn_cancelar.setEnabled(valor);
     }
 
