@@ -289,7 +289,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Estados");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Estados");
         }
 
     }
@@ -304,7 +304,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Parcelas");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Parcelas");
         }
     }
 
@@ -318,7 +318,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 i++;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao carregar Anos");
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Anos");
         }
     }
 
@@ -330,7 +330,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                 chx_bloqueado.setSelected(false);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao selecionar Status");
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar Status");
         }
     }
     //Fim das validações de interface.
@@ -561,7 +561,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                                 txt_responsavel.requestFocus();
                             } else {
                                 if (ValidaEmail.validarEmail(email) == false) {
-                                    JOptionPane.showMessageDialog(null, "Email Inválido!");
+                                    JOptionPane.showMessageDialog(null, "E-mail Inválido!");
                                     txt_email.requestFocus();
                                 } else {
                                     if (cbx_segmento.getSelectedItem().toString().equals("") == true) {
@@ -583,7 +583,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         try {
             clienteDAO = new ClienteDAO();
             clienteDAO.buscaClienteByEmail(email);
-            JOptionPane.showMessageDialog(null, "Email já cadastrado!");
+            JOptionPane.showMessageDialog(null, "E-mail já cadastrado!");
             return true;
         } catch (NoResultException e) {
             return false;
@@ -665,7 +665,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     public void validaTelefones(int qtde) {
         if (qtde == 0) {
-            JOptionPane.showMessageDialog(null, "Insira ao menos UM Contato na lista!");
+            JOptionPane.showMessageDialog(null, "Insira ao menos um Contato na lista!");
             txt_contato.requestFocus();
         } else {
             proximo();
@@ -796,13 +796,13 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             btn_consulta.setEnabled(false);
             btn_cancelar.setEnabled(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "erro ao Buscar Cliente: " + codigoCliente);
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Cliente: " + codigoCliente);
         }
     }
 
     public void validaLinks(int qtde) {
         if (qtde == 0) {
-            JOptionPane.showMessageDialog(null, "Insira ao menos UM Link na lista!");
+            JOptionPane.showMessageDialog(null, "Insira ao menos um Link na lista!");
         } else {
             proximo();
         }
@@ -2139,7 +2139,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Selecione Um telefone na lista para remover");
+            JOptionPane.showMessageDialog(null, "Selecione um telefone na lista para remover");
         }
 
     }//GEN-LAST:event_btn_removerTelefoneActionPerformed
@@ -2165,7 +2165,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     private void btn_removerLinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerLinksActionPerformed
         if (tb_links.getSelectedRowCount() != 1) {
-            JOptionPane.showMessageDialog(null, "Selecione UM Link na lista para remover!");
+            JOptionPane.showMessageDialog(null, "Selecione um Link na lista para remover!");
         } else {
             removeLink(tb_links.getValueAt(tb_links.getSelectedRow(), 0).toString());
         }
@@ -2337,7 +2337,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     private void btn_alteracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteracaoActionPerformed
         if (txt_codigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione um cliente atraves do botão consultar para poder altera-lo");
+            JOptionPane.showMessageDialog(null, "Selecione um cliente através do botão consultar para poder alterá-lo");
         } else {
             setEnabledButtons(false);
             setEnabledFields(true);
@@ -2359,7 +2359,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
                     limpaCampos();
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Impossivel remover este Cliente pois o mesmo ja teve movimentações!");
+                JOptionPane.showMessageDialog(null, "Impossível remover este Cliente pois o mesmo já teve movimentações!");
             }
 
         }

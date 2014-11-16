@@ -275,7 +275,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         btn_carregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Parametrizaçao por Usuário");
+        setTitle("Parametrização por Usuário");
         setResizable(false);
 
         chx_cadAplicativo.setText("CADASTRO/APLICATIVO/APLICATIVO");

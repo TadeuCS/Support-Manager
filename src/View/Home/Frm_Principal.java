@@ -1037,7 +1037,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         });
         menuI_Atendimentos.add(item_concluidos);
 
-        item_pendentes.setText("Pendêntes");
+        item_pendentes.setText("Pendentes");
         item_pendentes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 item_pendentesActionPerformed(evt);
