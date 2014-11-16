@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Consultas;
 
 import Controller.GrupoDAO;
@@ -15,10 +10,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Tadeu
- */
 public final class Frm_ConContatos extends javax.swing.JFrame {
 
     DefaultTableModel model;
@@ -60,7 +51,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } else {
             if (tb_contatos.getSelectedRowCount() > 1) {
-                JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
+                JOptionPane.showMessageDialog(null, "Selecione apenas uma linha!");
             } else {
                 Frm_CadUsuario f = new Frm_CadUsuario();
                 f.setCodigoUsuario(Integer.parseInt(tb_contatos.getValueAt(tb_contatos.getSelectedRow(), 0).toString()));
@@ -77,7 +68,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         try {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Valor Não Encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Valor não encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -87,7 +78,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                 model.removeRow(0);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Limpar tabela de Contatos");
+            JOptionPane.showMessageDialog(null, "Erro ao limpar tabela de Contatos");
         }
     }
 

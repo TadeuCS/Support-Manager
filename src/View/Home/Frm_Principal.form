@@ -209,7 +209,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="item_ConsRankUsuarios">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Rank de Usuarios"/>
+                <Property name="text" type="java.lang.String" value="Rank de Usu&#xe1;rios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="item_ConsRankUsuariosActionPerformed"/>

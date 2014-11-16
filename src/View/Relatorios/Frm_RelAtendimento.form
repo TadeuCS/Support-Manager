@@ -250,7 +250,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Data Inicio *:"/>
+                <Property name="text" type="java.lang.String" value="Data In&#xed;cio *:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="txt_dataFim">

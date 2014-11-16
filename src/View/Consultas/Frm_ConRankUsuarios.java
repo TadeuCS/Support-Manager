@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Consultas;
 
 import Controller.AtendimentoDAO;
@@ -12,10 +7,6 @@ import Model.Usuario;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_ConRankUsuarios extends javax.swing.JFrame {
 
     UsuarioDAO usuarioDAO;

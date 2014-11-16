@@ -77,7 +77,7 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Data Inicio *:");
+        jLabel3.setText("Data Início *:");
 
         try {
             txt_dataFim.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));

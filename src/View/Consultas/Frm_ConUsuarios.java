@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Consultas;
 
 import Controller.UsuarioDAO;
@@ -13,10 +8,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_ConUsuarios extends javax.swing.JFrame {
 
     DefaultTableModel model;
@@ -54,7 +45,7 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } else {
             if (tb_usuarios.getSelectedRowCount() > 1) {
-                JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
+                JOptionPane.showMessageDialog(null, "Selecione apenas uma linha!");
             } else {
                 Frm_CadUsuario f = new Frm_CadUsuario();
                 f.setCodigoUsuario(Integer.parseInt(tb_usuarios.getValueAt(tb_usuarios.getSelectedRow(), 0).toString()));
@@ -71,7 +62,7 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
         try {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Valor Não Encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Valor não encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -113,7 +104,7 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Usuário", "Email", "Status"
+                "Código", "Usuário", "E-mail", "Status"
             }
         ) {
             Class[] types = new Class [] {
@@ -347,8 +338,6 @@ public class Frm_ConUsuarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_fechar;
-    private javax.swing.JButton btn_sair1;
-    private javax.swing.JButton btn_sair2;
     private javax.swing.JButton btn_sair3;
     private javax.swing.JButton btn_selecionar;
     private javax.swing.JButton btn_voltar;

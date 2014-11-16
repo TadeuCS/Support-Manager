@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Consultas;
 
 import Controller.AtendimentoDAO;
@@ -22,10 +17,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Tadeu
- */
 public final class Frm_ConAtendimento extends javax.swing.JFrame {
 
     DefaultTableModel model;
@@ -142,7 +133,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } else {
             if (tb_atendimentos.getSelectedRowCount() > 1) {
-                JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
+                JOptionPane.showMessageDialog(null, "Selecione apenas uma linha!");
             } else {
                 try {
                     atendimentoDAO = new AtendimentoDAO();
@@ -151,7 +142,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
                     ));
                     dispose();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Erro ao Selecionar Atendimento");
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar Atendimento");
                 }
             }
         }
@@ -176,7 +167,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
         try {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Valor Não Encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Valor não encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -438,7 +429,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
 
     private void btn_executarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_executarActionPerformed
         if (tb_atendimentos.getSelectedRowCount() != 1) {
-            JOptionPane.showMessageDialog(null, "Selecione apenas um atendimento de cada vêz!");
+            JOptionPane.showMessageDialog(null, "Selecione apenas um atendimento de cada vez!");
         } else {
             executar(Integer.parseInt(tb_atendimentos.getValueAt(tb_atendimentos.getSelectedRow(), 0).toString()));
         }
@@ -506,7 +497,7 @@ public final class Frm_ConAtendimento extends javax.swing.JFrame {
             atendimentoDAO.salvar(atendimento);
             model.removeRow(tb_atendimentos.getSelectedRow());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Executar atendimento!");
+            JOptionPane.showMessageDialog(null, "Erro ao executar atendimento!");
             System.out.println(e);
         }
     }
