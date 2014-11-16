@@ -175,7 +175,7 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="item_pendentes">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Pend&#xea;ntes"/>
+                    <Property name="text" type="java.lang.String" value="Pendentes"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="item_pendentesActionPerformed"/>
