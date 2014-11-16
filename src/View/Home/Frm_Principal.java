@@ -1270,7 +1270,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_segmentoActionPerformed
 
     private void item_cadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_cadClienteActionPerformed
-        Frm_CadCliente f = new Frm_CadCliente();
+        Frm_CadCliente f = new Frm_CadCliente(txt_Tipo.getText());
     }//GEN-LAST:event_item_cadClienteActionPerformed
 
     private void item_informacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_informacaoActionPerformed
@@ -1313,7 +1313,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_salarioActionPerformed
 
     private void item_ConsClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConsClienteActionPerformed
-        Frm_ConClientes f = new Frm_ConClientes();
+        Frm_ConClientes f = new Frm_ConClientes(txt_Tipo.getText());
     }//GEN-LAST:event_item_ConsClienteActionPerformed
 
     private void item_relAtendimentoAnaliticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_relAtendimentoAnaliticoActionPerformed
@@ -1464,7 +1464,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_item_relClienteBySegmentoActionPerformed
 
     private void atalhoCadastroClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoCadastroClienteMousePressed
-        Frm_CadCliente f = new Frm_CadCliente();
+        Frm_CadCliente f = new Frm_CadCliente(txt_Tipo.getText());
     }//GEN-LAST:event_atalhoCadastroClienteMousePressed
 
     private void atalhoAbrirAtendimentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoAbrirAtendimentoMousePressed
@@ -1472,7 +1472,7 @@ public class Frm_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_atalhoAbrirAtendimentoMousePressed
 
     private void atalhoConsultarClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoConsultarClientesMousePressed
-        Frm_ConClientes f = new Frm_ConClientes();
+        Frm_ConClientes f = new Frm_ConClientes(txt_Tipo.getText());
     }//GEN-LAST:event_atalhoConsultarClientesMousePressed
 
     private void atalhoConsultarContatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atalhoConsultarContatosMousePressed

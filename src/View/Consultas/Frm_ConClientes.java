@@ -29,7 +29,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Tadeu
  */
-public class Frm_ConClientes extends javax.swing.JFrame {
+public final class Frm_ConClientes extends javax.swing.JFrame {
 
     DefaultTableModel model;
     ClienteDAO clienteDAO;
@@ -44,14 +44,22 @@ public class Frm_ConClientes extends javax.swing.JFrame {
     SalarioDAO salarioDAO;
     TipoPessoaDAO tipoPessoaDAO;
     AplicativoDAO aplicativoDAO;
-
-    public Frm_ConClientes() {
+    String tipoUsuarioLogado;
+    public Frm_ConClientes(String tipo) {
         initComponents();
         model = (DefaultTableModel) tb_clientes.getModel();
+        tipoUsuarioLogado=tipo;
         setVisible(true);
         listaClientes();
+        validaTipoUsuarioLogado(tipo);
     }
-
+    
+    public void validaTipoUsuarioLogado(String tipo){
+        if(tipo.equals("SUPORTE")==true){
+            btn_voltar.setEnabled(false);
+            btn_selecionar.setEnabled(false);
+        }
+    }
     public void carregaContatos(List<Telefone> telefones) {
         DefaultTableModel model = (DefaultTableModel) tb_contatos.getModel();
         limpaTabela(model);
@@ -87,7 +95,7 @@ public class Frm_ConClientes extends javax.swing.JFrame {
             if (tb_clientes.getSelectedRowCount() > 1) {
                 JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
             } else {
-                Frm_CadCliente f = new Frm_CadCliente();
+                Frm_CadCliente f = new Frm_CadCliente(tipoUsuarioLogado);
                 f.setCodigoCliente(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString()));
                 f.buscar();
                 dispose();
@@ -133,7 +141,6 @@ public class Frm_ConClientes extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_filtro = new javax.swing.JTextField();
         btn_fechar = new javax.swing.JButton();
-        btn_sair1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta Clientes");
@@ -304,13 +311,6 @@ public class Frm_ConClientes extends javax.swing.JFrame {
             }
         });
 
-        btn_sair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/buscar.png"))); // NOI18N
-        btn_sair1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_sair1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -330,8 +330,6 @@ public class Frm_ConClientes extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -339,13 +337,9 @@ public class Frm_ConClientes extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(btn_sair1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -388,7 +382,7 @@ public class Frm_ConClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_voltarActionPerformed
-        Frm_CadCliente F = new Frm_CadCliente();
+        Frm_CadCliente F = new Frm_CadCliente(tipoUsuarioLogado);
         dispose();
     }//GEN-LAST:event_btn_voltarActionPerformed
 
@@ -437,10 +431,6 @@ public class Frm_ConClientes extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btn_fecharActionPerformed
 
-    private void btn_sair1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sair1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_sair1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -472,14 +462,13 @@ public class Frm_ConClientes extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_ConClientes().setVisible(true);
+//                new Frm_ConClientes().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_fechar;
-    private javax.swing.JButton btn_sair1;
     private javax.swing.JButton btn_selecionar;
     private javax.swing.JButton btn_voltar;
     private javax.swing.JLabel jLabel1;

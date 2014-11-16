@@ -62,9 +62,10 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     TipoPessoa tipo;
     LinkCliente linksClientes;
     DefaultTableModel model;
+    String tipoUsuarioLogado;
     private static int codigoCliente;
 
-    public Frm_CadCliente() {
+    public Frm_CadCliente(String tipo) {
         initComponents();
         setVisible(true);
         codigoCliente = 0;
@@ -81,7 +82,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         txt_numero.setDocument(new IntegerDocument(5));
         txt_quantidade.setDocument(new IntegerDocument(2));
         abas.setEnabled(false);
-
+        this.tipoUsuarioLogado=tipo;
         carregaSegmentos();
         carregaTipos();
         carregaEstados();
@@ -2303,7 +2304,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salvar1ActionPerformed
 
     private void btn_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_consultaActionPerformed
-        Frm_ConClientes f = new Frm_ConClientes();
+        Frm_ConClientes f = new Frm_ConClientes(tipoUsuarioLogado);
         dispose();
     }//GEN-LAST:event_btn_consultaActionPerformed
 
@@ -2384,7 +2385,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Frm_CadCliente().setVisible(true);
+//                new Frm_CadCliente().setVisible(true);
             }
         });
     }

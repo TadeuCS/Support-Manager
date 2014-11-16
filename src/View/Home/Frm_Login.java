@@ -61,24 +61,25 @@ public class Frm_Login extends javax.swing.JFrame {
         }
     }
 
-    public void logar(String usuario, String senha) {
-        if (isAdministrador(usuario, senha) == true) {
+    public void logar(String nome, String senha) {
+        if (isAdministrador(nome, senha) == true) {
             p = new Frm_Principal();
             p.setVisible(true);
             dispose();
         } else {
             try {
-                usuarioDAO = new UsuarioDAO();
-                this.usuario = usuarioDAO.findByUsuarioAndSenha(usuario, senha);
-                p = new Frm_Principal();
-                p.setVisible(true);
-                dispose();
+
+                if (usuarioDAO.findByUsuarioAndSenha(nome, senha).getCodstatuspessoa().getDescricao().equals("BLOQUEADO") == true) {
+                    JOptionPane.showMessageDialog(null, "Usuário " + nome + " Bloquado", "Aviso", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    p = new Frm_Principal();
+                    p.setVisible(true);
+                    dispose();
+                }
             } catch (NoResultException e) {
-                JOptionPane.showMessageDialog(null, "Usuário não existe ou Bloqueado!", "Aviso", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos!", "Aviso", JOptionPane.ERROR_MESSAGE);
             } finally {
-                txt_senha.setText(null);
-                txt_usuario.setText(null);
-                txt_usuario.requestFocus();
+                limpaCampos();
             }
 
         }
@@ -295,4 +296,10 @@ public class Frm_Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_senha;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables
+
+    private void limpaCampos() {
+        txt_senha.setText(null);
+        txt_usuario.setText(null);
+        txt_usuario.requestFocus();
+    }
 }

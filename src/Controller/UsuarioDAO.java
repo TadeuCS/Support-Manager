@@ -53,8 +53,7 @@ public class UsuarioDAO extends Manager {
 
     public Usuario findByUsuarioAndSenha(String usuario, String senha) {
         em.getTransaction().begin();
-        query = em.createQuery("SELECT u FROM Usuario u where u.usuario = :user and u.senha= :password and u.codstatuspessoa = :bloc")
-                .setParameter("user", usuario).setParameter("password", senha).setParameter("bloc", statusPessoaDAO.buscaStatusPessoa("DESBLOQUEADO"));
+        query = em.createQuery("SELECT u FROM Usuario u where u.usuario = :user and u.senha= :password").setParameter("user", usuario).setParameter("password", senha);
         em.getTransaction().commit();
         return (Usuario) query.getSingleResult();
     }
