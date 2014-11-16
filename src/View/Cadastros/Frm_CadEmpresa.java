@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
-public class Frm_CadEmpresa extends javax.swing.JFrame {
+public final class Frm_CadEmpresa extends javax.swing.JFrame {
 
     TipoPessoaDAO tipoPessoaDAO;
     EmpresaDAO empresaDAO;
@@ -56,6 +56,13 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
         abas.setEnabled(false);
         btn_cancelar.doClick();
         codigoEmpresa = 0;
+        validaOperacao(txt_operacao.getText());
+    }
+    
+    public void validaOperacao(String operacao){
+        if(operacao.equals("CONSULTA")==true){
+            btn_proximoTelefone.setEnabled(true);
+        }
     }
 
     public int getCodigoEmpresa() {
@@ -326,6 +333,7 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
     public void getDadosEmpresa(Empresa empresa) {
         try {
             txt_nomeFantasia.setText(empresa.getNomeFantasia());
+            cbx_tipo.setSelectedItem(empresa.getTipoPessoa().getDescricao());
             txt_cpf.setText(empresa.getCnpjCpf());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar dados da Empresa");
@@ -451,7 +459,9 @@ public class Frm_CadEmpresa extends javax.swing.JFrame {
 
     public void setEmpresa(Empresa empresa) {
         try {
+            tipoPessoaDAO=new TipoPessoaDAO();
             empresa.setNomeFantasia(txt_nomeFantasia.getText());
+            empresa.setTipoPessoa(tipoPessoaDAO.buscaTipoPessoa(cbx_tipo.getSelectedItem().toString()));
             empresa.setCnpjCpf(txt_cpf.getText());
             setEndereco(empresa);
             setTelefone(empresa);

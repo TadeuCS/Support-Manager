@@ -164,6 +164,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         item_status.setVisible(permissoes.getCadStatusAtendimento());
         item_tipoAtendimento.setVisible(permissoes.getCadTipoAtendimento());
         item_cadCliente.setVisible(permissoes.getCadCliente());
+        pnl_cadCliente.setVisible(permissoes.getCadCliente());
         item_segmento.setVisible(permissoes.getCadSegmento());
         item_parcela.setVisible(permissoes.getCadParcela());
         item_salario.setVisible(permissoes.getCadSalario());

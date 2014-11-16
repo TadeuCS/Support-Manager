@@ -48,8 +48,18 @@ public class Empresa implements Serializable {
     private Email codemail;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codempresa")
     private List<Endereco> enderecoList = new ArrayList<>();
+    @ManyToOne(optional = false)
+    private TipoPessoa tipoPessoa;
 
     public Empresa() {
+    }
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 
     public Empresa(Integer codempresa) {
