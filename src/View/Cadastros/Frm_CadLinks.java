@@ -339,7 +339,13 @@ public final class Frm_CadLinks extends javax.swing.JFrame {
             if (btn_alterar.isEnabled() == true) {
                 salvar(txt_descricao.getText());
             } else {
-                alterar(txt_descricao.getText());
+                try {
+                    linksDAO.buscaLink(txt_descricao.getText());
+                    JOptionPane.showMessageDialog(null, "Link ja cadastrado!");
+                    txt_descricao.requestFocus();
+                } catch (NoResultException e) {
+                    alterar();
+                }
             }
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
@@ -434,12 +440,11 @@ public final class Frm_CadLinks extends javax.swing.JFrame {
         }
     }
 
-    private void alterar(String text) {
+    private void alterar() {
         try {
-            setLink(this.link);
+            setLink(link);
             linksDAO.salvar(link);
             JOptionPane.showMessageDialog(null, "Link alterado com sucesso!");
-
             txt_descricao.setText(null);
             btn_alterar.setEnabled(true);
         } catch (Exception e) {

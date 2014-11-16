@@ -294,7 +294,13 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
             if (btn_alterar.isEnabled() == true) {
                 salvar(txt_descricao.getText());
             } else {
-                alterar(txt_descricao.getText());
+                try {
+                    grupoDAO.consulta(txt_descricao.getText());
+                    JOptionPane.showMessageDialog(null, "Grupo ja cadastrado!");
+                    txt_descricao.requestFocus();
+                } catch (NoResultException e) {
+                    alterar();
+                }
             }
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
@@ -380,15 +386,16 @@ public class Frm_CadGrupo extends javax.swing.JFrame {
     private javax.swing.JTextField txt_filtro;
     // End of variables declaration//GEN-END:variables
 
-    private void alterar(String descricao) {
+    private void alterar() {
         try {
-            grupo.setDescricao(descricao);
+            grupo.setDescricao(txt_descricao.getText());
             grupoDAO.salvar(grupo);
-            JOptionPane.showMessageDialog(null, "Grupo " + descricao + " alterado com sucesso!");
-            listarGrupos();
+            JOptionPane.showMessageDialog(null, "Grupo " + txt_descricao.getText() + " alterado com sucesso!");
             btn_cancelar.doClick();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao alterar o grupo: " + descricao);
+            JOptionPane.showMessageDialog(null, "Erro ao alterar o grupo: " + txt_descricao.getText());
+        }finally{
+            listarGrupos();
         }
     }
 

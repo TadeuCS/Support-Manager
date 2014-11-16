@@ -8,14 +8,17 @@ package View.Cadastros;
 import Controller.SegmentoDAO;
 import Model.Segmento;
 import Util.Classes.FixedLengthDocument;
+import Util.Classes.TableConfig;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
  * @author Tadeu
  */
-public class Frm_CadSegmento extends javax.swing.JFrame {
+public final class Frm_CadSegmento extends javax.swing.JFrame {
 
     SegmentoDAO segmentoDAO;
     Segmento segmento;
@@ -24,11 +27,12 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         txt_descricao.setDocument(new FixedLengthDocument(20));
+        listar();
     }
 
     public void novo() {
         segmentoDAO = new SegmentoDAO();
-        segmento= new Segmento();
+        segmento = new Segmento();
     }
 
     public void salvar(String descricao) {
@@ -49,9 +53,26 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
                 txt_descricao.requestFocus();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Buscar Segmento "+descricao);
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar Segmento " + descricao);
             txt_descricao.setText(null);
             txt_descricao.requestFocus();
+        } finally {
+            listar();
+        }
+    }
+
+    public void listar() {
+        try {
+            TableConfig.limpaTabela(tb_segmentos);
+            segmentoDAO = new SegmentoDAO();
+            for (int i = 0; i < segmentoDAO.lista().size(); i++) {
+                String[] linha = new String[]{
+                    segmentoDAO.lista().get(i).getCodsegmento().toString(),
+                    segmentoDAO.lista().get(i).getDescricao()};
+                TableConfig.getModel(tb_segmentos).addRow(linha);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar Segmentos!");
         }
     }
 
@@ -65,6 +86,13 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
         txt_descricao = new javax.swing.JTextField();
         btn_salvar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+        pnl_tabela = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tb_segmentos = new javax.swing.JTable();
+        txt_filtro = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        btn_alterar = new javax.swing.JButton();
+        btn_fechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Segmento");
@@ -103,11 +131,88 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
             }
         });
 
-        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
-        btn_cancelar.setText("Fechar");
+        btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/cancelar.png"))); // NOI18N
+        btn_cancelar.setText("Cancelar");
         btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cancelarActionPerformed(evt);
+            }
+        });
+
+        tb_segmentos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Segmento"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tb_segmentos);
+        if (tb_segmentos.getColumnModel().getColumnCount() > 0) {
+            tb_segmentos.getColumnModel().getColumn(0).setMinWidth(80);
+            tb_segmentos.getColumnModel().getColumn(0).setPreferredWidth(80);
+            tb_segmentos.getColumnModel().getColumn(0).setMaxWidth(80);
+        }
+
+        txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_filtroKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setText("Filtro:");
+
+        javax.swing.GroupLayout pnl_tabelaLayout = new javax.swing.GroupLayout(pnl_tabela);
+        pnl_tabela.setLayout(pnl_tabelaLayout);
+        pnl_tabelaLayout.setHorizontalGroup(
+            pnl_tabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(pnl_tabelaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_filtro)
+                .addContainerGap())
+        );
+        pnl_tabelaLayout.setVerticalGroup(
+            pnl_tabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_tabelaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnl_tabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        btn_alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/alterar.png"))); // NOI18N
+        btn_alterar.setText("Alterar");
+        btn_alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alterarActionPerformed(evt);
+            }
+        });
+
+        btn_fechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/fechar.png"))); // NOI18N
+        btn_fechar.setText("Fechar");
+        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fecharActionPerformed(evt);
             }
         });
 
@@ -118,12 +223,16 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
             .addGroup(pnl_fundoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnl_tabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnl_dados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fundoLayout.createSequentialGroup()
-                        .addGap(0, 127, Short.MAX_VALUE)
                         .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                        .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_fundoLayout.createSequentialGroup()
+                        .addComponent(btn_fechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnl_fundoLayout.setVerticalGroup(
@@ -135,7 +244,13 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
                 .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salvar)
                     .addComponent(btn_cancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnl_tabela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnl_fundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_alterar)
+                    .addComponent(btn_fechar))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,16 +269,45 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        if (txt_descricao.getText().equals("") == false) {
-            salvar(txt_descricao.getText());
-        }else{
-            JOptionPane.showMessageDialog(null, "Descrição inválida");
+        if (txt_descricao.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Parcela inválida!");
+            txt_descricao.requestFocus();
+        } else {
+            if (btn_alterar.isEnabled() == true) {
+                salvar(txt_descricao.getText());
+            } else {
+                try {
+                    segmentoDAO.buscaSegmento(txt_descricao.getText());
+                    JOptionPane.showMessageDialog(null, "Segmento ja cadastrado!");
+                    txt_descricao.requestFocus();
+                } catch (NoResultException e) {
+                    alterar();
+                }
+            }
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        dispose();
+        btn_alterar.setEnabled(true);
+        txt_descricao.setText(null);
     }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
+        if (tb_segmentos.getSelectedRowCount() != 1) {
+            JOptionPane.showMessageDialog(null, "Selecione apenas uma linha para alterar");
+        } else {
+            getSegmento(tb_segmentos.getValueAt(tb_segmentos.getSelectedRow(), 1).toString());
+            btn_alterar.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_alterarActionPerformed
+
+    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_btn_fecharActionPerformed
+
+    private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
+        TableConfig.filtrar(evt, tb_segmentos, txt_filtro);
+    }//GEN-LAST:event_txt_filtroKeyReleased
 
     /**
      * @param args the command line arguments
@@ -201,11 +345,51 @@ public class Frm_CadSegmento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_alterar;
     private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnl_dados;
     private javax.swing.JPanel pnl_fundo;
+    private javax.swing.JPanel pnl_tabela;
+    private javax.swing.JTable tb_segmentos;
     private javax.swing.JTextField txt_descricao;
+    private javax.swing.JTextField txt_filtro;
     // End of variables declaration//GEN-END:variables
+
+    private void getSegmento(String descricao) {
+        try {
+            segmento = segmentoDAO.buscaSegmento(descricao);
+            txt_descricao.setText(segmento.getDescricao());
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar o Segmento: " + descricao);
+        }
+    }
+
+    private void alterar() {
+        try {
+            setSegmento(segmento);
+            segmentoDAO.salvar(segmento);
+            JOptionPane.showMessageDialog(null, "Segmento alterado com sucesso!");
+            txt_descricao.setText(null);
+            btn_alterar.setEnabled(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar Segmento: " + segmento.getDescricao());
+            txt_descricao.requestFocus();
+        } finally {
+            listar();
+        }
+    }
+
+    private void setSegmento(Segmento segmento) {
+        try {
+            segmento.setDescricao(txt_descricao.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao setar o Segmento: " + txt_descricao.getText());
+        }
+
+    }
 }

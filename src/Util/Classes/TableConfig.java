@@ -22,8 +22,9 @@ public class TableConfig extends DefaultTableModel {
         return (DefaultTableModel) tabela.getModel();
     }
 
-    public static void limpaTabela(DefaultTableModel model) {
+    public static void limpaTabela(JTable tabela) {
         try {
+            DefaultTableModel model = getModel(tabela);
             while (0 < model.getRowCount()) {
                 model.removeRow(0);
             }
@@ -32,7 +33,7 @@ public class TableConfig extends DefaultTableModel {
         }
     }
 
-    public static void filtrar(java.awt.event.KeyEvent evt,JTable table,JTextField filtro) {
+    public static void filtrar(java.awt.event.KeyEvent evt, JTable table, JTextField filtro) {
         TableRowSorter sorter = new TableRowSorter(table.getModel());
         table.setRowSorter(sorter);
         String texto = filtro.getText();

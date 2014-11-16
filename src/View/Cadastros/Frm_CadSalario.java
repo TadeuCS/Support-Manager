@@ -52,7 +52,7 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
         try {
             Moeda money= new Moeda();
             salarioDAO = new SalarioDAO();
-            TableConfig.limpaTabela(TableConfig.getModel(tb_salarios));
+            TableConfig.limpaTabela(tb_salarios);
             for (int i = 0; i < salarioDAO.lista().size(); i++) {
                 String[] linha = new String[]{salarioDAO.lista().get(i).getCodsalario().toString(),
                     salarioDAO.lista().get(i).getAno() + "",
