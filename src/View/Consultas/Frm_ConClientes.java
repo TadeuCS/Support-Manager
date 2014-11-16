@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Consultas;
 
 import Controller.AplicativoDAO;
@@ -25,10 +20,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-/**
- *
- * @author Tadeu
- */
 public final class Frm_ConClientes extends javax.swing.JFrame {
 
     DefaultTableModel model;
@@ -83,7 +74,7 @@ public final class Frm_ConClientes extends javax.swing.JFrame {
                 model.addRow(linha);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Listar Clientes");
+            JOptionPane.showMessageDialog(null, "Erro ao listar Clientes");
             System.out.println(e);
         }
     }
@@ -93,7 +84,7 @@ public final class Frm_ConClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } else {
             if (tb_clientes.getSelectedRowCount() > 1) {
-                JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
+                JOptionPane.showMessageDialog(null, "Selecione apenas uma linha!");
             } else {
                 Frm_CadCliente f = new Frm_CadCliente(tipoUsuarioLogado);
                 f.setCodigoCliente(Integer.parseInt(tb_clientes.getValueAt(tb_clientes.getSelectedRow(), 0).toString()));
@@ -110,7 +101,7 @@ public final class Frm_ConClientes extends javax.swing.JFrame {
         try {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Valor Não Encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Valor não encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

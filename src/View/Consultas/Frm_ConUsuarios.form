@@ -113,7 +113,7 @@
                       <Table columnCount="4" rowCount="0">
                         <Column editable="false" title="C&#xf3;digo" type="java.lang.String"/>
                         <Column editable="false" title="Usu&#xe1;rio" type="java.lang.String"/>
-                        <Column editable="false" title="Email" type="java.lang.String"/>
+                        <Column editable="false" title="E-mail" type="java.lang.String"/>
                         <Column editable="false" title="Status" type="java.lang.String"/>
                       </Table>
                     </Property>

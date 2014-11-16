@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.Consultas;
 
 import Controller.EmpresaDAO;
@@ -10,10 +5,6 @@ import View.Cadastros.Frm_CadEmpresa;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Tadeu
- */
 public class Frm_ConEmpresa extends javax.swing.JFrame {
 
     EmpresaDAO empresaDAO;
@@ -39,7 +30,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
                 model.addRow(linha);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Listar Empresas");
+            JOptionPane.showMessageDialog(null, "Erro ao listar Empresas");
             System.out.println(e);
         }
     }
@@ -49,7 +40,7 @@ public class Frm_ConEmpresa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } else {
             if (tb_empresas.getSelectedRowCount() > 1) {
-                JOptionPane.showMessageDialog(null, "Selecione Apenas uma linha!");
+                JOptionPane.showMessageDialog(null, "Selecione apenas uma linha!");
             } else {
                 Frm_CadEmpresa f = new Frm_CadEmpresa();
                 f.setCodigoEmpresa(Integer.parseInt(tb_empresas.getValueAt(tb_empresas.getSelectedRow(), 0).toString()));
