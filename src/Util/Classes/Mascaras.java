@@ -21,7 +21,7 @@ import javax.swing.text.NumberFormatter;
 public class Mascaras {
     
     public static void setMascaraMoeda(JFormattedTextField field){
-        DecimalFormat dFormat = new DecimalFormat("#,###,###.00");
+        DecimalFormat dFormat = new DecimalFormat("###,###,##0.00");
         NumberFormatter formatter = new NumberFormatter(dFormat);
         formatter.setFormat(dFormat);
         formatter.setAllowsInvalid(false);

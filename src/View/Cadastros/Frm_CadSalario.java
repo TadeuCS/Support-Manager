@@ -9,6 +9,7 @@ import Controller.SalarioDAO;
 import Model.Salario;
 import Util.Classes.IntegerDocument;
 import Util.Classes.Mascaras;
+import Util.Classes.Moeda;
 import Util.Classes.TableConfig;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
@@ -32,31 +33,30 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
     }
 
     public void salvar(int ano, double percentual) {
-        novo();
-        salario.setAno(ano);
-        salario.setValor(percentual);
         try {
+            novo();
+            setSalario(salario);
             salarioDAO.salva(salario);
             JOptionPane.showMessageDialog(null, "Salarios salvo com sucesso!");
-            txt_ano.setText(null);
-            txt_valor.setText(null);
-            txt_ano.requestFocus();
-            listar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Salarios já existe\n", "Alerta", JOptionPane.ERROR_MESSAGE);
             txt_ano.requestFocus();
+        } finally {
+            listar();
+            limpaCampos();
         }
 
     }
 
     public void listar() {
         try {
+            Moeda money= new Moeda();
             salarioDAO = new SalarioDAO();
             TableConfig.limpaTabela(TableConfig.getModel(tb_salarios));
             for (int i = 0; i < salarioDAO.lista().size(); i++) {
                 String[] linha = new String[]{salarioDAO.lista().get(i).getCodsalario().toString(),
                     salarioDAO.lista().get(i).getAno() + "",
-                    salarioDAO.lista().get(i).getValor() + ""};
+                    money.mascaraDinheiro(salarioDAO.lista().get(i).getValor())};
                 TableConfig.getModel(tb_salarios).addRow(linha);
             }
         } catch (Exception e) {
@@ -95,6 +95,7 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
         jLabel1.setText("Ano *:");
 
         txt_valor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        txt_valor.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_valor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_valorFocusLost(evt);
@@ -282,7 +283,8 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
                 txt_valor.requestFocus();
             } else {
                 if (btn_alterar.isEnabled() == true) {
-                    salvar(Integer.parseInt(txt_ano.getText()), Double.parseDouble(txt_valor.getText()));
+                    salvar(Integer.parseInt(txt_ano.getText()),
+                            Double.parseDouble(txt_valor.getText().replace(".", "").replace(",", ".")));
                 } else {
                     alterar();
                 }
@@ -370,7 +372,9 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
             salario = new Salario();
             salario = salarioDAO.findSalarioByCodigo(codigo);
             txt_ano.setText(salario.getAno() + "");
-            txt_valor.setText(salario.getValor() / 10 + "");
+            String valor=salario.getValor()+"";
+            System.out.println(valor);
+            txt_valor.setText(valor.replace(".", ","));
         } catch (NoResultException e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar o Salário: " + codigo);
         }
@@ -378,7 +382,7 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
 
     private void limpaCampos() {
         txt_ano.setText(null);
-        txt_valor.setText("00,00");
+        txt_valor.setText("0,00");
     }
 
     private void alterar() {
@@ -396,9 +400,8 @@ public final class Frm_CadSalario extends javax.swing.JFrame {
         }
     }
 
-    private Salario setSalario(Salario salario) {
+    private void setSalario(Salario salario) {
         salario.setAno(Integer.parseInt(txt_ano.getText()));
         salario.setValor(Double.parseDouble(txt_valor.getText().replace(".", "").replace(",", ".")));
-        return salario;
     }
 }

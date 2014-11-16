@@ -1,6 +1,6 @@
 ------------------------------------------------------CORREÇÕES------------------------------------------------------
 corrigir problemas com caminhos dos relatorios ao gerar um executavel.
-possibilitar alterar salarios,segmentos
+possibilitar alterar segmentos
 colocar algo no fundo da tela principal.
 configurar as telas de consulta para se o TIPO USUARIO for SUPORTE, desabilitar os botões voltar e selecionar.
 possibilitar mudar de abas se o tipo de operação for consultar.
