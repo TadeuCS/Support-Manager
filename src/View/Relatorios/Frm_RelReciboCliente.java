@@ -263,7 +263,7 @@ public class Frm_RelReciboCliente extends javax.swing.JFrame {
             cbx_cliente.requestFocus();
         } else {
             if (cbx_salario.getSelectedItem().toString() == null) {
-                JOptionPane.showMessageDialog(null, "Selecione um Salario!");
+                JOptionPane.showMessageDialog(null, "Selecione um Salário!");
                 cbx_salario.requestFocus();
             } else {
                 if (txt_data.getText().equals("  /  /    ") == true) {
