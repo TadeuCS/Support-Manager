@@ -196,12 +196,12 @@
               <SubComponents>
                 <Component class="javax.swing.JCheckBox" name="chx_cadAplicativo">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/APLICATIVO/APLICATIVO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/APLICATIVO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadLinks">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/APLICATIVO/LINKS"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/LINKS"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadLinksActionPerformed"/>
@@ -209,27 +209,27 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadAtendimento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/ATENDIMENTO/ATENDIMENTO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/ATENDIMENTO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadPrioridade">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/ATENDIMENTO/PRIORIDADE"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/PRIORIDADE"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadOrigem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/ATENDIMENTO/ORIGEM"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/ORIGEM"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadStatusAtendimento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/ATENDIMENTO/STATUS ATENDIMENTO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/STATUS ATENDIMENTO"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadTipoAtendimento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/ATENDIMENTO/TIPO ATENDIMENTO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/TIPO ATENDIMENTO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadTipoAtendimentoActionPerformed"/>
@@ -237,7 +237,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadCliente">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE/CLIENTE"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadClienteActionPerformed"/>
@@ -245,7 +245,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadSegmento">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE/SEGMENTO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/SEGMENTO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadSegmentoActionPerformed"/>
@@ -253,7 +253,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadParcela">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE/PARCELA"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/PARCELA"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadParcelaActionPerformed"/>
@@ -261,7 +261,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadSalario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CLIENTE/SAL&#xc1;RIO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/SAL&#xc1;RIO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadSalarioActionPerformed"/>
@@ -273,7 +273,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadContato">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CONTATO/CONTATO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/CONTATO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadContatoActionPerformed"/>
@@ -283,7 +283,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadGrupo">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/CONTATO/GRUPO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/GRUPO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadGrupoActionPerformed"/>
@@ -291,7 +291,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadTipoUsuario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/USU&#xc1;RIO/TIPO USU&#xc1;RIO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/TIPO USU&#xc1;RIO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadTipoUsuarioActionPerformed"/>
@@ -299,7 +299,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chx_cadUsuario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CADASTRO/USU&#xc1;RIO/USU&#xc1;RIO"/>
+                    <Property name="text" type="java.lang.String" value="CADASTRO/USU&#xc1;RIO"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chx_cadUsuarioActionPerformed"/>

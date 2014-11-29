@@ -4,6 +4,7 @@ import Controller.AtendimentoDAO;
 import Controller.UsuarioDAO;
 import Model.Atendimento;
 import Model.Usuario;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,8 +31,10 @@ public class Frm_ConRankUsuarios extends javax.swing.JFrame {
                 model = (DefaultTableModel) tb_rank.getModel();
                 model.addRow(lista);
             }
-        } catch (Exception e) {
+        } catch (NoResultException e) {
             JOptionPane.showMessageDialog(null, "Lista Vazia! \n");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar o Rank de Usuários \n" + ex.getMessage());
         }
     }
 

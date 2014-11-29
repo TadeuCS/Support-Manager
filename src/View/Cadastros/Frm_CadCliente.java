@@ -75,7 +75,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         txt_codigo.setDocument(new IntegerDocument(4));
         txt_referencia.setDocument(new IntegerDocument(8));
         txt_numero.setDocument(new IntegerDocument(5));
-        txt_quantidade.setDocument(new IntegerDocument(2));
+        txt_quantidade.setDocument(new IntegerDocument(3));
         abas.setEnabled(false);
         this.tipoUsuarioLogado=tipo;
         carregaSegmentos();
@@ -2272,11 +2272,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_proximoLinksActionPerformed
 
     private void btn_calcularMensalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calcularMensalidadeActionPerformed
-        if (cbx_parcela.getSelectedObjects() == null) {
+        if (cbx_parcela.getSelectedItem()==null) {
             JOptionPane.showMessageDialog(null, "Selecione um percentual da parcela do Cliente");
             cbx_parcela.requestFocus();
         } else {
-            if (cbx_salario.getSelectedObjects() == null) {
+            if (cbx_salario.getSelectedItem()== null) {
                 JOptionPane.showMessageDialog(null, "Selecione um ano para calculo do salario do Cliente");
                 cbx_salario.requestFocus();
             } else {

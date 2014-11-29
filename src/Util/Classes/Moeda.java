@@ -1,5 +1,4 @@
 package Util.Classes;
-//-------------------- classe Moeda--------------------------------------- 
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

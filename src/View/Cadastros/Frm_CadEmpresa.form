@@ -292,6 +292,8 @@
                       </Properties>
                       <Events>
                         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cbx_grupoFocusGained"/>
+                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbx_grupoMouseEntered"/>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cbx_grupoMousePressed"/>
                       </Events>
                     </Component>
                     <Container class="javax.swing.JPanel" name="pnl_dados">
@@ -506,7 +508,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cbx_estados" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cbx_estados" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="cbx_cidades" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                               </Group>
                           </Group>

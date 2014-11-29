@@ -375,7 +375,7 @@ public class Frm_Principal extends javax.swing.JFrame {
         item_Permissoes = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Bem Vindo");
+        setTitle("Support Manager 1.0");
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);

@@ -1,14 +1,13 @@
 package View.Consultas;
 
-import Controller.GrupoDAO;
 import Controller.TelefoneDAO;
+import Model.Telefone;
+import Util.Classes.TableConfig;
 import View.Cadastros.Frm_CadTelefone;
 import View.Cadastros.Frm_CadUsuario;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 public final class Frm_ConContatos extends javax.swing.JFrame {
 
@@ -18,28 +17,41 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
     public Frm_ConContatos(String tipoUsuario) {
         initComponents();
         setVisible(true);
-        model = (DefaultTableModel) tb_contatos.getModel();
         validaTipoUsuarioLogado(tipoUsuario);
         listaContatos();
     }
 
-    public void validaTipoUsuarioLogado(String tipo){
-        if(tipo.equals("SUPORTE")==true){
+    public void validaTipoUsuarioLogado(String tipo) {
+        if (tipo.equals("SUPORTE") == true) {
             btn_selecionar.setEnabled(false);
         }
     }
-    
+
+    public String getContatoCompleto(Telefone telefone) {
+        String contatoCompleto = null;
+        if(telefone.getCodcliente()!=null){
+            contatoCompleto=telefone.getCodcliente().getNomeFantasia().concat(" "+telefone.getDescricao());
+        }
+        if(telefone.getCodempresa()!=null){
+            contatoCompleto=telefone.getCodempresa().getNomeFantasia().concat(" "+telefone.getDescricao());
+        }
+        if(telefone.getCodusuario()!=null){
+            contatoCompleto=telefone.getCodusuario().getUsuario().concat(" "+telefone.getDescricao());
+        }
+        return contatoCompleto;
+    }
+
     public void listaContatos() {
         try {
-            limpaTabela(model);
+            TableConfig.limpaTabela(tb_contatos);
             telefoneDAO = new TelefoneDAO();
             for (int i = 0; i < telefoneDAO.lista().size(); i++) {
                 String[] linha = new String[]{telefoneDAO.lista().get(i).getCodtelefone().toString(),
-                    telefoneDAO.lista().get(i).getDescricao(),
+                    getContatoCompleto(telefoneDAO.lista().get(i)),
                     telefoneDAO.lista().get(i).getTelefone(),
                     telefoneDAO.lista().get(i).getCodgrupo().getDescricao()
                 };
-                model.addRow(linha);
+                TableConfig.getModel(tb_contatos).addRow(linha);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -61,27 +73,6 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         }
     }
 
-    public void filtrar(java.awt.event.KeyEvent evt) {
-        TableRowSorter sorter = new TableRowSorter(tb_contatos.getModel());
-        tb_contatos.setRowSorter(sorter);
-        String texto = txt_usuario.getText();
-        try {
-            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + texto));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Valor não encontrado!!!", "AVISO - Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void limpaTabela(DefaultTableModel model) {
-        try {
-            while (0 < model.getRowCount()) {
-                model.removeRow(0);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao limpar tabela de Contatos");
-        }
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -92,7 +83,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         tb_contatos = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txt_usuario = new javax.swing.JTextField();
+        txt_filtro = new javax.swing.JTextField();
         btn_selecionar = new javax.swing.JButton();
         btn_fechar = new javax.swing.JButton();
 
@@ -156,12 +147,12 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
 
         jLabel1.setText("Filtro:");
 
-        txt_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_filtro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_usuarioKeyPressed(evt);
+                txt_filtroKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_usuarioKeyReleased(evt);
+                txt_filtroKeyReleased(evt);
             }
         });
 
@@ -173,7 +164,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_usuario)
+                .addComponent(txt_filtro)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -182,7 +173,7 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                    .addComponent(txt_filtro, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -255,13 +246,13 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tb_contatosKeyPressed
 
-    private void txt_usuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyReleased
-        filtrar(evt);
-    }//GEN-LAST:event_txt_usuarioKeyReleased
+    private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
+        TableConfig.filtrar(evt, tb_contatos, txt_filtro);
+    }//GEN-LAST:event_txt_filtroKeyReleased
 
-    private void txt_usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuarioKeyPressed
+    private void txt_filtroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyPressed
 
-    }//GEN-LAST:event_txt_usuarioKeyPressed
+    }//GEN-LAST:event_txt_filtroKeyPressed
 
     private void btn_selecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionarActionPerformed
         try {
@@ -322,6 +313,6 @@ public final class Frm_ConContatos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tb_contatos;
-    private javax.swing.JTextField txt_usuario;
+    private javax.swing.JTextField txt_filtro;
     // End of variables declaration//GEN-END:variables
 }

@@ -49,6 +49,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         txt_complemento.setDocument(new UpperCaseDocument());
         txt_porta.setDocument(new IntegerDocument(3));
         txt_numero.setDocument(new IntegerDocument(5));
+        carregaGrupos();
         carregaTipos();
         carregaEstados();
         carregaCidades();
@@ -57,7 +58,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         btn_cancelar.doClick();
         codigoEmpresa = 0;
     }
-    
+
     public int getCodigoEmpresa() {
         return codigoEmpresa;
     }
@@ -123,6 +124,24 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         cbx_tipo.setEnabled(valor);
         txt_cpf.setEnabled(valor);
         btn_cancelar.setEnabled(valor);
+        btn_cadGrupo.setEnabled(valor);
+        cbx_grupo.setEnabled(valor);
+        txt_contato.setEnabled(valor);
+        txt_telefone.setEnabled(valor);
+        txt_cep.setEnabled(valor);
+        txt_rua.setEnabled(valor);
+        txt_numero.setEnabled(valor);
+        txt_bairro.setEnabled(valor);
+        txt_complemento.setEnabled(valor);
+        cbx_cidades.setEnabled(valor);
+        btn_cadCidade.setEnabled(valor);
+        cbx_estados.setEnabled(valor);
+        txt_email.setEnabled(valor);
+        txt_senha.setEnabled(valor);
+        txt_smtp.setEnabled(valor);
+        txt_porta.setEnabled(valor);
+        chx_ssl.setEnabled(valor);
+        btn_salvar.setEnabled(valor);
     }
 
     public void setEnabledButtons(boolean valor) {
@@ -264,23 +283,23 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "E-mail Inválido!");
             txt_email.requestFocus();
         } else {
-                if (senha.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Senha Inválida!");
-                    txt_senha.requestFocus();
+            if (senha.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Senha Inválida!");
+                txt_senha.requestFocus();
+            } else {
+                if (smtp.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "SMTP Inválido!");
+                    txt_smtp.requestFocus();
                 } else {
-                    if (smtp.isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "SMTP Inválido!");
-                        txt_smtp.requestFocus();
+                    if (porta.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Porta Inválida!");
+                        txt_porta.requestFocus();
                     } else {
-                        if (porta.isEmpty()) {
-                            JOptionPane.showMessageDialog(null, "Porta Inválida!");
-                            txt_porta.requestFocus();
-                        } else {
-                            salvar();
-                        }
+                        salvar();
                     }
                 }
             }
+        }
     }
 
     public void validaCamposTelefone(String grupo, String telefone, String contato) {
@@ -451,7 +470,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
 
     public void setEmpresa(Empresa empresa) {
         try {
-            tipoPessoaDAO=new TipoPessoaDAO();
+            tipoPessoaDAO = new TipoPessoaDAO();
             empresa.setNomeFantasia(txt_nomeFantasia.getText());
             empresa.setTipoPessoa(tipoPessoaDAO.buscaTipoPessoa(cbx_tipo.getSelectedItem().toString()));
             empresa.setCnpjCpf(txt_cpf.getText());
@@ -519,7 +538,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
             empresaDAO.salvar(empresa);
             if (txt_operacao.getText().equals("INCLUSÃO") == true) {
                 JOptionPane.showMessageDialog(null, "Empresa " + empresa.getNomeFantasia() + " salva com sucesso!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Empresa " + empresa.getNomeFantasia() + " alterada com sucesso!");
             }
             btn_cancelar.doClick();
@@ -675,6 +694,14 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         cbx_grupo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cbx_grupoFocusGained(evt);
+            }
+        });
+        cbx_grupo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cbx_grupoMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cbx_grupoMousePressed(evt);
             }
         });
 
@@ -963,7 +990,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
                     .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel17)
                         .addComponent(jLabel18)
-                        .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbx_estados, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbx_cidades, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 33, Short.MAX_VALUE)
                 .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1228,7 +1255,6 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_proximoEnderecoActionPerformed
 
     private void cbx_grupoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_grupoFocusGained
-        carregaGrupos();
     }//GEN-LAST:event_cbx_grupoFocusGained
 
     private void btn_cadGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadGrupoActionPerformed
@@ -1276,6 +1302,14 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         Frm_ConEmpresa f = new Frm_ConEmpresa();
         dispose();
     }//GEN-LAST:event_btn_consultaActionPerformed
+
+    private void cbx_grupoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbx_grupoMouseEntered
+
+    }//GEN-LAST:event_cbx_grupoMouseEntered
+
+    private void cbx_grupoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbx_grupoMousePressed
+        carregaGrupos();
+    }//GEN-LAST:event_cbx_grupoMousePressed
 
     /**
      * @param args the command line arguments

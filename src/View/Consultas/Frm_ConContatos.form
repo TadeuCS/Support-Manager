@@ -166,7 +166,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="txt_usuario" max="32767" attributes="0"/>
+                      <Component id="txt_filtro" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -177,7 +177,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel1" max="32767" attributes="0"/>
-                          <Component id="txt_usuario" pref="25" max="32767" attributes="0"/>
+                          <Component id="txt_filtro" pref="25" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -190,10 +190,10 @@
                 <Property name="text" type="java.lang.String" value="Filtro:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_usuario">
+            <Component class="javax.swing.JTextField" name="txt_filtro">
               <Events>
-                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_usuarioKeyPressed"/>
-                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_usuarioKeyReleased"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_filtroKeyPressed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_filtroKeyReleased"/>
               </Events>
             </Component>
           </SubComponents>

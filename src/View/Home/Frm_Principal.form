@@ -342,7 +342,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Bem Vindo"/>
+    <Property name="title" type="java.lang.String" value="Support Manager 1.0"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="Menu_barra"/>

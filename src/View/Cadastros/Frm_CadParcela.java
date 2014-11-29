@@ -1,10 +1,9 @@
 package View.Cadastros;
 
-import Controller.GrupoDAO;
 import Controller.ParcelaDAO;
-import Model.Link;
 import Model.Parcela;
 import Util.Classes.FixedLengthDocument;
+import Util.Classes.IntegerDocument;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -20,7 +19,7 @@ public final class Frm_CadParcela extends javax.swing.JFrame {
     public Frm_CadParcela() {
         initComponents();
         setVisible(true);
-        txt_descricao.setDocument(new FixedLengthDocument(20));
+        txt_descricao.setDocument(new FixedLengthDocument(5));
         model = (DefaultTableModel) tb_parcelas.getModel();
         listar();
     }
@@ -92,12 +91,20 @@ public final class Frm_CadParcela extends javax.swing.JFrame {
         return parcela;
     }
 
+    public void novo() {
+        parcela = new Parcela();
+        parcelaDAO = new ParcelaDAO();
+    }
+
     private void getParcela(String parcela) {
         try {
-            this.parcela = parcelaDAO.consulta(parcela);
-            txt_descricao.setText(this.parcela.getPercentual() + "");
+            novo();
+            this.parcela=parcelaDAO.consulta(parcela);
+            txt_descricao.setText(this.parcela.getPercentual()+"");
         } catch (NoResultException e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar o parcela: " + parcela);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -321,16 +328,24 @@ public final class Frm_CadParcela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        if (txt_descricao.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Parcela inválida!");
-            txt_descricao.requestFocus();
-        } else {
-            if (btn_alterar.isEnabled() == true) {
-                salvar(Double.parseDouble(txt_descricao.getText()));
+        try {
+            Double percentual = Double.parseDouble(txt_descricao.getText().replace(",", "."));
+            if (percentual > 100) {
+                JOptionPane.showMessageDialog(null, "Parcela deve ter valor inferior ou igual a 100 porcento!");
+                txt_descricao.requestFocus();
             } else {
-                alterar();
+                if (btn_alterar.isEnabled() == true) {
+                    salvar(Double.parseDouble(txt_descricao.getText()));
+                } else {
+                    alterar();
+                }
             }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(rootPane, "Parcela Inválida!");
+            txt_descricao.setText(null);
+            txt_descricao.requestFocus();
         }
+
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
@@ -347,6 +362,7 @@ public final class Frm_CadParcela extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        txt_descricao.setText(null);
         btn_alterar.setEnabled(true);
     }//GEN-LAST:event_btn_cancelarActionPerformed
 

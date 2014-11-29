@@ -167,7 +167,6 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
 //        }
 //    }
     //Fim das validações da interface
-
     public void getUsuario(Usuario usuario) {
         if (usuario.getCodusuario().equals("") == false) {
             txt_codigo.setText(usuario.getCodusuario().toString());
@@ -476,10 +475,12 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
                 }
             }
             if (existe == false) {
+                grupoDAO = new GrupoDAO();
                 telefone = new Telefone();
                 telefone.setCodusuario(usuario);
                 telefone.setTelefone(numTelefone);
                 telefone.setDescricao(contato);
+                telefone.setCodgrupo(grupoDAO.consulta(grupo));
                 insereTelefoneNalista(telefone);
                 txt_telefone.setText(null);
                 txt_contato.setText(null);

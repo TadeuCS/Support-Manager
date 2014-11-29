@@ -52,7 +52,7 @@ public class Frm_Permissoes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Permissões salvas com sucesso para usuários do Tipo: " + cbx_tipoUsuario.getSelectedItem().toString());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Salvar Permisões para usuários do Tipo: " + cbx_tipoUsuario.getSelectedItem().toString());
-        }finally{
+        } finally {
             dispose();
         }
     }
@@ -63,7 +63,9 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         permissoes = new Permissoes();
         try {
             permissoes = permissoesDAO.findByTipoUsuario(tipoUsuarioDAO.buscaTipoUsuario(tipo));
-        } catch (Exception e) {
+        } catch (NoResultException e) {
+            JOptionPane.showMessageDialog(null, "Não existem permissões para o tipo de usuário " + tipo);
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Listar permissões por Tipo de Usuário");
         }
         getPermissoesCadastro(permissoes);
@@ -278,80 +280,80 @@ public class Frm_Permissoes extends javax.swing.JFrame {
         setTitle("Parametrização por Usuário");
         setResizable(false);
 
-        chx_cadAplicativo.setText("CADASTRO/APLICATIVO/APLICATIVO");
+        chx_cadAplicativo.setText("CADASTRO/APLICATIVO");
 
-        chx_cadLinks.setText("CADASTRO/APLICATIVO/LINKS");
+        chx_cadLinks.setText("CADASTRO/LINKS");
         chx_cadLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadLinksActionPerformed(evt);
             }
         });
 
-        chx_cadAtendimento.setText("CADASTRO/ATENDIMENTO/ATENDIMENTO");
+        chx_cadAtendimento.setText("CADASTRO/ATENDIMENTO");
 
-        chx_cadPrioridade.setText("CADASTRO/ATENDIMENTO/PRIORIDADE");
+        chx_cadPrioridade.setText("CADASTRO/PRIORIDADE");
 
-        chx_cadOrigem.setText("CADASTRO/ATENDIMENTO/ORIGEM");
+        chx_cadOrigem.setText("CADASTRO/ORIGEM");
 
-        chx_cadStatusAtendimento.setText("CADASTRO/ATENDIMENTO/STATUS ATENDIMENTO");
+        chx_cadStatusAtendimento.setText("CADASTRO/STATUS ATENDIMENTO");
 
-        chx_cadTipoAtendimento.setText("CADASTRO/ATENDIMENTO/TIPO ATENDIMENTO");
+        chx_cadTipoAtendimento.setText("CADASTRO/TIPO ATENDIMENTO");
         chx_cadTipoAtendimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadTipoAtendimentoActionPerformed(evt);
             }
         });
 
-        chx_cadCliente.setText("CADASTRO/CLIENTE/CLIENTE");
+        chx_cadCliente.setText("CADASTRO/CLIENTE");
         chx_cadCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadClienteActionPerformed(evt);
             }
         });
 
-        chx_cadSegmento.setText("CADASTRO/CLIENTE/SEGMENTO");
+        chx_cadSegmento.setText("CADASTRO/SEGMENTO");
         chx_cadSegmento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadSegmentoActionPerformed(evt);
             }
         });
 
-        chx_cadParcela.setText("CADASTRO/CLIENTE/PARCELA");
+        chx_cadParcela.setText("CADASTRO/PARCELA");
         chx_cadParcela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadParcelaActionPerformed(evt);
             }
         });
 
-        chx_cadSalario.setText("CADASTRO/CLIENTE/SALÁRIO");
+        chx_cadSalario.setText("CADASTRO/SALÁRIO");
         chx_cadSalario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadSalarioActionPerformed(evt);
             }
         });
 
-        chx_cadContato.setText("CADASTRO/CONTATO/CONTATO");
+        chx_cadContato.setText("CADASTRO/CONTATO");
         chx_cadContato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadContatoActionPerformed(evt);
             }
         });
 
-        chx_cadGrupo.setText("CADASTRO/CONTATO/GRUPO");
+        chx_cadGrupo.setText("CADASTRO/GRUPO");
         chx_cadGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadGrupoActionPerformed(evt);
             }
         });
 
-        chx_cadTipoUsuario.setText("CADASTRO/USUÁRIO/TIPO USUÁRIO");
+        chx_cadTipoUsuario.setText("CADASTRO/TIPO USUÁRIO");
         chx_cadTipoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadTipoUsuarioActionPerformed(evt);
             }
         });
 
-        chx_cadUsuario.setText("CADASTRO/USUÁRIO/USUÁRIO");
+        chx_cadUsuario.setText("CADASTRO/USUÁRIO");
         chx_cadUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chx_cadUsuarioActionPerformed(evt);

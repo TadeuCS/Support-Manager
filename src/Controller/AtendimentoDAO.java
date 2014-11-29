@@ -37,8 +37,8 @@ public class AtendimentoDAO extends Manager {
         query = em.createNativeQuery("select u.`USUARIO`, \n"
                 + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=1 and a.`CODUSUARIO`=u.`codusuario`) abertos,\n"
                 + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=2 and a.`CODUSUARIO`=u.`codusuario`) executando,\n"
-                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=3 and a.`CODUSUARIO`=u.`codusuario`) pendentes\n"
-                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=4 and a.`CODUSUARIO`=u.`codusuario`) concluidos,\n"
+                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=3 and a.`CODUSUARIO`=u.`codusuario`) pendentes,\n"
+                + "(select count(*) from atendimento a where a.`CODSTATUSATENDIMENTO`=4 and a.`CODUSUARIO`=u.`codusuario`) concluidos \n"
                 + "from atendimento a\n"
                 + "inner join usuario u on a.`CODUSUARIO`=u.`CODUSUARIO`\n"
                 + "group by u.`USUARIO`");
