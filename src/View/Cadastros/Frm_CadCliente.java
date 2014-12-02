@@ -2373,6 +2373,8 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         if (cbx_tipo.getSelectedItem().equals("FISICA") == true) {
             txt_inscEstadual.setEnabled(false);
             txt_razaoSocial.requestFocus();
+        }else{
+            txt_inscEstadual.setEnabled(true);
         }
     }//GEN-LAST:event_txt_inscEstadualFocusGained
 
