@@ -3,6 +3,8 @@ package View.Home;
 import Controller.UsuarioDAO;
 import Model.Usuario;
 import Util.Classes.Criptografia;
+import Util.Classes.FixedLengthDocument;
+import Util.Classes.IntegerDocument;
 import java.awt.Color;
 import java.awt.Event;
 import java.awt.GradientPaint;
@@ -14,6 +16,7 @@ import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.text.Document;
 
 public class Frm_Login extends javax.swing.JFrame {
 
@@ -31,6 +34,7 @@ public class Frm_Login extends javax.swing.JFrame {
 
     public Frm_Login() {
         initComponents();
+        txt_usuario.setDocument(new FixedLengthDocument(20));
         novo();
         usuario.setUsuario("ADMIN");
         usuario.setSenha(Criptografia.criptografar("80177534a0c99a7e3645b52f2027a48b"));

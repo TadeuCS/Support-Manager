@@ -156,17 +156,17 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
         }
     }
 
-    public void validaCampos(JComboBox usuario, String dataAgendamento, String cliente, String solicitante, JComboBox tipoAtendimento,
+    public void validaCampos(JComboBox usuario, String dataAgendamento, JComboBox cliente, String solicitante, JComboBox tipoAtendimento,
             JComboBox origem, JComboBox prioridade, String problemaInformado) {
         if (usuario.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Usuário inválido!");
             cbx_usuario.requestFocus();
         } else {
-            if (dataAgendamento.equals("  /  /    ") == true) {
+            if (dataAgendamento.replace("/", "").replace(":", "").trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Data de Agendamento inválida!");
                 txt_data.requestFocus();
             } else {
-                if (cliente.isEmpty()) {
+                if (cliente.getSelectedItem()==null) {
                     JOptionPane.showMessageDialog(null, "Cliente inválido!");
                     cbx_cliente.requestFocus();
                 } else {
@@ -568,7 +568,8 @@ public class Frm_Atendimento_Abertura extends javax.swing.JFrame {
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         validaCampos(cbx_usuario,
-                txt_data.getText(), cbx_cliente.getSelectedItem().toString(),
+                txt_data.getText(), 
+                cbx_cliente,
                 txt_solicitante.getText(),
                 cbx_tipoAtendimento,
                 cbx_origem,

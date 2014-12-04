@@ -1,9 +1,4 @@
 ------------------------------------------------------CORREÇÕES------------------------------------------------------
-corrigir problemas com caminhos dos relatorios ao gerar um executavel.
-colocar algo no fundo da tela principal.
-criar metodo que troca a mascara do telefone em classe separada.
-descrição da mensagem "clicar enter" ta errada.
-mensagem de erro na exclusão de cliente.
 relatorio de atendimento sintético deu erro.
 carregar o banco de dados.
 ----------------------------------------------------------------------------------------------------------------------

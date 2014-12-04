@@ -656,7 +656,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnl_dadosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_nomeFantasia, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                            .addComponent(txt_nomeFantasia, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                             .addGroup(pnl_dadosEmpresaLayout.createSequentialGroup()
                                 .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11)
@@ -780,7 +780,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
                     .addGroup(pnl_fundoLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbx_grupo, 0, 322, Short.MAX_VALUE)
+                        .addComponent(cbx_grupo, 0, 324, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btn_cadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -909,7 +909,7 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 0));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Com o CEP preenchido, clique em ENTER para buscar o endereço pelo CEP");
+        jLabel23.setText("Com o CEP preenchido, pressione em ENTER para buscar o endereço pelo CEP");
 
         javax.swing.GroupLayout pnl_dadosEnderecoLayout = new javax.swing.GroupLayout(pnl_dadosEndereco);
         pnl_dadosEndereco.setLayout(pnl_dadosEnderecoLayout);
@@ -924,11 +924,11 @@ public final class Frm_CadEmpresa extends javax.swing.JFrame {
                             .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel17)
                                 .addComponent(jLabel19)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnl_dadosEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnl_dadosEnderecoLayout.createSequentialGroup()
                                 .addComponent(jLabel23)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_proximoEndereco))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosEnderecoLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)

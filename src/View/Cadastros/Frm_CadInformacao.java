@@ -200,12 +200,12 @@ public class Frm_CadInformacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        if (txt_descricao.getText().equals("") == false) {
+        if (txt_descricao.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Informe uma Observação!");
+        }else{
             f = new Frm_Principal();
             Date data = new Date();
             salvar(txt_descricao.getText(), f.getUsuarioLogado(), data, cbx_tipo.getSelectedItem().toString());
-        }else{
-            JOptionPane.showMessageDialog(null, "Informe uma Observação!");
         }
     }//GEN-LAST:event_btn_salvarActionPerformed
 

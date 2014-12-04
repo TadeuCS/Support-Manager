@@ -1031,7 +1031,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
         });
 
         btn_adicionarContato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
-        btn_adicionarContato.setToolTipText("Adicionar Contato");
+        btn_adicionarContato.setToolTipText("Inserir Contato");
         btn_adicionarContato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_adicionarContatoActionPerformed(evt);
@@ -1217,7 +1217,7 @@ public class Frm_CadUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Contato Inválido");
             txt_contato.requestFocus();
         } else {
-            if (txt_telefone.getText().equals("") == true) {
+            if (txt_telefone.getText().equals("(  )     -    ") == true) {
                 JOptionPane.showMessageDialog(null, "Telefone Inválido");
                 txt_telefone.requestFocus();
             } else {

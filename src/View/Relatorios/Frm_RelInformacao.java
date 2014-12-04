@@ -3,17 +3,14 @@ package View.Relatorios;
 import Controller.ClienteDAO;
 import Controller.StatusAtendimentoDAO;
 import Controller.StatusPessoaDAO;
+import Controller.TipoInformacaoDAO;
 import Controller.UsuarioDAO;
-import Model.StatusAtendimento;
 import Model.StatusPessoa;
-import Util.Classes.AutoComplete;
 import Util.Classes.Data;
 import Util.Classes.GeraRelatorios;
 import java.awt.Event;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 public class Frm_RelInformacao extends javax.swing.JFrame {
@@ -24,10 +21,12 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
     StatusPessoaDAO statusPessoaDAO;
     StatusPessoa statusPessoa;
     StatusAtendimentoDAO statusAtendimentoDAO;
+    TipoInformacaoDAO tipoInformacaoDAO;
 
     public Frm_RelInformacao() {
         initComponents();
         setVisible(true);
+        carregarTipos();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +41,8 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_dataFim = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        cbx_tipo = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Relatório de Informações lançadas por período");
@@ -93,15 +94,21 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
 
         jLabel4.setText("Data Fim *:");
 
+        jLabel5.setText("Tipo *:");
+
         javax.swing.GroupLayout pnl_dadosRelSinteticoLayout = new javax.swing.GroupLayout(pnl_dadosRelSintetico);
         pnl_dadosRelSintetico.setLayout(pnl_dadosRelSinteticoLayout);
         pnl_dadosRelSinteticoLayout.setHorizontalGroup(
             pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_dadosRelSinteticoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addGroup(pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txt_dataInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                    .addComponent(cbx_tipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -110,8 +117,12 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
         );
         pnl_dadosRelSinteticoLayout.setVerticalGroup(
             pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnl_dadosRelSinteticoLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_dadosRelSinteticoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(cbx_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
@@ -119,7 +130,7 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
                     .addGroup(pnl_dadosRelSinteticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txt_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout pnl_fundoLayout = new javax.swing.GroupLayout(pnl_fundo);
@@ -225,8 +236,10 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_gerar;
+    private javax.swing.JComboBox cbx_tipo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel pnl_dadosRelSintetico;
     private javax.swing.JPanel pnl_fundo;
     private javax.swing.JFormattedTextField txt_dataFim;
@@ -234,8 +247,14 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void validaTipo(String title) {
-        if (validaDatas() == true) {
-            geraRelatorioByDatas(txt_dataInicio.getText(), txt_dataFim.getText());
+        if (cbx_tipo.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um Tipo de Informação");
+        } else {
+            if (validaDatas() == true) {
+                geraRelatorioByDatas(cbx_tipo.getSelectedItem().toString(),
+                        txt_dataInicio.getText(),
+                        txt_dataFim.getText());
+            }
         }
     }
 
@@ -255,15 +274,29 @@ public class Frm_RelInformacao extends javax.swing.JFrame {
         }
     }
 
-    private void geraRelatorioByDatas(String inicio, String fim) {
+    private void geraRelatorioByDatas(String tipo, String inicio, String fim) {
         try {
             Map parameters = new HashMap();
             GeraRelatorios geraRelatorios = new GeraRelatorios();
+            tipoInformacaoDAO = new TipoInformacaoDAO();
+            parameters.put("Tipo", tipoInformacaoDAO.buscaTipoInformacao(tipo).getCodtipoinformacao());
             parameters.put("DataInicial", Data.getDataByTexto(inicio, "dd/MM/yyyy"));
             parameters.put("DataFinal", Data.getDataByTexto(fim, "dd/MM/yyyy"));
             geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_Informacao.jasper");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Nenhuma informação encontrada neste período!");
+        }
+    }
+
+    private void carregarTipos() {
+        try {
+            tipoInformacaoDAO = new TipoInformacaoDAO();
+            cbx_tipo.removeAllItems();
+            for (int i = 0; i < tipoInformacaoDAO.lista().size(); i++) {
+                cbx_tipo.addItem(tipoInformacaoDAO.lista().get(i).getDescricao());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar os tipos de Informações");
         }
     }
 }

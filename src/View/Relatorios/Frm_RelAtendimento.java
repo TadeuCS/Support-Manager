@@ -398,7 +398,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
     }
 
     private void validaOutrosFiltros() {
-        if (cbx_cliente.getSelectedItem().toString().isEmpty()) {
+        if (cbx_cliente.getSelectedItem()==null) {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente!");
             cbx_cliente.requestFocus();
         } else {

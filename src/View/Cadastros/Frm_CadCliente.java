@@ -77,7 +77,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         txt_numero.setDocument(new IntegerDocument(5));
         txt_quantidade.setDocument(new IntegerDocument(3));
         abas.setEnabled(false);
-        this.tipoUsuarioLogado=tipo;
+        this.tipoUsuarioLogado = tipo;
         carregaSegmentos();
         carregaTipos();
         carregaEstados();
@@ -113,7 +113,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         chx_bloqueado.setEnabled(valor);
         btn_cancelar.setEnabled(valor);
         btn_cadSegmento.setEnabled(valor);
-        
+
         txt_cep.setEnabled(valor);
         txt_rua.setEnabled(valor);
         txt_numero.setEnabled(valor);
@@ -122,7 +122,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         cbx_cidades.setEnabled(valor);
         btn_cadCidade.setEnabled(valor);
         cbx_estados.setEnabled(valor);
-        
+
         cbx_grupo.setEnabled(valor);
         txt_contato.setEnabled(valor);
         txt_telefone.setEnabled(valor);
@@ -130,21 +130,21 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         btn_inserirTelefone.setEnabled(valor);
         btn_removerTelefone.setEnabled(valor);
         tb_telefones.setEnabled(valor);
-        
+
         cbx_aplicativo.setEnabled(valor);
         cbx_links.setEnabled(valor);
         txt_quantidade.setEnabled(valor);
         btn_inserirLinks.setEnabled(valor);
         btn_removerLinks.setEnabled(valor);
         tb_links.setEnabled(valor);
-        
+
         cbx_parcela.setEnabled(valor);
         cbx_salario.setEnabled(valor);
         btn_cadParcela.setEnabled(valor);
         btn_cadSalario.setEnabled(valor);
         btn_calcularMensalidade.setEnabled(valor);
         btn_salvar.setEnabled(valor);
-        
+
     }
 
     private void setEnabledButtons(boolean valor) {
@@ -980,6 +980,9 @@ public class Frm_CadCliente extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cbx_tipoFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cbx_tipoFocusLost(evt);
+            }
         });
         cbx_tipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -990,6 +993,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         jLabel3.setText("CPF/CNPJ *:");
 
         txt_cpf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_cpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_cpfFocusLost(evt);
+            }
+        });
 
         txt_inscEstadual.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1336,7 +1344,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(153, 0, 0));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("Com o CEP preenchido, clique em ENTER para buscar o endereço pelo CEP");
+        jLabel23.setText("Com o CEP preenchido, pressione em ENTER para buscar o endereço pelo CEP");
 
         javax.swing.GroupLayout pnl_enderecoLayout = new javax.swing.GroupLayout(pnl_endereco);
         pnl_endereco.setLayout(pnl_enderecoLayout);
@@ -1414,6 +1422,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tb_telefones);
 
         btn_inserirTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
+        btn_inserirTelefone.setToolTipText("Inserir Contato");
         btn_inserirTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirTelefoneActionPerformed(evt);
@@ -1421,7 +1430,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         });
 
         btn_removerTelefone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/remover.png"))); // NOI18N
-        btn_removerTelefone.setToolTipText("");
+        btn_removerTelefone.setToolTipText("Remover Contato");
         btn_removerTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_removerTelefoneActionPerformed(evt);
@@ -1683,6 +1692,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         );
 
         btn_inserirLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/inserir.png"))); // NOI18N
+        btn_inserirLinks.setToolTipText("Inserir Link");
         btn_inserirLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirLinksActionPerformed(evt);
@@ -1690,6 +1700,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
         });
 
         btn_removerLinks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Util/Img/remover.png"))); // NOI18N
+        btn_removerLinks.setToolTipText("Remover Link");
         btn_removerLinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_removerLinksActionPerformed(evt);
@@ -2272,11 +2283,11 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_proximoLinksActionPerformed
 
     private void btn_calcularMensalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_calcularMensalidadeActionPerformed
-        if (cbx_parcela.getSelectedItem()==null) {
+        if (cbx_parcela.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Selecione um percentual da parcela do Cliente");
             cbx_parcela.requestFocus();
         } else {
-            if (cbx_salario.getSelectedItem()== null) {
+            if (cbx_salario.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, "Selecione um ano para calculo do salario do Cliente");
                 cbx_salario.requestFocus();
             } else {
@@ -2347,7 +2358,7 @@ public class Frm_CadCliente extends javax.swing.JFrame {
 
     private void btn_exclusaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclusaoActionPerformed
         if (txt_codigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione um cliente atraves do botão consultar para poder excluí-lo");
+            JOptionPane.showMessageDialog(null, "Selecione um cliente através do botão consultar para poder excluí-lo");
         } else {
             txt_operacao.setText("EXCLUSÃO");
             try {
@@ -2370,13 +2381,23 @@ public class Frm_CadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_cbx_aplicativoFocusGained
 
     private void txt_inscEstadualFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_inscEstadualFocusGained
+
+    }//GEN-LAST:event_txt_inscEstadualFocusGained
+
+    private void cbx_tipoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cbx_tipoFocusLost
+
+    }//GEN-LAST:event_cbx_tipoFocusLost
+
+    private void txt_cpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_cpfFocusLost
         if (cbx_tipo.getSelectedItem().equals("FISICA") == true) {
             txt_inscEstadual.setEnabled(false);
+            txt_inscEstadual.setText(null);
             txt_razaoSocial.requestFocus();
-        }else{
+        } else {
             txt_inscEstadual.setEnabled(true);
+            txt_inscEstadual.requestFocus();
         }
-    }//GEN-LAST:event_txt_inscEstadualFocusGained
+    }//GEN-LAST:event_txt_cpfFocusLost
 
     /**
      * @param args the command line arguments

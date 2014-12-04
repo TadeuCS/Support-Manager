@@ -116,7 +116,7 @@
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_nomeFantasia" pref="598" max="32767" attributes="0"/>
+                                      <Component id="txt_nomeFantasia" pref="600" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Component id="cbx_tipo" min="-2" pref="94" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
@@ -240,7 +240,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="cbx_grupo" pref="322" max="32767" attributes="0"/>
+                                      <Component id="cbx_grupo" pref="324" max="32767" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btn_cadGrupo" min="-2" pref="40" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -423,11 +423,11 @@
                                           <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="7" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                           <Component id="btn_proximoEndereco" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
@@ -646,7 +646,7 @@
                       <Color blue="0" green="0" red="99" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Com o CEP preenchido, clique em ENTER para buscar o endere&#xe7;o pelo CEP"/>
+                    <Property name="text" type="java.lang.String" value="Com o CEP preenchido, pressione em ENTER para buscar o endere&#xe7;o pelo CEP"/>
                   </Properties>
                 </Component>
               </SubComponents>
