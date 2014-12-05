@@ -334,7 +334,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                new Frm_RelAtendimento().setVisible(true);
+                new Frm_RelAtendimento("").setVisible(true);
             }
         });
     }
@@ -364,7 +364,7 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
             }
         } else {
             if (validaDatas() == true) {
-                validaOutrosFiltros();
+                validaOutrosFiltros(txt_dataInicio.getText(),txt_dataFim.getText());
             }
         }
     }
@@ -389,15 +389,17 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
         try {
             Map parameters = new HashMap();
             GeraRelatorios geraRelatorios = new GeraRelatorios();
-            parameters.put("dataInicial", Data.getDataByTexto(inicio, "dd/MM/yyyy HH:mm"));
-            parameters.put("dataFinal", Data.getDataByTexto(fim, "dd/MM/yyyy HH:mm"));
+            parameters.put("inicio", Data.getDataByTexto(inicio, "dd/MM/yyyy HH:mm"));
+            parameters.put("fim", Data.getDataByTexto(fim, "dd/MM/yyyy HH:mm"));
             geraRelatorios.imprimirRelatorioSQLNoRelatorio(parameters, "src/Relatorios/Rel_Atendimento-Sintetico.jasper");
         } catch (NoResultException e) {
             JOptionPane.showMessageDialog(null, "Nenhum atendimento encontrado neste período!");
+        }catch (Exception e){
+            System.out.println(e);
         }
     }
 
-    private void validaOutrosFiltros() {
+    private void validaOutrosFiltros(String inicio, String fim) {
         if (cbx_cliente.getSelectedItem()==null) {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente!");
             cbx_cliente.requestFocus();
@@ -410,7 +412,8 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Selecione um Status!");
                     cbx_status.requestFocus();
                 } else {
-                    gerarAnalitico(cbx_cliente.getSelectedItem().toString(),
+                    gerarAnalitico(inicio, fim,
+                            cbx_cliente.getSelectedItem().toString(),
                             cbx_status.getSelectedItem().toString(),
                             cbx_usuario.getSelectedItem().toString());
                 }
@@ -418,13 +421,15 @@ public class Frm_RelAtendimento extends javax.swing.JFrame {
         }
     }
 
-    private void gerarAnalitico(String cliente, String status, String usuario) {
+    private void gerarAnalitico(String dataInicio, String dataFim, String cliente, String status, String usuario) {
         try {
             Map parameters = new HashMap();
             usuarioDAO = new UsuarioDAO();
             statusAtendimentoDAO = new StatusAtendimentoDAO();
             clienteDAO = new ClienteDAO();
             GeraRelatorios geraRelatorios = new GeraRelatorios();
+            parameters.put("dataInicial", Data.getDataByTexto(dataInicio, "dd/MM/yyyy HH:mm"));
+            parameters.put("dataFinal", Data.getDataByTexto(dataFim, "dd/MM/yyyy HH:mm"));
             parameters.put("codUsuario", usuarioDAO.consultaByUsuario(usuario).getCodusuario());
             parameters.put("codCliente", clienteDAO.buscaClienteByNomeFantasia(cliente).getCodcliente());
             parameters.put("codStatus", statusAtendimentoDAO.buscaStatusAtendimento(status).getCodstatusatendimento());

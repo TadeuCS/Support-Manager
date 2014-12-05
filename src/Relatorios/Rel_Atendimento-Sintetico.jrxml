@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_AtendimentoByUsuario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d862663a-fbc5-4874-90bc-7e39caaa087f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rel_Atendimento-Sintetico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d862663a-fbc5-4874-90bc-7e39caaa087f">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="dataInicial" class="java.util.Date">
+	<parameter name="inicio" class="java.util.Date">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="dataFinal" class="java.util.Date"/>
+	<parameter name="fim" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select c.`CODCLIENTE` codigo,c.`NOME_FANTASIA` nome,c.`CNPJ_CPF`,count(c.`NOME_FANTASIA`) qtde from atendimento a
 inner join cliente c on a.`CODCLIENTE` = c.`CODCLIENTE`
 inner join status_atendimento s on a.`CODSTATUSATENDIMENTO`=s.`CODSTATUSATENDIMENTO`
-where a.`DATA_AGENDAMENTO` between $P{dataInicial} and $P{dataFinal}
+where
+a.`DATA_AGENDAMENTO` between $P{inicio} and $P{fim}
 group by c.`CODCLIENTE`]]>
 	</queryString>
 	<field name="codigo" class="java.lang.Integer"/>
@@ -34,16 +35,6 @@ group by c.`CODCLIENTE`]]>
 					</textElement>
 					<text><![CDATA[Relatório de Atendimentos - Sintético]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="208" y="60" width="74" height="20" forecolor="#FFFFFF" uuid="adfc9593-48e5-478d-b336-5bf990ffa9d9"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$P{dataInicial}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="384" y="60" width="82" height="20" forecolor="#FFFFFF" uuid="5828e25a-9c77-44c6-afbd-915e741c8c37"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$P{dataFinal}]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement mode="Opaque" x="149" y="60" width="59" height="20" forecolor="#FFFFFF" backcolor="#006699" uuid="995528fe-6781-4f2b-ae85-25e29ddbea8a"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
@@ -54,6 +45,16 @@ group by c.`CODCLIENTE`]]>
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<text><![CDATA[Data Final:]]></text>
 				</staticText>
+				<textField pattern="dd/MM/yyyy HH:mm">
+					<reportElement x="208" y="60" width="100" height="20" forecolor="#FFFFFF" uuid="edd068e7-c47c-4c47-94d5-c2689408279d"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{inicio}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy HH:mm">
+					<reportElement x="384" y="60" width="100" height="20" forecolor="#FFFFFF" uuid="d571ce29-60d2-4a75-b4cb-e5281df66de2"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$P{fim}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</title>
