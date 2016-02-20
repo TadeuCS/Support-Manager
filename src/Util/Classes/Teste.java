@@ -1,15 +1,17 @@
 package Util.Classes;
 
-import java.util.Locale;
-
 public class Teste {
-//        QRCode.geraQRCode("www.olivetsistemas.com.br");
 
+    private char numero;
+
+    public static void imprime(int numero) {
+        String retorno="";
+        for (int i = 0; i < numero; i++) {
+            retorno=retorno+"*";
+            System.out.println(retorno+"\n");
+        }
+    }
     public static void main(String[] args) {
-//---------------- classe para chamar Moeda -------------------- 
-        double VALOR = 10000.5; // estar assim no MySql 
-        Moeda tp = new Moeda();
-        String Formato2 = tp.mascaraDinheiro(VALOR);
-        System.out.println(Formato2);
+        imprime(4);
     }
 }

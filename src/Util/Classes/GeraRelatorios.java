@@ -66,7 +66,7 @@ public class GeraRelatorios {
         try {
             // Carrega conexão via JDBC
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/smdados", "root", "1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/smdados", "root", "mutkch");
 
             // Preenche o relatório com os dados
             JasperPrint print = JasperFillManager.fillReport(diretorio, parametros, conn);
